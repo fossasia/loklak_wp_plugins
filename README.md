@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # WordPress 4.2.2-ja + pg4wp2 Heroku
 
 This project is a template for installing and running [WordPress](http://wordpress.org/) on [Heroku](http://www.heroku.com/). The repository comes bundled with:
@@ -132,3 +133,6 @@ bin/
 *.zip
 ```
 
+=======
+# wordpress-ja-pg4wp2-heroku
+>>>>>>> origin/master
