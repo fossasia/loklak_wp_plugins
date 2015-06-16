@@ -1,0 +1,11 @@
+{
+  "name": "deliciousbrains/wp-amazon-web-services",
+  "type": "wordpress-plugin",
+  "homepage": "https://github.com/deliciousbrains/wp-amazon-web-services",
+  "license": "GPLv3",
+  "description": "Houses the Amazon Web Services (AWS) PHP libraries and manages access keys. Required by other AWS plugins.",
+  "keywords": ["plugin","amazon-web-services","aws","amazon"],
+  "require": {
+    "composer/installers": "~1.0.6"
+  }
+}

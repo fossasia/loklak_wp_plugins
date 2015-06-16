@@ -1,0 +1,205 @@
+.wphttps-message-wrap {
+	position: fixed;
+	bottom: 50%;
+	left: 50%;
+	margin-left: -25%;
+	width: 50%;
+	z-index: 10;
+	text-align: center;
+}
+.wphttps-message-wrap ul {
+	margin: 0;
+}
+
+#wphttps-main #icon-options-https {
+	background: url(images/admin-icon32.png) no-repeat;
+}
+
+#wphttps-main .meta-box-sortables {
+	margin: 0 8px;
+}
+
+#wphttps-main #poststuff .column-primary {
+	width: 72%;
+	padding: 0;
+}
+#wphttps-main #poststuff .column-secondary {
+	width: 28%;
+	float: right;
+	padding: 0;
+}
+#wphttps-main #poststuff .postbox {
+	min-width: auto;
+}
+
+#wphttps-main #message {
+	margin: 15px 0 0 0;
+}
+#wphttps-main #message p {
+	line-height: 100%;
+}
+
+#wphttps-main img.loading {
+	display: block;
+	position: absolute;
+	top: 7px;
+	right: 7px;	
+}
+
+#wphttps-main img.waiting {
+	display: none;
+}
+#wphttps-main img.submit-waiting {
+	vertical-align: middle;
+	margin-left: 5px;
+}
+
+#wphttps-donate-link img {
+	display: block;
+	margin: 5px auto 13px auto;
+}
+
+#wphttps-main input[type="text"] {
+	margin: -5px 0 0 0;
+}
+#wphttps-main input[type="checkbox"] {
+	margin: 7px 0 0 0;
+	vertical-align: bottom;
+}
+#wphttps-main table tr td,
+#wphttps-main table tr th {
+	line-height: 1em;
+	padding: 10px;
+}
+#wphttps-main table tr td {
+	padding: 2px 0 0 0;
+}
+#wphttps-main table tr td:first-child {
+	padding-top: 0;
+}
+#wphttps-main table th {
+	width: 160px;
+	line-height: 32px;
+	padding: 0;
+}
+#wphttps-main label.label-radio {
+	display: block;
+	margin: 5px 5px 0 0;
+	float: left;
+}
+#wphttps-main #settings-reset,
+#wphttps-main #network-settings-reset,
+#wphttps-main #filters-reset,
+#wphttps-main #domain-mapping-reset {
+	float: left;
+	margin-right: 10px;
+}
+#wphttps-main #ssl_port_label {
+	display: inline-block;
+	padding-top: 10px;	
+}
+#wphttps-main #ssl_host {
+	width: 70%;
+}
+#wphttps-main #exclusive_https_row label {
+	padding-top: 5px;	
+}
+
+#wphttps-main #admin_menu_row label {
+	display: inline;
+}
+
+#wphttps-main #secure_filter_row textarea {
+	width: 95%;
+	height: 120px;
+}
+
+#wphttps-main #admin_menu_row fieldset {
+	margin-top: 5px;
+}
+
+#wphttps-main input[type="checkbox"] {
+	float: left;
+}
+#wphttps-main p.description {
+	margin: .5em 0 0 .5em;
+	width: 75%;
+	display: block;
+	float: left;
+	line-height: 1.2em;
+}
+#wphttps-main #secure_filter_row p.description {
+	margin: .5em 10px 0 0;
+	width: auto;
+}
+#wphttps-main #ssl_proxy_row p.description {
+	width: 65%;
+}
+#wphttps-main #domain_mapping td {
+	padding: 10px 0;
+}
+#wphttps-main #domain_mapping td.arrow {
+	padding: 8px 0;
+}
+#wphttps-main #domain_mapping .http_scheme,
+#wphttps-main #domain_mapping .https_scheme {
+	width: 30px;
+	padding: 10px;
+}
+#wphttps-main #domain_mapping .https_scheme {
+	width: 35px;
+}
+#wphttps-main #domain_mapping .http_domain .label,
+#wphttps-main #domain_mapping .https_domain .label {
+	display: block;
+	float: left;
+	text-align: right;
+	padding-right: 2%;
+} 
+#wphttps-main #domain_mapping input {
+	width: 96%;
+	padding-left: 2%;
+	padding-right: 2%;
+}
+#wphttps-main #domain_mapping .add {
+	display: block;
+	height: 16px;
+	width: 16px;
+	overflow: hidden;
+	text-indent: -1000em;
+	float: left;
+	background: url(images/add.png) no-repeat 50% 50%;	
+}
+#wphttps-main #domain_mapping .remove {
+	display: block;
+	height: 16px;
+	width: 16px;
+	overflow: hidden;
+	text-indent: -1000em;
+	float: left;
+	background: url(images/delete.png) no-repeat 50% 50%;	
+}
+#wphttps-main #domain_mapping .arrow .label {
+	display: block;
+	height: 16px;
+	width: 16px;
+	overflow: hidden;
+	text-indent: -1000em;
+	background: url(images/arrow_right.png) no-repeat 50% 50%;	
+	margin: 0 auto;
+}
+
+#wphttps-main #regex-help {
+	display: none;
+}
+table.regex-help {
+	border-collapse: collapse;
+}
+table.regex-help tr {
+	border: 1px solid #000;
+	border-width: 1px 1px 0 0;
+}
+table.regex-help td, table.regex-help th {
+	border: 1px solid #000;
+	border-width: 0 0 1px 1px;
+}

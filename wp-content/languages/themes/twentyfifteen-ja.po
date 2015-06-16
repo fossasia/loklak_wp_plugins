@@ -1,0 +1,310 @@
+# Translation of Twenty Fifteen in Japanese
+# This file is distributed under the same license as the Twenty Fifteen package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2015-04-12 07:51:45+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: GlotPress/1.0-alpha-1000\n"
+"Project-Id-Version: Twenty Fifteen\n"
+
+#. Theme URI of the plugin/theme
+msgid "https://wordpress.org/themes/twentyfifteen/"
+msgstr "https://wordpress.org/themes/twentyfifteen/"
+
+#: single.php:37
+msgid "Previous post:"
+msgstr "前の投稿:"
+
+#: single.php:34
+msgid "Next post:"
+msgstr "次の投稿:"
+
+#: inc/customizer.php:47 inc/customizer.php:63 inc/customizer.php:68
+msgid "Applied to the header on small screens and the sidebar on wide screens."
+msgstr "﻿小さい画面上のヘッダーと、幅広い画面上のサイドバーに適用されます。"
+
+#: single.php:33
+msgid "Next"
+msgstr "次"
+
+#: single.php:36
+msgid "Previous"
+msgstr "前"
+
+#. Author of the plugin/theme
+msgid "the WordPress team"
+msgstr "WordPress チーム"
+
+#. Description of the plugin/theme
+msgid "Our 2015 default theme is clean, blog-focused, and designed for clarity. Twenty Fifteen's simple, straightforward typography is readable on a wide variety of screen sizes, and suitable for multiple languages. We designed it using a mobile-first approach, meaning your content takes center-stage, regardless of whether your visitors arrive by smartphone, tablet, laptop, or desktop computer."
+msgstr "2015年のデフォルトテーマはクリーンでブログ向けに、分かりやすさを考えて設計されています。Twenty Fifteen の単純明快なタイポグラフィは多様な画面サイズで読みやすく、複数の言語に適しています。このテーマは「モバイル・ファースト」アプローチを使ってデザインしました。つまり、サイトの訪問者がスマートフォン・タブレット・ノートまたはデスクトップパソコンのどれを使ってサイトに訪れていても、あなたのコンテンツに最も注目が注がれるようになっているという意味です。"
+
+#. Theme Name of the plugin/theme
+msgid "Twenty Fifteen"
+msgstr "Twenty Fifteen"
+
+#: search.php:18
+msgid "Search Results for: %s"
+msgstr "検索結果: %s"
+
+#: inc/template-tags.php:122
+msgid "% Comments"
+msgstr "%件のコメント"
+
+#: inc/template-tags.php:122
+msgid "1 Comment"
+msgstr "1件のコメント"
+
+#: inc/template-tags.php:113
+msgctxt "Used before full size attachment link."
+msgid "Full size"
+msgstr "フルサイズ"
+
+#: inc/template-tags.php:122
+msgid "Leave a comment"
+msgstr "コメントをどうぞ"
+
+#: inc/template-tags.php:102
+msgctxt "Used before tag names."
+msgid "Tags"
+msgstr "タグ"
+
+#: inc/template-tags.php:94
+msgctxt "Used before category names."
+msgid "Categories"
+msgstr "カテゴリー"
+
+#: inc/template-tags.php:91 inc/template-tags.php:99
+msgctxt "Used between list items, there is a space after the comma."
+msgid ", "
+msgstr ", "
+
+#: inc/template-tags.php:85
+msgctxt "Used before post author name."
+msgid "Author"
+msgstr "作成者"
+
+#: inc/template-tags.php:76
+msgctxt "Used before publish date."
+msgid "Posted on"
+msgstr "投稿日:"
+
+#: inc/template-tags.php:55
+msgctxt "Used before post format."
+msgid "Format"
+msgstr "フォーマット"
+
+#: inc/template-tags.php:26
+msgid "Older Comments"
+msgstr "過去のコメント"
+
+#: inc/template-tags.php:30
+msgid "Newer Comments"
+msgstr "新しいコメント"
+
+#: inc/template-tags.php:49
+msgid "Featured"
+msgstr "注目"
+
+#: inc/template-tags.php:23
+msgid "Comment navigation"
+msgstr "コメントナビゲーション"
+
+#: inc/customizer.php:147
+msgid "Blue"
+msgstr "ブルー"
+
+#: inc/customizer.php:136
+msgid "Purple"
+msgstr "紫"
+
+#: inc/customizer.php:125
+msgid "Pink"
+msgstr "ピンク"
+
+#: inc/customizer.php:103
+msgid "Dark"
+msgstr "ダーク"
+
+#: inc/customizer.php:114
+msgid "Yellow"
+msgstr "黄"
+
+#: inc/customizer.php:92
+msgid "Default"
+msgstr "デフォルト"
+
+#: inc/customizer.php:62
+msgid "Header and Sidebar Background Color"
+msgstr "ヘッダー・サイドバー背景色"
+
+#: inc/customizer.php:31
+msgid "Base Color Scheme"
+msgstr "ベース配色"
+
+#: inc/customizer.php:46
+msgid "Header and Sidebar Text Color"
+msgstr "ヘッダー・サイドバーテキスト色"
+
+#: inc/back-compat.php:37 inc/back-compat.php:47 inc/back-compat.php:60
+msgid "Twenty Fifteen requires at least WordPress version 4.1. You are running version %s. Please upgrade and try again."
+msgstr "Twenty Fifteen には WordPress バージョン 4.1 以上が必要です。現在のバージョンは %s です。アップグレードしてもう一度お試しください。"
+
+#: image.php:24
+msgid "Previous Image"
+msgstr "前の画像"
+
+#: image.php:24
+msgid "Next Image"
+msgstr "次の画像"
+
+#: image.php:84
+msgctxt "Parent post link"
+msgid "<span class=\"meta-nav\">Published in</span><span class=\"post-title\">%title</span>"
+msgstr "<span class=\"post-title\">%title</span> <span class=\"meta-nav\">内で公開</span>"
+
+#: header.php:43
+msgid "Menu and widgets"
+msgstr "﻿メニューとウィジェット"
+
+#: functions.php:255
+msgid "expand child menu"
+msgstr "サブメニューを展開"
+
+#: functions.php:256
+msgid "collapse child menu"
+msgstr "サブメニューを閉じる"
+
+#: header.php:26
+msgid "Skip to content"
+msgstr "コンテンツへ移動"
+
+#. Translators: To add an additional character subset specific to your
+#. language, translate this to 'greek', 'cyrillic', 'devanagari' or
+#. 'vietnamese'. Do not translate into your own language.
+#: functions.php:185
+msgctxt "Add new subset (greek, cyrillic, devanagari, vietnamese)"
+msgid "no-subset"
+msgstr "no-subset"
+
+#. Translators: If there are characters in your language that are not supported
+#. by Inconsolata, translate this to 'off'. Do not translate into your own
+#. language.
+#: functions.php:177
+msgctxt "Inconsolata font: on or off"
+msgid "on"
+msgstr "on"
+
+#. Translators: If there are characters in your language that are not supported
+#. by Noto Sans, translate this to 'off'. Do not translate into your own
+#. language.
+#: functions.php:161
+msgctxt "Noto Sans font: on or off"
+msgid "on"
+msgstr "on"
+
+#. Translators: If there are characters in your language that are not supported
+#. by Noto Serif, translate this to 'off'. Do not translate into your own
+#. language.
+#: functions.php:169
+msgctxt "Noto Serif font: on or off"
+msgid "on"
+msgstr "on"
+
+#: functions.php:135
+msgid "Add widgets here to appear in your sidebar."
+msgstr "サイドバーに表示させるにはここにウィジェットを追加してください。"
+
+#: functions.php:133
+msgid "Widget Area"
+msgstr "﻿ウィジェット エリア"
+
+#: functions.php:85
+msgid "Primary Menu"
+msgstr "メインメニュー"
+
+#: functions.php:86
+msgid "Social Links Menu"
+msgstr "﻿ソーシャルリンクメニュー"
+
+#: footer.php:25
+msgid "Proudly powered by %s"
+msgstr "Proudly powered by %s"
+
+#. #-#-#-#-#  twentyfifteen.pot (Twenty Fifteen 1.2)  #-#-#-#-#
+#. Author URI of the plugin/theme
+#: footer.php:25
+msgid "https://wordpress.org/"
+msgstr "https://ja.wordpress.org/"
+
+#: content-none.php:31
+msgid "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help."
+msgstr "お探しのコンテンツを見つけられませんでした。検索をお試しください。"
+
+#: content-none.php:26
+msgid "Sorry, but nothing matched your search terms. Please try again with some different keywords."
+msgstr "ご指定の検索条件に一致する投稿がありませんでした。他のキーワードでもう一度検索してみてください。"
+
+#: content-none.php:22
+msgid "Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+msgstr "最初の投稿をする準備ができましたか ?  <a href=\"%1$s\">ここからスタート</a>してください。"
+
+#: content-none.php:15
+msgid "Nothing Found"
+msgstr "見つかりません"
+
+#: content-link.php:56 content-page.php:35 content-search.php:28
+#: content-search.php:33 content.php:57 image.php:71
+msgid "Edit"
+msgstr "編集"
+
+#: content-link.php:36 content-page.php:25 content.php:38 image.php:59
+msgid "Pages:"
+msgstr "ページ:"
+
+#. translators: %s: Name of current post
+#: content-link.php:31 content.php:33 inc/template-tags.php:237
+msgid "Continue reading %s"
+msgstr "続きを読む %s"
+
+#: comments.php:53
+msgid "Comments are closed."
+msgstr "コメントは受け付けていません。"
+
+#: comments.php:28
+msgctxt "comments title"
+msgid "One thought on &ldquo;%2$s&rdquo;"
+msgid_plural "%1$s thoughts on &ldquo;%2$s&rdquo;"
+msgstr[0] "&ldquo;%2$s&rdquo; への%1$s件のフィードバック"
+
+#: author-bio.php:34
+msgid "View all posts by %s"
+msgstr "%s の投稿をすべて表示"
+
+#: author-bio.php:12
+msgid "Published by"
+msgstr "投稿者:"
+
+#: archive.php:51 content-link.php:40 content-page.php:29 content.php:42
+#: image.php:63 index.php:48 search.php:40
+msgid "Page"
+msgstr "ページ"
+
+#: archive.php:50 index.php:47 search.php:39
+msgid "Next page"
+msgstr "次のページ"
+
+#: archive.php:49 index.php:46 search.php:38
+msgid "Previous page"
+msgstr "前のページ"
+
+#: 404.php:21
+msgid "It looks like nothing was found at this location. Maybe try a search?"
+msgstr "こちらには何もありません。検索をお試しください。"
+
+#: 404.php:17
+msgid "Oops! That page can&rsquo;t be found."
+msgstr "﻿ページが見つかりません。"

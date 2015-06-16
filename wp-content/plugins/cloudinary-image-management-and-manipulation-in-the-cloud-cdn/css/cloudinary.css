@@ -1,0 +1,130 @@
+#options-success, #options-error {
+  font-size: 14px;
+  line-height: 19px;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-left: 0px;  
+  padding: 5px;
+}
+
+#options-error {
+  color: #e62401;
+}
+
+#cloudinary-library {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 1002;
+}
+
+#cld_editbtn {
+	border-color: #999;
+	background-color: #eee;
+	margin: 2px;
+	padding: 2px;
+	border-width: 1px;
+	border-style: solid;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+}
+#cld_editbtn:hover {
+	border-color: #555;
+	background-color: #ccc;
+}
+
+.wp-media-buttons a.cloudinary_add_media {
+	margin-left: 30px;
+	font-weight: bold;
+	font-size: 14px;
+	color: #1f416d;
+	background: url("../images/edit_icon.png") no-repeat scroll 0 -2px transparent;
+	padding-left: 27px;
+	padding-top: 2px;
+}
+
+.wp-media-buttons span.cloudinary_message {
+  margin-left: 5px;
+  font-weight: bold;
+  color: green;
+}
+
+.cloudinary_settings .top_part h2 {
+	float: left;
+	margin: 15px 0 0 0;
+	color: #464646;
+	font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",sans-serif;
+	font-size: 23px;
+	padding: 9px 15px 4px 0;
+	line-height: 29px;
+	font-weight: normal;
+	text-shadow: #fff 0 1px 0;	
+}
+
+.cloudinary_settings .acc_link {
+	max-width: 600px;
+}
+
+.cloudinary_settings .acc_link p {
+	font-size: 14px;
+	line-height: 20px;
+}
+
+.cloudinary_settings .top_part:after {
+	clear: both;
+	content: '';
+	display: block;
+}
+
+.cloudinary_settings .logo {
+	background: url("../images/logo.png") no-repeat scroll 0 0 transparent;
+	float: right;
+	height: 51px;
+	margin: 10px 20px 0 10px;
+	overflow: hidden;
+	text-indent: -9999px;
+	width: 241px;
+}
+
+.cloudinary_settings .cloudinary_config_tab {
+	font-size: 12px;
+	margin-top: 30px
+}
+
+.cloudinary_settings .cloudinary_config_first_td {
+	width: 200px;
+	font-size: 16px;
+	font-weight: bold;
+	vertical-align: top;
+	padding-top: 10px;	
+}
+.cloudinary_settings .cloudinary_config_second_td {
+	float: left;
+	width: 450px;	
+}
+.cloudinary_settings .cloudinary_config_second_td textarea {
+	border-color: #bbb;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;            	
+	border-style: solid;
+	border-width: 1px;
+	float: left;
+	width: 400px;	
+	font-size: 16px;
+	color: #666;
+	line-height: 20px;
+	height: 72px;
+	padding: 4px;
+	overflow: hidden;
+	max-height: 72px;
+	max-width: 400px;
+	resize: none;	
+}
+.cloudinary_settings .cloudinary_config_second_td span {
+	float: left;
+	margin-top: 3px;
+	margin-left: 5px;
+}

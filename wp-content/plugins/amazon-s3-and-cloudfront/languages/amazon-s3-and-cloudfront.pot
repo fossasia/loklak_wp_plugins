@@ -1,0 +1,457 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Amazon S3 and CloudFront\n"
+"POT-Creation-Date: 2015-01-29 12:40-0000\n"
+"PO-Revision-Date: 2015-01-29 12:40-0000\n"
+"Last-Translator: Delicious Brains <nom@deliciousbrains.com>\n"
+"Language-Team: Delicious Brains <nom@deliciousbrains.com>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.7\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: vendor\n"
+"X-Poedit-SearchPathExcluded-1: assets\n"
+
+#: classes/amazon-s3-and-cloudfront.php:38
+msgid "Amazon S3 and CloudFront"
+msgstr ""
+
+#: classes/amazon-s3-and-cloudfront.php:39
+msgid "S3 and CloudFront"
+msgstr ""
+
+#: classes/amazon-s3-and-cloudfront.php:370
+#, php-format
+msgid "Mime type %s is not allowed"
+msgstr ""
+
+#: classes/amazon-s3-and-cloudfront.php:457
+#, php-format
+msgid "Error uploading %s to S3: %s"
+msgstr ""
+
+#: classes/amazon-s3-and-cloudfront.php:961
+msgid "There was an error attempting to access the file system"
+msgstr ""
+
+#: classes/amazon-s3-and-cloudfront.php:1001
+msgid "Cheatin&#8217; eh?"
+msgstr ""
+
+#: classes/amazon-s3-and-cloudfront.php:1005
+msgid "You do not have sufficient permissions to access this page."
+msgstr ""
+
+#: classes/amazon-s3-and-cloudfront.php:1011
+msgid "No bucket name provided."
+msgstr ""
+
+#: classes/amazon-s3-and-cloudfront.php:1037
+#: classes/amazon-s3-and-cloudfront.php:1070
+#: classes/amazon-s3-and-cloudfront.php:1129
+msgid "Failed to retrieve bucket region."
+msgstr ""
+
+#: classes/amazon-s3-and-cloudfront.php:1179
+#, php-format
+msgid "There was an error attempting to get the region of the bucket %s: %s"
+msgstr ""
+
+#: classes/amazon-s3-and-cloudfront.php:1291
+msgid ""
+"This is a test file to check if the user has write permission to S3. Delete "
+"me if found."
+msgstr ""
+
+#: classes/amazon-s3-and-cloudfront.php:1336
+msgid "Bucket Name:"
+msgstr ""
+
+#: classes/amazon-s3-and-cloudfront.php:1337
+msgid "Error creating bucket: "
+msgstr ""
+
+#: classes/amazon-s3-and-cloudfront.php:1340
+msgid "Error fetching buckets: "
+msgstr ""
+
+#: classes/amazon-s3-and-cloudfront.php:1342
+msgid "Error saving bucket: "
+msgstr ""
+
+#: classes/amazon-s3-and-cloudfront.php:1345
+msgid "Error getting URL preview: "
+msgstr ""
+
+#: classes/amazon-s3-and-cloudfront.php:1346
+msgid "The changes you made will be lost if you navigate away from this page"
+msgstr ""
+
+#: classes/amazon-s3-and-cloudfront.php:1358
+msgid "Cheatin' eh?"
+msgstr ""
+
+#: classes/as3cf-compatibility-check.php:25
+msgid ""
+"You can deactivate the Amazon S3 and CloudFront plugin to get rid of this "
+"notice."
+msgstr ""
+
+#: classes/as3cf-compatibility-check.php:28
+#, php-format
+msgid ""
+"Amazon S3 and CloudFront has been disabled as it requires the <a style="
+"\"text-decoration:none;\" href=\"%s\">Amazon&nbsp;Web&nbsp;Services</a> "
+"plugin."
+msgstr ""
+
+#: classes/as3cf-compatibility-check.php:31
+msgid "It appears to be installed already."
+msgstr ""
+
+#: classes/as3cf-compatibility-check.php:33
+msgctxt "Activate plugin"
+msgid "Activate it now"
+msgstr ""
+
+#: classes/as3cf-compatibility-check.php:37
+#, php-format
+msgid "<a href=\"%s\">Install it</a> and activate."
+msgstr ""
+
+#: classes/as3cf-compatibility-check.php:48
+#, php-format
+msgid ""
+"Amazon S3 and CloudFront has been disabled as it requires version %s or "
+"later of the <a style=\"text-decoration:none;\" href=\"%s\">Amazon&nbsp;"
+"Web&nbsp;Services</a> plugin."
+msgstr ""
+
+#: classes/as3cf-compatibility-check.php:51
+#, php-format
+msgid "You currently have version %s installed."
+msgstr ""
+
+#: classes/as3cf-compatibility-check.php:55
+msgid "Update to the latest version"
+msgstr ""
+
+#: classes/as3cf-compatibility-check.php:66
+#, php-format
+msgid ""
+"Amazon S3 and CloudFront has been disabled because it will not work with the "
+"version of the Amazon&nbsp;Web&nbsp;Services plugin installed. Amazon&nbsp;"
+"S3&nbsp;and&nbsp;CloudFront %s or later is required."
+msgstr ""
+
+#: classes/as3cf-compatibility-check.php:70
+msgid "Update Amazon S3 and CloudFront to the latest version"
+msgstr ""
+
+#: classes/as3cf-upgrade.php:95
+#, php-format
+msgid ""
+"<strong>Running Metadata Update</strong> &mdash; We&#8217;re going through "
+"all the Media Library items uploaded to S3 and updating the metadata with "
+"the bucket region it is served from. This will allow us to serve your files "
+"from the proper S3 region subdomain <span style=\"white-space:nowrap;\">(e."
+"g. s3-us-west-2.amazonaws.com)</span>. This will be done quietly in the "
+"background, processing a small batch of Media Library items every %d "
+"minutes. There should be no noticeable impact on your server&#8217;s "
+"performance."
+msgstr ""
+
+#: classes/as3cf-upgrade.php:96
+msgid "Pause Update"
+msgstr ""
+
+#: classes/as3cf-upgrade.php:100
+msgid ""
+"<strong>Metadata Update Paused</strong> &mdash; Updating Media Library "
+"metadata has been paused."
+msgstr ""
+
+#: classes/as3cf-upgrade.php:101
+msgid "Restart Update"
+msgstr ""
+
+#: classes/as3cf-upgrade.php:104
+msgid ""
+"<strong>Error Updating Metadata</strong> &mdash; We ran into some errors "
+"attempting to update the metadata for all your Media Library items that have "
+"been uploaded to S3. Please check your error log for details."
+msgstr ""
+
+#: classes/as3cf-upgrade.php:105
+msgid "Try Run It Again"
+msgstr ""
+
+#: classes/as3cf-upgrade.php:168
+#, php-format
+msgid "Every %d Minutes"
+msgstr ""
+
+#: view/settings.php:19
+msgid "Settings saved."
+msgstr ""
+
+#: view/settings.php:35
+msgid "S3 Policy is Read-Only"
+msgstr ""
+
+#: view/settings.php:37
+#, php-format
+msgid ""
+"You need to go to <a href=\"%s\">Identity and Access Management</a> in your "
+"AWS console and manage the policy for the user you're using for this plugin. "
+"Your policy should look something like the following:"
+msgstr ""
+
+#: view/settings.php:52
+msgid "Select an existing S3 bucket to use:"
+msgstr ""
+
+#: view/settings.php:55
+msgid "Cancel"
+msgstr ""
+
+#: view/settings.php:57
+msgid "Refresh"
+msgstr ""
+
+#: view/settings.php:60
+msgid ""
+"You can enter a bucket manually to avoid listing the buckets available. This "
+"can be helpful if you have an IAM policy that does not allow bucket listing "
+"or you have a large amount of buckets to load."
+msgstr ""
+
+#: view/settings.php:63
+msgid "Enter Bucket"
+msgstr ""
+
+#: view/settings.php:64
+msgid "Select Bucket"
+msgstr ""
+
+#: view/settings.php:68 view/settings.php:79
+msgid "Bucket Name"
+msgstr ""
+
+#: view/settings.php:69
+msgid "Saving..."
+msgstr ""
+
+#: view/settings.php:69
+msgid "Save"
+msgstr ""
+
+#: view/settings.php:73
+msgid "Loading..."
+msgstr ""
+
+#: view/settings.php:76
+msgid "Or create a new bucket:"
+msgstr ""
+
+#: view/settings.php:80
+msgid "Creating..."
+msgstr ""
+
+#: view/settings.php:80
+msgid "Create"
+msgstr ""
+
+#: view/settings.php:91
+msgid "Bucket"
+msgstr ""
+
+#: view/settings.php:95
+msgid "Change"
+msgstr ""
+
+#: view/settings.php:102
+msgid "Enable/Disable the Plugin"
+msgstr ""
+
+#: view/settings.php:109
+msgid "Copy Files to S3"
+msgstr ""
+
+#: view/settings.php:110
+msgid ""
+"When a file is uploaded to the Media Library, copy it to S3. Existing files "
+"are <em>not</em> copied to S3."
+msgstr ""
+
+#: view/settings.php:118
+msgid "Rewrite File URLs"
+msgstr ""
+
+#: view/settings.php:119
+msgid ""
+"For Media Library files that have been copied to S3, rewrite the URLs so "
+"that they are served from S3/CloudFront instead of your server."
+msgstr ""
+
+#: view/settings.php:123
+msgid "Configure File URLs"
+msgstr ""
+
+#: view/settings.php:137
+msgid "Domain:"
+msgstr ""
+
+#: view/settings.php:183
+msgid "Path"
+msgstr ""
+
+#: view/settings.php:185
+msgid "By default the path is the same as your local WordPress files:"
+msgstr ""
+
+#: view/settings.php:198
+msgid "Year/Month"
+msgstr ""
+
+#: view/settings.php:200
+msgid "Add the Year/Month in the URL."
+msgstr ""
+
+#: view/settings.php:206
+msgid "SSL"
+msgstr ""
+
+#: view/settings.php:214
+msgid "Same as request"
+msgstr ""
+
+#: view/settings.php:215
+msgid "When the request is https://, use https:// for the file URL as well."
+msgstr ""
+
+#: view/settings.php:219
+msgid "Always SSL"
+msgstr ""
+
+#: view/settings.php:220
+msgid "Forces https:// to be used."
+msgstr ""
+
+#: view/settings.php:221
+msgid ""
+"You cannot use the \"Bucket as a subdomain\" domain option when using SSL."
+msgstr ""
+
+#: view/settings.php:225
+msgid "Always non-SSL"
+msgstr ""
+
+#: view/settings.php:226
+msgid "Forces http:// to be used."
+msgstr ""
+
+#: view/settings.php:232
+msgid "Advanced Options"
+msgstr ""
+
+#: view/settings.php:239
+msgid "Remove Files From Server"
+msgstr ""
+
+#: view/settings.php:240
+msgid "Once a file has been copied to S3, remove it from the local server."
+msgstr ""
+
+#: view/settings.php:248
+msgid "Object Versioning"
+msgstr ""
+
+#: view/settings.php:250
+msgid ""
+"Append a timestamp to the S3 file path. Recommended when using CloudFront so "
+"you don't have to worry about cache invalidation."
+msgstr ""
+
+#: view/settings.php:252 view/settings.php:265
+msgid "More info"
+msgstr ""
+
+#: view/settings.php:262
+msgid "Far Future Expiration Header"
+msgstr ""
+
+#: view/settings.php:263
+msgid ""
+"Implements a \"Never Expire\" caching policy for browsers by setting an "
+"Expires header for 10 years in the future. Should be used in conjunction "
+"with object versioning above."
+msgstr ""
+
+#: view/settings.php:275
+msgid "Copy HiDPI (@2x) Images"
+msgstr ""
+
+#: view/settings.php:276
+#, php-format
+msgid ""
+"When uploading a file to S3, checks if there's a file of the same name with "
+"an @2x suffix and copies it to S3 as well. Works with the <a href=\"%s\">WP "
+"Retina 2x</a> plugin."
+msgstr ""
+
+#: view/settings.php:282
+msgid "Save Changes"
+msgstr ""
+
+#: view/sidebar.php:6
+msgid "Pro Version?"
+msgstr ""
+
+#: view/sidebar.php:11
+msgid ""
+"We're working on a pro version that will include the following features:"
+msgstr ""
+
+#: view/sidebar.php:15
+msgid "Copy existing Media Library to S3"
+msgstr ""
+
+#: view/sidebar.php:16
+msgid "Serve theme JS & CSS from S3/CloudFront"
+msgstr ""
+
+#: view/sidebar.php:17
+msgid ""
+"WooCommerce & <abbr title=\"Easy Digital Downloads\">EDD</abbr> integration"
+msgstr ""
+
+#: view/sidebar.php:18
+msgid "Awesome email support"
+msgstr ""
+
+#: view/sidebar.php:22
+msgid "Your Name"
+msgstr ""
+
+#: view/sidebar.php:26
+msgid "Your Email"
+msgstr ""
+
+#: view/sidebar.php:30
+msgid "Send me news about a pro version"
+msgstr ""
+
+#: view/sidebar.php:34
+msgid ""
+"We promise we will not use your email for anything else and you can "
+"unsubscribe with 1-click anytime."
+msgstr ""

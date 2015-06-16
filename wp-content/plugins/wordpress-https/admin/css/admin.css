@@ -1,0 +1,19 @@
+#adminmenu .menu-top.toplevel_page_wordpress-https.current .wp-menu-image,
+#adminmenu .menu-top.toplevel_page_wordpress-https.wp-has-current-submenu .wp-menu-image,
+#adminmenu .menu-top.toplevel_page_wordpress-https:hover .wp-menu-image, 
+#adminmenu .menu-top.toplevel_page_wordpress-https.focused .wp-menu-image {
+	/* background-position: -360px -1px; */
+	background-position: 0% 0%;
+}
+#adminmenu .menu-top.toplevel_page_wordpress-https .wp-menu-image img {
+	display: none;	
+}
+
+#adminmenu .menu-top.toplevel_page_wordpress-https div.wp-menu-image {
+	/* background: url('../../../../../wp-admin/images/menu.png') no-repeat scroll -360px -33px; */
+	background: url('images/admin-icon.png') no-repeat 0% 100%;;
+}
+#side-sortables #wordpress-https .inside {
+	padding: 0;
+	margin: 0;	
+}

@@ -1,0 +1,318 @@
+# Translation of Twenty Thirteen in Japanese
+# This file is distributed under the same license as the Twenty Thirteen package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2015-03-26 18:25:42+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: GlotPress/1.0-alpha-1000\n"
+"Project-Id-Version: Twenty Thirteen\n"
+
+#. Theme URI of the plugin/theme
+msgid "https://wordpress.org/themes/twentythirteen/"
+msgstr "https://wordpress.org/themes/twentythirteen/"
+
+#. Author URI of the plugin/theme
+msgid "https://wordpress.org/"
+msgstr "https://ja.wordpress.org/"
+
+#. translators: %s: Name of current post
+#: content-aside.php:16 content-audio.php:27 content-chat.php:26
+#: content-gallery.php:27 content-image.php:26 content-link.php:27
+#: content-quote.php:16 content-status.php:16 content-video.php:26
+#: content.php:44 functions.php:478
+msgid "Continue reading %s <span class=\"meta-nav\">&rarr;</span>"
+msgstr "続きを読む %s <span class=\"meta-nav\">&rarr;</span>"
+
+#: 404.php:16
+msgid "Not Found"
+msgstr "見つかりません"
+
+#. Description of the plugin/theme
+msgid "The 2013 theme for WordPress takes us back to the blog, featuring a full range of post formats, each displayed beautifully in their own unique way. Design details abound, starting with a vibrant color scheme and matching header images, beautiful typography and icons, and a flexible layout that looks great on any device, big or small."
+msgstr "2013年版の WordPress テーマはブログ向けデザインに回帰しました。幅広い投稿フォーマットに対応し、それぞれを美しくユニークに表現します。鮮やかな色合いとそれに合わせたヘッダー画像、美しいタイポグラフィーとアイコン、大小どんなデバイスでも適切に表示できる柔軟なレイアウトなど、デザインのディテールにあふれています。"
+
+#: functions.php:233
+msgid "Appears in the footer section of the site."
+msgstr "サイトのフッター領域に表示されます。"
+
+#: image.php:38
+msgid "Link to full-size image"
+msgstr "フルサイズの画像にリンク"
+
+#: functions.php:231
+msgid "Main Widget Area"
+msgstr "メインウィジェットエリア"
+
+#: functions.php:241
+msgid "Secondary Widget Area"
+msgstr "副ウィジェットエリア"
+
+#: functions.php:243
+msgid "Appears on posts and pages in the sidebar."
+msgstr "投稿とページのサイドバーに表示します。"
+
+#: image.php:39
+msgid "Full resolution"
+msgstr "フル解像度"
+
+#: inc/back-compat.php:37 inc/back-compat.php:47 inc/back-compat.php:60
+msgid "Twenty Thirteen requires at least WordPress version 3.6. You are running version %s. Please upgrade and try again."
+msgstr "Twenty Thirteen には WordPress バージョン 3.6 以上が必要です。使用中のバージョンは %s です。更新して、もう一度試してください。"
+
+#: 404.php:21
+msgid "This is somewhat embarrassing, isn&rsquo;t it?"
+msgstr "おっと、失礼しました。"
+
+#: 404.php:22
+msgid "It looks like nothing was found at this location. Maybe try a search?"
+msgstr "こちらには何もありません。検索をお試しください。"
+
+#: archive.php:29
+msgid "Daily Archives: %s"
+msgstr "日別アーカイブ: %s"
+
+#: archive.php:31
+msgid "Monthly Archives: %s"
+msgstr "月別アーカイブ: %s"
+
+#: archive.php:31
+msgctxt "monthly archives date format"
+msgid "F Y"
+msgstr "Y年n月"
+
+#: archive.php:33
+msgid "Yearly Archives: %s"
+msgstr "年別アーカイブ: %s"
+
+#: archive.php:33
+msgctxt "yearly archives date format"
+msgid "Y"
+msgstr "Y年"
+
+#: archive.php:35
+msgid "Archives"
+msgstr "アーカイブ"
+
+#: author-bio.php:26
+msgid "About %s"
+msgstr "%s について"
+
+#: author-bio.php:30
+msgid "View all posts by %s <span class=\"meta-nav\">&rarr;</span>"
+msgstr "%s の投稿をすべて表示 <span class=\"meta-nav\">&rarr;</span>"
+
+#: author.php:31
+msgid "All posts by %s"
+msgstr "%s のすべての投稿"
+
+#: category.php:19
+msgid "Category Archives: %s"
+msgstr "カテゴリー別アーカイブ: %s"
+
+#: comments.php:25
+msgctxt "comments title"
+msgid "One thought on &ldquo;%2$s&rdquo;"
+msgid_plural "%1$s thoughts on &ldquo;%2$s&rdquo;"
+msgstr[0] "「%2$s」への%1$s件のフィードバック"
+
+#: comments.php:45
+msgid "Comment navigation"
+msgstr "コメントナビゲーション"
+
+#: comments.php:46
+msgid "&larr; Older Comments"
+msgstr "&larr; 古いコメント"
+
+#: comments.php:47
+msgid "Newer Comments &rarr;"
+msgstr "新しいコメント &rarr;"
+
+#: comments.php:52
+msgid "Comments are closed."
+msgstr "コメントは停止中です。"
+
+#: content-aside.php:20 content-audio.php:31 content-chat.php:30
+#: content-gallery.php:31 content-image.php:30 content-link.php:31
+#: content-quote.php:20 content-status.php:20 content-video.php:30
+#: content.php:48 image.php:70 page.php:35
+msgid "Pages:"
+msgstr "ページ:"
+
+#: content-aside.php:27 content-aside.php:35 content-audio.php:38
+#: content-chat.php:36 content-gallery.php:46 content-image.php:42
+#: content-link.php:19 content-quote.php:32 content-status.php:26
+#: content-video.php:42 content.php:31 image.php:44 page.php:39
+msgid "Edit"
+msgstr "編集"
+
+#: functions.php:369
+msgid "Permalink to %s"
+msgstr "%s へのパーマリンク"
+
+#: content-gallery.php:43 content-image.php:39 content-quote.php:29
+#: content-video.php:39 content.php:56
+msgid "Leave a comment"
+msgstr "コメントをどうぞ"
+
+#: content-gallery.php:43 content-image.php:39 content-quote.php:29
+#: content-video.php:39 content.php:56
+msgid "One comment so far"
+msgstr "1件のコメント"
+
+#: content-gallery.php:43 content-image.php:39 content-quote.php:29
+#: content-video.php:39 content.php:56
+msgid "View all % comments"
+msgstr "全%件のコメントを表示"
+
+#: content-none.php:12
+msgid "Nothing Found"
+msgstr "見つかりません"
+
+#: content-none.php:18
+msgid "Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+msgstr "最初の投稿をする準備ができましたか ?  <a href=\"%1$s\">ここからスタート</a>してください。"
+
+#: content-none.php:22
+msgid "Sorry, but nothing matched your search terms. Please try again with different keywords."
+msgstr "ご指定の検索条件に合う投稿がありませんでした。他のキーワードでもう一度検索してみてください。"
+
+#: content-none.php:27
+msgid "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help."
+msgstr "お探しのコンテンツを見つけられませんでした。検索をお試しください。"
+
+#: footer.php:19
+msgid "http://wordpress.org/"
+msgstr "http://ja.wordpress.org/"
+
+#: footer.php:19
+msgid "Semantic Personal Publishing Platform"
+msgstr "セマンティックなパブリッシングツール"
+
+#: footer.php:19
+msgid "Proudly powered by %s"
+msgstr "Proudly powered by %s"
+
+#: functions.php:97
+msgid "Navigation Menu"
+msgstr "ナビゲーションメニュー"
+
+#. Translators: If there are characters in your language that are not supported
+#. by Source Sans Pro, translate this to 'off'. Do not translate into your own
+#. language.
+#: functions.php:128
+msgctxt "Source Sans Pro font: on or off"
+msgid "on"
+msgstr "on"
+
+#. Translators: If there are characters in your language that are not supported
+#. by Bitter, translate this to 'off'. Do not translate into your own language.
+#: functions.php:134
+msgctxt "Bitter font: on or off"
+msgid "on"
+msgstr "on"
+
+#: functions.php:218
+msgid "Page %s"
+msgstr "ページ %s"
+
+#: functions.php:266
+msgid "Posts navigation"
+msgstr "投稿ナビゲーション"
+
+#: functions.php:270
+msgid "<span class=\"meta-nav\">&larr;</span> Older posts"
+msgstr "<span class=\"meta-nav\">&larr;</span> 古い投稿"
+
+#: functions.php:274
+msgid "Newer posts <span class=\"meta-nav\">&rarr;</span>"
+msgstr "新しい投稿 <span class=\"meta-nav\">&rarr;</span>"
+
+#: functions.php:300
+msgid "Post navigation"
+msgstr "投稿ナビゲーション"
+
+#: functions.php:303
+msgctxt "Previous post link"
+msgid "<span class=\"meta-nav\">&larr;</span> %title"
+msgstr "<span class=\"meta-nav\">&larr;</span> %title"
+
+#: functions.php:304
+msgctxt "Next post link"
+msgid "%title <span class=\"meta-nav\">&rarr;</span>"
+msgstr "%title <span class=\"meta-nav\">&rarr;</span>"
+
+#: functions.php:322
+msgid "Sticky"
+msgstr "固定表示"
+
+#. Translators: used between list items, there is a space after the comma.
+#: functions.php:328 functions.php:334
+msgid ", "
+msgstr ", "
+
+#: functions.php:343
+msgid "View all posts by %s"
+msgstr "%s の投稿をすべて表示"
+
+#: functions.php:363
+msgctxt "1: post format name. 2: date"
+msgid "%1$s on %2$s"
+msgstr "フォーマット: %1$s | 投稿日: %2$s"
+
+#: header.php:43
+msgid "Menu"
+msgstr "メニュー"
+
+#: header.php:44
+msgid "Skip to content"
+msgstr "コンテンツへ移動"
+
+#: image.php:22
+msgid "<span class=\"attachment-meta\">Published on <time class=\"entry-date\" datetime=\"%1$s\">%2$s</time> in <a href=\"%3$s\" title=\"Return to %4$s\" rel=\"gallery\">%5$s</a></span>"
+msgstr "<span class=\"attachment-meta\">公開日: <time class=\"entry-date\" datetime=\"%1$s\">%2$s</time> <a href=\"%3$s\" title=\"%4$s へ戻る\" rel=\"gallery\">%5$s</a></span>"
+
+#: image.php:51
+msgid "<span class=\"meta-nav\">&larr;</span> Previous"
+msgstr "<span class=\"meta-nav\">&larr;</span> 前へ"
+
+#: image.php:52
+msgid "Next <span class=\"meta-nav\">&rarr;</span>"
+msgstr "次へ <span class=\"meta-nav\">&rarr;</span>"
+
+#: inc/custom-header.php:49
+msgctxt "header image description"
+msgid "Circle"
+msgstr "サークル"
+
+#: inc/custom-header.php:54
+msgctxt "header image description"
+msgid "Diamond"
+msgstr "ダイアモンド"
+
+#: inc/custom-header.php:59
+msgctxt "header image description"
+msgid "Star"
+msgstr "スター"
+
+#: search.php:18
+msgid "Search Results for: %s"
+msgstr "検索結果: %s"
+
+#: tag.php:21
+msgid "Tag Archives: %s"
+msgstr "タグ別アーカイブ: %s"
+
+#: taxonomy-post_format.php:23
+msgid "%s Archives"
+msgstr "%s アーカイブ"
+
+#. Theme Name of the plugin/theme
+msgid "Twenty Thirteen"
+msgstr "Twenty Thirteen"
+
+#. Author of the plugin/theme
+msgid "the WordPress team"
+msgstr "WordPress チーム"

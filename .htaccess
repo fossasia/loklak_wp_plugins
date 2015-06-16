@@ -1,0 +1,23 @@
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+
+</IfModule>
+# END WordPress
+
+Options -Indexes
+
+<Files wp-login.php>
+AuthName "Login Password Required"
+AuthType Basic
+AuthUserFile /app/.htpasswd
+require valid-user
+</Files>
+
+SetEnv TZ Asia/Tokyo
+

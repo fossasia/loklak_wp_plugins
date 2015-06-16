@@ -1,0 +1,28 @@
+#blog-table .blog-host {
+	width: 100%;
+}
+#blog-table input[type="checkbox"] {
+	float: none;
+	margin: 0;
+}
+#blog-table .blog-ssl_admin, #blog-table .blog-exclusive_https,
+#blog-table .blog-remove_unsecure, #blog-table .blog-debug,
+#blog-table .blog-proxy, #blog-table .blog-admin_menu {
+	width: 1%;
+	text-align: center;
+}
+#blog-table .blog-proxy select {
+	width: 50px;
+}
+#blog-table .blog-admin_menu select {
+	width: 78px;
+}
+#blog-table .blog-host input {
+	width: 100%;
+}
+table#blog-table tr td,
+table#blog-table tr th {
+	padding: 0 5px;
+	word-wrap: break-word;
+	overflow: hidden;
+}

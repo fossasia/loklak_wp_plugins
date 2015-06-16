@@ -1,0 +1,31 @@
+# Copyright (C) 2012 WP Multibyte Patch
+# This file is distributed under the same license as the WP Multibyte Patch package.
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Multibyte Patch\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/wp-multibyte-patch\n"
+"POT-Creation-Date: 2012-06-09 14:33:17+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2011-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: wp-multibyte-patch.php:405
+msgid "Sorry, WP Multibyte Patch requires WordPress %s or later."
+msgstr ""
+
+#: wp-multibyte-patch.php:409
+msgid ""
+"Sorry, WP Multibyte Patch requires <a href=\"http://www.php.net/manual/en/"
+"mbstring.installation.php\" target=\"_blank\">mbstring</a> functions."
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "http://eastcoder.com/code/wp-multibyte-patch/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Multibyte functionality enhancement for the WordPress Japanese package."
+msgstr ""

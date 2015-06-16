@@ -1,0 +1,16 @@
+#setting-error-wp_sendgrid_settings_updated .spinner {
+	margin-top: 0;
+	float: none;
+}
+
+#wp-sendgrid-test-settings-response {
+	font-weight: normal;
+}
+
+#wp-sendgrid-test-settings-response.error {
+	color: red;
+}
+
+#wp-sendgrid-test-settings-response.success {
+	color: green;
+}
