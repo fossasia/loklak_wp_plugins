@@ -45,14 +45,17 @@
         },
         "AWS_ACCESS_KEY_ID": {
             "description": "The Amazon Access Key.",
+            "required": false,
             "value": ""
         },
         "AWS_SECRET_ACCESS_KEY": {
             "description": "The Amazon Secret Access Key.",
+            "required": false,
             "value": ""
         },
         "ADMINAUTH": {
             "description": "Login Basic authentication(ex. USERNAME:CRYPT PASSWORD).",
+            "required": false,
             "value": ""
         }
     },
