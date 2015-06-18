@@ -1,0 +1,61 @@
+{
+    "name": "wordpress-ja-pg4wp2-heroku",
+    "description": "WordPress-ja pg4wp2 PostgreSQL on Heroku",
+    "keywords": [
+        "Blog",
+        "PHP",
+        "WordPress",
+        "PostgreSQL"
+    ],
+    "website": "https://github.com/macminiosx/wordpress-ja-pg4wp2-heroku",
+    "repository": "https://github.com/macminiosx/wordpress-ja-pg4wp2-heroku",
+    "success_url": "/",
+    "env": {
+        "AUTH_KEY": {
+            "description": "Authentication secret key",
+            "generator": "secret"
+        },
+        "SECURE_AUTH_KEY": {
+            "description": "Authentication secret key",
+            "generator": "secret"
+        },
+        "LOGGED_IN_KEY": {
+            "description": "Authentication secret key",
+            "generator": "secret"
+        },
+        "NONCE_KEY": {
+            "description": "Authentication secret key",
+            "generator": "secret"
+        },
+        "AUTH_SALT": {
+            "description": "Authentication secret salt",
+            "generator": "secret"
+        },
+        "SECURE_AUTH_SALT": {
+            "description": "Authentication secret salt",
+            "generator": "secret"
+        },
+        "LOGGED_IN_SALT": {
+            "description": "Authentication secret salt",
+            "generator": "secret"
+        },
+        "NONCE_SALT": {
+            "description": "Authentication secret salt",
+            "generator": "secret"
+        },
+        "AWS_ACCESS_KEY_ID": {
+            "description": "The Amazon Access Key.",
+            "value": ""
+        },
+        "AWS_SECRET_ACCESS_KEY": {
+            "description": "The Amazon Secret Access Key.",
+            "value": ""
+        },
+        "ADMINAUTH": {
+            "description": "Login Basic authentication(ex. USERNAME:CRYPT PASSWORD).",
+            "value": ""
+    },
+    "addons": [
+        "heroku-postgresql:hobby-dev"
+    ]
+}

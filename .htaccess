@@ -19,5 +19,9 @@ AuthUserFile /app/.htpasswd
 require valid-user
 </Files>
 
+<Files web_boot.sh>
+Require all denied
+</Files>
+
 SetEnv TZ Asia/Tokyo
 
