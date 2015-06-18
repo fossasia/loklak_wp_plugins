@@ -1,6 +1,6 @@
 {
     "name": "wordpress-ja-pg4wp2-heroku",
-    "description": "WordPress-ja pg4wp2 PostgreSQL on Heroku",
+    "description": "WordPress4.2.2-ja pg4wp2 PostgreSQL on Heroku",
     "keywords": [
         "Blog",
         "PHP",
