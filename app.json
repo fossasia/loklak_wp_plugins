@@ -55,7 +55,6 @@
         },
         "ADMINAUTH": {
             "description": "Login Basic authentication(ex. USERNAME:CRYPT PASSWORD).",
-            "required": false,
             "value": ""
         }
     },
