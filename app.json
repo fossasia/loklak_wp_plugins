@@ -54,6 +54,7 @@
         "ADMINAUTH": {
             "description": "Login Basic authentication(ex. USERNAME:CRYPT PASSWORD).",
             "value": ""
+        }
     },
     "addons": [
         "heroku-postgresql:hobby-dev"
