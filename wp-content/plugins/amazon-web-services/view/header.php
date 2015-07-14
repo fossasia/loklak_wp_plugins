@@ -1,3 +1,3 @@
-<div class="wrap aws-main">
+<div class="wrap aws-main" data-view="<?php echo $page; ?>">
 
-	<h2><?php echo esc_html( ( isset( $page_title ) ) ? $page_title : __( 'Amazon Web Services', 'amazon-web-services' ) ); ?></h2>
+	<h2><?php echo esc_html( $page_title ); ?></h2>

@@ -29,6 +29,8 @@ class Amazon_Web_Services extends AWS_Plugin_Base {
 		$this->plugin_title      = __( 'Amazon Web Services', 'amazon-web-services' );
 		$this->plugin_menu_title = __( 'AWS', 'amazon-web-services' );
 
+		add_filter( 'plugin_action_links', array( $this, 'plugin_actions_settings_link' ), 10, 2 );
+
 		load_plugin_textdomain( 'amazon-web-services', false, dirname( plugin_basename( $plugin_file_path ) ) . '/languages/' );
 	}
 
@@ -56,7 +58,7 @@ class Amazon_Web_Services extends AWS_Plugin_Base {
 
 		global $submenu;
 		if ( isset( $submenu[ $this->plugin_slug ][0][0] ) ) {
-			$submenu[ $this->plugin_slug ][0][0] = __( 'Settings', 'amazon-web-services' );
+			$submenu[ $this->plugin_slug ][0][0] = __( 'Access Keys', 'amazon-web-services' );
 		}
 
 		do_action( 'aws_admin_menu', $this );
@@ -169,19 +171,25 @@ class Amazon_Web_Services extends AWS_Plugin_Base {
 	 * Render the output of a page
 	 */
 	function render_page() {
+		$view       = 'settings';
+		$page_title = __( 'Amazon Web Services', 'amazon-web-services' );
+
 		if ( empty( $_GET['page'] ) ) { // input var okay
 			// Not sure why we'd ever end up here, but just in case
 			wp_die( 'What the heck are we doin here?' );
 		}
-		$view = 'settings';
+
 		if ( preg_match( '@^aws-(.*)$@', $_GET['page'], $matches ) ) {
-			$allowed = array( 'addons' );
-			if ( in_array( $matches[1], $allowed ) ) {
-				$view = $matches[1];
+			$allowed = array(
+				'addons' => __( 'Amazon Web Services: Addons', 'amazon-web-services' ),
+			);
+			if ( array_key_exists( $matches[1], $allowed ) ) {
+				$view       = $matches[1];
+				$page_title = $allowed[ $view ];
 			}
 		}
 
-		$this->render_view( 'header' );
+		$this->render_view( 'header', array( 'page' => $view, 'page_title' => $page_title ) );
 		$this->render_view( $view );
 		$this->render_view( 'footer' );
 	}
@@ -193,6 +201,15 @@ class Amazon_Web_Services extends AWS_Plugin_Base {
 	 */
 	function are_key_constants_set() {
 		return defined( 'AWS_ACCESS_KEY_ID' ) && defined( 'AWS_SECRET_ACCESS_KEY' );
+	}
+
+	/**
+	 * Check if access keys are defined either by constants or database
+	 *
+	 * @return bool
+	 */
+	function are_access_keys_set() {
+		return $this->get_access_key_id() && $this->get_secret_access_key();
 	}
 
 	/**
@@ -222,21 +239,41 @@ class Amazon_Web_Services extends AWS_Plugin_Base {
 	}
 
 	/**
+	 * Allows the AWS client factory to use the IAM role for EC2 instances
+	 * instead of key/secret for credentials
+	 * http://docs.aws.amazon.com/aws-sdk-php/guide/latest/credentials.html#instance-profile-credentials
+	 *
+	 * @return bool
+	 */
+	function use_ec2_iam_roles() {
+		if ( defined( 'AWS_USE_EC2_IAM_ROLE' ) && AWS_USE_EC2_IAM_ROLE ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
 	 * Instantiate a new AWS service client for the AWS SDK
 	 * using the defined AWS key and secret
 	 *
 	 * @return Aws|WP_Error
 	 */
 	function get_client() {
-		if ( ! $this->get_access_key_id() || ! $this->get_secret_access_key() ) {
+		if ( ! $this->use_ec2_iam_roles() && ( ! $this->get_access_key_id() || ! $this->get_secret_access_key() ) ) {
 			return new WP_Error( 'access_keys_missing', sprintf( __( 'You must first <a href="%s">set your AWS access keys</a> to use this addon.', 'amazon-web-services' ), 'admin.php?page=' . $this->plugin_slug ) ); // xss ok
 		}
 
 		if ( is_null( $this->client ) ) {
-			$args = array(
-				'key'       => $this->get_access_key_id(),
-				'secret'    => $this->get_secret_access_key(),
-			);
+
+			$args = array();
+
+			if ( ! $this->use_ec2_iam_roles() ) {
+				$args = array(
+					'key'    => $this->get_access_key_id(),
+					'secret' => $this->get_secret_access_key(),
+				);
+			}
 
 			$args         = apply_filters( 'aws_get_client_args', $args );
 			$this->client = Aws::factory( $args );
@@ -245,28 +282,6 @@ class Amazon_Web_Services extends AWS_Plugin_Base {
 		return $this->client;
 	}
 
-	/*
-	function get_tabs() {
-		$tabs = array( 'addons' => 'Addons', 'settings' => 'Settings', 'about' => 'About' );
-		return apply_filters( 'aws_get_tabs', $tabs, $this );
-	}
-
-	function get_active_tab() {
-		if ( isset( $_GET['tab'] ) ) {
-			$tab = $_GET['tab'];
-			$tabs = $this->get_tabs();
-			if ( isset( $tabs[$tab] ) ) {
-				return $tab;
-			}
-		}
-
-		if ( !$this->get_access_key_id() ) {
-			return 'settings';
-		}
-
-		return 'addons'; // Default
-	}
-	*/
 
 	/**
 	 * Get a nonced, network safe install URL for a plugin
@@ -277,5 +292,144 @@ class Amazon_Web_Services extends AWS_Plugin_Base {
 	 */
 	function get_plugin_install_url( $slug ) {
 		return wp_nonce_url( self_admin_url( 'update.php?action=install-plugin&plugin=' . $slug ), 'install-plugin_' . $slug );
+	}
+
+	/**
+	 * Get a nonced, network safe activation URL for a plugin
+	 *
+	 * @param $slug Plugin slug
+	 *
+	 * @return string
+	 */
+	function get_plugin_activate_url( $slug ) {
+		$plugin_path = $this->get_plugin_path( $slug );
+
+		return wp_nonce_url( self_admin_url( 'plugins.php?action=activate&amp;plugin=' . $plugin_path ), 'activate-plugin_' . $plugin_path );
+	}
+
+	/**
+	 * Customize the link text on the plugins page
+	 *
+	 * @return string
+	 */
+	function get_plugin_action_settings_text() {
+		return __( 'Access Keys', 'amazon-web-services' );
+	}
+
+	/**
+	 * Get all defined addons that use this plugin
+	 *
+	 * @return array
+	 */
+	function get_addons() {
+		$addons = array(
+			'amazon-s3-and-cloudfront' => array(
+				'title'   => __( 'WP Offload S3', 'amazon-web-services' ),
+				'url'     => 'https://wordpress.org/plugins/amazon-s3-and-cloudfront/',
+				'install' => true,
+				'addons'  => array(),
+			),
+		);
+
+		$addons = apply_filters( 'aws_addons', $addons );
+
+		return $addons;
+	}
+
+	/**
+	 * Recursively build addons list
+	 *
+	 * @param array|null $addons
+	 */
+	function render_addons( $addons = null ) {
+		if ( is_null( $addons ) ) {
+			$addons = $this->get_addons();
+		}
+
+		foreach ( $addons as $slug => $addon ) {
+			$this->render_view( 'addon', array( 'slug' => $slug, 'addon' => $addon ) );
+		}
+	}
+
+	/**
+	 * Add install links to AWS addon page
+	 *
+	 * @param string $slug
+	 * @param array  $addon Details of the addon
+	 */
+	function get_addon_install_link( $slug, $addon ) {
+		$installed = file_exists( WP_PLUGIN_DIR . '/' . $slug );
+		$activated = $this->is_plugin_activated( $slug );
+
+		if ( $installed && $activated ) {
+			echo '<li>' . esc_html( _x( 'Installed & Activated', 'Plugin already installed and activated', 'amazon-web-services' ) ) . '</li>';
+		} elseif ( $installed ) {
+			echo '<li>' . esc_html( _x( 'Installed', 'Plugin already installed', 'amazon-web-services' ) ) . '</li>';
+			echo '<li><a href="' . esc_url( $this->get_plugin_activate_url( $slug ) ) . '">' . esc_html( _x( 'Activate Now', 'Activate plugin now', 'amazon-web-services' ) ) . '</a></li>';
+		} else {
+			if ( isset( $addon['install'] ) && $addon['install'] ) {
+				echo '<li><a href="' . esc_url( $this->get_plugin_install_url( $slug ) ) . '">' . esc_html( _x( 'Install Now', 'Install plugin now', 'amazon-web-services' ) ) . '</a></li>';
+			}
+		}
+
+		// Other links
+		if ( isset( $addon['links'] ) ) {
+			foreach ( $addon['links'] as $link ) {
+				if ( ! isset( $link['url'] ) || ! isset( $link['text'] ) ) {
+					continue;
+				}
+				echo '<li><a href="' . esc_url( $link['url'] ) . '">' . esc_html( $link['text'] ) . '</a></li>';
+			}
+		}
+	}
+
+	/**
+	 * Add details link to AWS addon page
+	 *
+	 * @param string $slug
+	 * @param array  $addon Details of the addon
+	 */
+	function get_addon_details_link( $slug, $addon ) {
+		$url   = $addon['url'];
+		$title = __( 'Visit Site', 'amazon-web-services' );
+		$class = '';
+		if ( isset( $addon['free'] ) && $addon['free'] ) {
+			$title = _x( 'View Details', 'View plugin details', 'amazon-web-services' );
+			$url   = self_admin_url( 'plugin-install.php?tab=plugin-information&amp;plugin=' . $slug . '&amp;TB_iframe=true&amp;width=600&amp;height=800' );
+			$class = 'thickbox';
+		}
+
+		echo '<li><a class="' . $class . '" href="' . esc_url( $url ) . '">' . esc_html( $title ) . '</a></li>';
+	}
+
+	/**
+	 * Check if plugin is activated
+	 *
+	 * @param string $slug
+	 *
+	 * @return bool
+	 */
+	function is_plugin_activated( $slug ) {
+		$path = $this->get_plugin_path( $slug );
+
+		return is_plugin_active( $path );
+	}
+
+	/**
+	 * Get plugin path relative to plugins directory
+	 *
+	 * @param string $slug
+	 *
+	 * @return string
+	 */
+	function get_plugin_path( $slug ) {
+		$path = $slug . '/' . $slug . '.php';
+
+		// Workaround for dodgy AS3CF naming convention
+		if ( 'amazon-s3-and-cloudfront' === $slug ) {
+			$path = $slug . '/wordpress-s3.php';
+		}
+
+		return $path;
 	}
 }

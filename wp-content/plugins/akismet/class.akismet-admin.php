@@ -712,13 +712,16 @@ class Akismet_Admin {
 	}
 	
 	public static function get_akismet_user( $api_key ) {
-		$akismet_user = Akismet::http_post( Akismet::build_query( array( 'key' => $api_key, 'blog' => get_bloginfo( 'url' ) ) ), 'get-subscription' );
+		$akismet_user = false;
 
-		if ( ! empty( $akismet_user[1] ) )
-			$akismet_user = json_decode( $akismet_user[1] );
-		else
-			$akismet_user = false;
-			
+		$subscription_verification = Akismet::http_post( Akismet::build_query( array( 'key' => $api_key, 'blog' => get_bloginfo( 'url' ) ) ), 'get-subscription' );
+
+		if ( ! empty( $subscription_verification[1] ) ) {
+			if ( 'invalid' !== $subscription_verification[1] ) {
+				$akismet_user = json_decode( $subscription_verification[1] );
+			}
+		}
+
 		return $akismet_user;
 	}
 	
@@ -809,7 +812,7 @@ class Akismet_Admin {
 			}
 		}
 
-		if ( $api_key = Akismet::get_api_key() ) {
+		if ( $api_key = Akismet::get_api_key() && ( empty( self::$notices['status'] ) || 'existing-key-invalid' != self::$notices['status'] ) ) {
 			self::display_configuration_page();
 			return;
 		}
@@ -850,8 +853,16 @@ class Akismet_Admin {
 	public static function display_configuration_page() {
 		$api_key      = Akismet::get_api_key();
 		$akismet_user = self::get_akismet_user( $api_key );
-		$stat_totals  = self::get_stats( $api_key );
 		
+		if ( ! $akismet_user ) {
+			// This could happen if the user's key became invalid after it was previously valid and successfully set up.
+			self::$notices['status'] = 'existing-key-invalid';
+			self::display_start_page();
+			return;
+		}
+
+		$stat_totals  = self::get_stats( $api_key );
+
 		// If unset, create the new strictness option using the old discard option to determine its default
        	if ( get_option( 'akismet_strictness' ) === false )
         	add_option( 'akismet_strictness', (get_option('akismet_discard_month') === 'true' ? '1' : '0') );

@@ -18,20 +18,24 @@ use Symfony\Component\EventDispatcher\Event;
  *
  * @method Model createIdentityPool(array $args = array()) {@command CognitoIdentity CreateIdentityPool}
  * @method Model deleteIdentityPool(array $args = array()) {@command CognitoIdentity DeleteIdentityPool}
+ * @method Model describeIdentity(array $args = array()) {@command CognitoIdentity DescribeIdentity}
  * @method Model describeIdentityPool(array $args = array()) {@command CognitoIdentity DescribeIdentityPool}
+ * @method Model getCredentialsForIdentity(array $args = array()) {@command CognitoIdentity GetCredentialsForIdentity}
  * @method Model getId(array $args = array()) {@command CognitoIdentity GetId}
+ * @method Model getIdentityPoolRoles(array $args = array()) {@command CognitoIdentity GetIdentityPoolRoles}
  * @method Model getOpenIdToken(array $args = array()) {@command CognitoIdentity GetOpenIdToken}
  * @method Model getOpenIdTokenForDeveloperIdentity(array $args = array()) {@command CognitoIdentity GetOpenIdTokenForDeveloperIdentity}
  * @method Model listIdentities(array $args = array()) {@command CognitoIdentity ListIdentities}
  * @method Model listIdentityPools(array $args = array()) {@command CognitoIdentity ListIdentityPools}
  * @method Model lookupDeveloperIdentity(array $args = array()) {@command CognitoIdentity LookupDeveloperIdentity}
  * @method Model mergeDeveloperIdentities(array $args = array()) {@command CognitoIdentity MergeDeveloperIdentities}
+ * @method Model setIdentityPoolRoles(array $args = array()) {@command CognitoIdentity SetIdentityPoolRoles}
  * @method Model unlinkDeveloperIdentity(array $args = array()) {@command CognitoIdentity UnlinkDeveloperIdentity}
  * @method Model unlinkIdentity(array $args = array()) {@command CognitoIdentity UnlinkIdentity}
  * @method Model updateIdentityPool(array $args = array()) {@command CognitoIdentity UpdateIdentityPool}
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-cognitoidentity.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.CognitoIdentity.CognitoIdentityClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/service-cognitoidentity.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/api/class-Aws.CognitoIdentity.CognitoIdentityClient.html API docs
  */
 class CognitoIdentityClient extends AbstractClient
 {
@@ -40,12 +44,12 @@ class CognitoIdentityClient extends AbstractClient
     /**
      * Factory method to create a new Amazon Cognito Identity client using an array of configuration options.
      *
-     * See http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
+     * See http://docs.aws.amazon.com/aws-sdk-php/v2/guide/configuration.html#client-configuration-options
      *
      * @param array|Collection $config Client configuration data
      *
      * @return self
-     * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
+     * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/configuration.html#client-configuration-options
      */
     public static function factory($config = array())
     {

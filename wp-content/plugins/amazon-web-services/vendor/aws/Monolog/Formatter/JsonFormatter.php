@@ -20,11 +20,11 @@ namespace Monolog\Formatter;
  */
 class JsonFormatter implements FormatterInterface
 {
-    protected $batchMode;
-    protected $appendNewline;
-
     const BATCH_MODE_JSON = 1;
     const BATCH_MODE_NEWLINES = 2;
+
+    protected $batchMode;
+    protected $appendNewline;
 
     /**
      * @param int $batchMode
@@ -39,7 +39,7 @@ class JsonFormatter implements FormatterInterface
      * The batch mode option configures the formatting style for
      * multiple records. By default, multiple records will be
      * formatted as a JSON-encoded array. However, for
-     * compatibility with some API endpoints, alternive styles
+     * compatibility with some API endpoints, alternative styles
      * are available.
      *
      * @return int

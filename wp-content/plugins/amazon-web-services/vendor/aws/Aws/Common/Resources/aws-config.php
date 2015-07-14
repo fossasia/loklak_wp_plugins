@@ -221,6 +221,12 @@ return array(
             'class'   => 'Aws\ImportExport\ImportExportClient'
         ),
 
+        'machinelearning' => array(
+            'alias'   => 'MachineLearning',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\MachineLearning\MachineLearningClient'
+        ),
+
         'opsworks' => array(
             'alias'   => 'OpsWorks',
             'extends' => 'default_settings',
@@ -281,6 +287,12 @@ return array(
             'class'   => 'Aws\Sqs\SqsClient'
         ),
 
+        'ssm' => array(
+            'alias'   => 'Ssm',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\Ssm\SsmClient'
+        ),
+
         'storagegateway' => array(
             'alias'   => 'StorageGateway',
             'extends' => 'default_settings',
@@ -303,6 +315,12 @@ return array(
             'alias'   => 'Swf',
             'extends' => 'default_settings',
             'class'   => 'Aws\Swf\SwfClient'
+        ),
+
+        'workspaces' => array(
+            'alias'   => 'WorkSpaces',
+            'extends' => 'default_settings',
+            'class'   => 'Aws\WorkSpaces\WorkSpacesClient'
         ),
     )
 );

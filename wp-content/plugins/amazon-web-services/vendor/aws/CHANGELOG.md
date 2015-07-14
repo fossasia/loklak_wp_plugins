@@ -1,5 +1,143 @@
 # CHANGELOG
 
+## 2.8.3 - 2015-05-07
+
+* `Aws\Glacier` - Added support for vault access policies.
+* `Aws\Route53` - Fixed a `GetCheckerIpRangesResponse` response parsing issue.
+* `Aws\S3` - Retrying CompleteMultipartUpload failures by retrying the request.
+* `Aws\S3` - Corrected some response handling in the S3 multipart upload
+   abstraction.
+* Expiring instance metadata credentials 30 minutes in advance for more eager
+  refreshes before the credentials expire.
+
+## 2.8.2 - 2015-04-23
+
+* `Aws\Ec2` - Added support for new VM Import APIs, `including ImportImage`.
+* `Aws\Iam` - Added support for the `GetAccessKeyLastUsed` operation.
+* `Aws\CloudSearchDomain` - Search responses now include the expressions requested.
+
+## 2.8.1 - 2015-04-16
+
+* `Aws\ConfigService` - Added the 'GetResourceConfigHistory' iterator.
+* `Aws\CognitoSync` - Added support for events.
+* `Aws\Lambda` - Fixed an issue with the Invoke operation.
+
+## 2.8.0 - 2015-04-09
+
+See the [Upgrading Guide](https://github.com/aws/aws-sdk-php/blob/master/UPGRADING.md)
+for details about any changes you may need to make to your code for this upgrade.
+
+* `Aws\MachineLearning` - Added support for the Amazon Machine Learning service.
+* `Aws\WorkSpaces` - Added support for the Amazon WorkSpaces service.
+* `Aws\Ecs` - Added support for the ECS service scheduler operations.
+* `Aws\S3` - Added support for the `getBucketNotificationConfiguration` and
+  `putBucketNotificationConfiguration` operations to the `S3Client` to replace 
+  the, now deprecated, `getBucketNotification` and `putBucketNotification`
+  operations.
+* [BC] `Aws\Lambda` - Added support for the new AWS Lambda API, which has been
+  changed based on customer feedback during Lambda's preview period. 
+* `Aws\Common` - Deprecated "facades". They will not be present in Version 3 of
+  the SDK.
+* `Aws\Common` - Added `getAwsErrorCode`, `getAwsErrorType` and `getAwsRequestId`
+  methods to the `ServiceResponseException` to be forward-compatible with
+  Version 3 of the SDK.
+
+## 2.7.27 - 2015-04-07
+
+* `Aws\DataPipeline` - Added support for `DeactivatePipeline`
+* `Aws\ElasticBeanstalk` - Added support for `AbortEnvironmentUpdate`
+
+## 2.7.26 - 2015-04-02
+
+* `Aws\CodeDeploy` - Added support deployments to on-premises instances.
+* `Aws\Rds` - Added support for the `DescribeCertificates` operation.
+* `Aws\ElasticTranscoder` - Added support for protecting content with PlayReady
+  Digital Rights Management (DRM).
+
+## 2.7.25 - 2015-03-26
+
+* `Aws\ElasticTranscoder` - Added support for job timing.
+* `Aws\Iam` - Added `NamedPolicy` to `GetAccountAuthorizationDetails`.
+* `Aws\OpsWorks` - Added `BlockDeviceMapping` support.
+
+## 2.7.24 - 2015-03-24
+
+* `Aws\S3` - Added support for cross-region replication.
+* `Aws\S3` - Added support for ["Requester Pays" buckets](http://docs.aws.amazon.com/AmazonS3/latest/dev/RequesterPaysBuckets.html).
+
+## 2.7.23 - 2015-03-19
+
+* `Aws\ElasticTranscoder` - API update to support AppliedColorSpaceConversion.
+* `Aws\CloudSearchDomain` - Adding 504 status code to retry list.
+
+## 2.7.22 - 2015-03-12
+
+* `Aws\CloudFront` - Fixed #482, which affected pre-signing CloudFront URLs.
+* `Aws\CloudTrail` - Added support for the `LookupEvents` operation.
+* `Aws\CloudWatchLogs` - Added ordering parameters to the `DescribeLogStreams`
+* `Aws\Ec2` - Added pagination parameters to the `DescribeSnapshots` operation.
+  operation.
+
+## 2.7.21 - 2015-03-04
+
+* `Aws\CognitoSync` - Added support for Amazon Cognito Streams.
+
+## 2.7.20 - 2015-02-23
+
+* `Aws\DataPipeline` - Added support for pipeline tagging via the `AddTags` and
+  `RemoveTags` operations.
+* `Aws\Route53` - Added support for the `GetHostedZoneCount` and
+  `ListHostedZonesByName` operations.
+
+## 2.7.19 - 2015-02-20
+
+* `Aws\CloudFront` - Added support for origin paths in web distributions.
+* `Aws\Ecs` - Added support for specifying volumes and mount points. Also
+* `Aws\ElasticTranscoder` - Added support for cross-regional resource warnings.
+* `Aws\Route53Domains` - Add iterators for `ListDomains` and `ListOperations`.
+* `Aws\Ssm` - Added support for the **Amazon Simple Systems Management Service
+  (SSM)**.
+* `Aws\Sts` - Added support for regional endpoints.
+  switched the client to use a JSON protocol.
+* Changed our CHANGELOG format. ;-)
+
+## 2.7.18 - 2015-02-12
+
+* Added support for named and managed policies to the IAM client.
+* Added support for tagging operations to the Route 53 Domains client.
+* Added support for tagging operations to the ElastiCache client.
+* Added support for the Scan API for secondary indexes to the DynamoDB client.
+* Added forward compatibility for the `'credentials'`, `'endpoint'`, and
+  `'http'` configuration options.
+* Made the `marshalValue()` and `unmarshalValue()` methods public in the
+  DynamoDB Marshaler.
+
+## 2.7.17 - 2015-01-27
+
+* Added support for `getShippingLabel` to the AWS Import/Export client.
+* Added support for online indexing to the DynamoDB client.
+* Updated the AWS Lambda client.
+
+## 2.7.16 - 2015-01-20
+
+* Added support for custom security groups to the Amazon EMR client.
+* Added support for the latest APIs to the Amazon Cognito Identity client.
+* Added support for ClassicLink to the Auto Scaling client.
+* Added the ability to set a client's API version to "latest" for forwards
+  compatibility with v3.
+
+## 2.7.15 - 2015-01-15
+
+* Added support for [HLS Content Protection](https://aws.amazon.com/releasenotes/3388917394239147)
+  to the Elastic Transcoder client.
+* Updated client factory logic to add the `SignatureListener`, even when
+  `NullCredentials` have been specified. This way, you can update a client's
+  credentials later if you want to begin signing requests.
+
+## 2.7.14 - 2015-01-09
+
+* Fixed a regression in the CloudSearch Domain client (#448).
+
 ## 2.7.13 - 2015-01-08
 
 * Added the Amazon EC2 Container Service client.

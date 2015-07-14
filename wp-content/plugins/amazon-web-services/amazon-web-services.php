@@ -2,9 +2,9 @@
 /*
 Plugin Name: Amazon Web Services
 Plugin URI: http://wordpress.org/extend/plugins/amazon-web-services/
-Description: Includes the Amazon Web Services PHP libraries, stores access keys, and allows other plugins to hook into it
+Description: Includes the Amazon Web Services PHP libraries, stores access keys, and allows other plugins to hook into it.
 Author: Brad Touesnard
-Version: 0.2.2
+Version: 0.3
 Author URI: http://bradt.ca/
 Network: True
 Text Domain: amazon-web-services
@@ -22,10 +22,10 @@ Domain Path: /languages/
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 // **********************************************************************
 
-$GLOBALS['aws_meta']['amazon-web-services']['version'] = '0.2.2';
+$GLOBALS['aws_meta']['amazon-web-services']['version'] = '0.3';
 
 $GLOBALS['aws_meta']['amazon-web-services']['supported_addon_versions'] = array(
-	'amazon-s3-and-cloudfront' => '0.8.1',
+	'amazon-s3-and-cloudfront' => '0.9',
 );
 
 require dirname( __FILE__ ) . '/classes/aws-compatibility-check.php';
@@ -60,7 +60,7 @@ function amazon_web_services_init() {
 function amazon_web_services_activation() {
 	global $aws_compat_check;
 	if ( ! $aws_compat_check->is_compatible() ) {
-		$error_msg = $aws_compat_check->get_sdk_requirements_error_msg();
+		$error_msg = $aws_compat_check->get_error_msg();
 		include dirname( __FILE__ ) . '/view/activation-error.php';
 		die();
 	}

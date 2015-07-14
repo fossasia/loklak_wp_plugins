@@ -2,7 +2,7 @@
 
 	<div class="as3cf-banner"><img src="<?php echo esc_url( plugins_url( 'assets/img/snail.jpg', $this->plugin_file_path ) ); ?>" width="292" height="165" alt="" /></div>
 
-	<form method="post" action="https://deliciousbrains.createsend.com/t/t/s/dlihik/" target="_blank" class="subscribe block">
+	<form method="post" action="https://deliciousbrains.com/email-subscribe/" target="_blank" class="subscribe block">
 		<h2><?php _e( 'Pro Version?', 'as3cf' ); ?></h2>
 
 		<?php $user = wp_get_current_user(); ?>
@@ -18,13 +18,20 @@
 			<li><?php echo wptexturize( __( 'Awesome email support', 'as3cf' ) ); // xss ok ?></li>
 		</ul>
 
-		<div class="field notify-name">
-			<input type="text" name="cm-name" value="<?php echo esc_attr( trim( $user->first_name . ' ' . $user->last_name ) ); ?>" placeholder="<?php _e( 'Your Name', 'as3cf' ); ?>"/>
+		<div class="field">
+			<input type="email" name="email" value="<?php echo esc_attr( $user->user_email ); ?>" placeholder="<?php _e( 'Your Email', 'as3cf' ); ?>"/>
 		</div>
 
-		<div class="field notify-email">
-			<input type="email" name="cm-dlihik-dlihik" value="<?php echo esc_attr( $user->user_email ); ?>" placeholder="<?php _e( 'Your Email', 'as3cf' ); ?>"/>
+		<div class="field">
+			<input type="text" name="first_name" value="<?php echo esc_attr( trim( $user->first_name ) ); ?>" placeholder="<?php _e( 'First Name', 'as3cf' ); ?>"/>
 		</div>
+
+		<div class="field">
+			<input type="text" name="last_name" value="<?php echo esc_attr( trim( $user->last_name ) ); ?>" placeholder="<?php _e( 'Last Name', 'as3cf' ); ?>"/>
+		</div>
+
+		<input type="hidden" name="campaigns[]" value="3" />
+		<input type="hidden" name="source" value="1" />
 
 		<div class="field submit-button">
 			<input type="submit" class="button" value="<?php _e( 'Send me news about a pro version', 'as3cf' ); ?>"/>

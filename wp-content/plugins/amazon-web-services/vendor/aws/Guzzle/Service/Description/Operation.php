@@ -86,7 +86,7 @@ class Operation implements OperationInterface
      *                       name, if a matching PSR-0 compliant class name is found, or set to 'primitive' by default.
      * - deprecated:         (bool) Set to true if this is a deprecated command
      * - errorResponses:     (array) Errors that could occur when executing the command. Array of hashes, each with a
-     *                       'code' (the HTTP response code), 'phrase' (response reason phrase or description of the
+     *                       'code' (the HTTP response code), 'reason' (response reason phrase or description of the
      *                       error), and 'class' (a custom exception class that would be thrown if the error is
      *                       encountered).
      * - data:               (array) Any extra data that might be used to help build or serialize the operation

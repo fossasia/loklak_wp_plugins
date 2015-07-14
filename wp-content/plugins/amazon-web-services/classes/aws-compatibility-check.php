@@ -1,23 +1,10 @@
 <?php
+require_once dirname( __FILE__ ) . '/wp-aws-compatibility-check.php';
 
-class AWS_Compatibility_Check {
-
-	private $plugin_file_path;
+class AWS_Compatibility_Check extends WP_AWS_Compatibility_Check {
 
 	function __construct( $plugin_file_path ) {
-		$this->plugin_file_path = $plugin_file_path;
-
-		add_action( 'admin_notices', array( $this, 'hook_admin_notices' ) );
-		add_action( 'network_admin_notices', array( $this, 'hook_admin_notices' ) );
-	}
-
-	/**
-	 * Check the server is compatible with the AWS SDK
-	 *
-	 * @return bool
-	 */
-	function is_compatible() {
-		return $this->get_sdk_requirements_errors() ? false : true;
+		parent::__construct( 'Amazon Web Services', 'amazon-web-services', $plugin_file_path, null, null, null, null, true );
 	}
 
 	/**
@@ -72,7 +59,7 @@ class AWS_Compatibility_Check {
 	 *
 	 * @return string
 	 */
-	function get_sdk_requirements_error_msg() {
+	function get_error_msg() {
 		$errors = $this->get_sdk_requirements_errors();
 
 		if ( ! $errors ) {
@@ -90,37 +77,5 @@ class AWS_Compatibility_Check {
 		$msg .= ' ' . implode( ', ', $errors ) . $last_one . '.';
 
 		return $msg;
-	}
-
-	/**
-	 * Display the compatibility error message for users
-	 * Deactivate the plugin if there are errors
-	 */
-	function hook_admin_notices() {
-		if ( is_multisite() ) {
-			if ( ! current_user_can( 'manage_network_plugins' ) ) {
-				return; // Don't show notices if the user can't manage network plugins
-			}
-		} else {
-			// Don't show notices if user doesn't have plugin management privileges
-			$caps = array( 'activate_plugins', 'update_plugins', 'install_plugins' );
-			foreach ( $caps as $cap ) {
-				if ( ! current_user_can( $cap ) ) {
-					return;
-				}
-			}
-		}
-
-		$error_msg = $this->get_sdk_requirements_error_msg();
-
-		if ( ! $error_msg ) {
-			return;
-		}
-
-		$deactivated_msg = __( 'The Amazon&nbsp;Web&nbsp;Services plugin has been deactivated.', 'amazon-web-services' );
-		printf( '<div class="error"><p>%s %s</p></div>', $deactivated_msg, $error_msg );
-
-		require_once ABSPATH . 'wp-admin/includes/plugin.php';
-		deactivate_plugins( $this->plugin_file_path );
 	}
 }

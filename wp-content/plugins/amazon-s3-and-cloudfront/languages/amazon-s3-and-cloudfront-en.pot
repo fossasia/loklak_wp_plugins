@@ -1,0 +1,580 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: amazon-s3-and-cloudfront\n"
+"Report-Msgid-Bugs-To: nom@deliciousbrains.com\n"
+"POT-Creation-Date: 2015-07-08 12:57-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:79
+msgid "Offload S3"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:80
+msgid "S3 and CloudFront"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:568
+#, php-format
+msgid "File %s does not exist"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:577
+#, php-format
+msgid "Mime type %s is not allowed"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:653
+#, php-format
+msgid "Error uploading %s to S3: %s"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1251
+msgid "Cheatin&#8217; eh?"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1255
+msgid "You do not have sufficient permissions to access this page."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1261
+msgid "No bucket name provided."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1518
+#, php-format
+msgid "There was an error attempting to get the region of the bucket %s: %s"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1635
+msgid ""
+"This is a test file to check if the user has write permission to S3. Delete "
+"me if found."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1667
+#, php-format
+msgid ""
+"There was an error attempting to check the permissions of the bucket %s: %s"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1730
+msgid "Error creating bucket: "
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1731
+msgid "Bucket name too short."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1732
+msgid "Bucket name too long."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1733
+msgid ""
+"Invalid character. Bucket names can contain lowercase letters, numbers, "
+"periods and hyphens."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1734
+msgid "Error saving bucket: "
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1735
+msgid "Error fetching buckets: "
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1736
+msgid "Error getting URL preview: "
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1737
+msgid "The changes you made will be lost if you navigate away from this page"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1795
+msgid "Cheatin' eh?"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1898
+msgctxt "Show the media library tab"
+msgid "Media Library"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1899
+msgctxt "Show the support tab"
+msgid "Support"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:2035
+#, php-format
+msgid "The file %s has been given %s permissions on Amazon S3."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/as3cf-plugin-compatibility.php:222
+#, php-format
+msgid "There was an error attempting to download the file %s from S3: %s"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/as3cf-upgrade.php:104
+#, php-format
+msgid ""
+"<strong>Running Metadata Update</strong> &mdash; We&#8217;re going through "
+"all the Media Library items uploaded to S3 and updating the metadata with "
+"the bucket region it is served from. This will allow us to serve your files "
+"from the proper S3 region subdomain <span style=\"white-space:nowrap;\">(e."
+"g. s3-us-west-2.amazonaws.com)</span>. This will be done quietly in the "
+"background, processing a small batch of Media Library items every %d "
+"minutes. There should be no noticeable impact on your server&#8217;s "
+"performance."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/as3cf-upgrade.php:105
+msgid "Pause Update"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/as3cf-upgrade.php:109
+msgid ""
+"<strong>Metadata Update Paused</strong> &mdash; Updating Media Library "
+"metadata has been paused."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/as3cf-upgrade.php:110
+msgid "Restart Update"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/as3cf-upgrade.php:113
+msgid ""
+"<strong>Error Updating Metadata</strong> &mdash; We ran into some errors "
+"attempting to update the metadata for all your Media Library items that have "
+"been uploaded to S3. Please check your error log for details."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/as3cf-upgrade.php:114
+msgid "Try Run It Again"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/as3cf-upgrade.php:183
+#, php-format
+msgid "Every %d Minutes"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:276
+msgid "deactivate"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:277
+#, php-format
+msgid "You can %s the %s plugin to get rid of this notice."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:280
+#, php-format
+msgid "%s has been disabled as it requires the %s plugin."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:284
+msgid "which is currently disabled."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:286
+msgid "It appears to be installed already."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:288
+msgctxt "Activate plugin"
+msgid "Activate it now."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:295
+#, php-format
+msgid "<a href=\"%s\">Install</a> and activate it."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:306
+#, php-format
+msgid ""
+"%s has been disabled as it requires version %s or later of the %s plugin."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:309
+#, php-format
+msgid "You currently have version %s installed."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:316
+#, php-format
+msgid "A valid license for %s is required to update."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:324
+msgid "Update to the latest version"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:336
+#, php-format
+msgid ""
+"%1$s has been disabled because it is not a supported addon of the %2$s "
+"plugin."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:345
+#, php-format
+msgid ""
+"%1$s has been disabled because it will not work with the version of the %2$s "
+"plugin installed. %1$s %3$s or later is required."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:348
+#, php-format
+msgid "Update %s to the latest version"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:403
+#, php-format
+msgid "The %s plugin has been deactivated."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/bucket-select.php:3
+msgid "Change bucket"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/bucket-select.php:3
+msgid "What bucket would you like to use?"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/bucket-select.php:5
+msgid "Existing bucket name"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/bucket-select.php:7
+#: builds/amazon-s3-and-cloudfront/view/bucket-select.php:12
+msgid "Saving..."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/bucket-select.php:7
+#: builds/amazon-s3-and-cloudfront/view/bucket-select.php:12
+msgid "Save Bucket"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/bucket-select.php:8
+msgid "Browse existing buckets"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/bucket-select.php:9
+#: builds/amazon-s3-and-cloudfront/view/bucket-select.php:26
+#: builds/amazon-s3-and-cloudfront/view/bucket-select.php:31
+msgid "Create new bucket"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/bucket-select.php:13
+#: builds/amazon-s3-and-cloudfront/view/bucket-select.php:21
+#: builds/amazon-s3-and-cloudfront/view/bucket-select.php:61
+msgid "Cancel"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/bucket-select.php:18
+msgid "Select bucket"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/bucket-select.php:19
+msgid "Loading..."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/bucket-select.php:22
+#: builds/amazon-s3-and-cloudfront/view/bucket-select.php:27
+msgid "Refresh"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/bucket-select.php:25
+msgid "Enter bucket name"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/bucket-select.php:37
+msgid "Bucket Name:"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/bucket-select.php:40
+msgid "Bucket Name"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/bucket-select.php:47
+msgid "Region:"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/bucket-select.php:60
+msgid "Creating..."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/bucket-select.php:60
+msgid "Create New Bucket"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/bucket-setting.php:7
+msgid "Bucket"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/bucket-setting.php:11
+msgid "Change"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/debug-info.php:2
+msgid "Diagnostic Info"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/debug-info.php:11
+msgctxt "Download to your computer"
+msgid "Download"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/domain-setting.php:5
+msgid "Domain:"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/domain-setting.php:23
+msgid "Bucket name as subdomain"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/domain-setting.php:28
+msgid "Bucket name in path"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/domain-setting.php:33
+msgid "Bucket name as domain"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/domain-setting.php:38
+msgid "CloudFront or custom domain"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/error-access.php:4
+msgid "Access Denied to Bucket"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/error-access.php:6
+#, php-format
+msgid ""
+"This could indicate your S3 policy is Read-Only. You need to go to <a href="
+"\"%s\">Identity and Access Management</a> in your AWS console and manage the "
+"policy for the user you're using for this plugin. Your policy should look "
+"something like the following:"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/settings.php:10
+msgid "Settings saved."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/settings.php:44
+msgid "Enable/Disable the Plugin"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/settings.php:51
+msgid "Copy Files to S3"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/settings.php:52
+msgid ""
+"When a file is uploaded to the Media Library, copy it to S3. Existing files "
+"are <em>not</em> copied to S3."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/settings.php:60
+msgid "Rewrite File URLs"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/settings.php:61
+msgid ""
+"For Media Library files that have been copied to S3, rewrite the URLs so "
+"that they are served from S3/CloudFront instead of your server."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/settings.php:65
+msgid "Configure File URLs"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/settings.php:83
+msgid "Path"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/settings.php:85
+msgid "By default the path is the same as your local WordPress files:"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/settings.php:98
+msgid "Year/Month"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/settings.php:100
+msgid "Add the Year/Month in the URL."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/settings.php:106
+msgid "SSL:"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/settings.php:114
+msgid "Same as request"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/settings.php:115
+msgid "When the request is https://, use https:// for the file URL as well."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/settings.php:119
+msgid "Always SSL"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/settings.php:120
+msgid "Forces https:// to be used."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/settings.php:121
+msgid ""
+"You cannot use the \"Bucket as a subdomain\" domain option when using SSL."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/settings.php:125
+msgid "Always non-SSL"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/settings.php:126
+msgid "Forces http:// to be used."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/settings.php:132
+msgid "Advanced Options"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/settings.php:139
+msgid "Remove Files From Server"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/settings.php:140
+msgid "Once a file has been copied to S3, remove it from the local server."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/settings.php:148
+msgid "Object Versioning"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/settings.php:150
+msgid ""
+"Append a timestamp to the S3 file path. Recommended when using CloudFront so "
+"you don't have to worry about cache invalidation."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/settings.php:152
+#: builds/amazon-s3-and-cloudfront/view/settings.php:165
+msgid "More info"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/settings.php:162
+msgid "Far Future Expiration Header"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/settings.php:163
+msgid ""
+"Implements a \"Never Expire\" caching policy for browsers by setting an "
+"Expires header for 10 years in the future. Should be used in conjunction "
+"with object versioning above."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/settings.php:175
+msgid "Copy HiDPI (@2x) Images"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/settings.php:176
+#, php-format
+msgid ""
+"When uploading a file to S3, checks if there's a file of the same name with "
+"an @2x suffix and copies it to S3 as well. Works with the <a href=\"%s\">WP "
+"Retina 2x</a> plugin."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/settings.php:182
+msgid "Save Changes"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/sidebar.php:6
+msgid "Pro Version?"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/sidebar.php:11
+msgid ""
+"We're working on a pro version that will include the following features:"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/sidebar.php:15
+msgid "Copy existing Media Library to S3"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/sidebar.php:16
+msgid "Serve theme JS & CSS from S3/CloudFront"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/sidebar.php:17
+msgid ""
+"WooCommerce & <abbr title=\"Easy Digital Downloads\">EDD</abbr> integration"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/sidebar.php:18
+msgid "Awesome email support"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/sidebar.php:22
+msgid "Your Email"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/sidebar.php:26
+msgid "First Name"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/sidebar.php:30
+msgid "Last Name"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/sidebar.php:37
+msgid "Send me news about a pro version"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/sidebar.php:41
+msgid ""
+"We promise we will not use your email for anything else and you can "
+"unsubscribe with 1-click anytime."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/wordpress-org-support.php:2
+msgid "As this is a free plugin, we do not provide support."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/wordpress-org-support.php:4
+#, php-format
+msgid ""
+"You may ask the WordPress community for help by posting to the <a href=\"%s"
+"\">WordPress.org support forum</a>. Response time can range from a few days "
+"to a few weeks and will likely be from a non-developer."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/wordpress-org-support.php:6
+#, php-format
+msgid ""
+"If you want a <strong>timely response via email from a developer</strong> "
+"who works on this plugin, <a href=\"%s\">upgrade</a> and send us an email."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/wordpress-org-support.php:8
+#, php-format
+msgid ""
+"If you've found a bug, please <a href=\"%s\">submit an issue on GitHub</a>."
+msgstr ""

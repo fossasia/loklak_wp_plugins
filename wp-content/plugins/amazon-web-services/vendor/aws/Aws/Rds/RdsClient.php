@@ -48,6 +48,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model deleteDBSubnetGroup(array $args = array()) {@command Rds DeleteDBSubnetGroup}
  * @method Model deleteEventSubscription(array $args = array()) {@command Rds DeleteEventSubscription}
  * @method Model deleteOptionGroup(array $args = array()) {@command Rds DeleteOptionGroup}
+ * @method Model describeAccountAttributes(array $args = array()) {@command Rds DescribeAccountAttributes}
+ * @method Model describeCertificates(array $args = array()) {@command Rds DescribeCertificates}
  * @method Model describeDBEngineVersions(array $args = array()) {@command Rds DescribeDBEngineVersions}
  * @method Model describeDBInstances(array $args = array()) {@command Rds DescribeDBInstances}
  * @method Model describeDBLogFiles(array $args = array()) {@command Rds DescribeDBLogFiles}
@@ -102,8 +104,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getDescribeReservedDBInstancesOfferingsIterator(array $args = array()) The input array uses the parameters of the DescribeReservedDBInstancesOfferings operation
  * @method ResourceIteratorInterface getListTagsForResourceIterator(array $args = array()) The input array uses the parameters of the ListTagsForResource operation
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-rds.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.Rds.RdsClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/service-rds.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/api/class-Aws.Rds.RdsClient.html API docs
  */
 class RdsClient extends AbstractClient
 {
@@ -115,7 +117,7 @@ class RdsClient extends AbstractClient
      * @param array|Collection $config Client configuration data
      *
      * @return self
-     * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
+     * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/configuration.html#client-configuration-options
      */
     public static function factory($config = array())
     {

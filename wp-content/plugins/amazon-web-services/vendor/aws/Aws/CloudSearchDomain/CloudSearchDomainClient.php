@@ -3,7 +3,6 @@
 namespace Aws\CloudSearchDomain;
 
 use Aws\Common\Client\AbstractClient;
-use Aws\Common\Credentials\CredentialsInterface;
 use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\BadMethodCallException;
 use Guzzle\Common\Collection;
@@ -16,8 +15,8 @@ use Guzzle\Service\Resource\Model;
  * @method Model suggest(array $args = array()) {@command CloudSearchDomain Suggest}
  * @method Model uploadDocuments(array $args = array()) {@command CloudSearchDomain UploadDocuments}
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-cloudsearchdomain.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.CloudSearchDomain.CloudSearchDomainClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/service-cloudsearchdomain.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/api/class-Aws.CloudSearchDomain.CloudSearchDomainClient.html API docs
  */
 class CloudSearchDomainClient extends AbstractClient
 {
@@ -26,12 +25,12 @@ class CloudSearchDomainClient extends AbstractClient
     /**
      * Factory method to create a new Amazon CloudSearch Domain client using an array of configuration options.
      *
-     * You must provide the `base_url` option for this client, but credentials and `region` are not needed.
+     * You must provide the `endpoint` option for this client, but credentials and `region` are not needed.
      *
      * @param array|Collection $config Client configuration data
      *
      * @return self
-     * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
+     * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/configuration.html#client-configuration-options
      */
     public static function factory($config = array())
     {

@@ -1,10 +1,10 @@
-=== Amazon S3 and Cloudfront ===
+=== WP Offload S3 ===
 Contributors: bradt
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5VPMGLLK94XJC
 Tags: uploads, amazon, s3, mirror, admin, media, cdn, cloudfront
 Requires at least: 3.5
-Tested up to: 4.1
-Stable tag: 0.8.2
+Tested up to: 4.2.2
+Stable tag: 0.9
 License: GPLv3
 
 Copies files to Amazon S3 as they are uploaded to the Media Library. Optionally configure Amazon CloudFront for faster delivery.
@@ -58,6 +58,36 @@ This version requires PHP 5.3.3+ and the Amazon Web Services plugin
 This version requires PHP 5.3.3+ and the Amazon Web Services plugin
 
 == Changelog ==
+
+= 0.9 - 2015-07-08 =
+* New: Plugin rebranded to WP Offload S3
+* New: Support tab added to _Offload S3_ screen containing diagnostic information
+* New: Compatibility with the [Media Replace](https://wordpress.org/plugins/enable-media-replace/) plugin
+* New: Select bucket region when creating a new bucket
+* New: Toggle switches redesigned
+* Improvement: Compatibility with release candidate of Pro plugin
+* Improvement: Example IAM policy more secure
+* Improvement: Set default bucket region using the `AS3CF_REGION` constant
+* Improvement: Added `as3cf_object_meta` filter for developers
+* Improvement: Bucket selection moved to modal window
+* Improvement: Don't allow bucket names to contain invalid characters on creation
+* Improvement: More verbose error messages on bucket selection
+* Improvement: Settings link added to plugin row on _Plugins_ screen
+* Improvement: Object versioning enabled by default
+* Improvement: Uninstall routines added
+* Improvement: JavaScript coding standards
+* Improvement: Cache result when checking S3 bucket permissions
+* Bug fix: Bucket region errors result in blank WP Offload S3 screen
+* Bug fix: Editing an image when _Remove Files From Server_ option is enabled results in error
+* Bug fix: Metadata upgrade procedure triggered on new installs
+* Bug fix: File URLs when uploaded to a subdirectory result in incorrect S3 URLs
+* Bug fix: Errors logged when trying to delete non-existent HiDPI images
+* Bug fix: SignatureDoesNotMatch errors on regions with v4 authentication
+* Bug fix: Customizer background image not editable
+* Bug fix: Error when creating buckets with US Standard region
+* Bug fix: Notices appearing incorrectly on some admin screens
+* Bug fix: Subsite upload paths repeated on multisite installs
+* Bug fix: Handle multisite installs where `BLOG_ID_CURRENT_SITE` is not 1
 
 = 0.8.2 - 2015-01-31 =
 * New: Input bucket in settings to avoid listing all buckets

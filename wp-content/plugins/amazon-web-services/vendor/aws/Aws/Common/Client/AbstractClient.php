@@ -18,10 +18,10 @@ namespace Aws\Common\Client;
 
 use Aws\Common\Aws;
 use Aws\Common\Credentials\CredentialsInterface;
-use Aws\Common\Credentials\NullCredentials;
 use Aws\Common\Enum\ClientOptions as Options;
 use Aws\Common\Exception\InvalidArgumentException;
 use Aws\Common\Exception\TransferException;
+use Aws\Common\RulesEndpointProvider;
 use Aws\Common\Signature\EndpointSignatureInterface;
 use Aws\Common\Signature\SignatureInterface;
 use Aws\Common\Signature\SignatureListener;
@@ -83,9 +83,7 @@ abstract class AbstractClient extends Client implements AwsClientInterface
 
         // Add the event listener so that requests are signed before they are sent
         $dispatcher = $this->getEventDispatcher();
-        if (!$credentials instanceof NullCredentials) {
-            $dispatcher->addSubscriber(new SignatureListener($credentials, $signature));
-        }
+        $dispatcher->addSubscriber(new SignatureListener($credentials, $signature));
 
         if ($backoff = $config->get(Options::BACKOFF)) {
             $dispatcher->addSubscriber($backoff, -255);
@@ -113,21 +111,18 @@ abstract class AbstractClient extends Client implements AwsClientInterface
      */
     public static function getEndpoint(ServiceDescriptionInterface $description, $region, $scheme)
     {
-        $service = $description->getData('serviceFullName');
-        // Lookup the region in the service description
-        if (!($regions = $description->getData('regions'))) {
-            throw new InvalidArgumentException("No regions found in the {$service} description");
+        try {
+            $service = $description->getData('endpointPrefix');
+            $provider = RulesEndpointProvider::fromDefaults();
+            $result = $provider(array(
+                'service' => $service,
+                'region'  => $region,
+                'scheme'  => $scheme
+            ));
+            return $result['endpoint'];
+        } catch (\InvalidArgumentException $e) {
+            throw new InvalidArgumentException($e->getMessage(), 0, $e);
         }
-        // Ensure that the region exists for the service
-        if (!isset($regions[$region])) {
-            throw new InvalidArgumentException("{$region} is not a valid region for {$service}");
-        }
-        // Ensure that the scheme is valid
-        if ($regions[$region][$scheme] == false) {
-            throw new InvalidArgumentException("{$scheme} is not a valid URI scheme for {$service} in {$region}");
-        }
-
-        return $scheme . '://' . $regions[$region]['hostname'];
     }
 
     public function getCredentials()
@@ -194,7 +189,7 @@ abstract class AbstractClient extends Client implements AwsClientInterface
             // Update the signature if necessary
             $signature = $this->getSignature();
             if ($signature instanceof EndpointSignatureInterface) {
-                /** @var $signature EndpointSignatureInterface */
+                /** @var EndpointSignatureInterface $signature */
                 $signature->setRegionName($region);
             }
 

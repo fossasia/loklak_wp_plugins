@@ -1,0 +1,80 @@
+/**
+ * Modals
+ */
+#as3cf-overlay {
+	display: none;
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+	overflow: hidden;
+	overflow-y: auto;
+	z-index: 999999; // Needs to be higher than WP media modals
+}
+
+#as3cf-modal {
+	display: none;
+	position: relative;
+	width: 600px;
+	margin: 100px auto;
+	padding: 30px;
+	background-color: #eee;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+	font-size: 14px;
+	overflow: hidden;
+	z-index: 100000;
+
+	.close-as3cf-modal {
+		color: #999;
+		cursor: pointer;
+		font-family: "Times New Roman", serif;
+		font-size: 26px;
+		font-weight: 200;
+		position: absolute;
+		right: 18px;
+		top: 18px;
+
+		&:hover {
+			color: #666;
+		}
+	}
+
+	h3 {
+		margin: 0 0 20px;
+		font-weight: normal;
+		line-height: 1;
+	}
+
+	.error,
+	.notice,
+	.updated {
+		margin: 0 0 20px;
+	}
+
+	.actions {
+		margin: 20px -30px -30px;
+		padding: 20px 30px;
+		border-top: none;
+		background-color: #e3e3e3;
+		overflow: hidden;
+
+		.right {
+			margin-left: 15px;
+
+			&:last-of-type {
+				margin-left: 0;
+			}
+		}
+
+		button {
+			min-width: 90px;
+		}
+	}
+}
+
+body.as3cf-modal-open {
+	overflow: hidden;
+	padding-right: 15px;
+}

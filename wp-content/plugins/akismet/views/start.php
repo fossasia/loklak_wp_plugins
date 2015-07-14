@@ -85,7 +85,7 @@
 		<p><?php esc_html_e('If you already know your API key.', 'akismet'); ?></p>
 	</div>
 	<form action="<?php echo esc_url( Akismet_Admin::get_page_url() ); ?>" method="post" id="akismet-enter-api-key" class="right">
-		<input id="key" name="key" type="text" size="15" value="" class="regular-text code">
+		<input id="key" name="key" type="text" size="15" value="<?php echo esc_attr( Akismet::get_api_key() ); ?>" class="regular-text code">
 		<input type="hidden" name="action" value="enter-key">
 		<?php wp_nonce_field( Akismet_Admin::NONCE ); ?>
 		<input type="submit" name="submit" id="submit" class="button button-secondary" value="<?php esc_attr_e('Use this key', 'akismet');?>">

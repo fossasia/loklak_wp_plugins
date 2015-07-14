@@ -89,6 +89,10 @@
 <div class="wrap alert critical">
 	<h3 class="key-status"><?php esc_html_e( 'The key you entered is invalid. Please double-check it.' , 'akismet'); ?></h3>
 </div>
+<?php elseif ( $type == 'existing-key-invalid' ) :?>
+<div class="wrap alert critical">
+	<h3 class="key-status"><?php esc_html_e( 'Your API key is no longer valid. Please enter a new key or contact support@akismet.com.' , 'akismet'); ?></h3>
+</div>
 <?php elseif ( $type == 'new-key-failed' ) :?>
 <div class="wrap alert critical">
 	<h3 class="key-status"><?php esc_html_e( 'The key you entered could not be verified.' , 'akismet'); ?></h3>

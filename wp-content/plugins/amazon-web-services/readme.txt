@@ -3,8 +3,8 @@ Contributors: bradt
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5VPMGLLK94XJC
 Tags: amazon, amazon web services
 Requires at least: 3.5
-Tested up to: 4.1
-Stable tag: 0.2.2
+Tested up to: 4.2.2
+Stable tag: 0.3
 License: GPLv3
 
 Houses the Amazon Web Services (AWS) PHP libraries and manages access keys. Required by other AWS plugins.
@@ -13,7 +13,13 @@ Houses the Amazon Web Services (AWS) PHP libraries and manages access keys. Requ
 
 This plugin is required by other plugins, which uses its libraries and its settings to connect to AWS services. Currently, there is only one plugin that requires this plugin:
 
-* [Amazon S3 and CloudFront](http://wordpress.org/plugins/amazon-s3-and-cloudfront/)
+* [WP Offload S3](http://wordpress.org/plugins/amazon-s3-and-cloudfront/)
+
+= Requirements =
+
+* PHP version 5.3.3 or greater
+* PHP cURL library 7.16.2 or greater
+* cURL compiled with OpenSSL and zlib
 
 == Installation ==
 
@@ -25,6 +31,14 @@ This plugin is required by other plugins, which uses its libraries and its setti
 1. Settings screen
 
 == Changelog ==
+
+= 0.3 - 2015-07-08 =
+* New: Support for [IAM Roles on Amazon EC2](https://deliciousbrains.com/wp-offload-s3/doc/iam-roles/) using the `AWS_USE_EC2_IAM_ROLE` constant
+* New: Resigned _Access Keys_ and _Addons_ screens
+* Improvement: _Settings_ menu item renamed to _Access Keys_
+* Improvement: _Access Keys_ link added to plugin row on _Plugins_ screen
+* Improvement: Activate addons directly from within _Addons_ screen
+* Improvement: [Quick Start Guide](https://deliciousbrains.com/wp-offload-s3/doc/quick-start-guide/) documentation
 
 = 0.2.2 - 2015-01-19 =
 * Bug Fix: Reverting AWS client config of region and signature

@@ -26,6 +26,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
 /**
  * Client to interact with Amazon ElastiCache
  *
+ * @method Model addTagsToResource(array $args = array()) {@command ElastiCache AddTagsToResource}
  * @method Model authorizeCacheSecurityGroupIngress(array $args = array()) {@command ElastiCache AuthorizeCacheSecurityGroupIngress}
  * @method Model copySnapshot(array $args = array()) {@command ElastiCache CopySnapshot}
  * @method Model createCacheCluster(array $args = array()) {@command ElastiCache CreateCacheCluster}
@@ -52,12 +53,14 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model describeReservedCacheNodes(array $args = array()) {@command ElastiCache DescribeReservedCacheNodes}
  * @method Model describeReservedCacheNodesOfferings(array $args = array()) {@command ElastiCache DescribeReservedCacheNodesOfferings}
  * @method Model describeSnapshots(array $args = array()) {@command ElastiCache DescribeSnapshots}
+ * @method Model listTagsForResource(array $args = array()) {@command ElastiCache ListTagsForResource}
  * @method Model modifyCacheCluster(array $args = array()) {@command ElastiCache ModifyCacheCluster}
  * @method Model modifyCacheParameterGroup(array $args = array()) {@command ElastiCache ModifyCacheParameterGroup}
  * @method Model modifyCacheSubnetGroup(array $args = array()) {@command ElastiCache ModifyCacheSubnetGroup}
  * @method Model modifyReplicationGroup(array $args = array()) {@command ElastiCache ModifyReplicationGroup}
  * @method Model purchaseReservedCacheNodesOffering(array $args = array()) {@command ElastiCache PurchaseReservedCacheNodesOffering}
  * @method Model rebootCacheCluster(array $args = array()) {@command ElastiCache RebootCacheCluster}
+ * @method Model removeTagsFromResource(array $args = array()) {@command ElastiCache RemoveTagsFromResource}
  * @method Model resetCacheParameterGroup(array $args = array()) {@command ElastiCache ResetCacheParameterGroup}
  * @method Model revokeCacheSecurityGroupIngress(array $args = array()) {@command ElastiCache RevokeCacheSecurityGroupIngress}
  * @method ResourceIteratorInterface getDescribeCacheClustersIterator(array $args = array()) The input array uses the parameters of the DescribeCacheClusters operation
@@ -73,12 +76,12 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getDescribeReplicationGroupsIterator(array $args = array()) The input array uses the parameters of the DescribeReplicationGroups operation
  * @method ResourceIteratorInterface getDescribeSnapshotsIterator(array $args = array()) The input array uses the parameters of the DescribeSnapshots operation
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-elasticache.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.ElastiCache.ElastiCacheClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/service-elasticache.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/api/class-Aws.ElastiCache.ElastiCacheClient.html API docs
  */
 class ElastiCacheClient extends AbstractClient
 {
-    const LATEST_API_VERSION = '2014-09-30';
+    const LATEST_API_VERSION = '2015-02-02';
 
     /**
      * Factory method to create a new Amazon ElastiCache client using an array of configuration options.
@@ -86,7 +89,7 @@ class ElastiCacheClient extends AbstractClient
      * @param array|Collection $config Client configuration data
      *
      * @return self
-     * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
+     * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/configuration.html#client-configuration-options
      */
     public static function factory($config = array())
     {

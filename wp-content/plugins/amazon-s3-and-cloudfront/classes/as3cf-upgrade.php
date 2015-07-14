@@ -77,24 +77,33 @@ class AS3CF_Upgrade {
 			return;
 		}
 
+		// Do we actually have S3 meta data without regions to update?
+		// No need to bother for fresh sites, or media not uploaded to S3
+		if ( 0 == $this->count_all_attachments_without_region() ) {
+			$this->as3cf->set_setting( 'post_meta_version', 1 );
+			$this->as3cf->save_settings();
+
+			return;
+		}
+
 		// Initialize the upgrade
 		$this->save_session( array( 'status' => self::STATUS_RUNNING ) );
 
-		$this->schedule_event();
+		$this->as3cf->schedule_event( self::CRON_HOOK, self::CRON_SCHEDULE_KEY );
 	}
 
 	/**
 	 * Adds notices about issues with upgrades allowing user to restart them
 	 */
 	function maybe_display_notices() {
-		$action_url = self_admin_url( 'admin.php?page=' . $this->as3cf->get_plugin_slug() . '&action=restart_update_meta_with_region' );
-		$msg_type   = 'notice';
+		$action_url = $this->as3cf->get_plugin_page_url( array( 'action' => 'restart_update_meta_with_region' ), 'self' );
+		$msg_type   = 'notice-info';
 
 		switch ( $this->get_upgrade_status() ) {
 			case self::STATUS_RUNNING :
 				$msg         = sprintf( __( '<strong>Running Metadata Update</strong> &mdash; We&#8217;re going through all the Media Library items uploaded to S3 and updating the metadata with the bucket region it is served from. This will allow us to serve your files from the proper S3 region subdomain <span style="white-space:nowrap;">(e.g. s3-us-west-2.amazonaws.com)</span>. This will be done quietly in the background, processing a small batch of Media Library items every %d minutes. There should be no noticeable impact on your server&#8217;s performance.', 'as3cf' ), $this->cron_interval_in_minutes );
 				$action_text = __( 'Pause Update', 'as3cf' );
-				$action_url  = self_admin_url( 'admin.php?page=' . $this->as3cf->get_plugin_slug() . '&action=pause_update_meta_with_region' );
+				$action_url  = $this->as3cf->get_plugin_page_url( array( 'action' => 'pause_update_meta_with_region' ), 'self' );
 				break;
 			case self::STATUS_PAUSED :
 				$msg         = __( '<strong>Metadata Update Paused</strong> &mdash; Updating Media Library metadata has been paused.', 'as3cf' );
@@ -111,7 +120,12 @@ class AS3CF_Upgrade {
 
 		$msg .= ' <strong><a href="' . $action_url . '">' . $action_text . '</a></strong>';
 
-		$this->as3cf->render_view( $msg_type, array( 'message' => $msg ) );
+		$args = array(
+			'message'     => $msg,
+			'type'        => $msg_type,
+		);
+
+		$this->as3cf->render_view( 'notice', $args );
 	}
 
 	function maybe_handle_action() {
@@ -130,7 +144,7 @@ class AS3CF_Upgrade {
 	 */
 	function action_restart_update_meta_with_region() {
 		$this->change_status_request( self::STATUS_RUNNING );
-		$this->schedule_event();
+		$this->as3cf->schedule_event( self::CRON_HOOK, self::CRON_SCHEDULE_KEY );
 	}
 
 	/**
@@ -151,7 +165,8 @@ class AS3CF_Upgrade {
 		$session['status'] = $status;
 		$this->save_session( $session );
 
-		wp_redirect( self_admin_url( 'admin.php?page=' . $this->as3cf->get_plugin_slug() ) );
+		$url = $this->as3cf->get_plugin_page_url( array(), 'self' );
+		wp_redirect( $url );
 	}
 
 	/**
@@ -170,63 +185,29 @@ class AS3CF_Upgrade {
 
 		return $schedules;
 	}
-
-	/**
-	 * Wrapper for scheduling the cron job
-	 */
-	function schedule_event() {
-		if ( ! wp_next_scheduled( self::CRON_HOOK ) ) {
-			wp_schedule_event( current_time( 'timestamp' ), self::CRON_SCHEDULE_KEY, self::CRON_HOOK );
-		}
-	}
-
-	/**
-	 * Wrapper for clearing scheduled events for a specific cron job
-	 */
-	function clear_scheduled_event() {
-		$timestamp = wp_next_scheduled( self::CRON_HOOK );
-		if ( $timestamp ) {
-			wp_unschedule_event( $timestamp, self::CRON_HOOK );
-		}
-	}
-
+	
 	/**
 	 * Cron jon to update the region of the bucket in s3 metadata
 	 */
 	function cron_update_meta_with_region() {
 		// Check if the cron should even be running
 		if ( $this->as3cf->get_setting( 'post_meta_version', 0 ) > 0 || $this->get_upgrade_status() != self::STATUS_RUNNING ) {
-			$this->clear_scheduled_event();
+			$this->as3cf->clear_scheduled_event( self::CRON_HOOK );
 			return;
 		}
-
-		global $wpdb;
-		$prefix = $wpdb->prefix;
 
 		// set the batch size limit for the query
 		$limit     = apply_filters( 'as3cf_update_meta_with_region_batch_size', 500 );
 		$all_limit = $limit;
 
-		$table_prefixes = array();
 		$session   = $this->get_session();
 
 		// find the blog IDs that have been processed so we can skip them
 		$processed_blog_ids = isset( $session['processed_blog_ids'] ) ? $session['processed_blog_ids'] : array();
 		$error_count  = isset( $session['error_count'] ) ? $session['error_count'] : 0;
 
-		if ( ! in_array( 1, $processed_blog_ids ) ) {
-			$table_prefixes[1] = $prefix;
-		}
-
-		if ( is_multisite() ) {
-			$blog_ids = $this->as3cf->get_blog_ids();
-			foreach ( $blog_ids as $blog_id ) {
-				if ( in_array( $blog_id, $processed_blog_ids ) ) {
-					continue;
-				}
-				$table_prefixes[ $blog_id ] = $prefix . $blog_id . '_';
-			}
-		}
+		// get the table prefixes for all the blogs
+		$table_prefixes = $this->get_all_blog_table_prefixes( $processed_blog_ids );
 
 		$all_attachments = array();
 		$all_count       = 0;
@@ -254,7 +235,7 @@ class AS3CF_Upgrade {
 			$this->as3cf->set_setting( 'post_meta_version', 1 );
 			$this->as3cf->remove_setting( 'update_meta_with_region_session' );
 			$this->as3cf->save_settings();
-			$this->clear_scheduled_event();
+			$this->as3cf->clear_scheduled_event( self::CRON_HOOK );
 			return;
 		}
 
@@ -268,7 +249,7 @@ class AS3CF_Upgrade {
 
 		// loop through and update s3 meta with region
 		foreach ( $all_attachments as $blog_id => $attachments ) {
-			if ( 1 != $blog_id && is_multisite() ) {
+			if ( is_multisite() && ! $this->as3cf->is_current_blog( $blog_id ) ) {
 				switch_to_blog( $blog_id );
 			}
 
@@ -299,7 +280,7 @@ class AS3CF_Upgrade {
 				}
 			}
 
-			if ( 1 != $blog_id && is_multisite() ) {
+			if ( is_multisite() && ! $this->as3cf->is_current_blog( $blog_id ) ) {
 				restore_current_blog();
 			}
 		}
@@ -310,7 +291,26 @@ class AS3CF_Upgrade {
 		$this->save_session( $session );
 	}
 
-	/*
+	/**
+	 * Get a count of all attachments without region in their S3 metadata
+	 * for the whole site
+	 *
+	 * @return int
+	 */
+	function count_all_attachments_without_region() {
+		// get the table prefixes for all the blogs
+		$table_prefixes = $this->get_all_blog_table_prefixes();
+		$all_count      = 0;
+
+		foreach ( $table_prefixes as $blog_id => $table_prefix ) {
+			$count = $this->count_attachments_without_region( $table_prefix );
+			$all_count += $count;
+		}
+
+		return $all_count;
+	}
+
+	/**
 	 * Get the current status of the upgrade
 	 * See STATUS_* constants in the class declaration above.
 	 */
@@ -324,7 +324,7 @@ class AS3CF_Upgrade {
 		return $session['status'];
 	}
 
-	/*
+	/**
 	 * Retrieve session data from plugin settings
 	 *
 	 * @return array
@@ -333,7 +333,7 @@ class AS3CF_Upgrade {
 		return $this->as3cf->get_setting( 'update_meta_with_region_session', array() );
 	}
 
-	/*
+	/**
 	 * Store data to be used between requests in plugin settings
 	 *
 	 * @param $session array of session data to store
@@ -344,23 +344,90 @@ class AS3CF_Upgrade {
 	}
 
 	/**
-	 * Get all attachments that don't have region in their S3 meta
+	 * Get all the table prefixes for the blogs in the site. MS compatible
 	 *
-	 * @param unknown $prefix
-	 * @param unknown $limit
+	 * @param array $exclude_blog_ids blog ids to exclude
+	 *
+	 * @return array associative array with blog ID as key, prefix as value
+	 */
+	function get_all_blog_table_prefixes( $exclude_blog_ids = array() ) {
+		global $wpdb;
+		$prefix = $wpdb->prefix;
+
+		$table_prefixes = array();
+
+		if ( ! in_array( 1, $exclude_blog_ids ) ) {
+			$table_prefixes[1] = $prefix;
+		}
+
+		if ( is_multisite() ) {
+			$blog_ids = $this->as3cf->get_blog_ids();
+			foreach ( $blog_ids as $blog_id ) {
+				if ( in_array( $blog_id, $exclude_blog_ids ) ) {
+					continue;
+				}
+				$table_prefixes[ $blog_id ] = $wpdb->get_blog_prefix( $blog_id );
+			}
+		}
+
+		return $table_prefixes;
+	}
+
+	/**
+	 * Get all attachments that don't have region in their S3 meta data for a blog
+	 *
+	 * @param string $prefix
+	 * @param int    $limit
 	 *
 	 * @return mixed
 	 */
 	function get_attachments_without_region( $prefix, $limit ) {
+		$attachments = $this->get_attachments_without_region_results( $prefix, false, $limit );
+
+		return $attachments;
+	}
+
+	/**
+	 * Get a count of attachments  that don't have region in their S3 meta data for a blog
+	 * @param $prefix
+	 *
+	 * @return int
+	 */
+	function count_attachments_without_region( $prefix ) {
+		$count = $this->get_attachments_without_region_results( $prefix, true );
+
+		return $count;
+	}
+
+	/**
+	 * Wrapper for database call to get attachments without region
+	 *
+	 * @param string   $prefix
+	 * @param bool     $count return count of attachments
+	 * @param null|int $limit
+	 *
+	 * @return mixed
+	 */
+	function get_attachments_without_region_results( $prefix, $count = false, $limit = null ) {
 		global $wpdb;
-		$sql = $wpdb->prepare(
-			"SELECT `post_id` as `ID`, `meta_value` AS 's3object'
-				FROM `{$prefix}postmeta`
+
+		$sql = " FROM `{$prefix}postmeta`
 				WHERE `meta_key` = 'amazonS3_info'
-				AND `meta_value` NOT LIKE '%%\"region\"%%'
-				LIMIT %d",
-			$limit
-		);
+				AND `meta_value` NOT LIKE '%%\"region\"%%'";
+
+		if ( $count ) {
+			$sql = 'SELECT COUNT(*)' . $sql;
+
+			return $wpdb->get_var( $sql );
+		}
+
+		$sql = "SELECT `post_id` as `ID`, `meta_value` AS 's3object'" . $sql;
+
+		if ( ! is_null( $limit ) ) {
+			$sql .= ' LIMIT %d';
+
+			$sql = $wpdb->prepare( $sql, $limit );
+		}
 
 		return $wpdb->get_results( $sql, OBJECT );
 	}

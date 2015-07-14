@@ -33,11 +33,13 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model createVault(array $args = array()) {@command Glacier CreateVault}
  * @method Model deleteArchive(array $args = array()) {@command Glacier DeleteArchive}
  * @method Model deleteVault(array $args = array()) {@command Glacier DeleteVault}
+ * @method Model deleteVaultAccessPolicy(array $args = array()) {@command Glacier DeleteVaultAccessPolicy}
  * @method Model deleteVaultNotifications(array $args = array()) {@command Glacier DeleteVaultNotifications}
  * @method Model describeJob(array $args = array()) {@command Glacier DescribeJob}
  * @method Model describeVault(array $args = array()) {@command Glacier DescribeVault}
  * @method Model getDataRetrievalPolicy(array $args = array()) {@command Glacier GetDataRetrievalPolicy}
  * @method Model getJobOutput(array $args = array()) {@command Glacier GetJobOutput}
+ * @method Model getVaultAccessPolicy(array $args = array()) {@command Glacier GetVaultAccessPolicy}
  * @method Model getVaultNotifications(array $args = array()) {@command Glacier GetVaultNotifications}
  * @method Model initiateJob(array $args = array()) {@command Glacier InitiateJob}
  * @method Model initiateMultipartUpload(array $args = array()) {@command Glacier InitiateMultipartUpload}
@@ -46,6 +48,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model listParts(array $args = array()) {@command Glacier ListParts}
  * @method Model listVaults(array $args = array()) {@command Glacier ListVaults}
  * @method Model setDataRetrievalPolicy(array $args = array()) {@command Glacier SetDataRetrievalPolicy}
+ * @method Model setVaultAccessPolicy(array $args = array()) {@command Glacier SetVaultAccessPolicy}
  * @method Model setVaultNotifications(array $args = array()) {@command Glacier SetVaultNotifications}
  * @method Model uploadArchive(array $args = array()) {@command Glacier UploadArchive}
  * @method Model uploadMultipartPart(array $args = array()) {@command Glacier UploadMultipartPart}
@@ -56,8 +59,8 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method ResourceIteratorInterface getListPartsIterator(array $args = array()) The input array uses the parameters of the ListParts operation
  * @method ResourceIteratorInterface getListVaultsIterator(array $args = array()) The input array uses the parameters of the ListVaults operation
  *
- * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/service-glacier.html User guide
- * @link http://docs.aws.amazon.com/aws-sdk-php/latest/class-Aws.Glacier.GlacierClient.html API docs
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/service-glacier.html User guide
+ * @link http://docs.aws.amazon.com/aws-sdk-php/v2/api/class-Aws.Glacier.GlacierClient.html API docs
  */
 class GlacierClient extends AbstractClient
 {
@@ -69,7 +72,7 @@ class GlacierClient extends AbstractClient
      * @param array|Collection $config Client configuration data
      *
      * @return GlacierClient
-     * @link http://docs.aws.amazon.com/aws-sdk-php/guide/latest/configuration.html#client-configuration-options
+     * @link http://docs.aws.amazon.com/aws-sdk-php/v2/guide/configuration.html#client-configuration-options
      */
     public static function factory($config = array())
     {

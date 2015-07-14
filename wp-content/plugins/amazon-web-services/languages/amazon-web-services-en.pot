@@ -1,0 +1,237 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: amazon-web-services\n"
+"Report-Msgid-Bugs-To: nom@deliciousbrains.com\n"
+"POT-Creation-Date: 2015-07-08 11:55-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: classes/amazon-web-services.php:29
+#: classes/amazon-web-services.php:175
+msgid "Amazon Web Services"
+msgstr ""
+
+#: classes/amazon-web-services.php:30
+msgid "AWS"
+msgstr ""
+
+#: classes/amazon-web-services.php:53
+msgid "Addons"
+msgstr ""
+
+#: classes/amazon-web-services.php:61
+#: classes/amazon-web-services.php:316
+#: view/settings.php:14
+msgid "Access Keys"
+msgstr ""
+
+#: classes/amazon-web-services.php:133
+msgid "Cheatin' eh?"
+msgstr ""
+
+#: classes/amazon-web-services.php:184
+msgid "Amazon Web Services: Addons"
+msgstr ""
+
+#: classes/amazon-web-services.php:264
+#, php-format
+msgid ""
+"You must first <a href=\"%s\">set your AWS access keys</a> to use this addon."
+msgstr ""
+
+#: classes/amazon-web-services.php:327
+msgid "WP Offload S3"
+msgstr ""
+
+#: classes/amazon-web-services.php:365
+msgctxt "Plugin already installed and activated"
+msgid "Installed & Activated"
+msgstr ""
+
+#: classes/amazon-web-services.php:367
+msgctxt "Plugin already installed"
+msgid "Installed"
+msgstr ""
+
+#: classes/amazon-web-services.php:368
+msgctxt "Activate plugin now"
+msgid "Activate Now"
+msgstr ""
+
+#: classes/amazon-web-services.php:371
+msgctxt "Install plugin now"
+msgid "Install Now"
+msgstr ""
+
+#: classes/amazon-web-services.php:394
+msgid "Visit Site"
+msgstr ""
+
+#: classes/amazon-web-services.php:397
+msgctxt "View plugin details"
+msgid "View Details"
+msgstr ""
+
+#: classes/aws-compatibility-check.php:25
+msgid "a PHP version less than 5.3.3"
+msgstr ""
+
+#: classes/aws-compatibility-check.php:29
+msgid "no PHP cURL library activated"
+msgstr ""
+
+#: classes/aws-compatibility-check.php:35
+msgid "a cURL version less than 7.16.2"
+msgstr ""
+
+#: classes/aws-compatibility-check.php:50
+msgid "cURL compiled without"
+msgstr ""
+
+#: classes/aws-compatibility-check.php:69
+msgid ""
+"The official Amazon&nbsp;Web&nbsp;Services SDK requires PHP 5.3.3+ and cURL "
+"7.16.2+ compiled with OpenSSL and zlib. Your server currently has"
+msgstr ""
+
+#: classes/aws-plugin-base.php:157
+msgid "Settings"
+msgstr ""
+
+#: classes/wp-aws-compatibility-check.php:276
+msgid "deactivate"
+msgstr ""
+
+#: classes/wp-aws-compatibility-check.php:277
+#, php-format
+msgid "You can %s the %s plugin to get rid of this notice."
+msgstr ""
+
+#: classes/wp-aws-compatibility-check.php:280
+#, php-format
+msgid "%s has been disabled as it requires the %s plugin."
+msgstr ""
+
+#: classes/wp-aws-compatibility-check.php:284
+msgid "which is currently disabled."
+msgstr ""
+
+#: classes/wp-aws-compatibility-check.php:286
+msgid "It appears to be installed already."
+msgstr ""
+
+#: classes/wp-aws-compatibility-check.php:288
+msgctxt "Activate plugin"
+msgid "Activate it now."
+msgstr ""
+
+#: classes/wp-aws-compatibility-check.php:295
+#, php-format
+msgid "<a href=\"%s\">Install</a> and activate it."
+msgstr ""
+
+#: classes/wp-aws-compatibility-check.php:306
+#, php-format
+msgid ""
+"%s has been disabled as it requires version %s or later of the %s plugin."
+msgstr ""
+
+#: classes/wp-aws-compatibility-check.php:309
+#, php-format
+msgid "You currently have version %s installed."
+msgstr ""
+
+#: classes/wp-aws-compatibility-check.php:316
+#, php-format
+msgid "A valid license for %s is required to update."
+msgstr ""
+
+#: classes/wp-aws-compatibility-check.php:324
+msgid "Update to the latest version"
+msgstr ""
+
+#: classes/wp-aws-compatibility-check.php:336
+#, php-format
+msgid ""
+"%1$s has been disabled because it is not a supported addon of the %2$s "
+"plugin."
+msgstr ""
+
+#: classes/wp-aws-compatibility-check.php:345
+#, php-format
+msgid ""
+"%1$s has been disabled because it will not work with the version of the %2$s "
+"plugin installed. %1$s %3$s or later is required."
+msgstr ""
+
+#: classes/wp-aws-compatibility-check.php:348
+#, php-format
+msgid "Update %s to the latest version"
+msgstr ""
+
+#: classes/wp-aws-compatibility-check.php:403
+#, php-format
+msgid "The %s plugin has been deactivated."
+msgstr ""
+
+#: view/activation-error.php:5
+msgid "Activation Error"
+msgstr ""
+
+#: view/settings.php:9
+#, php-format
+msgid ""
+"Need help getting your Access Keys? <a href=\"%s\">Check out the Quick Start "
+"Guide &rarr;</a>"
+msgstr ""
+
+#: view/settings.php:19
+msgid "You have enabled the use of IAM roles for Amazon EC2 instances."
+msgstr ""
+
+#: view/settings.php:25
+msgid ""
+"You&#8217;ve already defined your AWS access keys in your wp-config.php. If "
+"you&#8217;d prefer to manage them here and store them in the database (not "
+"recommended), simply remove the lines from your wp-config."
+msgstr ""
+
+#: view/settings.php:31
+msgid ""
+"We recommend defining your Access Keys in wp-config.php so long as you "
+"don&#8217;t commit it to source control (you shouldn&#8217;t be). Simply "
+"copy the following snippet and replace the stars with the keys."
+msgstr ""
+
+#: view/settings.php:38
+msgid ""
+"If you&#8217;d rather store your Access Keys in the database, <a href="
+"\"\">click here to reveal a form.</a>"
+msgstr ""
+
+#: view/settings.php:54
+msgid "Access Key ID:"
+msgstr ""
+
+#: view/settings.php:60
+msgid "Secret Access Key:"
+msgstr ""
+
+#: view/settings.php:67
+msgid "Save Changes"
+msgstr ""
+
+#: view/settings.php:70
+msgid "Remove Keys"
+msgstr ""

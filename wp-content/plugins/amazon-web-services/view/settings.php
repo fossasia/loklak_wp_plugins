@@ -1,8 +1,25 @@
 <div class="aws-content aws-settings">
 
-	<h3>Access Keys</h3>
+	<?php
+	$use_ec2_iam_roles = $this->use_ec2_iam_roles(); ?>
 
-	<?php if ( $this->are_key_constants_set() ) : ?>
+	<?php if ( ! $this->are_access_keys_set() && ! $use_ec2_iam_roles ) : ?>
+
+		<p class="need-help dashicons-before dashicons-info">
+			<?php printf( __( 'Need help getting your Access Keys? <a href="%s">Check out the Quick Start Guide &rarr;</a>', 'amazon-web-services' ), 'https://deliciousbrains.com/wp-offload-s3/doc/quick-start-guide/' ); ?>
+		</p>
+
+	<?php endif; ?>
+
+	<h3><?php _e( 'Access Keys', 'amazon-web-services' ); ?></h3>
+
+	<?php if ( $use_ec2_iam_roles ) : ?>
+
+		<p>
+			<?php _e( 'You have enabled the use of IAM roles for Amazon EC2 instances.', 'amazon-web-services' ); ?>
+		</p>
+
+	<?php elseif ( $this->are_key_constants_set() && ! $use_ec2_iam_roles ) : ?>
 
 		<p>
 			<?php _e( 'You&#8217;ve already defined your AWS access keys in your wp-config.php. If you&#8217;d prefer to manage them here and store them in the database (not recommended), simply remove the lines from your wp-config.', 'amazon-web-services' ); ?>
@@ -11,20 +28,14 @@
 	<?php else : ?>
 
 		<p>
-			<?php printf( __( 'If you don&#8217;t have an Amazon Web Services account yet, you need to <a href="%s">sign up</a>.', 'amazon-web-services' ), 'http://aws.amazon.com' ); ?>
-		</p>
-		<p>
-			<?php printf( __( 'Once you&#8217;ve signed up, you will need to <a href="%s">create a new IAM user</a> and grant access to the specific services which this plugin will use (e.g. S3).', 'amazon-web-services' ), 'https://console.aws.amazon.com/iam/home?region=us-east-1#users' ); ?>
-		</p>
-		<p>
-			<?php _e( 'Once the user has been created, you will be presented with a couple of keys. Copy the folowing code to your wp-config.php and replace the stars with the keys.', 'amazon-web-services' ); ?>
+			<?php _e( 'We recommend defining your Access Keys in wp-config.php so long as you don&#8217;t commit it to source control (you shouldn&#8217;t be). Simply copy the following snippet and replace the stars with the keys.', 'amazon-web-services' ); ?>
 		</p>
 
 		<pre>define( 'AWS_ACCESS_KEY_ID', '********************' );
 define( 'AWS_SECRET_ACCESS_KEY', '****************************************' );</pre>
 
 		<p class="reveal-form">
-			<?php _e( 'If you&#8217;d rather not to edit your wp-config.php and are ok storing the keys in the database (not recommended), <a href="">click here to reveal a form.</a>', 'amazon-web-services' ); ?>
+			<?php _e( 'If you&#8217;d rather store your Access Keys in the database, <a href="">click here to reveal a form.</a>', 'amazon-web-services' ); ?>
 		</p>
 
 		<form method="post" <?php echo ( ! $this->get_access_key_id() && ! $this->get_secret_access_key() ) ? 'style="display: none;"' : ''; // xss ok ?>>
