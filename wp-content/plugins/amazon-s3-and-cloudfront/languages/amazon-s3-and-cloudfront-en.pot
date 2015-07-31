@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: amazon-s3-and-cloudfront\n"
 "Report-Msgid-Bugs-To: nom@deliciousbrains.com\n"
-"POT-Creation-Date: 2015-07-08 12:57-0300\n"
+"POT-Creation-Date: 2015-07-29 16:53-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,112 +17,133 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:79
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:84
 msgid "Offload S3"
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:80
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:85
 msgid "S3 and CloudFront"
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:568
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:519
 #, php-format
 msgid "File %s does not exist"
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:577
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:528
 #, php-format
 msgid "Mime type %s is not allowed"
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:653
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:605
 #, php-format
 msgid "Error uploading %s to S3: %s"
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1251
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1174
 msgid "Cheatin&#8217; eh?"
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1255
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1178
 msgid "You do not have sufficient permissions to access this page."
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1261
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1184
 msgid "No bucket name provided."
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1518
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1452
 #, php-format
 msgid "There was an error attempting to get the region of the bucket %s: %s"
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1635
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1572
 msgid ""
 "This is a test file to check if the user has write permission to S3. Delete "
 "me if found."
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1667
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1604
 #, php-format
 msgid ""
 "There was an error attempting to check the permissions of the bucket %s: %s"
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1730
-msgid "Error creating bucket: "
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1662
+msgid "Error creating bucket"
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1731
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1663
 msgid "Bucket name too short."
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1732
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1664
 msgid "Bucket name too long."
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1733
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1665
 msgid ""
 "Invalid character. Bucket names can contain lowercase letters, numbers, "
 "periods and hyphens."
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1734
-msgid "Error saving bucket: "
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1666
+msgid "Error saving bucket"
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1735
-msgid "Error fetching buckets: "
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1667
+msgid "Error fetching buckets"
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1736
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1668
 msgid "Error getting URL preview: "
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1737
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1669
 msgid "The changes you made will be lost if you navigate away from this page"
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1795
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1727
 msgid "Cheatin' eh?"
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1898
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1830
 msgctxt "Show the media library tab"
 msgid "Media Library"
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1899
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1831
 msgctxt "Show the support tab"
 msgid "Support"
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:2035
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1967
 #, php-format
 msgid "The file %s has been given %s permissions on Amazon S3."
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/as3cf-plugin-compatibility.php:222
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:2427
+msgid "Quick Start Guide"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:2429
+#, php-format
+msgid ""
+"Looks like we don't have write access to this bucket. It's likely that the "
+"user you've provided access keys for hasn't been granted the correct "
+"permissions. Please see our %s for instructions on setting up permissions "
+"correctly."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:2431
+#, php-format
+msgid ""
+"Looks like we don't have access to the buckets. It's likely that the user "
+"you've provided access keys for hasn't been granted the correct permissions. "
+"Please see our %s for instructions on setting up permissions correctly."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/classes/as3cf-plugin-compatibility.php:260
 #, php-format
 msgid "There was an error attempting to download the file %s from S3: %s"
 msgstr ""
@@ -170,78 +191,78 @@ msgstr ""
 msgid "Every %d Minutes"
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:276
+#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:289
 msgid "deactivate"
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:277
+#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:290
 #, php-format
 msgid "You can %s the %s plugin to get rid of this notice."
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:280
+#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:293
 #, php-format
 msgid "%s has been disabled as it requires the %s plugin."
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:284
+#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:297
 msgid "which is currently disabled."
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:286
+#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:299
 msgid "It appears to be installed already."
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:288
+#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:301
 msgctxt "Activate plugin"
 msgid "Activate it now."
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:295
+#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:308
 #, php-format
 msgid "<a href=\"%s\">Install</a> and activate it."
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:306
+#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:319
 #, php-format
 msgid ""
 "%s has been disabled as it requires version %s or later of the %s plugin."
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:309
+#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:322
 #, php-format
 msgid "You currently have version %s installed."
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:316
+#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:329
 #, php-format
 msgid "A valid license for %s is required to update."
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:324
+#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:337
 msgid "Update to the latest version"
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:336
+#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:349
 #, php-format
 msgid ""
 "%1$s has been disabled because it is not a supported addon of the %2$s "
 "plugin."
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:345
+#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:358
 #, php-format
 msgid ""
 "%1$s has been disabled because it will not work with the version of the %2$s "
 "plugin installed. %1$s %3$s or later is required."
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:348
+#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:361
 #, php-format
 msgid "Update %s to the latest version"
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:403
+#: builds/amazon-s3-and-cloudfront/classes/wp-aws-compatibility-check.php:423
 #, php-format
 msgid "The %s plugin has been deactivated."
 msgstr ""
@@ -360,15 +381,6 @@ msgstr ""
 
 #: builds/amazon-s3-and-cloudfront/view/error-access.php:4
 msgid "Access Denied to Bucket"
-msgstr ""
-
-#: builds/amazon-s3-and-cloudfront/view/error-access.php:6
-#, php-format
-msgid ""
-"This could indicate your S3 policy is Read-Only. You need to go to <a href="
-"\"%s\">Identity and Access Management</a> in your AWS console and manage the "
-"policy for the user you're using for this plugin. Your policy should look "
-"something like the following:"
 msgstr ""
 
 #: builds/amazon-s3-and-cloudfront/view/settings.php:10

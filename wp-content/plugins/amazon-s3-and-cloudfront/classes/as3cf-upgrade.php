@@ -207,7 +207,7 @@ class AS3CF_Upgrade {
 		$error_count  = isset( $session['error_count'] ) ? $session['error_count'] : 0;
 
 		// get the table prefixes for all the blogs
-		$table_prefixes = $this->get_all_blog_table_prefixes( $processed_blog_ids );
+		$table_prefixes = $this->as3cf->get_all_blog_table_prefixes( $processed_blog_ids );
 
 		$all_attachments = array();
 		$all_count       = 0;
@@ -299,7 +299,7 @@ class AS3CF_Upgrade {
 	 */
 	function count_all_attachments_without_region() {
 		// get the table prefixes for all the blogs
-		$table_prefixes = $this->get_all_blog_table_prefixes();
+		$table_prefixes = $this->as3cf->get_all_blog_table_prefixes();
 		$all_count      = 0;
 
 		foreach ( $table_prefixes as $blog_id => $table_prefix ) {

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: amazon-web-services\n"
 "Report-Msgid-Bugs-To: nom@deliciousbrains.com\n"
-"POT-Creation-Date: 2015-07-08 11:55-0300\n"
+"POT-Creation-Date: 2015-07-29 09:49-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -109,78 +109,78 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:276
+#: classes/wp-aws-compatibility-check.php:289
 msgid "deactivate"
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:277
+#: classes/wp-aws-compatibility-check.php:290
 #, php-format
 msgid "You can %s the %s plugin to get rid of this notice."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:280
+#: classes/wp-aws-compatibility-check.php:293
 #, php-format
 msgid "%s has been disabled as it requires the %s plugin."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:284
+#: classes/wp-aws-compatibility-check.php:297
 msgid "which is currently disabled."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:286
+#: classes/wp-aws-compatibility-check.php:299
 msgid "It appears to be installed already."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:288
+#: classes/wp-aws-compatibility-check.php:301
 msgctxt "Activate plugin"
 msgid "Activate it now."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:295
+#: classes/wp-aws-compatibility-check.php:308
 #, php-format
 msgid "<a href=\"%s\">Install</a> and activate it."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:306
+#: classes/wp-aws-compatibility-check.php:319
 #, php-format
 msgid ""
 "%s has been disabled as it requires version %s or later of the %s plugin."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:309
+#: classes/wp-aws-compatibility-check.php:322
 #, php-format
 msgid "You currently have version %s installed."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:316
+#: classes/wp-aws-compatibility-check.php:329
 #, php-format
 msgid "A valid license for %s is required to update."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:324
+#: classes/wp-aws-compatibility-check.php:337
 msgid "Update to the latest version"
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:336
+#: classes/wp-aws-compatibility-check.php:349
 #, php-format
 msgid ""
 "%1$s has been disabled because it is not a supported addon of the %2$s "
 "plugin."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:345
+#: classes/wp-aws-compatibility-check.php:358
 #, php-format
 msgid ""
 "%1$s has been disabled because it will not work with the version of the %2$s "
 "plugin installed. %1$s %3$s or later is required."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:348
+#: classes/wp-aws-compatibility-check.php:361
 #, php-format
 msgid "Update %s to the latest version"
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:403
+#: classes/wp-aws-compatibility-check.php:423
 #, php-format
 msgid "The %s plugin has been deactivated."
 msgstr ""

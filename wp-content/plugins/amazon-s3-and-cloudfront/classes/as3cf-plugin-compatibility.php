@@ -39,6 +39,12 @@ class AS3CF_Plugin_Compatibility {
 	 */
 	function compatibility_init() {
 		/*
+		 * Legacy filter
+		 * 'as3cf_get_attached_file_copy_back_to_local'
+		 */
+		add_filter( 'as3cf_get_attached_file', array( $this, 'legacy_copy_back_to_local'), 10, 4 );
+
+		/*
 		 * WP_Image_Editor
 		 * /wp-includes/class-wp-image-editor.php
 		 */
@@ -59,6 +65,33 @@ class AS3CF_Plugin_Compatibility {
 	}
 
 	/**
+	 * Allow any process to trigger the copy back to local with
+	 * the filter 'as3cf_get_attached_file_copy_back_to_local'
+	 *
+	 * @param string $url
+	 * @param string $file
+	 * @param int    $attachment_id
+	 * @param array  $s3_object
+	 *
+	 * @return string
+	 */
+	function legacy_copy_back_to_local( $url, $file, $attachment_id, $s3_object ) {
+		$copy_back_to_local = apply_filters( 'as3cf_get_attached_file_copy_back_to_local', false, $file, $attachment_id, $s3_object );
+		if ( false === $copy_back_to_local ) {
+			// Not copying back file
+			return $url;
+		}
+
+		if ( ( $file = $this->copy_s3_file_to_server( $s3_object, $file ) ) ) {
+			// Return the file if successfully downloaded from S3
+			return $file;
+		};
+
+		// Return S3 URL as a fallback
+		return $url;
+	}
+
+	/**
 	 * Allow the WordPress Image Editor to remove edited version of images
 	 * if the original image is being restored and 'IMAGE_EDIT_OVERWRITE' is set
 	 *
@@ -68,10 +101,15 @@ class AS3CF_Plugin_Compatibility {
 	 * @param array  $args
 	 */
 	function image_editor_remove_files( $post_id, $s3object, $prefix, $args ) {
-		if ( isset( $_POST['do'] ) && 'restore' == $_POST['do'] && defined( 'IMAGE_EDIT_OVERWRITE' ) && IMAGE_EDIT_OVERWRITE ) {
-			$meta = get_post_meta( $post_id, '_wp_attachment_metadata', true );
-			$this->as3cf->remove_attachment_files_from_s3( $post_id, $s3object, $meta['file'] );
+		if ( ! isset( $_POST['do'] ) || 'restore' !== $_POST['do'] ) {
+			return;
 		}
+
+		if ( ! defined( 'IMAGE_EDIT_OVERWRITE' ) || ! IMAGE_EDIT_OVERWRITE ) {
+			return;
+		}
+
+		$this->as3cf->remove_attachment_files_from_s3( $post_id, $s3object, false );
 	}
 
 	/**

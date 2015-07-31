@@ -3,8 +3,8 @@ Contributors: bradt
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5VPMGLLK94XJC
 Tags: uploads, amazon, s3, mirror, admin, media, cdn, cloudfront
 Requires at least: 3.5
-Tested up to: 4.2.2
-Stable tag: 0.9
+Tested up to: 4.3
+Stable tag: 0.9.2
 License: GPLv3
 
 Copies files to Amazon S3 as they are uploaded to the Media Library. Optionally configure Amazon CloudFront for faster delivery.
@@ -58,6 +58,23 @@ This version requires PHP 5.3.3+ and the Amazon Web Services plugin
 This version requires PHP 5.3.3+ and the Amazon Web Services plugin
 
 == Changelog ==
+
+= 0.9.2 - 2015-07-29- =
+* Bug fix: Accidentally released the sidebar for after we launch the pro version
+
+= 0.9.1 - 2015-07-29- =
+* Improvement: Access denied sample IAM policy replaced with link to [Quick Start Guide](https://deliciousbrains.com/wp-offload-s3/doc/quick-start-guide/)
+* Improvement: Access denied messages on bucket selection or bucket creation now link to [Quick Start Guide](https://deliciousbrains.com/wp-offload-s3/doc/quick-start-guide/)
+* Improvement: Object expires time can now be filtered using the `as3cf_object_meta` filter
+* Bug fix: Error not always shown when S3 bucket inaccessible due to incorrect permissions
+* Bug fix: Permission checks fail when S3 bucket is in a non-default region and defined by `AS3CF_BUCKET` constant
+* Bug fix: Restore `as3cf_get_attached_file_copy_back_to_local` filter
+* Bug fix: Image versions not uploaded to S3 when an edited image is restored
+* Bug fix: Original image version not deleted from server when _Remove Files From Server_ option enabled
+* Bug fix: Media library items with non-ascii characters in the file name are not removed from S3
+* Bug fix: Compatibility notices shown on plugin install pages
+* Bug fix: WordPress footer overlaps WP Offload S3 sidebar
+* Bug fix: Upon initial setup the settings changed alert shows when no settings have changed
 
 = 0.9 - 2015-07-08 =
 * New: Plugin rebranded to WP Offload S3

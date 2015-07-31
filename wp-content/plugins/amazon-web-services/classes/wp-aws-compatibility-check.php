@@ -255,6 +255,19 @@ if ( ! class_exists( 'WP_AWS_Compatibility_Check' ) ) {
 		}
 
 		/**
+		 * Check the parent plugin is at a specific version
+		 *
+		 * @param string $version
+		 *
+		 * @return bool
+		 */
+		function is_parent_plugin_at_version( $version ) {
+			$current_parent_plugin_version = isset( $GLOBALS['aws_meta'][ $this->parent_plugin_slug ]['version'] ) ? $GLOBALS['aws_meta'][ $this->parent_plugin_slug ]['version'] : 0;
+
+			return version_compare( $current_parent_plugin_version, $version, '>=' );
+		}
+
+		/**
 		 * Get the compatibility error message
 		 *
 		 * @return string|void
@@ -383,6 +396,13 @@ if ( ! class_exists( 'WP_AWS_Compatibility_Check' ) ) {
 		 */
 		function hook_admin_notices() {
 			if ( ! $this->check_capabilities() ){
+				return;
+			}
+
+			global $pagenow;
+
+			if ( 'update.php' === $pagenow && isset( $_GET['action'] ) && 'install-plugin' === $_GET['action'] ) {
+				// Don't show notice when installing plugins
 				return;
 			}
 

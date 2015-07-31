@@ -56,7 +56,7 @@
 		.as3cf-notice, .error, .updated, .updated.show {
 			display: none;
 		}
-		.fatal .error, .dbrains-api-down {
+		.fatal .error, .as3cf-notice.important, .dbrains-api-down  {
 			display: block;
 		}
 	}
@@ -488,6 +488,7 @@
 }
 
 #tab-support {
+	min-height: 900px;
 	.as3cf-sidebar {
 		top: 11px;
 	}
@@ -579,6 +580,10 @@
 		margin-bottom: 0.3em;
 	  }
 
+	  input[type=text], input[type=email] {
+	  	width: 100%;
+	  }
+
 	  &.submit-button {
 		margin-bottom: 1em;
 	  }
@@ -637,15 +642,15 @@
   (min-resolution: 1.3dppx) {
 
 	.as3cf-banner {
-	  background-image: url(../img/snail@2x.jpg);
-	  background-size: 292px 165px;
-	  width: 292px;
-	  height: 165px;
-	  display: block;
+		background-image: url(../img/snail-banner@2x.jpg);
+		background-size: 292px 156px;
+		width: 292px;
+		height: 156px;
+		display: block;
 
-	  img {
-		display: none;
-	  }
+		img {
+			display: none;
+		}
 	}
   }
 
@@ -669,4 +674,10 @@
 .aws-compatibility-notice.error {
 	clear: both;
 	margin: 5px 20px 5px 0;
+}
+
+.as3cf-bucket-error {
+	span.title {
+		font-weight: bold;
+	}
 }

@@ -1,6 +1,6 @@
 <div class="as3cf-sidebar">
 
-	<div class="as3cf-banner"><img src="<?php echo esc_url( plugins_url( 'assets/img/snail.jpg', $this->plugin_file_path ) ); ?>" width="292" height="165" alt="" /></div>
+	<div class="as3cf-banner"><img src="<?php echo esc_url( plugins_url( 'assets/img/snail-banner.jpg', $this->plugin_file_path ) ); ?>" width="292" height="156" alt="" /></div>
 
 	<form method="post" action="https://deliciousbrains.com/email-subscribe/" target="_blank" class="subscribe block">
 		<h2><?php _e( 'Pro Version?', 'as3cf' ); ?></h2>

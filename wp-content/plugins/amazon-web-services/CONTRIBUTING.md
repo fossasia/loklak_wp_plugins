@@ -9,12 +9,13 @@ Submit a ticket for your issue, assuming one does not already exist.
 
 ## Making Changes
 
-* Fork the repository on GitHub
-* From the `develop` branch on your forked repository, create a new branch and make your changes
+* Fork the repository on GitHub.
+* From the `master` branch on your forked repository, create a new branch and make your changes.
   * It is suggested that your new branch use a name that briefly describes the feature or issue.
-  * Ensure you stick to the [WordPress Coding Standards](http://codex.wordpress.org/WordPress_Coding_Standards)
-* When committing, use a [well-formed](http://robots.thoughtbot.com/5-useful-tips-for-a-better-commit-message) [commit](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html) [message](http://who-t.blogspot.com/2009/12/on-commit-messages.html)
-* Push the changes to your fork and submit a pull request to the `develop` branch of the plugin's repository
+  * Ensure you stick to the [WordPress Coding Standards](http://codex.wordpress.org/WordPress_Coding_Standards).
+* When committing, use a [well-formed](http://robots.thoughtbot.com/5-useful-tips-for-a-better-commit-message) [commit](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html) [message](http://who-t.blogspot.com/2009/12/on-commit-messages.html).
+* Push the changes to your fork and submit a pull request to the `master` branch of the plugin's repository.
+* We appreciate any pull requests, however, as development on this plugin actually takes place in private repo, no PRs will be merged here. Although we will give props for code that gets released.
 
 ## Code Documentation
 

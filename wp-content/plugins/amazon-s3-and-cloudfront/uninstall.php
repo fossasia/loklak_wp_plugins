@@ -19,9 +19,6 @@ require dirname( __FILE__ ) . '/classes/wp-aws-uninstall.php';
 $options    = 'tantan_wordpress_s3';
 $postmeta   = 'amazonS3_info';
 $crons      = 'as3cf_cron_update_meta_with_region';
-$transients = array(
-	'as3cf_notices',
-	'as3cf_bucket_writable',
-);
+$transients = 'as3cf_notices';
 
 $as3cf_uninstall = new WP_AWS_Uninstall( $options, $postmeta, $crons, $transients );

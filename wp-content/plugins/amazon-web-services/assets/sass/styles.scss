@@ -118,21 +118,21 @@ body.toplevel_page_amazon-web-services .wrap {
 				}
 			}
 
-			h1 {
-				margin: 0;
+			h1, h2 {
+				padding: 0;
 				color: #fff;
-				font-size: 26px;
 				line-height: 1;
 				font-weight: 600;
 			}
 
+			h1 {
+				margin: 0;
+				font-size: 26px;
+			}
+
 			h2 {
 				margin: 4px 0 0;
-				padding: 0;
 				font-size: 18px;
-				line-height: 1;
-				font-weight: 600;
-				color: #fff;
 			}
 
 			.label {

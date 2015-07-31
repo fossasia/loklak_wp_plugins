@@ -3,8 +3,8 @@
 **Donate link:** https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5VPMGLLK94XJC  
 **Tags:** amazon, amazon web services  
 **Requires at least:** 3.5  
-**Tested up to:** 4.2.2  
-**Stable tag:** 0.3  
+**Tested up to:** 4.3  
+**Stable tag:** trunk  
 **License:** GPLv3  
 
 Houses the Amazon Web Services (AWS) PHP libraries and manages access keys. Required by other AWS plugins.
@@ -34,9 +34,12 @@ This plugin is required by other plugins, which uses its libraries and its setti
 
 ## Changelog ##
 
+### 0.3.1 - 2015-07-29 ###
+* Bug fix: Style inconsistencies on the _Addons_ screen
+
 ### 0.3 - 2015-07-08 ###
 * New: Support for [IAM Roles on Amazon EC2](https://deliciousbrains.com/wp-offload-s3/doc/iam-roles/) using the `AWS_USE_EC2_IAM_ROLE` constant
-* New: Resigned _Access Keys_ and _Addons_ screens
+* New: Redesigned _Access Keys_ and _Addons_ screens
 * Improvement: _Settings_ menu item renamed to _Access Keys_
 * Improvement: _Access Keys_ link added to plugin row on _Plugins_ screen
 * Improvement: Activate addons directly from within _Addons_ screen
