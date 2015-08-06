@@ -141,13 +141,13 @@ msgstr "ヘッダー・サイドバー背景色"
 msgid "Applied to the header on small screens and the sidebar on wide screens."
 msgstr "﻿小さい画面上のヘッダーと、幅広い画面上のサイドバーに適用されます。"
 
-#: inc/customizer.php:46
-msgid "Header and Sidebar Text Color"
-msgstr "ヘッダー・サイドバーテキスト色"
-
 #: inc/customizer.php:31
 msgid "Base Color Scheme"
 msgstr "ベース配色"
+
+#: inc/customizer.php:46
+msgid "Header and Sidebar Text Color"
+msgstr "ヘッダー・サイドバーテキスト色"
 
 #: inc/back-compat.php:37 inc/back-compat.php:47 inc/back-compat.php:60
 msgid "Twenty Fifteen requires at least WordPress version 4.1. You are running version %s. Please upgrade and try again."
@@ -214,13 +214,13 @@ msgctxt "Noto Sans font: on or off"
 msgid "on"
 msgstr "on"
 
-#: functions.php:135
-msgid "Add widgets here to appear in your sidebar."
-msgstr "サイドバーに表示させるにはここにウィジェットを追加してください。"
-
 #: functions.php:133
 msgid "Widget Area"
 msgstr "﻿ウィジェット エリア"
+
+#: functions.php:135
+msgid "Add widgets here to appear in your sidebar."
+msgstr "サイドバーに表示させるにはここにウィジェットを追加してください。"
 
 #: functions.php:86
 msgid "Social Links Menu"

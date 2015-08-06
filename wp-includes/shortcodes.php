@@ -328,29 +328,10 @@ function do_shortcodes_in_html_tags( $content, $ignore_html ) {
 	$trans = array( '[' => '&#91;', ']' => '&#93;' );
 	
 	$pattern = get_shortcode_regex();
-
-	$comment_regex =
-		  '!'           // Start of comment, after the <.
-		. '(?:'         // Unroll the loop: Consume everything until --> is found.
-		.     '-(?!->)' // Dash not followed by end of comment.
-		.     '[^\-]*+' // Consume non-dashes.
-		. ')*+'         // Loop possessively.
-		. '(?:-->)?';   // End of comment. If not found, match all input.
-
-	$regex =
-		  '/('                   // Capture the entire match.
-		.     '<'                // Find start of element.
-		.     '(?(?=!--)'        // Is this a comment?
-		.         $comment_regex // Find end of comment.
-		.     '|'
-		.         '[^>]*>?'      // Find end of element. If not found, match all input.
-		.     ')'
-		. ')/s';
-
-	$textarr = preg_split( $regex, $content, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY );
+	$textarr = wp_html_split( $content );
 
 	foreach ( $textarr as &$element ) {
-		if ( '<' !== $element[0] ) {
+		if ( '' == $element || '<' !== $element[0] ) {
 			continue;
 		}
 
@@ -365,7 +346,7 @@ function do_shortcodes_in_html_tags( $content, $ignore_html ) {
 			continue;
 		}
 
-		if ( $ignore_html || '<!--' === substr( $element, 0, 4 ) ) {
+		if ( $ignore_html || '<!--' === substr( $element, 0, 4 ) || '<![CDATA[' === substr( $element, 0, 9 ) ) {
 			// Encode all [ and ] chars.
 			$element = strtr( $element, $trans );
 			continue;
@@ -373,6 +354,11 @@ function do_shortcodes_in_html_tags( $content, $ignore_html ) {
 
 		$attributes = wp_kses_attr_parse( $element );
 		if ( false === $attributes ) {
+			// Some plugins are doing things like [name] <[email]>.
+			if ( 1 === preg_match( '%^<\s*\[\[?[^\[\]]+\]%', $element ) ) {
+				$element = preg_replace_callback( "/$pattern/s", 'do_shortcode_tag', $element );
+			}
+
 			// Looks like we found some crazy unfiltered HTML.  Skipping it for sanity.
 			$element = strtr( $element, $trans );
 			continue;
