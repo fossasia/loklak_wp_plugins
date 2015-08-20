@@ -440,5 +440,31 @@ if ( ! class_exists( 'WP_AWS_Compatibility_Check' ) ) {
 		function render_notice( $message ) {
 			printf( '<div class="' . $this->notice_class . ' aws-compatibility-notice"><p>%s</p></div>', $message );
 		}
+
+		/**
+		 * Is the current process an install or upgrade of plugin(s)
+		 *
+		 * @return bool
+		 */
+		public static function is_installing_or_updating_plugins() {
+			global $pagenow;
+
+			if ( 'update.php' === $pagenow && isset( $_GET['action'] ) && 'install-plugin' === $_GET['action'] ) {
+				// We are installing a plugin
+				return true;
+			}
+
+			if ( 'plugins.php' === $pagenow && isset( $_POST['action'] ) && 'update-selected' === $_POST['action'] ) {
+				// We are updating plugins from the plugin page
+				return true;
+			}
+
+			if ( 'update-core.php' === $pagenow && isset( $_GET['action'] ) && 'do-plugin-upgrade' === $_GET['action'] ) {
+				// We are updating plugins from the updates page
+				return true;
+			}
+
+			return false;
+		}
 	}
 }

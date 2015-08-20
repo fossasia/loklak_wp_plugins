@@ -5,8 +5,9 @@
 ( function( $, window ) {
 	var PressThis = function() {
 		var editor, $mediaList, $mediaThumbWrap,
+			$window               = $( window ),
+			$document             = $( document ),
 			saveAlert             = false,
-			editLinkVisible       = false,
 			textarea              = document.createElement( 'textarea' ),
 			sidebarIsOpen         = false,
 			settings              = window.wpPressThisConfig || {},
@@ -17,6 +18,11 @@
 			isOffScreen           = 'is-off-screen',
 			isHidden              = 'is-hidden',
 			offscreenHidden       = isOffScreen + ' ' + isHidden,
+			iOS                   = /iPad|iPod|iPhone/.test( window.navigator.userAgent ),
+			$textEditor           = $( '#pressthis' ),
+			textEditor            = $textEditor[0],
+			textEditorMinHeight   = 600,
+			textLength            = 0,
 			transitionEndEvent    = ( function() {
 				var style = document.documentElement.style;
 
@@ -114,6 +120,99 @@
 			$( '.post-actions button' ).removeAttr( 'disabled' );
 		}
 
+		function textEditorResize( reset ) {
+			var pageYOffset, height;
+
+			if ( editor && ! editor.isHidden() ) {
+ 				return;
+ 			}
+
+			reset = ( reset === 'reset' ) || ( textLength && textLength > textEditor.value.length );
+			height = textEditor.style.height;
+
+			if ( reset ) {
+				pageYOffset = window.pageYOffset;
+
+				textEditor.style.height = 'auto';
+				textEditor.style.height = Math.max( textEditor.scrollHeight, textEditorMinHeight ) + 'px';
+				window.scrollTo( window.pageXOffset, pageYOffset );
+			} else if ( parseInt( textEditor.style.height, 10 ) < textEditor.scrollHeight ) {
+				textEditor.style.height = textEditor.scrollHeight + 'px';
+ 			}
+
+ 			textLength = textEditor.value.length;
+ 		}
+
+ 		function mceGetCursorOffset() {
+			if ( ! editor ) {
+				return false;
+			}
+
+			var node = editor.selection.getNode(),
+				range, view, offset;
+
+			if ( editor.wp && editor.wp.getView && ( view = editor.wp.getView( node ) ) ) {
+				offset = view.getBoundingClientRect();
+			} else {
+				range = editor.selection.getRng();
+
+				try {
+					offset = range.getClientRects()[0];
+				} catch( er ) {}
+
+				if ( ! offset ) {
+					offset = node.getBoundingClientRect();
+				}
+			}
+
+			return offset.height ? offset : false;
+		}
+
+		// Make sure the caret is always visible.
+		function mceKeyup( event ) {
+			var VK = window.tinymce.util.VK,
+				key = event.keyCode;
+
+			// Bail on special keys.
+			if ( key <= 47 && ! ( key === VK.SPACEBAR || key === VK.ENTER || key === VK.DELETE || key === VK.BACKSPACE || key === VK.UP || key === VK.LEFT || key === VK.DOWN || key === VK.UP ) ) {
+				return;
+			// OS keys, function keys, num lock, scroll lock
+			} else if ( ( key >= 91 && key <= 93 ) || ( key >= 112 && key <= 123 ) || key === 144 || key === 145 ) {
+				return;
+			}
+
+			mceScroll( key );
+		}
+
+		function mceScroll( key ) {
+			var cursorTop, cursorBottom, editorBottom,
+				offset = mceGetCursorOffset(),
+				bufferTop = 50,
+				bufferBottom = 65,
+				VK = window.tinymce.util.VK;
+
+			if ( ! offset ) {
+				return;
+			}
+
+			cursorTop = offset.top + editor.iframeElement.getBoundingClientRect().top;
+			cursorBottom = cursorTop + offset.height;
+			cursorTop = cursorTop - bufferTop;
+			cursorBottom = cursorBottom + bufferBottom;
+			editorBottom = $window.height();
+
+			// Don't scroll if the node is taller than the visible part of the editor
+			if ( editorBottom < offset.height ) {
+				return;
+			}
+
+			if ( cursorTop < 0 && ( key === VK.UP || key === VK.LEFT || key === VK.BACKSPACE ) ) {
+				window.scrollTo( window.pageXOffset, cursorTop + window.pageYOffset );
+			} else if ( cursorBottom > editorBottom ) {
+				window.scrollTo( window.pageXOffset, cursorBottom + window.pageYOffset - editorBottom );
+			}
+		}
+
 		/**
 		 * Replace emoji images with chars and sanitize the text content.
 		 */
@@ -163,8 +262,7 @@
 		 * @param action string publish|draft
 		 */
 		function submitPost( action ) {
-			var data,
-				keepFocus = $( document.activeElement ).hasClass( 'draft-button' );
+			var data;
 
 			saveAlert = false;
 			showSpinner();
@@ -183,50 +281,28 @@
 			}).always( function() {
 				hideSpinner();
 				clearNotices();
+				$( '.publish-button' ).removeClass( 'is-saving' );
 			}).done( function( response ) {
-				var $link, $button;
-
 				if ( ! response.success ) {
 					renderError( response.data.errorMessage );
 				} else if ( response.data.redirect ) {
-					if ( window.opener && settings.redirInParent ) {
+					if ( window.opener && ( settings.redirInParent || response.data.force ) ) {
 						try {
 							window.opener.location.href = response.data.redirect;
-						} catch( er ) {}
 
-						window.self.close();
+							window.setTimeout( function() {
+								window.self.close();
+							}, 200 );
+						} catch( er ) {
+							window.location.href = response.data.redirect;
+						}
 					} else {
 						window.location.href = response.data.redirect;
 					}
-				} else if ( response.data.postSaved ) {
-					$link = $( '.edit-post-link' );
-					$button = $( '.draft-button' );
-					editLinkVisible = true;
-
-					$button.fadeOut( 200, function() {
-						$button.removeClass( 'is-saving' );
-						$link.fadeIn( 200, function() {
-							var active = document.activeElement;
-							// Different browsers move the focus to different places when the button is disabled.
-							if ( keepFocus && ( active === $button[0] || $( active ).hasClass( 'post-actions' ) || active.nodeName === 'BODY' ) ) {
-								$link.focus();
-							}
-						});
-					});
 				}
 			}).fail( function() {
 				renderError( __( 'serverError' ) );
 			});
-		}
-
-		function resetDraftButton() {
-			if ( editLinkVisible ) {
-				editLinkVisible = false;
-
-				$( '.edit-post-link' ).fadeOut( 200, function() {
-					$( '.draft-button' ).removeClass( 'is-saving' ).fadeIn( 200 );
-				});
-			}
 		}
 
 		/**
@@ -238,10 +314,6 @@
 		 */
 		function insertSelectedMedia( $element ) {
 			var src, link, newContent = '';
-
-			if ( ! editor ) {
-				return;
-			}
 
 			src = checkUrl( $element.attr( 'data-wp-src' ) || '' );
 			link = checkUrl( data.u );
@@ -256,10 +328,14 @@
 				newContent = '[embed]' + src + '[/embed]';
 			}
 
-			if ( ! hasSetFocus ) {
-				editor.setContent( '<p>' + newContent + '</p>' + editor.getContent() );
-			} else {
-				editor.execCommand( 'mceInsertContent', false, newContent );
+			if ( editor && ! editor.isHidden() ) {
+				if ( ! hasSetFocus ) {
+					editor.setContent( '<p>' + newContent + '</p>' + editor.getContent() );
+				} else {
+					editor.execCommand( 'mceInsertContent', false, newContent );
+				}
+			} else if ( window.QTags ) {
+				window.QTags.insertContent( newContent );
 			}
 		}
 
@@ -550,7 +626,6 @@
 
 			$titleField.on( 'focus', function() {
 				$placeholder.addClass( 'is-hidden' );
-				resetDraftButton();
 			}).on( 'blur', function() {
 				if ( ! $titleField.text() && ! $titleField.html() ) {
 					$placeholder.removeClass( 'is-hidden' );
@@ -626,6 +701,11 @@
 			});
 		}
 
+		function splitButtonClose() {
+			$( '.split-button' ).removeClass( 'is-open' );
+			$( '.split-button-toggle' ).attr( 'aria-expanded', 'false' );
+		}
+
 		/* ***************************************************************
 		 * PROCESSING FUNCTIONS
 		 *************************************************************** */
@@ -642,22 +722,52 @@
 			if ( window.tagBox ) {
 				window.tagBox.init();
 			}
+
+			// iOS doesn't fire click events on "standard" elements without this...
+			if ( iOS ) {
+				$( document.body ).css( 'cursor', 'pointer' );
+			}
 		}
 
 		/**
 		 * Set app events and other state monitoring related code.
 		 */
 		function monitor() {
-			$( document ).on( 'tinymce-editor-init', function( event, ed ) {
+			var $splitButton = $( '.split-button' );
+
+			$document.on( 'tinymce-editor-init', function( event, ed ) {
 				editor = ed;
 
 				editor.on( 'nodechange', function() {
 					hasSetFocus = true;
-					resetDraftButton();
-				} );
+				});
+
+				editor.on( 'focus', function() {
+					splitButtonClose();
+				});
+
+				editor.on( 'show', function() {
+					setTimeout( function() {
+						editor.execCommand( 'wpAutoResize' );
+					}, 300 );
+				});
+
+				editor.on( 'hide', function() {
+					setTimeout( function() {
+						textEditorResize( 'reset' );
+					}, 100 );
+				});
+
+				editor.on( 'keyup', mceKeyup );
+				editor.on( 'undo redo', mceScroll );
+
 			}).on( 'click.press-this keypress.press-this', '.suggested-media-thumbnail', function( event ) {
 				if ( event.type === 'click' || event.keyCode === 13 ) {
 					insertSelectedMedia( $( this ) );
+				}
+			}).on( 'click.press-this', function( event ) {
+				if ( ! $( event.target ).closest( 'button' ).hasClass( 'split-button-toggle' ) ) {
+					splitButtonClose();
 				}
 			});
 
@@ -668,9 +778,10 @@
 
 				if ( $button.length ) {
 					if ( $button.hasClass( 'draft-button' ) ) {
-						$button.addClass( 'is-saving' );
+						$( '.publish-button' ).addClass( 'is-saving' );
 						submitPost( 'draft' );
 					} else if ( $button.hasClass( 'publish-button' ) ) {
+						$button.addClass( 'is-saving' );
 						submitPost( 'publish' );
 					} else if ( $button.hasClass( 'preview-button' ) ) {
 						prepareFormData();
@@ -679,10 +790,19 @@
 						$( '#wp-preview' ).val( 'dopreview' );
 						$( '#pressthis-form' ).attr( 'target', '_blank' ).submit().attr( 'target', '' );
 						$( '#wp-preview' ).val( '' );
+					} else if ( $button.hasClass( 'standard-editor-button' ) ) {
+						$( '.publish-button' ).addClass( 'is-saving' );
+						$( '#pt-force-redirect' ).val( 'true' );
+						submitPost( 'draft' );
+					} else if ( $button.hasClass( 'split-button-toggle' ) ) {
+						if ( $splitButton.hasClass( 'is-open' ) ) {
+							$splitButton.removeClass( 'is-open' );
+							$button.attr( 'aria-expanded', 'false' );
+						} else {
+							$splitButton.addClass( 'is-open' );
+							$button.attr( 'aria-expanded', 'true' );
+						}
 					}
-				} else if ( $target.hasClass( 'edit-post-link' ) && window.opener ) {
-					window.opener.focus();
-					window.self.close();
 				}
 			});
 
@@ -722,11 +842,15 @@
 				}
 			} );
 
-			$( window ).on( 'beforeunload.press-this', function() {
+			$window.on( 'beforeunload.press-this', function() {
 				if ( saveAlert || ( editor && editor.isDirty() ) ) {
 					return __( 'saveAlert' );
 				}
-			} );
+			} ).on( 'resize.press-this', function() {
+				if ( ! editor || editor.isHidden() ) {
+					textEditorResize( 'reset' );
+				}
+			});
 
 			$( 'button.add-cat-toggle' ).on( 'click.press-this', function() {
 				var $this = $( this );
@@ -761,6 +885,8 @@
 				}
 			} );
 
+			$textEditor.on( 'focus.press-this input.press-this propertychange.press-this', textEditorResize );
+
 			return true;
 		}
 
@@ -777,7 +903,7 @@
 		}
 
 		// Let's go!
-		$( document ).ready( function() {
+		$document.ready( function() {
 			render();
 			monitor();
 			refreshCatsCache();

@@ -2,7 +2,7 @@
 /*
 Plugin Name: WP Multibyte Patch
 Description: Multibyte functionality enhancement for the WordPress Japanese package.
-Version: 2.3.1
+Version: 2.4
 Plugin URI: http://eastcoder.com/code/wp-multibyte-patch/
 Author: Seisuke Kuraishi
 Author URI: http://tinybit.co.jp/
@@ -15,7 +15,7 @@ Domain Path: /languages
  * Multibyte functionality enhancement for the WordPress Japanese package.
  *
  * @package WP_Multibyte_Patch
- * @version 2.3.1
+ * @version 2.4
  * @author Seisuke Kuraishi <210pura@gmail.com>
  * @copyright Copyright (c) 2015 Seisuke Kuraishi, Tinybit Inc.
  * @license http://opensource.org/licenses/gpl-2.0.php GPLv2
@@ -62,7 +62,7 @@ class multibyte_patch {
 	var $debug_suffix = '';
 	var $textdomain = 'wp-multibyte-patch';
 	var $lang_dir = 'languages';
-	var $required_version = '4.1-RC1';
+	var $required_version = '4.2-RC1';
 	var $query_based_vars = array();
 
 	// For fallback purpose only. (1.6)
@@ -272,22 +272,30 @@ class multibyte_patch {
 	}
 
 	function wplink_js( &$scripts ) {
-		global $wp_version;
-		$script_required_version = '4.2-RC1';
+		$script_required_version = '4.3-RC3';
 
-		if ( version_compare( substr( $wp_version, 0, strlen( $script_required_version ) ), $script_required_version, '<' ) )
-			$scripts->add( 'wplink', plugin_dir_url( __FILE__ ) . "js/20141213/wplink{$this->debug_suffix}.js", array( 'jquery' ), '20141213', 1 );
+		if ( !$this->is_wp_required_version( $script_required_version ) )
+			$scripts->add( 'wplink', plugin_dir_url( __FILE__ ) . "js/20150424/wplink{$this->debug_suffix}.js", array( 'jquery' ), '20150424', 1 );
 		else
-			$scripts->add( 'wplink', plugin_dir_url( __FILE__ ) . "js/wplink{$this->debug_suffix}.js", array( 'jquery' ), '20150424', 1 );
+			$scripts->add( 'wplink', plugin_dir_url( __FILE__ ) . "js/wplink{$this->debug_suffix}.js", array( 'jquery' ), '20150818', 1 );
 	}
 
 	function word_count_js( &$scripts ) {
-		$scripts->add( 'word-count', plugin_dir_url( __FILE__ ) . "js/word-count{$this->debug_suffix}.js", array( 'jquery' ),  '20131219', 1 );
+		$script_required_version = '4.3-RC1';
+
+		if ( !$this->is_wp_required_version( $script_required_version ) )
+			$scripts->add( 'word-count', plugin_dir_url( __FILE__ ) . "js/20131219/word-count{$this->debug_suffix}.js", array( 'jquery' ), 20131219, 1 );
+		//else
+		//	$scripts->add( 'word-count', plugin_dir_url( __FILE__ ) . "js/word-count{$this->debug_suffix}.js", array(), '20150818', 1 );
 	}
 
 	function force_character_count( $translations = '', $text = '', $context = '' ) {
 		if ( 'word count: words or characters?' == $context && 'words' == $text )
 			return 'characters';
+
+		if ( 'Word count type. Do not translate!' == $context && 'words' == $text )
+			return 'characters_including_spaces';
+
 		return $translations;
 	}
 
@@ -336,10 +344,20 @@ class multibyte_patch {
 			return preg_match_all( "/./us", $str, $match );
 	}
 
+	function is_wp_required_version( $required_version ) {
+		global $wp_version;
+		return version_compare( $wp_version, $required_version, '<' ) ? false : true;
+	}
+
 	function filters_after_setup_theme() {
 		// add filter
-		if ( false !== $this->conf['patch_force_character_count'] && 'characters' != _x( 'words', 'word count: words or characters?' ) )
+		if ( false !== $this->conf['patch_force_character_count']) {
+			if (
+				$this->is_wp_required_version( '4.3-RC1' ) && 'characters_including_spaces' != _x( 'words', 'Word count type. Do not translate!' ) || 
+				!$this->is_wp_required_version( '4.3-RC1' ) && 'characters' != _x( 'words', 'word count: words or characters?' )
+			)
 			add_filter( 'gettext_with_context', array( $this, 'force_character_count' ), 10, 3 );
+		}
 
 		if ( false !== $this->conf['patch_force_twentytwelve_open_sans_off'] && 'twentytwelve' == get_template() ) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'force_twentytwelve_open_sans_off' ), 99 );
@@ -421,10 +439,9 @@ class multibyte_patch {
 	}
 
 	function activation_check() {
-		global $wp_version;
 		$required_version = $this->required_version;
 
-		if ( version_compare( substr( $wp_version, 0, strlen( $required_version ) ), $required_version, '<' ) ) {
+		if ( !$this->is_wp_required_version( $required_version ) ) {
 			deactivate_plugins( __FILE__ );
 			exit( sprintf( __( 'Sorry, WP Multibyte Patch requires WordPress %s or later.', 'wp-multibyte-patch' ), $required_version ) );
 		}

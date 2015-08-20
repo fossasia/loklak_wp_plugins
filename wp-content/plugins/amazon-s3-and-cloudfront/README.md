@@ -2,14 +2,16 @@
 **Contributors:** bradt  
 **Donate link:** https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5VPMGLLK94XJC  
 **Tags:** uploads, amazon, s3, mirror, admin, media, cdn, cloudfront  
-**Requires at least:** 3.5  
+**Requires at least:** 3.7  
 **Tested up to:** 4.3  
-**Stable tag:** 0.9.2  
+**Stable tag:** 0.9.3  
 **License:** GPLv3  
 
 Copies files to Amazon S3 as they are uploaded to the Media Library. Optionally configure Amazon CloudFront for faster delivery.
 
 ## Description ##
+
+https://www.youtube.com/watch?v=_PVybEGaRXc
 
 This plugin automatically copies images, videos, documents, and any other media added through WordPress' media uploader to [Amazon Simple Storage Service](http://aws.amazon.com/s3/) (S3). It then automatically replaces the URL to each media file with their respective S3 URL or, if you have configured [Amazon CloudFront](http://aws.amazon.com/cloudfront/), the respective CloudFront URL. Image thumbnails are also copied to S3 and delivered through S3/CloudFront.
 
@@ -17,18 +19,19 @@ Uploading files *directly* to your S3 account is not currently supported by this
 
 If you're adding this plugin to a site that's been around for a while, your existing media files will not be copied or served from S3. Only newly uploaded files will be copied and served from S3.
 
-**Pro Version**
+**PRO Upgrade with Email Support and More Features**
 
-We’re working on a pro version that will include the following features:
+* Upload existing Media Library to S3
+* Find & replace file URLs in content
+* Control S3 files from the Media Library
+* [Assets addon](https://deliciousbrains.com/wp-offload-s3/?utm_source=wordpress.org&utm_medium=web&utm_content=desc&utm_campaign=freeplugin#assets-addon) - Serve your CSS & JS from S3/CloudFront
+* [WooCommerce addon](https://deliciousbrains.com/wp-offload-s3/?utm_source=wordpress.org&utm_medium=web&utm_content=desc&utm_campaign=freeplugin#woocommerce-addon)
+* [Easy Digital Downloads addon](https://deliciousbrains.com/wp-offload-s3/?utm_source=wordpress.org&utm_medium=web&utm_content=desc&utm_campaign=freeplugin#edd-addon)
+* PriorityExpert&trade; email support
 
-* Copy existing Media Library to S3
-* Serve theme JS & CSS from S3/CloudFront
-* WooCommerce & EDD integration
-* Awesome email support
+See the video below or [visit the web site](http://deliciousbrains.com/wp-offload-s3/?utm_source=wordpress.org&utm_medium=web&utm_content=desc&utm_campaign=freeplugin) to learn more about the pro version.
 
-[Sign up for news about the pro version](https://confirmsubscription.com/h/t/295CA85AEB94E879)
-
-[Request features, report bugs, and submit pull requests on Github](https://github.com/deliciousbrains/wp-amazon-s3-and-cloudfront/issues)
+https://www.youtube.com/watch?v=55xNGnbJ_CY
 
 *This plugin has been completely rewritten, but was originally a fork of
 [Amazon S3 for WordPress with CloudFront](http://wordpress.org/extend/plugins/tantan-s3-cloudfront/)
@@ -63,10 +66,14 @@ This version requires PHP 5.3.3+ and the Amazon Web Services plugin
 
 ## Changelog ##
 
-### 0.9.2 - 2015-07-29- ###
+### 0.9.3 - 2015-08-17 ###
+* New: Pro upgrade sidebar
+* Bug fix: Create buckets in US standard region causing S3 URLs to 404 errors
+
+### 0.9.2 - 2015-07-29 ###
 * Bug fix: Accidentally released the sidebar for after we launch the pro version
 
-### 0.9.1 - 2015-07-29- ###
+### 0.9.1 - 2015-07-29 ###
 * Improvement: Access denied sample IAM policy replaced with link to [Quick Start Guide](https://deliciousbrains.com/wp-offload-s3/doc/quick-start-guide/)
 * Improvement: Access denied messages on bucket selection or bucket creation now link to [Quick Start Guide](https://deliciousbrains.com/wp-offload-s3/doc/quick-start-guide/)
 * Improvement: Object expires time can now be filtered using the `as3cf_object_meta` filter

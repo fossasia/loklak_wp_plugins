@@ -122,7 +122,7 @@ if ( $action ) {
 			require_once(ABSPATH . 'wp-admin/admin-header.php');
 
 			echo '<div class="wrap">';
-			echo '<h2>' . esc_html( $title ) . '</h2>';
+			echo '<h1>' . esc_html( $title ) . '</h1>';
 
 			$url = self_admin_url('update.php?action=update-selected&amp;plugins=' . urlencode( join(',', $plugins) ));
 			$url = wp_nonce_url($url, 'bulk-update-plugins');
@@ -148,6 +148,9 @@ if ( $action ) {
 
 			@ini_set('display_errors', true); //Ensure that Fatal errors are displayed.
 			// Go back to "sandbox" scope so we get the same errors as before
+			/**
+			 * @param string $plugin
+			 */
 			function plugin_sandbox_scrape( $plugin ) {
 				wp_register_plugin_realpath( WP_PLUGIN_DIR . '/' . $plugin );
 				include( WP_PLUGIN_DIR . '/' . $plugin );
@@ -285,13 +288,13 @@ if ( $action ) {
 					$plugins_to_delete = count( $plugin_info );
 				?>
 				<?php if ( 1 == $plugins_to_delete ) : ?>
-					<h2><?php _e( 'Delete Plugin' ); ?></h2>
+					<h1><?php _e( 'Delete Plugin' ); ?></h1>
 					<?php if ( $have_non_network_plugins && is_network_admin() ) : ?>
 						<div class="error"><p><strong><?php _e( 'Caution:' ); ?></strong> <?php _e( 'This plugin may be active on other sites in the network.' ); ?></p></div>
 					<?php endif; ?>
 					<p><?php _e( 'You are about to remove the following plugin:' ); ?></p>
 				<?php else: ?>
-					<h2><?php _e( 'Delete Plugins' ); ?></h2>
+					<h1><?php _e( 'Delete Plugins' ); ?></h1>
 					<?php if ( $have_non_network_plugins && is_network_admin() ) : ?>
 						<div class="error"><p><strong><?php _e( 'Caution:' ); ?></strong> <?php _e( 'These plugins may be active on other sites in the network.' ); ?></p></div>
 					<?php endif; ?>
@@ -327,13 +330,13 @@ if ( $action ) {
 						}
 					?>
 					<?php wp_nonce_field('bulk-plugins') ?>
-					<?php submit_button( $data_to_delete ? __( 'Yes, Delete these files and data' ) : __( 'Yes, Delete these files' ), 'button', 'submit', false ); ?>
+					<?php submit_button( $data_to_delete ? __( 'Yes, delete these files and data' ) : __( 'Yes, delete these files' ), 'button', 'submit', false ); ?>
 				</form>
 				<?php
 				$referer = wp_get_referer();
 				?>
 				<form method="post" action="<?php echo $referer ? esc_url( $referer ) : ''; ?>" style="display:inline;">
-					<?php submit_button( __( 'No, Return me to the plugin list' ), 'button', 'submit', false ); ?>
+					<?php submit_button( __( 'No, return me to the plugin list' ), 'button', 'submit', false ); ?>
 				</form>
 
 				<p><a href="#" onclick="jQuery('#files-list').toggle(); return false;"><?php _e('Click to view entire list of files which will be deleted'); ?></a></p>
@@ -443,13 +446,13 @@ if ( !empty($invalid) )
 <?php endif; ?>
 
 <div class="wrap">
-<h2><?php echo esc_html( $title );
+<h1><?php echo esc_html( $title );
 if ( ( ! is_multisite() || is_network_admin() ) && current_user_can('install_plugins') ) { ?>
- <a href="<?php echo self_admin_url( 'plugin-install.php' ); ?>" class="add-new-h2"><?php echo esc_html_x('Add New', 'plugin'); ?></a>
+ <a href="<?php echo self_admin_url( 'plugin-install.php' ); ?>" class="page-title-action"><?php echo esc_html_x('Add New', 'plugin'); ?></a>
 <?php }
 if ( $s )
 	printf( '<span class="subtitle">' . __('Search results for &#8220;%s&#8221;') . '</span>', esc_html( $s ) ); ?>
-</h2>
+</h1>
 
 <?php
 /**

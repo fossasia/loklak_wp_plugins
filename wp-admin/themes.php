@@ -124,12 +124,12 @@ require_once( ABSPATH . 'wp-admin/admin-header.php' );
 ?>
 
 <div class="wrap">
-	<h2><?php esc_html_e( 'Themes' ); ?>
+	<h1><?php esc_html_e( 'Themes' ); ?>
 		<span class="title-count theme-count"><?php echo count( $themes ); ?></span>
 	<?php if ( ! is_multisite() && current_user_can( 'install_themes' ) ) : ?>
-		<a href="<?php echo admin_url( 'theme-install.php' ); ?>" class="hide-if-no-js add-new-h2"><?php echo esc_html_x( 'Add New', 'Add new theme' ); ?></a>
+		<a href="<?php echo admin_url( 'theme-install.php' ); ?>" class="hide-if-no-js page-title-action"><?php echo esc_html_x( 'Add New', 'Add new theme' ); ?></a>
 	<?php endif; ?>
-	</h2>
+	</h1>
 <?php
 if ( ! validate_current_theme() || isset( $_GET['broken'] ) ) : ?>
 <div id="message1" class="updated notice is-dismissible"><p><?php _e('The active theme is broken. Reverting to the default theme.'); ?></p></div>
@@ -245,7 +245,6 @@ foreach ( $themes as $theme ) :
 		<a class="button button-secondary activate" href="<?php echo $theme['actions']['activate']; ?>"><?php _e( 'Activate' ); ?></a>
 		<?php if ( current_user_can( 'edit_theme_options' ) && current_user_can( 'customize' ) ) { ?>
 			<a class="button button-primary load-customize hide-if-no-customize" href="<?php echo $theme['actions']['customize']; ?>"><?php _e( 'Live Preview' ); ?></a>
-			<a class="button button-secondary hide-if-customize" href="<?php echo $theme['actions']['preview']; ?>"><?php _e( 'Preview' ); ?></a>
 		<?php } ?>
 	<?php } ?>
 
@@ -280,7 +279,7 @@ $can_delete = current_user_can( 'delete_themes' );
 		<th><?php _ex('Name', 'theme name'); ?></th>
 		<th><?php _e('Description'); ?></th>
 		<?php if ( $can_delete ) { ?>
-			<th></th>
+			<td></td>
 		<?php } ?>
 		</tr>
 	</tr>
@@ -331,7 +330,7 @@ $can_delete = current_user_can( 'delete_themes' );
 		<h3 class="theme-name" id="{{ data.id }}-name">
 			<?php
 			/* translators: %s: theme name */
-			printf( __( '<span>Active:</span> %s' ), '{{ data.name }}' );
+			printf( __( '<span>Active:</span> %s' ), '{{{ data.name }}}' );
 			?>
 		</h3>
 	<# } else { #>
@@ -347,7 +346,6 @@ $can_delete = current_user_can( 'delete_themes' );
 	<# } else { #>
 		<a class="button button-secondary activate" href="{{{ data.actions.activate }}}"><?php _e( 'Activate' ); ?></a>
 		<a class="button button-primary load-customize hide-if-no-customize" href="{{{ data.actions.customize }}}"><?php _e( 'Live Preview' ); ?></a>
-		<a class="button button-secondary hide-if-customize" href="{{{ data.actions.preview }}}"><?php _e( 'Preview' ); ?></a>
 	<# } #>
 
 	</div>
@@ -363,7 +361,7 @@ $can_delete = current_user_can( 'delete_themes' );
 		<div class="theme-header">
 			<button class="left dashicons dashicons-no"><span class="screen-reader-text"><?php _e( 'Show previous theme' ); ?></span></button>
 			<button class="right dashicons dashicons-no"><span class="screen-reader-text"><?php _e( 'Show next theme' ); ?></span></button>
-			<button class="close dashicons dashicons-no"><span class="screen-reader-text"><?php _e( 'Close overlay' ); ?></span></button>
+			<button class="close dashicons dashicons-no"><span class="screen-reader-text"><?php _e( 'Close details dialog' ); ?></span></button>
 		</div>
 		<div class="theme-about">
 			<div class="theme-screenshots">
@@ -409,7 +407,6 @@ $can_delete = current_user_can( 'delete_themes' );
 					<a href="{{{ data.actions.activate }}}" class="button button-secondary activate"><?php _e( 'Activate' ); ?></a>
 				<# } #>
 				<a href="{{{ data.actions.customize }}}" class="button button-primary load-customize hide-if-no-customize"><?php _e( 'Live Preview' ); ?></a>
-				<a href="{{{ data.actions.preview }}}" class="button button-secondary hide-if-customize"><?php _e( 'Preview' ); ?></a>
 			</div>
 
 			<# if ( ! data.active && data.actions['delete'] ) { #>

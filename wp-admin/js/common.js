@@ -37,17 +37,19 @@ columns = {
 	},
 
 	checked : function(column) {
-		$('.column-' + column).show();
+		$('.column-' + column).removeClass( 'hidden' );
 		this.colSpanChange(+1);
 	},
 
 	unchecked : function(column) {
-		$('.column-' + column).hide();
+		$('.column-' + column).addClass( 'hidden' );
 		this.colSpanChange(-1);
 	},
 
 	hidden : function() {
-		return $('.manage-column').filter(':hidden').map(function() { return this.id; }).get().join(',');
+		return $( '.manage-column[id]' ).filter( ':hidden' ).map(function() {
+			return this.id;
+		}).get().join( ',' );
 	},
 
 	useCheckboxesForHidden : function() {
@@ -103,15 +105,14 @@ screenMeta = {
 
 	init: function() {
 		this.element = $('#screen-meta');
-		this.toggles = $('.screen-meta-toggle a');
+		this.toggles = $( '#screen-meta-links' ).find( '.show-settings' );
 		this.page    = $('#wpcontent');
 
 		this.toggles.click( this.toggleEvent );
 	},
 
-	toggleEvent: function( e ) {
-		var panel = $( this.href.replace(/.+#/, '#') );
-		e.preventDefault();
+	toggleEvent: function() {
+		var panel = $( '#' + $( this ).attr( 'aria-controls' ) );
 
 		if ( !panel.length )
 			return;
@@ -122,22 +123,22 @@ screenMeta = {
 			screenMeta.open( panel, $(this) );
 	},
 
-	open: function( panel, link ) {
+	open: function( panel, button ) {
 
-		$('.screen-meta-toggle').not( link.parent() ).css('visibility', 'hidden');
+		$( '#screen-meta-links' ).find( '.screen-meta-toggle' ).not( button.parent() ).css( 'visibility', 'hidden' );
 
 		panel.parent().show();
 		panel.slideDown( 'fast', function() {
 			panel.focus();
-			link.addClass('screen-meta-active').attr('aria-expanded', true);
+			button.addClass( 'screen-meta-active' ).attr( 'aria-expanded', true );
 		});
 
 		$( document ).trigger( 'screen:options:open' );
 	},
 
-	close: function( panel, link ) {
+	close: function( panel, button ) {
 		panel.slideUp( 'fast', function() {
-			link.removeClass('screen-meta-active').attr('aria-expanded', false);
+			button.removeClass( 'screen-meta-active' ).attr( 'aria-expanded', false );
 			$('.screen-meta-toggle').css('visibility', '');
 			panel.parent().hide();
 		});
@@ -369,7 +370,13 @@ $(document).ready( function() {
 	}
 
 	// Move .notice, .updated and .error alert boxes. Don't move boxes designed to be inline.
-	$firstHeading = $( 'div.wrap h2:first' );
+	$firstHeading = $( '.wrap > h1:first' );
+
+	// Back compatibility: if there is no H1, apply to first H2.
+	if ( ! $firstHeading.length ) {
+		$firstHeading = $( '.wrap h2:first' );
+	}
+
 	$firstHeading.nextAll( 'div.updated, div.error, div.notice' ).addClass( 'below-h2' );
 	$( 'div.updated, div.error, div.notice' ).not( '.below-h2, .inline' ).insertAfter( $firstHeading );
 
@@ -478,7 +485,12 @@ $(document).ready( function() {
 				focusedRowActions.removeClass( 'visible' );
 			}, 30 );
 		}
-	}, 'td.post-title, td.title, td.comment, .tags td.column-name, .bookmarks td.column-name, td.blogname, .users-network td.column-blogs, td.username, .dashboard-comment-wrap' );
+	}, '.has-row-actions' );
+
+	// Toggle list table rows on small screens
+	$( 'tbody' ).on( 'click', '.toggle-row', function() {
+		$( this ).closest( 'tr' ).toggleClass( 'is-expanded' );
+	});
 
 	$('#default-password-nag-no').click( function() {
 		setUserSetting('default_password_nag', 'hide');
@@ -740,6 +752,10 @@ $(document).ready( function() {
 			// Toggle sidebar when toggle is clicked
 			$( '#wp-admin-bar-menu-toggle' ).on( 'click.wp-responsive', function( event ) {
 				event.preventDefault();
+
+				// close any open toolbar submenus
+				$adminbar.find( '.hover' ).removeClass( 'hover' );
+
 				$wpwrap.toggleClass( 'wp-responsive-open' );
 				if ( $wpwrap.hasClass( 'wp-responsive-open' ) ) {
 					$(this).find('a').attr( 'aria-expanded', 'true' );

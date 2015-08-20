@@ -68,7 +68,7 @@ var wpLink;
 				inputs.queryNoticeTextHint.addClass( 'screen-reader-text' ).hide();
 			} );
 
-			inputs.search.keyup( function() {
+			inputs.search.on( 'keyup input', function() {
 				var self = this;
 
 				window.clearTimeout( searchTimer );
@@ -77,26 +77,28 @@ var wpLink;
 				}, 500 );
 			});
 
-			function correctURL() {
-				var url = $.trim( inputs.url.val() );
-
-				if ( url && correctedURL !== url && ! /^(?:[a-z]+:|#|\?|\.|\/)/.test( url ) ) {
-					inputs.url.val( 'http://' + url );
-					correctedURL = url;
-				}
-			}
-
 			inputs.url.on( 'paste', function() {
-				setTimeout( correctURL, 0 );
+				setTimeout( wpLink.correctURL, 0 );
 			} );
 
-			inputs.url.on( 'blur', correctURL );
+			inputs.url.on( 'blur', wpLink.correctURL );
+		},
+
+		// If URL wasn't corrected last time and doesn't start with http:, https:, ? # or /, prepend http://
+		correctURL: function () {
+			var url = $.trim( inputs.url.val() );
+
+			if ( url && correctedURL !== url && ! /^(?:[a-z]+:|#|\?|\.|\/)/.test( url ) ) {
+				inputs.url.val( 'http://' + url );
+				correctedURL = url;
+			}
 		},
 
 		open: function( editorId ) {
-			var ed;
+			var ed,
+				$body = $( document.body );
 
-			$( document.body ).addClass( 'modal-open' );
+			$body.addClass( 'modal-open' );
 
 			wpLink.range = null;
 
@@ -111,6 +113,10 @@ var wpLink;
 			this.textarea = $( '#' + window.wpActiveEditor ).get( 0 );
 
 			if ( typeof tinymce !== 'undefined' ) {
+				// Make sure the link wrapper is the last element in the body,
+				// or the inline editor toolbar may show above the backdrop.
+				$body.append( inputs.backdrop, inputs.wrap );
+
 				ed = tinymce.get( wpActiveEditor );
 
 				if ( ed && ! ed.isHidden() ) {
@@ -260,10 +266,22 @@ var wpLink;
 		},
 
 		getAttrs: function() {
+			wpLink.correctURL();
+
 			return {
 				href: $.trim( inputs.url.val() ),
 				target: inputs.openInNewTab.prop( 'checked' ) ? '_blank' : ''
 			};
+		},
+
+		buildHtml: function(attrs) {
+			var html = '<a href="' + attrs.href + '"';
+
+			if ( attrs.target ) {
+				html += ' target="' + attrs.target + '"';
+			}
+
+			return html + '>';
 		},
 
 		update: function() {
@@ -290,14 +308,7 @@ var wpLink;
 				return;
 			}
 
-			// Build HTML
-			html = '<a href="' + attrs.href + '"';
-
-			if ( attrs.target ) {
-				html += ' target="' + attrs.target + '"';
-			}
-
-			html += '>';
+			html = wpLink.buildHtml(attrs);
 
 			// Insert HTML
 			if ( document.selection && wpLink.range ) {
@@ -354,7 +365,10 @@ var wpLink;
 			}
 
 			link = getLink();
-			text = inputs.text.val();
+
+			if ( inputs.wrap.hasClass( 'has-text-field' ) ) {
+				text = inputs.text.val() || attrs.href;
+			}
 
 			if ( link ) {
 				if ( text ) {
@@ -373,6 +387,8 @@ var wpLink;
 					editor.execCommand( 'mceInsertLink', false, attrs );
 				}
 			}
+
+			editor.nodeChanged();
 		},
 
 		updateFields: function( e, li ) {

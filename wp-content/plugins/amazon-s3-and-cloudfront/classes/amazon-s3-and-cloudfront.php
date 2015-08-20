@@ -1003,10 +1003,9 @@ class Amazon_S3_And_CloudFront extends AWS_Plugin_Base {
 
 		// We don't use $this->get_s3object_region() here because we don't want
 		// to make an AWS API call and slow down page loading
-		if ( isset( $s3object['region'] ) ) {
+		if ( isset( $s3object['region'] ) && self::DEFAULT_REGION !== $s3object['region'] ) {
 			$region = $this->translate_region( $s3object['region'] );
-		}
-		else {
+		} else {
 			$region = '';
 		}
 
@@ -1356,6 +1355,10 @@ class Amazon_S3_And_CloudFront extends AWS_Plugin_Base {
 				if ( is_wp_error( $region ) ) {
 					return $region;
 				}
+			}
+
+			if ( self::DEFAULT_REGION === $region ) {
+				$region = '';
 			}
 
 			$this->set_setting( 'region', $region );

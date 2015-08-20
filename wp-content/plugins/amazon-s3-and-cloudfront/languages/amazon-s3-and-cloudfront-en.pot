@@ -8,13 +8,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: amazon-s3-and-cloudfront\n"
 "Report-Msgid-Bugs-To: nom@deliciousbrains.com\n"
-"POT-Creation-Date: 2015-07-29 16:53-0300\n"
+"POT-Creation-Date: 2015-08-17 15:41-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:84
@@ -40,93 +40,93 @@ msgstr ""
 msgid "Error uploading %s to S3: %s"
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1174
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1173
 msgid "Cheatin&#8217; eh?"
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1178
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1177
 msgid "You do not have sufficient permissions to access this page."
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1184
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1183
 msgid "No bucket name provided."
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1452
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1455
 #, php-format
 msgid "There was an error attempting to get the region of the bucket %s: %s"
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1572
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1575
 msgid ""
 "This is a test file to check if the user has write permission to S3. Delete "
 "me if found."
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1604
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1607
 #, php-format
 msgid ""
 "There was an error attempting to check the permissions of the bucket %s: %s"
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1662
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1665
 msgid "Error creating bucket"
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1663
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1666
 msgid "Bucket name too short."
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1664
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1667
 msgid "Bucket name too long."
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1665
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1668
 msgid ""
 "Invalid character. Bucket names can contain lowercase letters, numbers, "
 "periods and hyphens."
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1666
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1669
 msgid "Error saving bucket"
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1667
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1670
 msgid "Error fetching buckets"
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1668
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1671
 msgid "Error getting URL preview: "
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1669
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1672
 msgid "The changes you made will be lost if you navigate away from this page"
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1727
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1730
 msgid "Cheatin' eh?"
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1830
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1833
 msgctxt "Show the media library tab"
 msgid "Media Library"
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1831
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1834
 msgctxt "Show the support tab"
 msgid "Support"
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1967
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:1970
 #, php-format
 msgid "The file %s has been given %s permissions on Amazon S3."
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:2427
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:2430
 msgid "Quick Start Guide"
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:2429
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:2432
 #, php-format
 msgid ""
 "Looks like we don't have write access to this bucket. It's likely that the "
@@ -135,7 +135,7 @@ msgid ""
 "correctly."
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:2431
+#: builds/amazon-s3-and-cloudfront/classes/amazon-s3-and-cloudfront.php:2434
 #, php-format
 msgid ""
 "Looks like we don't have access to the buckets. It's likely that the user "
@@ -518,49 +518,66 @@ msgstr ""
 msgid "Save Changes"
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/view/sidebar.php:6
-msgid "Pro Version?"
+#: builds/amazon-s3-and-cloudfront/view/sidebar.php:10
+msgid "Upload existing Media Library to S3"
 msgstr ""
 
 #: builds/amazon-s3-and-cloudfront/view/sidebar.php:11
-msgid ""
-"We're working on a pro version that will include the following features:"
+msgid "Find & replace file URLs in content"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/sidebar.php:12
+msgid "Manage S3 files in WordPress"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/sidebar.php:13
+msgid "Assets addon - Serve your CSS & JS from S3/CloudFront"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/sidebar.php:14
+msgid "WooCommerce addon"
 msgstr ""
 
 #: builds/amazon-s3-and-cloudfront/view/sidebar.php:15
-msgid "Copy existing Media Library to S3"
+msgid "Easy Digital Downloads addon"
 msgstr ""
 
 #: builds/amazon-s3-and-cloudfront/view/sidebar.php:16
-msgid "Serve theme JS & CSS from S3/CloudFront"
+msgid "PriorityExpert™ email support"
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/view/sidebar.php:17
-msgid ""
-"WooCommerce & <abbr title=\"Easy Digital Downloads\">EDD</abbr> integration"
-msgstr ""
-
-#: builds/amazon-s3-and-cloudfront/view/sidebar.php:18
-msgid "Awesome email support"
-msgstr ""
-
-#: builds/amazon-s3-and-cloudfront/view/sidebar.php:22
-msgid "Your Email"
+#: builds/amazon-s3-and-cloudfront/view/sidebar.php:19
+msgid "Visit deliciousbrains.com &rarr;"
 msgstr ""
 
 #: builds/amazon-s3-and-cloudfront/view/sidebar.php:26
-msgid "First Name"
+msgid "Get 20% Off!"
 msgstr ""
 
-#: builds/amazon-s3-and-cloudfront/view/sidebar.php:30
-msgid "Last Name"
+#: builds/amazon-s3-and-cloudfront/view/sidebar.php:29
+#, php-format
+msgid ""
+"Submit your name and email and we’ll send you a coupon for 20% off your "
+"upgrade."
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/sidebar.php:33
+msgid "Your Email"
 msgstr ""
 
 #: builds/amazon-s3-and-cloudfront/view/sidebar.php:37
-msgid "Send me news about a pro version"
+msgid "First Name"
 msgstr ""
 
 #: builds/amazon-s3-and-cloudfront/view/sidebar.php:41
+msgid "Last Name"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/sidebar.php:48
+msgid "Send me the coupon"
+msgstr ""
+
+#: builds/amazon-s3-and-cloudfront/view/sidebar.php:52
 msgid ""
 "We promise we will not use your email for anything else and you can "
 "unsubscribe with 1-click anytime."

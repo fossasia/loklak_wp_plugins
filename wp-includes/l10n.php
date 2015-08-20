@@ -21,6 +21,9 @@
  *
  * @since 1.5.0
  *
+ * @global string $locale
+ * @global string $wp_local_package
+ *
  * @return string The locale of the blog or from the 'locale' hook.
  */
 function get_locale() {
@@ -113,7 +116,7 @@ function translate( $text, $domain = 'default' ) {
  */
 function before_last_bar( $string ) {
 	$last_bar = strrpos( $string, '|' );
-	if ( false == $last_bar )
+	if ( false === $last_bar )
 		return $string;
 	else
 		return substr( $string, 0, $last_bar );
@@ -431,6 +434,8 @@ function translate_nooped_plural( $nooped_plural, $count, $domain = 'default' ) 
  *
  * @since 1.5.0
  *
+ * @global array $l10n
+ *
  * @param string $domain Text domain. Unique identifier for retrieving translated strings.
  * @param string $mofile Path to the .mo file.
  * @return bool True on success, false on failure.
@@ -490,6 +495,8 @@ function load_textdomain( $domain, $mofile ) {
  * Unload translations for a text domain.
  *
  * @since 3.0.0
+ *
+ * @global array $l10n
  *
  * @param string $domain Text domain. Unique identifier for retrieving translated strings.
  * @return bool Whether textdomain was unloaded.
@@ -704,6 +711,8 @@ function load_child_theme_textdomain( $domain, $path = false ) {
  *
  * @since 2.8.0
  *
+ * @global array $l10n
+ *
  * @param string $domain Text domain. Unique identifier for retrieving translated strings.
  * @return NOOP_Translations A Translations instance.
  */
@@ -719,6 +728,8 @@ function get_translations_for_domain( $domain ) {
  * Whether there are translations for the text domain.
  *
  * @since 3.0.0
+ *
+ * @global array $l10n
  *
  * @param string $domain Text domain. Unique identifier for retrieving translated strings.
  * @return bool Whether there are translations.
@@ -813,7 +824,7 @@ function wp_get_installed_translations( $type ) {
 		if ( substr( $file, -3 ) !== '.po' ) {
 			continue;
 		}
-		if ( ! preg_match( '/(?:(.+)-)?([A-Za-z_]{2,6}).po/', $file, $match ) ) {
+		if ( ! preg_match( '/(?:(.+)-)?([a-z]{2,3}(?:_[A-Z]{2})?(?:_[a-z0-9]+)?).po/', $file, $match ) ) {
 			continue;
 		}
 		if ( ! in_array( substr( $file, 0, -3 ) . '.mo', $files ) )  {
@@ -855,6 +866,7 @@ function wp_get_pomo_file_data( $po_file ) {
  * Language selector.
  *
  * @since 4.0.0
+ * @since 4.3.0 Introduced the `echo` argument.
  *
  * @see get_available_languages()
  * @see wp_get_available_translations()
@@ -862,15 +874,18 @@ function wp_get_pomo_file_data( $po_file ) {
  * @param string|array $args {
  *     Optional. Array or string of arguments for outputting the language selector.
  *
- *     @type string  $id                           ID attribute of the select element. Default empty.
- *     @type string  $name                         Name attribute of the select element. Default empty.
- *     @type array   $languages                    List of installed languages, contain only the locales.
- *                                                 Default empty array.
- *     @type array   $translations                 List of available translations. Default result of
- *                                                 {@see wp_get_available_translations()}.
- *     @type string  $selected                     Language which should be selected. Default empty.
- *     @type bool    $show_available_translations  Whether to show available translations. Default true.
+ *     @type string   $id                           ID attribute of the select element. Default empty.
+ *     @type string   $name                         Name attribute of the select element. Default empty.
+ *     @type array    $languages                    List of installed languages, contain only the locales.
+ *                                                  Default empty array.
+ *     @type array    $translations                 List of available translations. Default result of
+ *                                                  wp_get_available_translations().
+ *     @type string   $selected                     Language which should be selected. Default empty.
+ *     @type bool|int $echo                         Whether to echo or return the generated markup. Accepts 0, 1, or their
+ *                                                  bool equivalents. Default 1.
+ *     @type bool     $show_available_translations  Whether to show available translations. Default true.
  * }
+ * @return string HTML content only if 'echo' argument is 0.
  */
 function wp_dropdown_languages( $args = array() ) {
 
@@ -880,6 +895,7 @@ function wp_dropdown_languages( $args = array() ) {
 		'languages'    => array(),
 		'translations' => array(),
 		'selected'     => '',
+		'echo'         => 1,
 		'show_available_translations' => true,
 	) );
 
@@ -916,7 +932,7 @@ function wp_dropdown_languages( $args = array() ) {
 
 	$translations_available = ( ! empty( $translations ) && $args['show_available_translations'] );
 
-	printf( '<select name="%s" id="%s">', esc_attr( $args['name'] ), esc_attr( $args['id'] ) );
+	$output = sprintf( '<select name="%s" id="%s">', esc_attr( $args['name'] ), esc_attr( $args['id'] ) );
 
 	// Holds the HTML markup.
 	$structure = array();
@@ -954,7 +970,13 @@ function wp_dropdown_languages( $args = array() ) {
 		$structure[] = '</optgroup>';
 	}
 
-	echo join( "\n", $structure );
+	$output .= join( "\n", $structure );
 
-	echo '</select>';
+	$output .= '</select>';
+
+	if ( $args['echo'] ) {
+		echo $output;
+	}
+
+	return $output;
 }

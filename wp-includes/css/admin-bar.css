@@ -207,17 +207,17 @@ html:lang(he-il) .rtl #wpadminbar *  {
 	right: 100%;
 }
 
-#wpadminbar .ab-top-menu > li > .ab-item:focus,
+#wpadminbar:not(.mobile) .ab-top-menu > li > .ab-item:focus,
 #wpadminbar.nojq .quicklinks .ab-top-menu > li > .ab-item:focus,
-#wpadminbar .ab-top-menu > li:hover > .ab-item,
+#wpadminbar:not(.mobile) .ab-top-menu > li:hover > .ab-item,
 #wpadminbar .ab-top-menu > li.hover > .ab-item {
 	background: #32373c;
 	color: #00b9eb;
 }
 
-#wpadminbar > #wp-toolbar li:hover span.ab-label,
+#wpadminbar:not(.mobile) > #wp-toolbar li:hover span.ab-label,
 #wpadminbar > #wp-toolbar li.hover span.ab-label,
-#wpadminbar > #wp-toolbar a:focus span.ab-label {
+#wpadminbar:not(.mobile) > #wp-toolbar a:focus span.ab-label {
 	color: #00b9eb;
 }
 
@@ -284,6 +284,16 @@ html:lang(he-il) .rtl #wpadminbar *  {
 #wpadminbar li.hover .ab-item:before,
 #wpadminbar li:hover #adminbarsearch:before,
 #wpadminbar li #adminbarsearch.adminbar-focused:before {
+	color: #00b9eb;
+}
+
+#wpadminbar.mobile .quicklinks .ab-icon:before,
+#wpadminbar.mobile .quicklinks .ab-item:before {
+	color: #b4b9be;
+}
+
+#wpadminbar.mobile .quicklinks .hover .ab-icon:before,
+#wpadminbar.mobile .quicklinks .hover .ab-item:before {
 	color: #00b9eb;
 }
 
@@ -510,6 +520,12 @@ html:lang(he-il) .rtl #wpadminbar *  {
 	content: '\f112';
 	top: 2px;
 }
+
+#wpadminbar #wp-admin-bar-customize > .ab-item:before {
+	content: '\f540';
+	top: 2px;
+}
+
 
 #wpadminbar #wp-admin-bar-edit > .ab-item:before {
 	content: '\f464';
@@ -872,6 +888,7 @@ html:lang(he-il) .rtl #wpadminbar *  {
 	/* My Sites and "Site Title" menu */
 	#wpadminbar #wp-admin-bar-my-sites > .ab-item,
 	#wpadminbar #wp-admin-bar-site-name > .ab-item,
+	#wpadminbar #wp-admin-bar-customize > .ab-item,
 	#wpadminbar #wp-admin-bar-edit > .ab-item,
 	#wpadminbar #wp-admin-bar-my-account > .ab-item {
 		text-indent: 100%;
@@ -893,6 +910,7 @@ html:lang(he-il) .rtl #wpadminbar *  {
 	#wpadminbar #wp-admin-bar-edit > .ab-item:before,
 	#wpadminbar #wp-admin-bar-my-sites > .ab-item:before,
 	#wpadminbar #wp-admin-bar-site-name > .ab-item:before,
+	#wpadminbar #wp-admin-bar-customize > .ab-item:before,
 	#wpadminbar #wp-admin-bar-my-account > .ab-item:before {
 		display: block;
 		text-indent: 0;
@@ -1006,10 +1024,10 @@ html:lang(he-il) .rtl #wpadminbar *  {
 	#wpadminbar li#wp-admin-bar-my-sites,
 	#wpadminbar li#wp-admin-bar-updates,
 	#wpadminbar li#wp-admin-bar-site-name,
+	#wpadminbar li#wp-admin-bar-customize,
 	#wpadminbar li#wp-admin-bar-new-content,
 	#wpadminbar li#wp-admin-bar-edit,
 	#wpadminbar li#wp-admin-bar-comments,
-	#wpadminbar li#wp-admin-bar-new-content,
 	#wpadminbar li#wp-admin-bar-my-account {
 		display: block;
 	}
@@ -1119,5 +1137,12 @@ html:lang(he-il) .rtl #wpadminbar *  {
 		position: static;
 		-webkit-box-shadow: none;
 		box-shadow: none;
+	}
+}
+
+/* Very narrow screens */
+@media screen and (max-width: 400px) {
+	#wpadminbar li#wp-admin-bar-comments {
+		display: none;
 	}
 }

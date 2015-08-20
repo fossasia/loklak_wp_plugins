@@ -20,6 +20,8 @@ class WP_Customize_Control {
 	 * Used when sorting two instances whose priorities are equal.
 	 *
 	 * @since 4.1.0
+	 *
+	 * @static
 	 * @access protected
 	 * @var int
 	 */
@@ -137,9 +139,9 @@ class WP_Customize_Control {
 	 *
 	 * @since 3.4.0
 	 *
-	 * @param WP_Customize_Manager $manager
-	 * @param string $id
-	 * @param array $args
+	 * @param WP_Customize_Manager $manager Customizer bootstrap instance.
+	 * @param string               $id      Control ID.
+	 * @param array                $args    Optional. Arguments to override class property defaults.
 	 */
 	public function __construct( $manager, $id, $args = array() ) {
 		$keys = array_keys( get_object_vars( $this ) );
@@ -215,7 +217,7 @@ class WP_Customize_Control {
 	 * @since 4.0.0
 	 * @access public
 	 *
-	 * @return bool Always true.
+	 * @return true Always true.
 	 */
 	public function active_callback() {
 		return true;
@@ -299,9 +301,7 @@ class WP_Customize_Control {
 	final public function get_content() {
 		ob_start();
 		$this->maybe_render();
-		$template = trim( ob_get_contents() );
-		ob_end_clean();
-		return $template;
+		return trim( ob_get_clean() );
 	}
 
 	/**
@@ -568,9 +568,9 @@ class WP_Customize_Color_Control extends WP_Customize_Control {
 	 * @since 3.4.0
 	 * @uses WP_Customize_Control::__construct()
 	 *
-	 * @param WP_Customize_Manager $manager
-	 * @param string $id
-	 * @param array $args
+	 * @param WP_Customize_Manager $manager Customizer bootstrap instance.
+	 * @param string               $id      Control ID.
+	 * @param array                $args    Optional. Arguments to override class property defaults.
 	 */
 	public function __construct( $manager, $id, $args = array() ) {
 		$this->statuses = array( '' => __('Default') );
@@ -678,7 +678,9 @@ class WP_Customize_Media_Control extends WP_Customize_Control {
 	 * @since 4.1.0
 	 * @since 4.2.0 Moved from WP_Customize_Upload_Control.
 	 *
-	 * @param WP_Customize_Manager $manager {@see WP_Customize_Manager} instance.
+	 * @param WP_Customize_Manager $manager Customizer bootstrap instance.
+	 * @param string               $id      Control ID.
+	 * @param array                $args    Optional. Arguments to override class property defaults.
 	 */
 	public function __construct( $manager, $id, $args = array() ) {
 		parent::__construct( $manager, $id, $args );
@@ -714,8 +716,10 @@ class WP_Customize_Media_Control extends WP_Customize_Control {
 	 */
 	public function to_json() {
 		parent::to_json();
+		$this->json['label'] = html_entity_decode( $this->label, ENT_QUOTES, get_bloginfo( 'charset' ) );
 		$this->json['mime_type'] = $this->mime_type;
 		$this->json['button_labels'] = $this->button_labels;
+		$this->json['canUpload'] = current_user_can( 'upload_files' );
 
 		$value = $this->value();
 
@@ -810,7 +814,7 @@ class WP_Customize_Media_Control extends WP_Customize_Control {
 									</video>
 								</div>
 							<# } else { #>
-								<img class="attachment-thumb type-icon" src="{{ data.attachment.icon }}" class="icon" draggable="false" />
+								<img class="attachment-thumb type-icon icon" src="{{ data.attachment.icon }}" draggable="false" />
 								<p class="attachment-title">{{ data.attachment.title }}</p>
 							<# } #>
 						</div>
@@ -818,9 +822,11 @@ class WP_Customize_Media_Control extends WP_Customize_Control {
 				</div>
 			</div>
 			<div class="actions">
+				<# if ( data.canUpload ) { #>
 				<button type="button" class="button remove-button"><?php echo $this->button_labels['remove']; ?></button>
 				<button type="button" class="button upload-button" id="{{ data.settings['default'] }}-button"><?php echo $this->button_labels['change']; ?></button>
 				<div style="clear:both"></div>
+				<# } #>
 			</div>
 		<# } else { #>
 			<div class="current">
@@ -838,7 +844,9 @@ class WP_Customize_Media_Control extends WP_Customize_Control {
 				<# if ( data.defaultAttachment ) { #>
 					<button type="button" class="button default-button"><?php echo $this->button_labels['default']; ?></button>
 				<# } #>
+				<# if ( data.canUpload ) { #>
 				<button type="button" class="button upload-button" id="{{ data.settings['default'] }}-button"><?php echo $this->button_labels['select']; ?></button>
+				<# } #>
 				<div style="clear:both"></div>
 			</div>
 		<# } #>
@@ -899,9 +907,9 @@ class WP_Customize_Image_Control extends WP_Customize_Upload_Control {
 	 * @since 3.4.0
 	 * @uses WP_Customize_Upload_Control::__construct()
 	 *
-	 * @param WP_Customize_Manager $manager
-	 * @param string $id
-	 * @param array  $args
+	 * @param WP_Customize_Manager $manager Customizer bootstrap instance.
+	 * @param string               $id      Control ID.
+	 * @param array                $args    Optional. Arguments to override class property defaults.
 	 */
 	public function __construct( $manager, $id, $args = array() ) {
 		parent::__construct( $manager, $id, $args );
@@ -967,7 +975,7 @@ class WP_Customize_Background_Image_Control extends WP_Customize_Image_Control {
 	 * @since 3.4.0
 	 * @uses WP_Customize_Image_Control::__construct()
 	 *
-	 * @param WP_Customize_Manager $manager
+	 * @param WP_Customize_Manager $manager Customizer bootstrap instance.
 	 */
 	public function __construct( $manager ) {
 		parent::__construct( $manager, 'background_image', array(
@@ -993,6 +1001,127 @@ class WP_Customize_Background_Image_Control extends WP_Customize_Image_Control {
 }
 
 /**
+ * Customize Cropped Image Control class.
+ *
+ * @since 4.3.0
+ *
+ * @see WP_Customize_Media_Control
+ */
+class WP_Customize_Cropped_Image_Control extends WP_Customize_Media_Control {
+
+	/**
+	 * Control type.
+	 *
+	 * @since 4.3.0
+	 * @access public
+	 * @var string
+	 */
+	public $type = 'cropped_image';
+
+	/**
+	 * Suggested width for cropped image.
+	 *
+	 * @since 4.3.0
+	 * @access public
+	 * @var int
+	 */
+	public $width = 150;
+
+	/**
+	 * Suggested height for cropped image.
+	 *
+	 * @since 4.3.0
+	 * @access public
+	 * @var int
+	 */
+	public $height = 150;
+
+	/**
+	 * Whether the width is flexible.
+	 *
+	 * @since 4.3.0
+	 * @access public
+	 * @var bool
+	 */
+	public $flex_width = false;
+
+	/**
+	 * Whether the height is flexible.
+	 *
+	 * @since 4.3.0
+	 * @access public
+	 * @var bool
+	 */
+	public $flex_height = false;
+
+	/**
+	 * Enqueue control related scripts/styles.
+	 *
+	 * @since 4.3.0
+	 * @access public
+	 */
+	public function enqueue() {
+		wp_enqueue_script( 'customize-views' );
+
+		parent::enqueue();
+	}
+
+	/**
+	 * Refresh the parameters passed to the JavaScript via JSON.
+	 *
+	 * @since 4.3.0
+	 * @access public
+	 *
+	 * @see WP_Customize_Control::to_json()
+	 */
+	public function to_json() {
+		parent::to_json();
+
+		$this->json['width']       = absint( $this->width );
+		$this->json['height']      = absint( $this->height );
+		$this->json['flex_width']  = absint( $this->flex_width );
+		$this->json['flex_height'] = absint( $this->flex_height );
+	}
+
+}
+
+/**
+ * Customize Site Icon control class.
+ *
+ * Used only for custom functionality in JavaScript.
+ *
+ * @since 4.3.0
+ *
+ * @see WP_Customize_Cropped_Image_Control
+ */
+class WP_Customize_Site_Icon_Control extends WP_Customize_Cropped_Image_Control {
+
+	/**
+	 * Control type.
+	 *
+	 * @since 4.3.0
+	 * @access public
+	 * @var string
+	 */
+	public $type = 'site_icon';
+
+	/**
+	 * Constructor.
+	 *
+	 * @since 4.3.0
+	 * @access public
+	 *
+	 * @param WP_Customize_Manager $manager Customizer bootstrap instance.
+	 * @param string               $id      Control ID.
+	 * @param array                $args    Optional. Arguments to override class property defaults.
+	 */
+	public function __construct( $manager, $id, $args = array() ) {
+		parent::__construct( $manager, $id, $args );
+		add_action( 'customize_controls_print_styles', 'wp_site_icon', 99 );
+	}
+}
+
+/**
  * Customize Header Image Control class.
  *
  * @since 3.4.0
@@ -1005,7 +1134,11 @@ class WP_Customize_Header_Image_Control extends WP_Customize_Image_Control {
 	public $default_headers;
 
 	/**
-	 * @param WP_Customize_Manager $manager
+	 * Constructor.
+	 *
+	 * @since 3.4.0
+	 *
+	 * @param WP_Customize_Manager $manager Customizer bootstrap instance.
 	 */
 	public function __construct( $manager ) {
 		parent::__construct( $manager, 'header_image', array(
@@ -1021,6 +1154,9 @@ class WP_Customize_Header_Image_Control extends WP_Customize_Image_Control {
 
 	}
 
+	/**
+	 * @access public
+	 */
 	public function enqueue() {
 		wp_enqueue_media();
 		wp_enqueue_script( 'customize-views' );
@@ -1046,6 +1182,10 @@ class WP_Customize_Header_Image_Control extends WP_Customize_Image_Control {
 		parent::enqueue();
 	}
 
+	/**
+	 *
+	 * @global Custom_Image_Header $custom_image_header
+	 */
 	public function prepare_control() {
 		global $custom_image_header;
 		if ( empty( $custom_image_header ) ) {
@@ -1058,23 +1198,26 @@ class WP_Customize_Header_Image_Control extends WP_Customize_Image_Control {
 		$this->uploaded_headers = $custom_image_header->get_uploaded_header_images();
 	}
 
+	/**
+	 * @access public
+	 */
 	public function print_header_image_template() {
 		?>
 		<script type="text/template" id="tmpl-header-choice">
 			<# if (data.random) { #>
-					<button type="button" class="button display-options random">
-						<span class="dashicons dashicons-randomize dice"></span>
-						<# if ( data.type === 'uploaded' ) { #>
-							<?php _e( 'Randomize uploaded headers' ); ?>
-						<# } else if ( data.type === 'default' ) { #>
-							<?php _e( 'Randomize suggested headers' ); ?>
-						<# } #>
-					</button>
+			<button type="button" class="button display-options random">
+				<span class="dashicons dashicons-randomize dice"></span>
+				<# if ( data.type === 'uploaded' ) { #>
+					<?php _e( 'Randomize uploaded headers' ); ?>
+				<# } else if ( data.type === 'default' ) { #>
+					<?php _e( 'Randomize suggested headers' ); ?>
+				<# } #>
+			</button>
 
 			<# } else { #>
 
 			<# if (data.type === 'uploaded') { #>
-				<div class="dashicons dashicons-no close"></div>
+				<button type="button" class="dashicons dashicons-no close"><span class="screen-reader-text"><?php _e( 'Remove image' ); ?></span></button>
 			<# } #>
 
 			<button type="button" class="choice thumbnail"
@@ -1123,23 +1266,26 @@ class WP_Customize_Header_Image_Control extends WP_Customize_Image_Control {
 		<?php
 	}
 
+	/**
+	 * @return string|void
+	 */
 	public function get_current_image_src() {
 		$src = $this->value();
 		if ( isset( $this->get_url ) ) {
 			$src = call_user_func( $this->get_url, $src );
 			return $src;
 		}
-		return null;
 	}
 
+	/**
+	 * @access public
+	 */
 	public function render_content() {
 		$this->print_header_image_template();
 		$visibility = $this->get_current_image_src() ? '' : ' style="display:none" ';
 		$width = absint( get_theme_support( 'custom-header', 'width' ) );
 		$height = absint( get_theme_support( 'custom-header', 'height' ) );
 		?>
-
-
 		<div class="customize-control-content">
 			<p class="customizer-section-intro">
 				<?php
@@ -1160,11 +1306,11 @@ class WP_Customize_Header_Image_Control extends WP_Customize_Image_Control {
 				</div>
 			</div>
 			<div class="actions">
-				<?php /* translators: Hide as in hide header image via the Customizer */ ?>
-				<button type="button"<?php echo $visibility ?> class="button remove"><?php _ex( 'Hide image', 'custom header' ); ?></button>
-				<?php /* translators: New as in add new header image via the Customizer */ ?>
-				<button type="button" class="button new"><?php _ex( 'Add new image', 'header image' ); ?></button>
+				<?php if ( current_user_can( 'upload_files' ) ): ?>
+				<button type="button"<?php echo $visibility; ?> class="button remove" aria-label="<?php esc_attr_e( 'Hide header image' ); ?>"><?php _e( 'Hide image' ); ?></button>
+				<button type="button" class="button new" aria-label="<?php esc_attr_e( 'Add new header image' ); ?>"><?php _e( 'Add new image' ); ?></button>
 				<div style="clear:both"></div>
+				<?php endif; ?>
 			</div>
 			<div class="choices">
 				<span class="customize-control-title header-previously-uploaded">
@@ -1273,11 +1419,11 @@ class WP_Customize_Theme_Control extends WP_Customize_Control {
 				<h3 class="theme-name" id="{{ data.theme.id }}-name">
 					<?php
 					/* translators: %s: theme name */
-					printf( __( '<span>Active:</span> %s' ), '{{ data.theme.name }}' );
+					printf( __( '<span>Active:</span> %s' ), '{{{ data.theme.name }}}' );
 					?>
 				</h3>
 			<# } else { #>
-				<h3 class="theme-name" id="{{ data.theme.id }}-name">{{ data.theme.name }}</h3>
+				<h3 class="theme-name" id="{{ data.theme.id }}-name">{{{ data.theme.name }}}</h3>
 				<div class="theme-actions">
 					<button type="button" class="button theme-details"><?php _e( 'Theme Details' ); ?></button>
 				</div>
@@ -1306,6 +1452,9 @@ class WP_Widget_Area_Customize_Control extends WP_Customize_Control {
 		}
 	}
 
+	/**
+	 * @access public
+	 */
 	public function render_content() {
 		?>
 		<span class="button-secondary add-new-widget" tabindex="0">
@@ -1346,6 +1495,10 @@ class WP_Widget_Form_Customize_Control extends WP_Customize_Control {
 		}
 	}
 
+	/**
+	 *
+	 * @global array $wp_registered_widgets
+	 */
 	public function render_content() {
 		global $wp_registered_widgets;
 		require_once ABSPATH . '/wp-admin/includes/widgets.php';
@@ -1374,5 +1527,445 @@ class WP_Widget_Form_Customize_Control extends WP_Customize_Control {
 	 */
 	public function active_callback() {
 		return $this->manager->widgets->is_widget_rendered( $this->widget_id );
+	}
+}
+
+/**
+ * Customize Nav Menu Control Class.
+ *
+ * @since 4.3.0
+ */
+class WP_Customize_Nav_Menu_Control extends WP_Customize_Control {
+
+	/**
+	 * Control type.
+	 *
+	 * @since 4.3.0
+	 * @access public
+	 * @var string
+	 */
+	public $type = 'nav_menu';
+
+	/**
+	 * The nav menu setting.
+	 *
+	 * @since 4.3.0
+	 * @access public
+	 * @var WP_Customize_Nav_Menu_Setting
+	 */
+	public $setting;
+
+	/**
+	 * Don't render the control's content - it uses a JS template instead.
+	 *
+	 * @since 4.3.0
+	 * @access public
+	 */
+	public function render_content() {}
+
+	/**
+	 * JS/Underscore template for the control UI.
+	 *
+	 * @since 4.3.0
+	 * @access public
+	 */
+	public function content_template() {
+		?>
+		<button type="button" class="button-secondary add-new-menu-item" aria-label="<?php esc_attr_e( 'Add or remove menu items' ); ?>" aria-expanded="false" aria-controls="available-menu-items">
+			<?php _e( 'Add Items' ); ?>
+		</button>
+		<button type="button" class="not-a-button reorder-toggle" aria-label="<?php esc_attr_e( 'Reorder menu items' ); ?>" aria-describedby="reorder-items-desc-{{ data.menu_id }}">
+			<span class="reorder"><?php _ex( 'Reorder', 'Reorder menu items in Customizer' ); ?></span>
+			<span class="reorder-done"><?php _ex( 'Done', 'Cancel reordering menu items in Customizer' ); ?></span>
+		</button>
+		<p class="screen-reader-text" id="reorder-items-desc-{{ data.menu_id }}"><?php _e( 'When in reorder mode, additional controls to reorder menu items will be available in the items list above.' ); ?></p>
+		<span class="add-menu-item-loading spinner"></span>
+		<span class="menu-delete-item">
+			<button type="button" class="not-a-button menu-delete">
+				<?php _e( 'Delete menu' ); ?> <span class="screen-reader-text">{{ data.menu_name }}</span>
+			</button>
+		</span>
+		<?php if ( current_theme_supports( 'menus' ) ) : ?>
+		<ul class="menu-settings">
+			<li class="customize-control">
+				<span class="customize-control-title"><?php _e( 'Menu locations' ); ?></span>
+			</li>
+
+			<?php foreach ( get_registered_nav_menus() as $location => $description ) : ?>
+			<li class="customize-control customize-control-checkbox assigned-menu-location">
+				<label>
+					<input type="checkbox" data-menu-id="{{ data.menu_id }}" data-location-id="<?php echo esc_attr( $location ); ?>" class="menu-location" /> <?php echo $description; ?>
+					<span class="theme-location-set"><?php printf( _x( '(Current: %s)', 'Current menu location' ), '<span class="current-menu-location-name-' . esc_attr( $location ) . '"></span>' ); ?></span>
+				</label>
+			</li>
+			<?php endforeach; ?>
+
+		</ul>
+		<?php endif;
+	}
+
+	/**
+	 * Return parameters for this control.
+	 *
+	 * @since 4.3.0
+	 * @access public
+	 *
+	 * @return array Exported parameters.
+	 */
+	public function json() {
+		$exported            = parent::json();
+		$exported['menu_id'] = $this->setting->term_id;
+
+		return $exported;
+	}
+}
+
+/**
+ * Customize control to represent the name field for a given menu.
+ *
+ * @since 4.3.0
+ */
+class WP_Customize_Nav_Menu_Item_Control extends WP_Customize_Control {
+
+	/**
+	 * Control type.
+	 *
+	 * @since 4.3.0
+	 * @access public
+	 * @var string
+	 */
+	public $type = 'nav_menu_item';
+
+	/**
+	 * The nav menu item setting.
+	 *
+	 * @since 4.3.0
+	 * @access public
+	 * @var WP_Customize_Nav_Menu_Item_Setting
+	 */
+	public $setting;
+
+	/**
+	 * Constructor.
+	 *
+	 * @since 4.3.0
+	 * @access public
+	 *
+	 * @see WP_Customize_Control::__construct()
+	 *
+	 * @param WP_Customize_Manager $manager Customizer bootstrap instance.
+	 * @param string               $id      The control ID.
+	 * @param array                $args    Optional. Overrides class property defaults.
+	 */
+	public function __construct( $manager, $id, $args = array() ) {
+		parent::__construct( $manager, $id, $args );
+	}
+
+	/**
+	 * Don't render the control's content - it's rendered with a JS template.
+	 *
+	 * @since 4.3.0
+	 * @access public
+	 */
+	public function render_content() {}
+
+	/**
+	 * JS/Underscore template for the control UI.
+	 *
+	 * @since 4.3.0
+	 * @access public
+	 */
+	public function content_template() {
+		?>
+		<div class="menu-item-bar">
+			<div class="menu-item-handle">
+				<span class="item-type" aria-hidden="true">{{ data.item_type_label }}</span>
+				<span class="item-title" aria-hidden="true">
+					<span class="spinner"></span>
+					<span class="menu-item-title<# if ( ! data.title ) { #> no-title<# } #>">{{ data.title || wp.customize.Menus.data.l10n.untitled }}</span>
+				</span>
+				<span class="item-controls">
+					<button type="button" class="not-a-button item-edit" aria-expanded="false"><span class="screen-reader-text"><?php
+						/* translators: 1: Title of a menu item, 2: Type of a menu item */
+						printf( __( 'Edit menu item: %1$s (%2$s)' ), '{{ data.title || wp.customize.Menus.data.l10n.untitled }}', '{{ data.item_type_label }}' );
+					?></span><span class="toggle-indicator" aria-hidden="true"></span></button>
+					<button type="button" class="not-a-button item-delete submitdelete deletion"><span class="screen-reader-text"><?php
+						/* translators: 1: Title of a menu item, 2: Type of a menu item */
+						printf( __( 'Remove Menu Item: %1$s (%2$s)' ), '{{ data.title || wp.customize.Menus.data.l10n.untitled }}', '{{ data.item_type_label }}' );
+					?></span></button>
+				</span>
+			</div>
+		</div>
+
+		<div class="menu-item-settings" id="menu-item-settings-{{ data.menu_item_id }}">
+			<# if ( 'custom' === data.item_type ) { #>
+			<p class="field-url description description-thin">
+				<label for="edit-menu-item-url-{{ data.menu_item_id }}">
+					<?php _e( 'URL' ); ?><br />
+					<input class="widefat code edit-menu-item-url" type="text" id="edit-menu-item-url-{{ data.menu_item_id }}" name="menu-item-url" />
+				</label>
+			</p>
+		<# } #>
+			<p class="description description-thin">
+				<label for="edit-menu-item-title-{{ data.menu_item_id }}">
+					<?php _e( 'Navigation Label' ); ?><br />
+					<input type="text" id="edit-menu-item-title-{{ data.menu_item_id }}" class="widefat edit-menu-item-title" name="menu-item-title" />
+				</label>
+			</p>
+			<p class="field-link-target description description-thin">
+				<label for="edit-menu-item-target-{{ data.menu_item_id }}">
+					<input type="checkbox" id="edit-menu-item-target-{{ data.menu_item_id }}" class="edit-menu-item-target" value="_blank" name="menu-item-target" />
+					<?php _e( 'Open link in a new tab' ); ?>
+				</label>
+			</p>
+			<p class="field-attr-title description description-thin">
+				<label for="edit-menu-item-attr-title-{{ data.menu_item_id }}">
+					<?php _e( 'Title Attribute' ); ?><br />
+					<input type="text" id="edit-menu-item-attr-title-{{ data.menu_item_id }}" class="widefat edit-menu-item-attr-title" name="menu-item-attr-title" />
+				</label>
+			</p>
+			<p class="field-css-classes description description-thin">
+				<label for="edit-menu-item-classes-{{ data.menu_item_id }}">
+					<?php _e( 'CSS Classes' ); ?><br />
+					<input type="text" id="edit-menu-item-classes-{{ data.menu_item_id }}" class="widefat code edit-menu-item-classes" name="menu-item-classes" />
+				</label>
+			</p>
+			<p class="field-xfn description description-thin">
+				<label for="edit-menu-item-xfn-{{ data.menu_item_id }}">
+					<?php _e( 'Link Relationship (XFN)' ); ?><br />
+					<input type="text" id="edit-menu-item-xfn-{{ data.menu_item_id }}" class="widefat code edit-menu-item-xfn" name="menu-item-xfn" />
+				</label>
+			</p>
+			<p class="field-description description description-thin">
+				<label for="edit-menu-item-description-{{ data.menu_item_id }}">
+					<?php _e( 'Description' ); ?><br />
+					<textarea id="edit-menu-item-description-{{ data.menu_item_id }}" class="widefat edit-menu-item-description" rows="3" cols="20" name="menu-item-description">{{ data.description }}</textarea>
+					<span class="description"><?php _e( 'The description will be displayed in the menu if the current theme supports it.' ); ?></span>
+				</label>
+			</p>
+
+			<div class="menu-item-actions description-thin submitbox">
+				<# if ( ( 'post_type' === data.item_type || 'taxonomy' === data.item_type ) && '' !== data.original_title ) { #>
+				<p class="link-to-original">
+					<?php printf( __( 'Original: %s' ), '<a class="original-link" href="{{ data.url }}">{{ data.original_title }}</a>' ); ?>
+				</p>
+				<# } #>
+
+				<button type="button" class="not-a-button item-delete submitdelete deletion"><?php _e( 'Remove' ); ?></button>
+				<span class="spinner"></span>
+			</div>
+			<input type="hidden" name="menu-item-db-id[{{ data.menu_item_id }}]" class="menu-item-data-db-id" value="{{ data.menu_item_id }}" />
+			<input type="hidden" name="menu-item-parent-id[{{ data.menu_item_id }}]" class="menu-item-data-parent-id" value="{{ data.parent }}" />
+		</div><!-- .menu-item-settings-->
+		<ul class="menu-item-transport"></ul>
+		<?php
+	}
+
+	/**
+	 * Return parameters for this control.
+	 *
+	 * @since 4.3.0
+	 * @access public
+	 *
+	 * @return array Exported parameters.
+	 */
+	public function json() {
+		$exported                 = parent::json();
+		$exported['menu_item_id'] = $this->setting->post_id;
+
+		return $exported;
+	}
+}
+
+/**
+ * Customize Menu Location Control Class.
+ *
+ * This custom control is only needed for JS.
+ *
+ * @since 4.3.0
+ *
+ * @see WP_Customize_Control
+ */
+class WP_Customize_Nav_Menu_Location_Control extends WP_Customize_Control {
+
+	/**
+	 * Control type.
+	 *
+	 * @since 4.3.0
+	 * @access public
+	 * @var string
+	 */
+	public $type = 'nav_menu_location';
+
+	/**
+	 * Location ID.
+	 *
+	 * @since 4.3.0
+	 * @access public
+	 * @var string
+	 */
+	public $location_id = '';
+
+	/**
+	 * Refresh the parameters passed to JavaScript via JSON.
+	 *
+	 * @since 4.3.0
+	 * @access public
+	 *
+	 * @see WP_Customize_Control::to_json()
+	 */
+	public function to_json() {
+		parent::to_json();
+		$this->json['locationId'] = $this->location_id;
+	}
+
+	/**
+	 * Render content just like a normal select control.
+	 *
+	 * @since 4.3.0
+	 * @access public
+	 */
+	public function render_content() {
+		if ( empty( $this->choices ) ) {
+			return;
+		}
+		?>
+		<label>
+			<?php if ( ! empty( $this->label ) ) : ?>
+			<span class="customize-control-title"><?php echo esc_html( $this->label ); ?></span>
+			<?php endif; ?>
+
+			<?php if ( ! empty( $this->description ) ) : ?>
+			<span class="description customize-control-description"><?php echo $this->description; ?></span>
+			<?php endif; ?>
+
+			<select <?php $this->link(); ?>>
+				<?php
+				foreach ( $this->choices as $value => $label ) :
+					echo '<option value="' . esc_attr( $value ) . '"' . selected( $this->value(), $value, false ) . '>' . $label . '</option>';
+				endforeach;
+				?>
+			</select>
+		</label>
+		<?php
+	}
+}
+
+/**
+ * Customize control to represent the name field for a given menu.
+ *
+ * @since 4.3.0
+ *
+ * @see WP_Customize_Control
+ */
+class WP_Customize_Nav_Menu_Name_Control extends WP_Customize_Control {
+
+	/**
+	 * Type of control, used by JS.
+	 *
+	 * @since 4.3.0
+	 * @access public
+	 * @var string
+	 */
+	public $type = 'nav_menu_name';
+
+	/**
+	 * No-op since we're using JS template.
+	 *
+	 * @since 4.3.0
+	 * @access protected
+	 */
+	protected function render_content() {}
+
+	/**
+	 * Render the Underscore template for this control.
+	 *
+	 * @since 4.3.0
+	 * @access protected
+	 */
+	protected function content_template() {
+		?>
+		<label>
+			<# if ( data.label ) { #>
+				<span class="customize-control-title screen-reader-text">{{ data.label }}</span>
+			<# } #>
+			<input type="text" class="menu-name-field live-update-section-title" />
+		</label>
+		<?php
+	}
+}
+
+/**
+ * Customize control to represent the auto_add field for a given menu.
+ *
+ * @since 4.3.0
+ *
+ * @see WP_Customize_Control
+ */
+class WP_Customize_Nav_Menu_Auto_Add_Control extends WP_Customize_Control {
+
+	/**
+	 * Type of control, used by JS.
+	 *
+	 * @since 4.3.0
+	 * @access public
+	 * @var string
+	 */
+	public $type = 'nav_menu_auto_add';
+
+	/**
+	 * No-op since we're using JS template.
+	 *
+	 * @since 4.3.0
+	 * @access protected
+	 */
+	protected function render_content() {}
+
+	/**
+	 * Render the Underscore template for this control.
+	 *
+	 * @since 4.3.0
+	 * @access protected
+	 */
+	protected function content_template() {
+		?>
+		<span class="customize-control-title"><?php _e( 'Menu options' ); ?></span>
+		<label>
+			<input type="checkbox" class="auto_add" />
+			<?php _e( 'Automatically add new top-level pages to this menu' ); ?>
+		</label>
+		<?php
+	}
+}
+
+/**
+ * Customize control class for new menus.
+ *
+ * @since 4.3.0
+ *
+ * @see WP_Customize_Control
+ */
+class WP_Customize_New_Menu_Control extends WP_Customize_Control {
+
+	/**
+	 * Control type.
+	 *
+	 * @since 4.3.0
+	 * @access public
+	 * @var string
+	 */
+	public $type = 'new_menu';
+
+	/**
+	 * Render the control's content.
+	 *
+	 * @since 4.3.0
+	 * @access public
+	 */
+	public function render_content() {
+		?>
+		<button type="button" class="button button-primary" id="create-new-menu-submit"><?php _e( 'Create Menu' ); ?></button>
+		<span class="spinner"></span>
+		<?php
 	}
 }

@@ -2,13 +2,18 @@
 /**
  * WordPress の基本設定
  *
- * このファイルは、MySQL、テーブル接頭辞、秘密鍵、ABSPATH の設定を含みます。
- * より詳しい情報は {@link http://wpdocs.sourceforge.jp/wp-config.php_%E3%81%AE%E7%B7%A8%E9%9B%86 
- * wp-config.php の編集} を参照してください。MySQL の設定情報はホスティング先より入手できます。
+ * このファイルは、インストール時に wp-config.php 作成ウィザードが利用します。
+ * ウィザードを介さずにこのファイルを "wp-config.php" という名前でコピーして
+ * 直接編集して値を入力してもかまいません。
  *
- * このファイルはインストール時に wp-config.php 作成ウィザードが利用します。
- * ウィザードを介さず、このファイルを "wp-config.php" という名前でコピーして直接編集し値を
- * 入力してもかまいません。
+ * このファイルは、以下の設定を含みます。
+ *
+ * * MySQL 設定
+ * * 秘密鍵
+ * * データベーステーブル接頭辞
+ * * ABSPATH
+ *
+ * @link http://wpdocs.sourceforge.jp/wp-config.php_%E3%81%AE%E7%B7%A8%E9%9B%86
  *
  * @package WordPress
  */
@@ -71,6 +76,10 @@ $table_prefix  = 'wp_';
  *
  * この値を true にすると、開発中に注意 (notice) を表示します。
  * テーマおよびプラグインの開発者には、その開発環境においてこの WP_DEBUG を使用することを強く推奨します。
+ *
+ * その他のデバッグに利用できる定数については Codex をご覧ください。
+ *
+ * @link http://wpdocs.osdn.jp/WordPress%E3%81%A7%E3%81%AE%E3%83%87%E3%83%90%E3%83%83%E3%82%B0
  */
 define('WP_DEBUG', false);
 

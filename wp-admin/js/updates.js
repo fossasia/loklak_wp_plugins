@@ -263,7 +263,7 @@ window.wp = window.wp || {};
 			$message.attr( 'aria-label', wp.updates.l10n.updateFailedLabel.replace( '%s', name ) );
 		}
 		$message.removeClass( 'updating-message' );
-		$message.html( wp.updates.l10n.updateFailed + ': ' + response.error );
+		$message.html( wp.updates.l10n.updateFailed.replace( '%s', response.error ) );
 		wp.a11y.speak( wp.updates.l10n.updateFailed );
 
 		/*

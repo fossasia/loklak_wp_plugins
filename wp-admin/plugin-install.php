@@ -94,7 +94,7 @@ get_current_screen()->set_help_sidebar(
 include(ABSPATH . 'wp-admin/admin-header.php');
 ?>
 <div class="wrap">
-<h2>
+<h1>
 	<?php
 	echo esc_html( $title );
 	if ( ! empty( $tabs['upload'] ) && current_user_can( 'upload_plugins' ) ) {
@@ -105,10 +105,10 @@ include(ABSPATH . 'wp-admin/admin-header.php');
 			$href = self_admin_url( 'plugin-install.php?tab=upload' );
 			$text = __( 'Upload Plugin' );
 		}
-		echo ' <a href="' . $href . '" class="upload add-new-h2">' . $text . '</a>';
+		echo ' <a href="' . $href . '" class="upload page-title-action">' . $text . '</a>';
 	}
 	?>
-</h2>
+</h1>
 
 <?php
 if ( $tab !== 'upload' ) {

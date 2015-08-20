@@ -176,8 +176,8 @@
 
 			// If the available widgets panel is open and the customize controls are
 			// interacted with (i.e. available widgets panel is blurred) then close the
-			// available widgets panel.
-			$( '#customize-controls, .customize-overlay-close' ).on( 'click keydown', function( e ) {
+			// available widgets panel. Also close on back button click.
+			$( '#customize-controls, #available-widgets .customize-section-title' ).on( 'click keydown', function( e ) {
 				var isAddNewBtn = $( e.target ).is( '.add-new-widget, .add-new-widget *' );
 				if ( $( 'body' ).hasClass( 'adding-widget' ) && ! isAddNewBtn ) {
 					self.close();
@@ -366,7 +366,7 @@
 				this.close( { returnFocus: true } );
 			}
 
-			if ( isTab && ( isShift && isSearchFocused || ! isShift && isLastWidgetFocused ) ) {
+			if ( this.currentSidebarControl && isTab && ( isShift && isSearchFocused || ! isShift && isLastWidgetFocused ) ) {
 				this.currentSidebarControl.container.find( '.add-new-widget' ).focus();
 				event.preventDefault();
 			}
@@ -786,12 +786,11 @@
 
 			// Handle widgets that support live previews
 			$widgetContent.on( 'change input propertychange', ':input', function( e ) {
-				if ( self.liveUpdateMode ) {
-					if ( e.type === 'change' ) {
-						self.updateWidget();
-					} else if ( this.checkValidity && this.checkValidity() ) {
-						updateWidgetDebounced();
-					}
+				if ( ! self.liveUpdateMode ) {
+					return;
+				}
+				if ( e.type === 'change' || ( this.checkValidity && this.checkValidity() ) ) {
+					updateWidgetDebounced();
 				}
 			} );
 
@@ -1041,6 +1040,7 @@
 			params.wp_customize = 'on';
 			params.nonce = api.Widgets.data.nonce;
 			params.theme = api.settings.theme.stylesheet;
+			params.customized = wp.customize.previewer.query().customized;
 
 			data = $.param( params );
 			$inputs = this._getInputs( $widgetContent );
@@ -1270,7 +1270,9 @@
 
 			if ( expanded ) {
 
-				self.expandControlSection();
+				if ( self.section() && api.section( self.section() ) ) {
+					self.expandControlSection();
+				}
 
 				// Close all other widget controls before expanding this one
 				api.control.each( function( otherControl ) {
@@ -1604,6 +1606,7 @@
 				items: '> .customize-control-widget_form',
 				handle: '.widget-top',
 				axis: 'y',
+				tolerance: 'pointer',
 				connectWith: '.accordion-section-content:has(.customize-control-sidebar_widgets)',
 				update: function() {
 					var widgetContainerIds = self.$sectionContent.sortable( 'toArray' ), widgetIds;
