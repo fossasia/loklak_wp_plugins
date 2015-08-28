@@ -40,12 +40,17 @@ if ( ! class_exists( 'WP_AWS_Compatibility_Check' ) ) {
 		protected $plugin_file_path;
 
 		/**
+		 * @var null|string The name of the required parent plugin
+		 */
+		protected $parent_plugin_name;
+
+		/**
 		 * @var null|string The key of the required parent plugin, e.g. amazon-web-services
 		 */
 		protected $parent_plugin_slug;
 
 		/**
-		 * @var null|int The required version of the parent plugin
+		 * @var null|string The required version of the parent plugin
 		 */
 		protected $parent_plugin_required_version;
 
@@ -74,6 +79,22 @@ if ( ! class_exists( 'WP_AWS_Compatibility_Check' ) ) {
 		 */
 		protected $notice_class = 'error';
 
+		/**
+		 * @var bool Used to store if we are installing or updating plugins once per page request
+		 */
+		protected static $is_installing_or_updating_plugins;
+
+		/**
+		 * @param string      $plugin_name
+		 * @param  string     $plugin_slug
+		 * @param string      $plugin_file_path
+		 * @param string|null $parent_plugin_name
+		 * @param string|null $parent_plugin_slug
+		 * @param string|null $parent_plugin_required_version
+		 * @param string|null $parent_plugin_filename
+		 * @param bool|false  $deactivate_if_not_compatible
+		 * @param string|null $parent_plugin_url
+		 */
 		function __construct( $plugin_name, $plugin_slug, $plugin_file_path, $parent_plugin_name = null, $parent_plugin_slug = null, $parent_plugin_required_version = null, $parent_plugin_filename = null, $deactivate_if_not_compatible = false, $parent_plugin_url = null ) {
 			$this->plugin_name                    = $plugin_name;
 			$this->plugin_slug                    = $plugin_slug;
@@ -117,7 +138,7 @@ if ( ! class_exists( 'WP_AWS_Compatibility_Check' ) ) {
 		 * @return string
 		 */
 		function get_parent_plugin_name() {
-			if ( $this->parent_plugin_name ) {
+			if ( ! is_null( $this->parent_plugin_name ) ) {
 				return $this->parent_plugin_name;
 			}
 
@@ -127,10 +148,10 @@ if ( ! class_exists( 'WP_AWS_Compatibility_Check' ) ) {
 		/**
 		 * Get the class of the parent plugin
 		 *
-		 * @return mixed|string
+		 * @return string
 		 */
 		function get_parent_plugin_class() {
-			if ( $this->parent_plugin_slug ) {
+			if ( ! is_null( $this->parent_plugin_slug ) ) {
 				$class = ucwords( str_replace( '-', ' ', $this->parent_plugin_slug ) );
 
 				return str_replace( ' ', '_', $class );
@@ -175,7 +196,7 @@ if ( ! class_exists( 'WP_AWS_Compatibility_Check' ) ) {
 		/**
 		 * Get the URL for the parent plugin. Defaults to a wordpress.org URL.
 		 *
-		 * @return null|string
+		 * @return string
 		 */
 		function get_parent_plugin_url() {
 			if ( ! is_null( $this->parent_plugin_slug ) ) {
@@ -399,10 +420,8 @@ if ( ! class_exists( 'WP_AWS_Compatibility_Check' ) ) {
 				return;
 			}
 
-			global $pagenow;
-
-			if ( 'update.php' === $pagenow && isset( $_GET['action'] ) && 'install-plugin' === $_GET['action'] ) {
-				// Don't show notice when installing plugins
+			if ( self::is_installing_or_updating_plugins() ) {
+				// Don't show notice when installing or updating plugins
 				return;
 			}
 
@@ -415,7 +434,7 @@ if ( ! class_exists( 'WP_AWS_Compatibility_Check' ) ) {
 		function get_admin_notice() {
 			$error_msg = $this->get_error_msg();
 
-			if ( ! $error_msg ) {
+			if ( false === $error_msg || '' === $error_msg ) {
 				return;
 			}
 
@@ -447,24 +466,37 @@ if ( ! class_exists( 'WP_AWS_Compatibility_Check' ) ) {
 		 * @return bool
 		 */
 		public static function is_installing_or_updating_plugins() {
+			if ( ! is_null( self::$is_installing_or_updating_plugins ) ) {
+				return self::$is_installing_or_updating_plugins;
+			}
+
+			self::$is_installing_or_updating_plugins = false;
+
 			global $pagenow;
 
 			if ( 'update.php' === $pagenow && isset( $_GET['action'] ) && 'install-plugin' === $_GET['action'] ) {
 				// We are installing a plugin
-				return true;
+				self::$is_installing_or_updating_plugins = true;
 			}
 
-			if ( 'plugins.php' === $pagenow && isset( $_POST['action'] ) && 'update-selected' === $_POST['action'] ) {
-				// We are updating plugins from the plugin page
-				return true;
+			if ( 'plugins.php' === $pagenow && isset( $_POST['action'] ) ) {
+				$action = $_POST['action'];
+				if ( isset( $_POST['action2'] ) && '-1' !== $_POST['action2'] ) {
+					$action = $_POST['action2'];
+				}
+
+				if ( 'update-selected' === $action ) {
+					// We are updating plugins from the plugin page
+					self::$is_installing_or_updating_plugins = true;
+				}
 			}
 
 			if ( 'update-core.php' === $pagenow && isset( $_GET['action'] ) && 'do-plugin-upgrade' === $_GET['action'] ) {
 				// We are updating plugins from the updates page
-				return true;
+				self::$is_installing_or_updating_plugins = true;
 			}
 
-			return false;
+			return self::$is_installing_or_updating_plugins;
 		}
 	}
 }

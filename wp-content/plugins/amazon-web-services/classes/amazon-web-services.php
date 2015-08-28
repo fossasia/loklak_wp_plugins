@@ -3,10 +3,31 @@ use Aws\Common\Aws;
 
 class Amazon_Web_Services extends AWS_Plugin_Base {
 
-	private $plugin_title, $plugin_menu_title, $plugin_permission, $client;
+	/**
+	 * @var string
+	 */
+	private $plugin_title;
+
+	/**
+	 * @var string
+	 */
+	private $plugin_menu_title;
+
+	/**
+	 * @var string
+	 */
+	private $plugin_permission;
+
+	/**
+	 * @var
+	 */
+	private $client;
 
 	const SETTINGS_KEY = 'aws_settings';
 
+	/**
+	 * @param string $plugin_file_path
+	 */
 	function __construct( $plugin_file_path ) {
 		$this->plugin_slug = 'amazon-web-services';
 
@@ -75,13 +96,13 @@ class Amazon_Web_Services extends AWS_Plugin_Base {
 	/**
 	 * Add sub page to the AWS menu item
 	 *
-	 * @param        $page_title
-	 * @param        $menu_title
-	 * @param        $capability
-	 * @param        $menu_slug
-	 * @param string $function
+	 * @param string       $page_title
+	 * @param string       $menu_title
+	 * @param string       $capability
+	 * @param string       $menu_slug
+	 * @param string|array $function
 	 *
-	 * @return bool|string
+	 * @return string|false
 	 */
 	function add_page( $page_title, $menu_title, $capability, $menu_slug, $function = '' ) {
 		return add_submenu_page( $this->plugin_slug, $page_title, $menu_title, $capability, $menu_slug, $function );
@@ -286,7 +307,7 @@ class Amazon_Web_Services extends AWS_Plugin_Base {
 	/**
 	 * Get a nonced, network safe install URL for a plugin
 	 *
-	 * @param $slug Plugin slug
+	 * @param string $slug Plugin slug
 	 *
 	 * @return string
 	 */
@@ -297,7 +318,7 @@ class Amazon_Web_Services extends AWS_Plugin_Base {
 	/**
 	 * Get a nonced, network safe activation URL for a plugin
 	 *
-	 * @param $slug Plugin slug
+	 * @param string $slug Plugin slug
 	 *
 	 * @return string
 	 */
@@ -327,7 +348,29 @@ class Amazon_Web_Services extends AWS_Plugin_Base {
 				'title'   => __( 'WP Offload S3', 'amazon-web-services' ),
 				'url'     => 'https://wordpress.org/plugins/amazon-s3-and-cloudfront/',
 				'install' => true,
-				'addons'  => array(),
+				'addons'  => array(
+					'amazon-s3-and-cloudfront-pro' => array(
+						'title'  => __( 'Pro Upgrade', 'amazon-web-services' ),
+						'url'    => 'https://deliciousbrains.com/wp-offload-s3/',
+						'addons' => array(
+							'amazon-s3-and-cloudfront-assets'      => array(
+								'title' => __( 'Assets', 'amazon-web-services' ),
+								'url'   => 'https://deliciousbrains.com/wp-offload-s3/#assets-addon',
+								'label' => __( 'Addon', 'amazon-web-services' ),
+							),
+							'amazon-s3-and-cloudfront-edd'         => array(
+								'title' => __( 'Easy Digital Downloads', 'amazon-web-services' ),
+								'url'   => 'https://deliciousbrains.com/wp-offload-s3/#edd-addon',
+								'label' => __( 'Addon', 'amazon-web-services' ),
+							),
+							'amazon-s3-and-cloudfront-woocommerce' => array(
+								'title' => __( 'WooCommerce', 'amazon-web-services' ),
+								'url'   => 'https://deliciousbrains.com/wp-offload-s3/#woocommerce-addon',
+								'label' => __( 'Addon', 'amazon-web-services' ),
+							),
+						),
+					),
+				),
 			),
 		);
 

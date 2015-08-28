@@ -26,37 +26,45 @@ if ( ! class_exists( 'WP_AWS_Uninstall' ) ) {
 	class WP_AWS_Uninstall {
 
 		/**
-		 * @var array Options to be deleted
+		 * @var array|string Options to be deleted
 		 */
 		protected $options;
 
 		/**
-		 * @var array Post meta to be deleted
+		 * @var array|string Post meta to be deleted
 		 */
 		protected $postmeta;
 
 		/**
-		 * @var array Cron hooks to be unscheduled
+		 * @var array|string Cron hooks to be unscheduled
 		 */
 		protected $crons;
 
 		/**
-		 * @var array Transients to be deleted
+		 * @var array|string Transients to be deleted, this can be site wide and subsite, e.g.
+		 *
+		 *      array(
+		 *          'site'    => array(...),
+		 *          'subsite' => array(...),
+		 *      )
+		 *
+		 * By default, an array of transients will be treated as site wide.
+		 *
 		 */
 		protected $transients;
 
 		/**
-		 * @var Blog(s) in site
+		 * @var array Blog(s) in site
 		 */
 		protected $blog_ids;
 
 		/**
 		 * WP_AWS_Uninstall constructor.
 		 *
-		 * @param array $options
-		 * @param array $postmeta
-		 * @param array $crons
-		 * @param array $transients
+		 * @param array|string $options
+		 * @param array|string $postmeta
+		 * @param array|string $crons
+		 * @param array|string $transients
 		 */
 		public function __construct(
 			$options = array(),
@@ -64,10 +72,10 @@ if ( ! class_exists( 'WP_AWS_Uninstall' ) ) {
 			$crons = array(),
 			$transients = array()
 		) {
-			$this->options    = $options;
-			$this->postmeta   = $postmeta;
-			$this->crons      = $crons;
-			$this->transients = $transients;
+			$this->options    = $this->maybe_convert_to_array( $options );
+			$this->postmeta   = $this->maybe_convert_to_array( $postmeta );
+			$this->crons      = $this->maybe_convert_to_array( $crons );
+			$this->transients = $this->maybe_convert_to_array( $transients );
 
 			$this->set_blog_ids();
 
@@ -81,7 +89,7 @@ if ( ! class_exists( 'WP_AWS_Uninstall' ) ) {
 		 * Set the blog id(s) for a site
 		 */
 		private function set_blog_ids() {
-			$blog_ids[] = 1;
+			$blog_ids = array( 1 );
 			if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 				$args     = array(
 					'limit'    => false,
@@ -97,33 +105,42 @@ if ( ! class_exists( 'WP_AWS_Uninstall' ) ) {
 		}
 
 		/**
-		 * Check and ensure a property has been filled with an array
+		 * Is the current blog ID that specified in wp-config.php
 		 *
-		 * @param string $property
+		 * @param int $blog_id
 		 *
 		 * @return bool
 		 */
-		private function check_property( $property ) {
-			if ( empty( $this->$property ) ) {
-				return false;
+		private function is_current_blog( $blog_id ) {
+			$default = defined( 'BLOG_ID_CURRENT_SITE' ) ? BLOG_ID_CURRENT_SITE : 1;
+
+			if ( $default === $blog_id ) {
+				return true;
 			}
 
-			if ( ! is_array( $this->$property ) ) {
-				// Convert any strings to an array
-				$this->$property = array( $this->$property );
+			return false;
+		}
+
+		/**
+		 * Helper to ensure a value is an array
+		 *
+		 * @param array|string $data
+		 *
+		 * @return array
+		 */
+		private function maybe_convert_to_array( $data ) {
+			if ( ! is_array( $data ) ) {
+				// Convert a string to an array
+				$data = array( $data );
 			}
 
-			return true;
+			return $data;
 		}
 
 		/**
 		 * Delete site wide options
 		 */
 		public function delete_options() {
-			if ( ! $this->check_property( 'options' ) ) {
-				return;
-			}
-
 			foreach ( $this->options as $option ) {
 				delete_site_option( $option );
 			}
@@ -133,10 +150,6 @@ if ( ! class_exists( 'WP_AWS_Uninstall' ) ) {
 		 * Delete post meta data for all blogs
 		 */
 		public function delete_postmeta() {
-			if ( ! $this->check_property( 'postmeta' ) ) {
-				return;
-			}
-
 			global $wpdb;
 
 			foreach ( $this->blog_ids as $blog_id ) {
@@ -153,10 +166,6 @@ if ( ! class_exists( 'WP_AWS_Uninstall' ) ) {
 		 * Clear any scheduled cron jobs
 		 */
 		public function clear_crons() {
-			if ( ! $this->check_property( 'crons' ) ) {
-				return;
-			}
-
 			foreach ( $this->crons as $cron ) {
 				$timestamp = wp_next_scheduled( $cron );
 				if ( $timestamp ) {
@@ -166,15 +175,44 @@ if ( ! class_exists( 'WP_AWS_Uninstall' ) ) {
 		}
 
 		/**
-		 * Delete site wide transients
+		 * Delete transients
 		 */
 		public function delete_transients() {
-			if ( ! $this->check_property( 'transients' ) ) {
+			if ( ! isset( $this->transients['site'] ) && ! isset( $this->transients['subsite'] ) ) {
+				// Single array of site wide transients
+				foreach ( $this->transients as $transient ) {
+					delete_site_transient( $transient );
+				}
+
 				return;
 			}
 
-			foreach ( $this->transients as $transient ) {
-				delete_site_transient( $transient );
+			// Deal with site wide transients
+			if ( isset( $this->transients['site'] ) ) {
+				$site_transients = $this->maybe_convert_to_array( $this->transients['site'] );
+
+				foreach ( $site_transients as $transient ) {
+					delete_site_transient( $transient );
+				}
+			}
+
+			// Deal with subsite specific transients
+			if ( isset( $this->transients['subsite'] ) ) {
+				$subsite_transients = $this->maybe_convert_to_array( $this->transients['subsite'] );
+
+				foreach ( $this->blog_ids as $blog_id ) {
+					if ( is_multisite() && ! $this->is_current_blog( $blog_id ) ) {
+						switch_to_blog( $blog_id );
+					}
+
+					foreach ( $subsite_transients as $transient ) {
+						delete_transient( $transient );
+					}
+				}
+
+				if ( is_multisite() && ! $this->is_current_blog( $blog_id ) ) {
+					restore_current_blog();
+				}
 			}
 		}
 	}

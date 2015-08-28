@@ -50,13 +50,15 @@ class AS3CF_Plugin_Compatibility {
 		 */
 		add_action( 'as3cf_upload_attachment_pre_remove', array( $this, 'image_editor_remove_files' ), 10, 4 );
 		add_filter( 'as3cf_get_attached_file', array( $this, 'image_editor_download_file' ), 10, 4 );
+		add_filter( 'as3cf_upload_attachment_local_files_to_remove', array( $this, 'image_editor_remove_original_image' ), 10, 3 );
+		add_filter( 'as3cf_get_attached_file', array( $this, 'customizer_header_crop_download_file' ), 10, 4 );
+		add_filter( 'as3cf_upload_attachment_local_files_to_remove', array( $this, 'customizer_header_crop_remove_original_image' ), 10, 3 );
 
 		/*
 		 * WP_Customize_Control
 		 * /wp-includes/class-wp-customize_control.php
 		 */
 		add_filter( 'attachment_url_to_postid', array( $this, 'customizer_background_image' ), 10, 2 );
-
 		/*
 		 * Regenerate Thumbnails
 		 * https://wordpress.org/plugins/regenerate-thumbnails/
@@ -89,6 +91,25 @@ class AS3CF_Plugin_Compatibility {
 
 		// Return S3 URL as a fallback
 		return $url;
+	}
+
+	/**
+	 * Get the file path of the original image file before an update
+	 *
+	 * @param int    $post_id
+	 * @param string $file_path
+	 *
+	 * @return bool|string
+	 */
+	function get_original_image_file( $post_id, $file_path ) {
+		// remove original main image after edit
+		$meta          = get_post_meta( $post_id, '_wp_attachment_metadata', true );
+		$original_file = trailingslashit( dirname( $file_path ) ) . basename( $meta['file'] );
+		if ( file_exists( $original_file ) ) {
+			return $original_file;
+		}
+
+		return false;
 	}
 
 	/**
@@ -144,9 +165,9 @@ class AS3CF_Plugin_Compatibility {
 			$this->copy_s3_file_to_server( $orig_s3, $orig_file );
 
 			// Copy the edited file back to the server as well, it will be cleaned up later
-			if ( ( $file = $this->copy_s3_file_to_server( $s3_object, $file ) ) ) {
+			if ( ( $s3_file = $this->copy_s3_file_to_server( $s3_object, $file ) ) ) {
 				// Return the file if successfully downloaded from S3
-				return $file;
+				return $s3_file;
 			};
 		}
 
@@ -156,15 +177,91 @@ class AS3CF_Plugin_Compatibility {
 			foreach ( $callers as $caller ) {
 				if ( isset( $caller['function'] ) && '_load_image_to_edit_path' == $caller['function'] ) {
 					// check this has been called by '_load_image_to_edit_path' so as only to copy back once
-					if ( ( $file = $this->copy_s3_file_to_server( $s3_object, $file ) ) ) {
+					if ( ( $s3_file = $this->copy_s3_file_to_server( $s3_object, $file ) ) ) {
 						// Return the file if successfully downloaded from S3
-						return $file;
+						return $s3_file;
 					};
 				}
 			}
 		}
 
 		return $url;
+	}
+
+	/**
+	 * Allow the WordPress Image Editor to remove the main image file after it has been copied
+	 * back from S3 after it has done the edit.
+	 *
+	 * @param array  $files
+	 * @param int    $post_id
+	 * @param string $file_path
+	 *
+	 * @return array
+	 */
+	function image_editor_remove_original_image( $files, $post_id, $file_path ) {
+		if ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) {
+			return $files;
+		}
+
+		if ( isset( $_POST['action'] ) && 'image-editor' === sanitize_key( $_POST['action'] ) ) { // input var okay
+			// remove original main image after edit
+			if ( ( $original_file = $this->get_original_image_file( $post_id, $file_path ) ) ) {
+				$files[] = $original_file;
+			}
+		}
+
+		return $files;
+	}
+
+	/**
+	 * Allow the WordPress Customizer to crop images that have been copied to S3
+	 * but removed from the local server, by copying them back temporarily
+	 *
+	 * @param string $url
+	 * @param string $file
+	 * @param int    $attachment_id
+	 * @param array  $s3_object
+	 *
+	 * @return string
+	 */
+	function customizer_header_crop_download_file( $url, $file, $attachment_id, $s3_object ) {
+		if ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) {
+			return $url;
+		}
+
+		if ( isset( $_POST['action'] ) && 'custom-header-crop' === sanitize_key( $_POST['action'] ) ) { // input var okay
+			if ( ( $file = $this->copy_s3_file_to_server( $s3_object, $file ) ) ) {
+				// Return the file if successfully downloaded from S3
+				return $file;
+			};
+		}
+
+		return $url;
+	}
+
+	/**
+	 * Allow the WordPress Image Editor to remove the main image file after it has been copied
+	 * back from S3 after it has done the edit.
+	 *
+	 * @param array  $files
+	 * @param int    $post_id
+	 * @param string $file_path
+	 *
+	 * @return array
+	 */
+	function customizer_header_crop_remove_original_image( $files, $post_id, $file_path ) {
+		if ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) {
+			return $files;
+		}
+
+		if ( isset( $_POST['action'] ) && 'custom-header-crop' === sanitize_key( $_POST['action'] ) ) { // input var okay
+			// remove original main image after edit
+			if ( ( $original_file = $this->get_original_image_file( $_POST['id'], $file_path ) ) ) {
+				$files[] = $original_file;
+			}
+		}
+
+		return $files;
 	}
 
 	/**

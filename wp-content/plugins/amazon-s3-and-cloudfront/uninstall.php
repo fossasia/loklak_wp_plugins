@@ -16,9 +16,28 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 
 require dirname( __FILE__ ) . '/classes/wp-aws-uninstall.php';
 
-$options    = 'tantan_wordpress_s3';
-$postmeta   = 'amazonS3_info';
-$crons      = 'as3cf_cron_update_meta_with_region';
-$transients = 'as3cf_notices';
+$options = array(
+	'tantan_wordpress_s3',
+	'update_meta_with_region_session',
+	'update_file_sizes_session',
+);
+
+$postmeta = array(
+	'amazonS3_info',
+	'wpos3_filesize_total',
+);
+
+$crons = array(
+	'as3cf_cron_update_meta_with_region',
+	'as3cf_cron_update_file_sizes',
+);
+
+$transients = array(
+	'site'    => array(
+		'as3cf_notices',
+		'wpos3_attachment_counts',
+	),
+	'subsite' => array( 'wpos3_site_space_used' ),
+);
 
 $as3cf_uninstall = new WP_AWS_Uninstall( $options, $postmeta, $crons, $transients );

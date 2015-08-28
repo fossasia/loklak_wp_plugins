@@ -57,12 +57,6 @@
 		<h4>Created &amp; maintained by</h4>
 		<ul>
 			<li>
-				<a href="http://profiles.wordpress.org/bradt/">
-					<img src="//www.gravatar.com/avatar/e538ca4cb34839d4e5e3ccf20c37c67b?size=64" alt="" width="32" height="32">
-					<span>Brad Touesnard</span>
-				</a>
-			</li>
-			<li>
 				<a href="https://deliciousbrains.com/?utm_source=insideplugin&amp;utm_medium=web&amp;utm_content=sidebar&amp;utm_campaign=os3-free-plugin">
 					<img src="//www.gravatar.com/avatar/e62fc2e9c8d9fc6edd4fea5339036a91?size=64" alt="" width="32" height="32">
 					<span>Delicious Brains Inc.</span>

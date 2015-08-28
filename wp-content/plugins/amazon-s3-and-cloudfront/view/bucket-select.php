@@ -41,20 +41,26 @@
 						<p class="as3cf-invalid-bucket-name"></p>
 					</td>
 				</tr>
-				<?php if ( ! defined( 'AS3CF_REGION' ) ) : ?>
-					<tr>
-						<td>
-							<?php _e( 'Region:', 'as3cf' ); ?>
-						</td>
-						<td>
+				<tr>
+					<td>
+						<?php _e( 'Region:', 'as3cf' ); ?>
+					</td>
+					<td>
+						<?php
+						$aws_regions = $this->get_aws_regions();
+						if ( ! defined( 'AS3CF_REGION' ) ) { ?>
 							<select class="bucket-create-region" name="region_name">
-								<?php foreach ( $this->get_aws_regions() as $value => $label ) : ?>
+								<?php foreach ( $aws_regions as $value => $label ) : ?>
 									<option value="<?php echo $value; ?>"> <?php echo $label; ?></option>
 								<?php endforeach; ?>
 							</select>
-						</td>
-					</tr>
-				<?php endif; ?>
+						<?php } else {
+							$region      = AS3CF_REGION;
+							$region_name = isset( $aws_regions[ $region ] ) ? $aws_regions[ $region ] : $region;
+							printf( __( '%s (defined in wp-config.php)', 'as3cf' ), $region_name );
+						} ?>
+					</td>
+				</tr>
 			</table>
 			<p class="bucket-actions actions">
 				<button type="submit" class="button button-primary" data-working="<?php _e( 'Creating...', 'as3cf' ); ?>"><?php _e( 'Create New Bucket', 'as3cf' ); ?></button>

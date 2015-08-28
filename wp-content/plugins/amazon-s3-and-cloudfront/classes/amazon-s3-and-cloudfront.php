@@ -43,7 +43,7 @@ class Amazon_S3_And_CloudFront extends AWS_Plugin_Base {
 	protected $default_tab = '';
 
 	/**
-	 * @var array
+	 * @var string
 	 */
 	public $hook_suffix;
 
@@ -84,8 +84,8 @@ class Amazon_S3_And_CloudFront extends AWS_Plugin_Base {
 		$this->plugin_title      = __( 'Offload S3', 'as3cf' );
 		$this->plugin_menu_title = __( 'S3 and CloudFront', 'as3cf' );
 
-		// fire up the plugin upgrade checker
-		new AS3CF_Upgrade( $this );
+		new AS3CF_Upgrade_Region_Meta( $this );
+		new AS3CF_Upgrade_File_Sizes( $this );
 
 		add_action( 'aws_admin_menu', array( $this, 'admin_menu' ) );
 		add_action( 'wp_ajax_as3cf-get-buckets', array( $this, 'ajax_get_buckets' ) );
@@ -107,6 +107,7 @@ class Amazon_S3_And_CloudFront extends AWS_Plugin_Base {
 		add_filter( 'update_attached_file', array( $this, 'update_attached_file' ), 100, 2 );
 		add_filter( 'get_attached_file', array( $this, 'get_attached_file' ), 10, 2 );
 		add_filter( 'plugin_action_links', array( $this, 'plugin_actions_settings_link' ), 10, 2 );
+		add_filter( 'pre_get_space_used', array( $this, 'multisite_get_spaced_used' ) );
 
 		// include compatibility code for other plugins
 		new AS3CF_Plugin_Compatibility( $this );
@@ -488,7 +489,7 @@ class Amazon_S3_And_CloudFront extends AWS_Plugin_Base {
 		}
 
 		// upload attachment to S3
-		$this->upload_attachment_to_s3( $post_id, $data );
+		$data = $this->upload_attachment_to_s3( $post_id, $data );
 
 		return $data;
 	}
@@ -503,10 +504,12 @@ class Amazon_S3_And_CloudFront extends AWS_Plugin_Base {
 	 *                                         to cope with possible different regions
 	 * @param bool        $remove_local_files
 	 *
-	 * @return array|WP_Error $s3object
+	 * @return array|WP_Error $s3object|$meta If meta is supplied, return it. Else return S3 meta
 	 */
 	function upload_attachment_to_s3( $post_id, $data = null, $file_path = null, $force_new_s3_client = false, $remove_local_files = true ) {
+		$return_metadata = true;
 		if ( is_null( $data ) ) {
+			$return_metadata = false;
 			$data = wp_get_attachment_metadata( $post_id, true );
 		}
 
@@ -616,6 +619,26 @@ class Amazon_S3_And_CloudFront extends AWS_Plugin_Base {
 		$file_paths        = $this->get_attachment_file_paths( $post_id, true, $data );
 		$additional_images = array();
 
+		$filesize_total = 0;
+		$remove_local_files_setting = $this->get_setting( 'remove-local-file' );
+
+		if ( $remove_local_files_setting ) {
+			$bytes = filesize( $file_path );
+			if ( false !== $bytes ) {
+				// Store in the attachment meta data for use by WP
+				$data['filesize'] = $bytes;
+
+				if ( ! $return_metadata ) {
+					// Upload happening outside of 'wp_update_attachment_metadata' filter,
+					// So update metadata manually
+					update_post_meta( $post_id, '_wp_attachment_metadata', $data );
+				}
+
+				// Add to the file size total
+				$filesize_total += $bytes;
+			}
+		}
+
 		foreach ( $file_paths as $file_path ) {
 			if ( ! in_array( $file_path, $files_to_remove ) ) {
 				$additional_images[] = array(
@@ -624,6 +647,14 @@ class Amazon_S3_And_CloudFront extends AWS_Plugin_Base {
 				);
 
 				$files_to_remove[] = $file_path;
+
+				if ( $remove_local_files_setting ) {
+					// Record the file size for the additional image
+					$bytes = filesize( $file_path );
+					if ( false !== $bytes ) {
+						$filesize_total += $bytes;
+					}
+				}
 			}
 		}
 
@@ -639,18 +670,41 @@ class Amazon_S3_And_CloudFront extends AWS_Plugin_Base {
 		}
 
 		if ( $remove_local_files ) {
-			if ( $this->get_setting( 'remove-local-file' ) ) {
-				if ( isset( $_POST['action'] ) && 'image-editor' == sanitize_key( $_POST['action'] ) && defined( 'DOING_AJAX' ) && DOING_AJAX ) {
-					// remove original main image after edit
-					$meta          = get_post_meta( $post_id, '_wp_attachment_metadata', true );
-					$original_file = trailingslashit( dirname( $file_path ) ) . basename( $meta['file'] );
-					if ( file_exists( $original_file ) && ! in_array( $original_file, $files_to_remove ) ) {
-						$files_to_remove[] = $original_file;
-					}
-				}
-	
+			if ( $remove_local_files_setting ) {
+				// Allow other functions to remove files after they have processed
+				$files_to_remove = apply_filters( 'as3cf_upload_attachment_local_files_to_remove', $files_to_remove, $post_id, $file_path );
+				// Remove duplicates
+				$files_to_remove = array_unique( $files_to_remove );
+
+				// Delete the files
 				$this->remove_local_files( $files_to_remove );
 			}
+		}
+
+		// Store the file size in the attachment meta if we are removing local file
+		if ( $remove_local_files_setting ) {
+			if ( $filesize_total > 0 ) {
+				// Add the total file size for all image sizes
+				update_post_meta( $post_id, 'wpos3_filesize_total', $filesize_total );
+			}
+		} else {
+			if ( isset( $data['filesize'] ) ) {
+				// Make sure we don't have a cached file sizes in the meta
+				unset( $data['filesize'] );
+
+				if ( ! $return_metadata ) {
+					// Upload happening outside of 'wp_update_attachment_metadata' filter,
+					// So update metadata manually
+					update_post_meta( $post_id, '_wp_attachment_metadata', $data );
+				}
+
+				delete_post_meta( $post_id, 'wpos3_filesize_total' );
+			}
+		}
+
+		if ( $return_metadata ) {
+			// If the attachment metadata is supplied, return it
+			return $data;
 		}
 
 		return $s3object;
@@ -676,6 +730,13 @@ class Amazon_S3_And_CloudFront extends AWS_Plugin_Base {
 		return $pathinfo['dirname'] . '/' . $pathinfo['filename'] . $hidpi_suffix . '.' . $pathinfo['extension'];
 	}
 
+	/**
+	 * Get the object versioning string prefix
+	 *
+	 * @param int $post_id
+	 *
+	 * @return string
+	 */
 	function get_object_version_string( $post_id ) {
 		if ( $this->get_setting( 'use-yearmonth-folders' ) ) {
 			$date_format = 'dHis';
@@ -708,8 +769,15 @@ class Amazon_S3_And_CloudFront extends AWS_Plugin_Base {
 		return null;
 	}
 
-	// Media files attached to a post use the post's date
-	// to determine the folder path they are placed in
+	/**
+	 * Get the time of attachment upload.
+	 *
+	 * Use post datetime if attached.
+	 *
+	 * @param int $post_id
+	 *
+	 * @return int|string
+	 */
 	function get_attachment_folder_time( $post_id ) {
 		$time = current_time( 'timestamp' );
 
@@ -815,18 +883,39 @@ class Amazon_S3_And_CloudFront extends AWS_Plugin_Base {
 		return get_post_meta( $post_id, 'amazonS3_info', true );
 	}
 
+	/**
+	 * Check the plugin is correctly setup
+	 *
+	 * @return bool
+	 */
 	function is_plugin_setup() {
-		return (bool) $this->get_setting( 'bucket' ) && ! is_wp_error( $this->aws->get_client() );
+		if ( is_wp_error( $this->aws->get_client() ) ) {
+			// AWS not configured
+			return false;
+		}
+
+		if ( false === (bool) $this->get_setting( 'bucket' ) ) {
+			// No bucket selected
+			return false;
+		}
+
+		if ( is_wp_error( $this->get_setting( 'region' ) ) ) {
+			// Region error when retrieving bucket location
+			return false;
+		}
+
+		// All good, let's do this
+		return true;
 	}
 
 	/**
 	 * Generate a link to download a file from Amazon S3 using query string
 	 * authentication. This link is only valid for a limited amount of time.
 	 *
-	 * @param int    $post_id Post ID of the attachment
-	 * @param int    $expires Seconds for the link to live
-	 * @param string $size    Size of the image to get
-	 * @param array  $headers Header overrides for request
+	 * @param int         $post_id Post ID of the attachment
+	 * @param int|null    $expires Seconds for the link to live
+	 * @param string|null $size    Size of the image to get
+	 * @param array       $headers Header overrides for request
 	 *
 	 * @return mixed|void|WP_Error
 	 */
@@ -981,11 +1070,11 @@ class Amazon_S3_And_CloudFront extends AWS_Plugin_Base {
 	/**
 	 * Get the url of the file from Amazon S3
 	 *
-	 * @param int    $post_id Post ID of the attachment
-	 * @param int    $expires Seconds for the link to live
-	 * @param string $size    Size of the image to get
-	 * @param array  $meta    Pre retrieved _wp_attachment_metadata for the attachment
-	 * @param array  $headers Header overrides for request
+	 * @param int         $post_id Post ID of the attachment
+	 * @param int|null    $expires Seconds for the link to live
+	 * @param string|null $size    Size of the image to get
+	 * @param array|null  $meta    Pre retrieved _wp_attachment_metadata for the attachment
+	 * @param array       $headers Header overrides for request
 	 *
 	 * @return bool|mixed|void|WP_Error
 	 */
@@ -1016,7 +1105,7 @@ class Amazon_S3_And_CloudFront extends AWS_Plugin_Base {
 
 		$domain_bucket = $this->get_s3_url_domain( $s3object['bucket'], $region, $expires );
 
-		if ( $size ) {
+		if ( ! is_null( $size ) ) {
 			if ( is_null( $meta ) ) {
 				$meta = get_post_meta( $post_id, '_wp_attachment_metadata', true );
 			}
@@ -1027,23 +1116,20 @@ class Amazon_S3_And_CloudFront extends AWS_Plugin_Base {
 
 		if ( ! is_null( $expires ) ) {
 			try {
-				$expires = time() + $expires;
+				$expires    = time() + $expires;
 				$secure_url = $this->get_s3client( $region )->getObjectUrl( $s3object['bucket'], $s3object['key'], $expires, $headers );
+
+				return apply_filters( 'as3cf_get_attachment_secure_url', $secure_url, $s3object, $post_id, $expires, $headers );
 			}
 			catch ( Exception $e ) {
 				return new WP_Error( 'exception', $e->getMessage() );
 			}
 		}
 
-		// encode file
 		$file = $this->encode_filename_in_path( $s3object['key'] );
+		$url  = $scheme . '://' . $domain_bucket . '/' . $file;
 
-		$url = $scheme . '://' . $domain_bucket . '/' . $file;
-		if ( isset( $secure_url ) ) {
-			$url .= substr( $secure_url, strpos( $secure_url, '?' ) );
-		}
-
-		return apply_filters( 'as3cf_get_attachment_url', $url, $s3object, $post_id, $expires );
+		return apply_filters( 'as3cf_get_attachment_url', $url, $s3object, $post_id, $expires, $headers );
 	}
 
 	/**
@@ -1410,8 +1496,12 @@ class Amazon_S3_And_CloudFront extends AWS_Plugin_Base {
 	 * @param Amazon_Web_Services $aws
 	 */
 	function admin_menu( $aws ) {
-		$this->hook_suffix = $aws->add_page( $this->get_plugin_page_title(), $this->plugin_menu_title, 'manage_options', $this->plugin_slug, array( $this, 'render_page' ) );
-		add_action( 'load-' . $this->hook_suffix , array( $this, 'plugin_load' ) );
+		$hook_suffix = $aws->add_page( $this->get_plugin_page_title(), $this->plugin_menu_title, 'manage_options', $this->plugin_slug, array( $this, 'render_page' ) );
+
+		if ( false !== $hook_suffix ) {
+			$this->hook_suffix = $hook_suffix;
+			add_action( 'load-' . $this->hook_suffix, array( $this, 'plugin_load' ) );
+		}
 	}
 
 	/**
@@ -1450,12 +1540,12 @@ class Amazon_S3_And_CloudFront extends AWS_Plugin_Base {
 	function get_bucket_region( $bucket ) {
 		try {
 			$region = $this->get_s3client()->getBucketLocation( array( 'Bucket' => $bucket ) );
-		}
-		catch ( Exception $e ) {
-			$error_msg = sprintf( __( 'There was an error attempting to get the region of the bucket %s: %s', 'as3cf' ), $bucket, $e->getMessage() );
+		} catch ( Exception $e ) {
+			$error_msg_title = '<strong>' . __( 'Error Getting Bucket Region', 'as3cf' ) . '</strong> &mdash;';
+			$error_msg       = sprintf( __( 'There was an error attempting to get the region of the bucket %s: %s', 'as3cf' ), $bucket, $e->getMessage() );
 			error_log( $error_msg );
 
-			return new WP_Error( 'exception', $e->getMessage() );
+			return new WP_Error( 'exception', $error_msg_title . $error_msg );
 		}
 
 		$region = $this->translate_region( $region['Location'] );
@@ -1508,7 +1598,7 @@ class Amazon_S3_And_CloudFront extends AWS_Plugin_Base {
 		$region = strtolower( $region );
 
 		switch ( $region ) {
-			case 'eu' :
+			case 'eu':
 				$region = 'eu-west-1';
 				break;
 		}
@@ -1924,7 +2014,7 @@ class Amazon_S3_And_CloudFront extends AWS_Plugin_Base {
 	 * Apply ACL to an attachment and associated files
 	 *
 	 * @param int    $post_id
-	 * @param object $s3object
+	 * @param array  $s3object
 	 * @param string $acl
 	 */
 	function set_attachment_acl_on_s3( $post_id, $s3object, $acl ) {
@@ -2144,6 +2234,21 @@ class Amazon_S3_And_CloudFront extends AWS_Plugin_Base {
 		}
 		echo "\r\n\r\n";
 
+		$media_counts = $this->diagnostic_media_counts();
+
+		echo 'Media Files: ';
+		echo number_format_i18n( $media_counts['all'] );
+		echo "\r\n";
+
+		echo 'Media Files on S3: ';
+		echo number_format_i18n( $media_counts['s3'] );
+		echo "\r\n";
+
+		echo 'Number of Image Sizes: ';
+		$sizes = count( get_intermediate_image_sizes() );
+		echo number_format_i18n( $sizes );
+		echo "\r\n\r\n";
+
 		echo 'Bucket: ';
 		echo $this->get_setting( 'bucket' );
 		echo "\r\n";
@@ -2215,7 +2320,7 @@ class Amazon_S3_And_CloudFront extends AWS_Plugin_Base {
 	/**
 	 * Helper for displaying settings
 	 *
-	 * @param $key setting key
+	 * @param string $key setting key
 	 *
 	 * @return string
 	 */
@@ -2228,7 +2333,7 @@ class Amazon_S3_And_CloudFront extends AWS_Plugin_Base {
 	/**
 	 * Helper to display plugin details
 	 *
-	 * @param        $plugin_path
+	 * @param string $plugin_path
 	 * @param string $suffix
 	 */
 	function print_plugin_details( $plugin_path, $suffix = '' ) {
@@ -2315,6 +2420,32 @@ class Amazon_S3_And_CloudFront extends AWS_Plugin_Base {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Helper to switch to a Multisite blog
+	 *  - If the site is MS
+	 *  - If the blog is not the current blog defined
+	 *
+	 * @param $blog_id
+	 */
+	function switch_to_blog( $blog_id ) {
+		if ( is_multisite() && ! $this->is_current_blog( $blog_id ) ) {
+			switch_to_blog( $blog_id );
+		}
+	}
+
+	/**
+	 * Helper to restore to the current Multisite blog
+	 *  - If the site is MS
+	 *  - If the blog is not the current blog defined
+	 *
+	 * @param $blog_id
+	 */
+	function restore_current_blog( $blog_id ) {
+		if ( is_multisite() && ! $this->is_current_blog( $blog_id ) ) {
+			restore_current_blog();
+		}
 	}
 
 	/**
@@ -2436,5 +2567,126 @@ class Amazon_S3_And_CloudFront extends AWS_Plugin_Base {
 		}
 
 		return $message;
+	}
+
+	/**
+	 * Used to give a realistic total of storage space used on a Multisite subsite,
+	 * when there have been attachments uploaded to S3 but removed from server
+	 *
+	 * @param $space_used bool
+	 *
+	 * @return float|int
+	 */
+	function multisite_get_spaced_used( $space_used ) {
+		if ( false === ( $space_used = get_transient( 'wpos3_site_space_used' ) ) ) {
+			global $wpdb;
+
+			// Sum the total file size (including image sizes) for all S3 attachments
+			$sql = "SELECT SUM( meta_value ) AS bytes_total
+				FROM {$wpdb->postmeta}
+				WHERE meta_key = 'wpos3_filesize_total'";
+
+			$space_used = $wpdb->get_var( $sql );
+
+			// Get local upload sizes
+			$upload_dir = wp_upload_dir();
+			$space_used += get_dirsize( $upload_dir['basedir'] );
+
+			if ( $space_used > 0 ) {
+				// Convert to bytes to MB
+				$space_used = $space_used / 1024 / 1024;
+			}
+
+			set_transient( 'wpos3_site_space_used', $space_used, HOUR_IN_SECONDS );
+		}
+
+		return $space_used;
+	}
+
+	/**
+	 * Memory exceeded
+	 *
+	 * Ensures the a process never exceeds 90% of the maximum WordPress memory.
+	 *
+	 * @param null|string $filter_name Name of filter to apply to the return
+	 *
+	 * @return bool
+	 */
+	public function memory_exceeded( $filter_name = null ) {
+		$current_memory = memory_get_usage( true );
+		$memory_limit   = ( intval( WP_MEMORY_LIMIT ) * 1024 * 1024 ) * 0.9; // 90% of max memory
+		$return         = false;
+
+		if ( $current_memory >= $memory_limit ) {
+			$return = true;
+		}
+
+		if ( is_null( $filter_name ) || ! is_string( $filter_name ) ) {
+			return $return;
+		}
+
+		return apply_filters( $filter_name, $return );
+	}
+
+	/**
+	 * Count attachments on a site
+	 *
+	 * @param string    $prefix
+	 * @param null|bool $uploaded_to_s3
+	 *      null  - All attachments
+	 *      true  - Attachments only uploaded to S3
+	 *      false - Attachments not uploaded to S3
+	 *
+	 * @return null|string
+	 */
+	public function count_attachments( $prefix, $uploaded_to_s3 = null ) {
+		global $wpdb;
+
+		$sql = "SELECT COUNT(*)
+				FROM `{$prefix}posts` p";
+
+		$where = "WHERE p.post_type = 'attachment'";
+
+		if ( ! is_null( $uploaded_to_s3 ) && is_bool( $uploaded_to_s3 ) ) {
+			$sql .= " LEFT OUTER JOIN `{$prefix}postmeta` pm
+					ON p.`ID` = pm.`post_id`
+					AND pm.`meta_key` = 'amazonS3_info'";
+
+			$operator = $uploaded_to_s3 ? 'not ' : '';
+			$where .= " AND pm.`post_id` is {$operator}null";
+		}
+
+		$sql .= ' ' . $where;
+
+		return $wpdb->get_var( $sql );
+	}
+
+	/**
+	 * Get the total attachment and total S3 attachment counts for the diagnostic log
+	 *
+	 * @return array
+	 */
+	protected function diagnostic_media_counts() {
+		if ( false === ( $attachment_counts = get_site_transient( 'wpos3_attachment_counts' ) ) ) {
+			$table_prefixes = $this->get_all_blog_table_prefixes();
+			$all_media      = 0;
+			$all_media_s3   = 0;
+
+			foreach ( $table_prefixes as $blog_id => $table_prefix ) {
+				$count = $this->count_attachments( $table_prefix );
+				$all_media += $count;
+				$s3_count = $this->count_attachments( $table_prefix, true );
+				$all_media_s3 += $s3_count;
+			}
+
+			$attachment_counts = array(
+				'all' => $all_media,
+				's3'  => $all_media_s3,
+			);
+
+			set_site_transient( 'wpos3_attachment_counts', $attachment_counts, 2 * HOUR_IN_SECONDS );
+		}
+
+		return $attachment_counts;
 	}
 }

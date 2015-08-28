@@ -1,8 +1,7 @@
 # Amazon Web Services #
-**Contributors:** bradt  
-**Donate link:** https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5VPMGLLK94XJC  
+**Contributors:** bradt, deliciousbrains  
 **Tags:** amazon, amazon web services  
-**Requires at least:** 3.5  
+**Requires at least:** 3.7  
 **Tested up to:** 4.3  
 **Stable tag:** trunk  
 **License:** GPLv3  
@@ -33,6 +32,9 @@ This plugin is required by other plugins, which uses its libraries and its setti
 
 
 ## Changelog ##
+
+### 0.3.2 - 2015-08-26 ###
+**# New:** WP Offload S3 Pro upgrade and addons added to the _Addons_ screen  
 
 ### 0.3.1 - 2015-07-29 ###
 * Bug fix: Style inconsistencies on the _Addons_ screen

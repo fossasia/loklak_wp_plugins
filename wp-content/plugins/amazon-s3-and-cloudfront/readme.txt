@@ -1,10 +1,9 @@
 === WP Offload S3 ===
-Contributors: bradt
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5VPMGLLK94XJC
+Contributors: bradt, deliciousbrains
 Tags: uploads, amazon, s3, mirror, admin, media, cdn, cloudfront
 Requires at least: 3.7
 Tested up to: 4.3
-Stable tag: 0.9.3
+Stable tag: 0.9.4
 License: GPLv3
 
 Copies files to Amazon S3 as they are uploaded to the Media Library. Optionally configure Amazon CloudFront for faster delivery.
@@ -17,19 +16,21 @@ This plugin automatically copies images, videos, documents, and any other media 
 
 Uploading files *directly* to your S3 account is not currently supported by this plugin. They are uploaded to your server first, then copied to S3. There is an option to automatically remove the files from your server once they are copied to S3 however.
 
-If you're adding this plugin to a site that's been around for a while, your existing media files will not be copied or served from S3. Only newly uploaded files will be copied and served from S3.
+If you're adding this plugin to a site that's been around for a while, your existing media files will not be copied or served from S3. Only newly uploaded files will be copied and served from S3. The pro upgrade has an upload tool to handle existing media files.
 
 **PRO Upgrade with Email Support and More Features**
 
 * Upload existing Media Library to S3
 * Find & replace file URLs in content
 * Control S3 files from the Media Library
-* [Assets addon](https://deliciousbrains.com/wp-offload-s3/?utm_source=wordpress.org&utm_medium=web&utm_content=desc&utm_campaign=freeplugin#assets-addon) - Serve your CSS & JS from S3/CloudFront
-* [WooCommerce addon](https://deliciousbrains.com/wp-offload-s3/?utm_source=wordpress.org&utm_medium=web&utm_content=desc&utm_campaign=freeplugin#woocommerce-addon)
-* [Easy Digital Downloads addon](https://deliciousbrains.com/wp-offload-s3/?utm_source=wordpress.org&utm_medium=web&utm_content=desc&utm_campaign=freeplugin#edd-addon)
+* [Assets addon](https://deliciousbrains.com/wp-offload-s3/?utm_source=wordpress.org&utm_medium=web&utm_content=desc&utm_campaign=os3-free-plugin#assets-addon) - Serve your CSS & JS from S3/CloudFront
+* [WooCommerce addon](https://deliciousbrains.com/wp-offload-s3/?utm_source=wordpress.org&utm_medium=web&utm_content=desc&utm_campaign=os3-free-plugin#woocommerce-addon)
+* [Easy Digital Downloads addon](https://deliciousbrains.com/wp-offload-s3/?utm_source=wordpress.org&utm_medium=web&utm_content=desc&utm_campaign=os3-free-plugin#edd-addon)
 * PriorityExpert&trade; email support
 
-See the video below or [visit the web site](http://deliciousbrains.com/wp-offload-s3/?utm_source=wordpress.org&utm_medium=web&utm_content=desc&utm_campaign=freeplugin) to learn more about the pro version.
+[Compare pro vs free &rarr;](http://deliciousbrains.com/wp-offload-s3/upgrade/?utm_source=wordpress.org&utm_medium=web&utm_content=desc&utm_campaign=os3-free-plugin)
+
+The video below runs through the pro upgrade features...
 
 https://www.youtube.com/watch?v=55xNGnbJ_CY
 
@@ -61,6 +62,17 @@ This version requires PHP 5.3.3+ and the Amazon Web Services plugin
 This version requires PHP 5.3.3+ and the Amazon Web Services plugin
 
 == Changelog ==
+
+= 0.9.4 - 2015-08-27 =
+* New: Update all existing attachments with missing file sizes when the 'Remove Files From Server' option is enabled (automatically runs in the background)
+* Improvement: Show when constants are used to set bucket and region options
+* Improvement: Don't show compatibility notices on plugin update screen
+* Improvement: On Multisite installs don't call `restore_current_blog()` on successive loop iterations
+* Bug fix: 'Error getting URL preview' alert shown when enter key pressed on settings screen
+* Bug fix: Unable to crop header images when the 'Remove Files From Server' option is enabled
+* Bug fix: Incorrect storage space shown on Multisite installs when the 'Remove Files From Server' option is enabled
+* Bug fix: Upload attempted to non existent bucket when defined by constant
+* Bug fix: 'SignatureDoesNotMatch' error shown when using signed URLs with bucket names containing '.' characters
 
 = 0.9.3 - 2015-08-17 =
 * New: Pro upgrade sidebar

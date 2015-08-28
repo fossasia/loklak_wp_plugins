@@ -358,6 +358,9 @@
 				savedSettings[ id ] = serializedForm( id );
 			}
 
+			// Remove previous permission errors
+			$( '.as3cf-error.fatal' ).hide();
+
 			$activeBucket.text( bucket );
 			$manualBucketForm.find( '.as3cf-bucket-name' ).val( bucket );
 			$( '#' + as3cfModal.prefix + '-bucket' ).val( bucket );
@@ -625,6 +628,16 @@
 
 		$( '.url-preview' ).on( 'change', 'input', function( e ) {
 			generateUrlPreview();
+		} );
+
+		// Don't allow 'enter' key to submit form on text input settings
+		$( '.as3cf-setting input[type="text"]' ).keypress( function( event ) {
+			if ( 13 === event.which ) {
+				event.preventDefault();
+
+				return false;
+			}
+
 		} );
 
 		// Bucket select
