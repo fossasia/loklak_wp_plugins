@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: amazon-s3-and-cloudfront\n"
 "Report-Msgid-Bugs-To: nom@deliciousbrains.com\n"
-"POT-Creation-Date: 2015-08-27 20:11+0100\n"
+"POT-Creation-Date: 2015-09-01 09:58+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,112 +25,112 @@ msgstr ""
 msgid "S3 and CloudFront"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:522
+#: classes/amazon-s3-and-cloudfront.php:521
 #, php-format
 msgid "File %s does not exist"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:531
+#: classes/amazon-s3-and-cloudfront.php:530
 #, php-format
 msgid "Mime type %s is not allowed"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:608
+#: classes/amazon-s3-and-cloudfront.php:607
 #, php-format
 msgid "Error uploading %s to S3: %s"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:1259
+#: classes/amazon-s3-and-cloudfront.php:1247
 msgid "Cheatin&#8217; eh?"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:1263
+#: classes/amazon-s3-and-cloudfront.php:1251
 msgid "You do not have sufficient permissions to access this page."
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:1269
+#: classes/amazon-s3-and-cloudfront.php:1257
 msgid "No bucket name provided."
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:1544
+#: classes/amazon-s3-and-cloudfront.php:1532
 msgid "Error Getting Bucket Region"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:1545
+#: classes/amazon-s3-and-cloudfront.php:1533
 #, php-format
 msgid "There was an error attempting to get the region of the bucket %s: %s"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:1665
+#: classes/amazon-s3-and-cloudfront.php:1653
 msgid ""
 "This is a test file to check if the user has write permission to S3. Delete "
 "me if found."
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:1697
+#: classes/amazon-s3-and-cloudfront.php:1685
 #, php-format
 msgid ""
 "There was an error attempting to check the permissions of the bucket %s: %s"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:1755
+#: classes/amazon-s3-and-cloudfront.php:1743
 msgid "Error creating bucket"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:1756
+#: classes/amazon-s3-and-cloudfront.php:1744
 msgid "Bucket name too short."
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:1757
+#: classes/amazon-s3-and-cloudfront.php:1745
 msgid "Bucket name too long."
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:1758
+#: classes/amazon-s3-and-cloudfront.php:1746
 msgid ""
 "Invalid character. Bucket names can contain lowercase letters, numbers, "
 "periods and hyphens."
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:1759
+#: classes/amazon-s3-and-cloudfront.php:1747
 msgid "Error saving bucket"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:1760
+#: classes/amazon-s3-and-cloudfront.php:1748
 msgid "Error fetching buckets"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:1761
+#: classes/amazon-s3-and-cloudfront.php:1749
 msgid "Error getting URL preview: "
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:1762
+#: classes/amazon-s3-and-cloudfront.php:1750
 msgid "The changes you made will be lost if you navigate away from this page"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:1820
+#: classes/amazon-s3-and-cloudfront.php:1808
 msgid "Cheatin' eh?"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:1923
+#: classes/amazon-s3-and-cloudfront.php:1911
 msgctxt "Show the media library tab"
 msgid "Media Library"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:1924
+#: classes/amazon-s3-and-cloudfront.php:1912
 msgctxt "Show the support tab"
 msgid "Support"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:2060
+#: classes/amazon-s3-and-cloudfront.php:2048
 #, php-format
 msgid "The file %s has been given %s permissions on Amazon S3."
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:2561
+#: classes/amazon-s3-and-cloudfront.php:2549
 msgid "Quick Start Guide"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:2563
+#: classes/amazon-s3-and-cloudfront.php:2551
 #, php-format
 msgid ""
 "Looks like we don't have write access to this bucket. It's likely that the "
@@ -139,7 +139,7 @@ msgid ""
 "correctly."
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:2565
+#: classes/amazon-s3-and-cloudfront.php:2553
 #, php-format
 msgid ""
 "Looks like we don't have access to the buckets. It's likely that the user "
@@ -148,6 +148,7 @@ msgid ""
 msgstr ""
 
 #: classes/as3cf-plugin-compatibility.php:357
+#: classes/upgrades/as3cf-meta-wp-error.php:72
 #, php-format
 msgid "There was an error attempting to download the file %s from S3: %s"
 msgstr ""
@@ -199,6 +200,11 @@ msgid ""
 "and updating the metadata with the sizes of files that have been removed "
 "from the server. This will allow us to serve the correct size for media "
 "items and the total space used in Multisite subsites."
+msgstr ""
+
+#: classes/upgrades/as3cf-meta-wp-error.php:38
+msgid ""
+"and rebuilding the metadata for attachments that may have been corrupted."
 msgstr ""
 
 #: classes/upgrades/as3cf-region-meta.php:36

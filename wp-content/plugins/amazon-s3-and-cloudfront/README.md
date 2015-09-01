@@ -3,7 +3,7 @@
 **Tags:** uploads, amazon, s3, mirror, admin, media, cdn, cloudfront  
 **Requires at least:** 3.7  
 **Tested up to:** 4.3  
-**Stable tag:** 0.9.4  
+**Stable tag:** 0.9.5  
 **License:** GPLv3  
 
 Copies files to Amazon S3 as they are uploaded to the Media Library. Optionally configure Amazon CloudFront for faster delivery.
@@ -66,6 +66,9 @@ This version requires PHP 5.3.3+ and the Amazon Web Services plugin
 This version requires PHP 5.3.3+ and the Amazon Web Services plugin
 
 ## Changelog ##
+
+### 0.9.5 - 2015-09-01 ###
+* Bug fix: Fatal error: Cannot use object of type WP_Error as array
 
 ### 0.9.4 - 2015-08-27 ###
 * New: Update all existing attachments with missing file sizes when the 'Remove Files From Server' option is enabled (automatically runs in the background)

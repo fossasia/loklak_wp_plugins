@@ -86,6 +86,7 @@ class Amazon_S3_And_CloudFront extends AWS_Plugin_Base {
 
 		new AS3CF_Upgrade_Region_Meta( $this );
 		new AS3CF_Upgrade_File_Sizes( $this );
+		new AS3CF_Upgrade_Meta_WP_Error( $this );
 
 		add_action( 'aws_admin_menu', array( $this, 'admin_menu' ) );
 		add_action( 'wp_ajax_as3cf-get-buckets', array( $this, 'ajax_get_buckets' ) );
@@ -489,7 +490,7 @@ class Amazon_S3_And_CloudFront extends AWS_Plugin_Base {
 		}
 
 		// upload attachment to S3
-		$data = $this->upload_attachment_to_s3( $post_id, $data );
+		$this->upload_attachment_to_s3( $post_id, $data );
 
 		return $data;
 	}
@@ -507,9 +508,7 @@ class Amazon_S3_And_CloudFront extends AWS_Plugin_Base {
 	 * @return array|WP_Error $s3object|$meta If meta is supplied, return it. Else return S3 meta
 	 */
 	function upload_attachment_to_s3( $post_id, $data = null, $file_path = null, $force_new_s3_client = false, $remove_local_files = true ) {
-		$return_metadata = true;
 		if ( is_null( $data ) ) {
-			$return_metadata = false;
 			$data = wp_get_attachment_metadata( $post_id, true );
 		}
 
@@ -628,11 +627,8 @@ class Amazon_S3_And_CloudFront extends AWS_Plugin_Base {
 				// Store in the attachment meta data for use by WP
 				$data['filesize'] = $bytes;
 
-				if ( ! $return_metadata ) {
-					// Upload happening outside of 'wp_update_attachment_metadata' filter,
-					// So update metadata manually
-					update_post_meta( $post_id, '_wp_attachment_metadata', $data );
-				}
+				// Update metadata with filesize
+				update_post_meta( $post_id, '_wp_attachment_metadata', $data );
 
 				// Add to the file size total
 				$filesize_total += $bytes;
@@ -692,19 +688,11 @@ class Amazon_S3_And_CloudFront extends AWS_Plugin_Base {
 				// Make sure we don't have a cached file sizes in the meta
 				unset( $data['filesize'] );
 
-				if ( ! $return_metadata ) {
-					// Upload happening outside of 'wp_update_attachment_metadata' filter,
-					// So update metadata manually
-					update_post_meta( $post_id, '_wp_attachment_metadata', $data );
-				}
+				// Remove the filesize from the metadata
+				update_post_meta( $post_id, '_wp_attachment_metadata', $data );
 
 				delete_post_meta( $post_id, 'wpos3_filesize_total' );
 			}
-		}
-
-		if ( $return_metadata ) {
-			// If the attachment metadata is supplied, return it
-			return $data;
 		}
 
 		return $s3object;
