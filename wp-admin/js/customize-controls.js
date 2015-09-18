@@ -68,8 +68,10 @@
 		params = params || {};
 		focus = function () {
 			var focusContainer;
-			if ( construct.expanded && construct.expanded() ) {
-				focusContainer = construct.container.find( 'ul:first' );
+			if ( construct.extended( api.Panel ) && construct.expanded && construct.expanded() ) {
+				focusContainer = construct.container.find( 'ul.control-panel-content' );
+			} else if ( construct.extended( api.Section ) && construct.expanded && construct.expanded() ) {
+				focusContainer = construct.container.find( 'ul.accordion-section-content' );
 			} else {
 				focusContainer = construct.container;
 			}
@@ -284,8 +286,15 @@
 		 * @param {Object}  args.duration
 		 * @param {Object}  args.completeCallback
 		 */
-		onChangeActive: function ( active, args ) {
+		onChangeActive: function( active, args ) {
 			var duration, construct = this;
+			if ( args.unchanged ) {
+				if ( args.completeCallback ) {
+					args.completeCallback();
+				}
+				return;
+			}
+
 			duration = ( 'resolved' === api.previewer.deferred.active.state() ? args.duration : 0 );
 			if ( ! $.contains( document, construct.container[0] ) ) {
 				// jQuery.fn.slideUp is not hiding an element if it is not in the DOM
@@ -648,6 +657,9 @@
 						completeCallback: expand
 					});
 				} else {
+					api.panel.each( function( panel ) {
+						panel.collapse();
+					});
 					expand();
 				}
 
@@ -1257,7 +1269,7 @@
 
 				// Collapse any sibling sections/panels
 				api.section.each( function ( section ) {
-					if ( ! section.panel() ) {
+					if ( panel.id !== section.panel() ) {
 						section.collapse( { duration: 0 } );
 					}
 				});
@@ -1497,6 +1509,13 @@
 		 * @param {Callback} args.completeCallback
 		 */
 		onChangeActive: function ( active, args ) {
+			if ( args.unchanged ) {
+				if ( args.completeCallback ) {
+					args.completeCallback();
+				}
+				return;
+			}
+
 			if ( ! $.contains( document, this.container ) ) {
 				// jQuery.fn.slideUp is not hiding an element if it is not in the DOM
 				this.container.toggle( active );
@@ -2144,13 +2163,19 @@
 		 * @param {object} attachment
 		 */
 		setImageFromAttachment: function( attachment ) {
-			var icon = typeof attachment.sizes['site_icon-32'] !== 'undefined' ? attachment.sizes['site_icon-32'] : attachment.sizes.thumbnail;
+			var sizes = [ 'site_icon-32', 'thumbnail', 'full' ],
+				icon;
+
+			_.each( sizes, function( size ) {
+				if ( ! icon && ! _.isUndefined ( attachment.sizes[ size ] ) ) {
+					icon = attachment.sizes[ size ];
+				}
+			} );
 
 			this.params.attachment = attachment;
 
 			// Set the Customizer setting; the callback takes care of rendering.
 			this.setting( attachment.id );
-
 
 			// Update the icon in-browser.
 			$( 'link[sizes="32x32"]' ).attr( 'href', icon.url );

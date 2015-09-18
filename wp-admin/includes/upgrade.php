@@ -222,6 +222,7 @@ As a new WordPress user, you should go to <a href=\"%s\">your dashboard</a> to d
 		'post_date_gmt' => $now_gmt,
 		'post_content' => $first_page,
 		'post_excerpt' => '',
+		'comment_status' => 'closed',
 		'post_title' => __( 'Sample Page' ),
 		/* translators: Default page slug */
 		'post_name' => __( 'sample-page' ),
@@ -533,6 +534,9 @@ function upgrade_all() {
 
 	if ( $wp_current_db_version < 33055 )
 		upgrade_430();
+
+	if ( $wp_current_db_version < 33056 )
+		upgrade_431();
 
 	maybe_disable_link_manager();
 
@@ -1574,6 +1578,20 @@ function upgrade_430_fix_comments() {
 
 	foreach ( $comments as $comment ) {
 		wp_delete_comment( $comment->comment_ID, true );
+	}
+}
+
+/**
+ * Executes changes made in WordPress 4.3.1.
+ *
+ * @since 4.3.1
+ */
+function upgrade_431() {
+	// Fix incorrect cron entries for term splitting
+	$cron_array = _get_cron_array();
+	if ( isset( $cron_array['wp_batch_split_terms'] ) ) {
+		unset( $cron_array['wp_batch_split_terms'] );
+		_set_cron_array( $cron_array );
 	}
 }
 
