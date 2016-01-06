@@ -1,5 +1,128 @@
 # CHANGELOG
 
+## 2.8.18 - 2015-08-12
+* `Aws\ElasticBeanstalk` - Added support for enhanced health reporting.
+* `Aws\Glacier` - Fixed an issue where content bodies that equaled false (e.g.,
+  '0') would not be uploaded.
+
+## 2.8.17 - 2015-08-04
+
+* `Aws\Common` - Fixed an issue with `RefreshableInstanceProfileCredentials`
+  serilaization.
+* `Aws\DeviceFarm` - Added support for the `GetAccountSettings` operation.
+
+## 2.8.16 - 2015-07-28
+
+* `Aws\CloudWatchLogs` - Added support for 4 new operations: `PutDestination`,
+  `PutDestinationPolicy`, `DescribeDestinations`, and `DeleteDestination`.
+* `Aws\S3` - Added support for receiving the storage class in the responses
+  for `GetObject` and `HeadObject` operations.
+
+## 2.8.15 - 2015-07-23
+
+* `Aws\CloudSearch` - Marked CloudSearchClient::getDomainClient as deprecated.
+  This method has been removed in v3 of the SDK.
+* `Aws\Ec2` - Added support for SpotFleetLaunchSpecification.
+* `Aws\Glacier` - Added support for the InitiateVaultLock, GetVaultLock,
+  AbortVaultLock, and CompleteVaultLock API operations.
+
+## 2.8.14 - 2015-07-14
+
+* `Aws\DeviceFarm` - Added support for AWS DeviceFarm, an app testing service 
+  that enables you to test your Android and Fire OS apps on real, physical 
+  phones and tablets that are hosted by AWS.
+* `Aws\DynamoDb` - Added support for consistent scans and update streams.
+* `Aws\DynamoDbStreams` - Added support for Amazon DynamoDB Streams, giving you
+  the ability to subscribe to the transactional log of all changes transpiring
+  in your DynamoDB table.
+
+## 2.8.13 - 2015-07-09
+
+* `Aws\AutoScaling` - Added support for step policies.
+* `Aws\CodeCommit` - Added support for AWS CodeCommit, a secure, highly 
+  scalable, managed source control service that hosts private Git repositories.
+* `Aws\CodePipeline` - Added support for AWS CodePipeline, a continuous delivery
+  service that enables you to model, visualize, and automate the steps required
+  to release your software.
+* `Aws\Ec2` - Added support for encrypted snapshots.
+* `Aws\Iam` - Added support for uploading SSH public keys for authentication
+  with AWS CodeCommit.
+* `Aws\S3` - Fixed #609 to handle non-200 responses in the Stream Wrapper.
+* `Aws\Ses` - Added support for cross-account sending through the sending
+  authorization feature.
+* Fixed the way that cached credentials work via #670.
+
+## 2.8.11 - 2015-06-24
+
+* `Aws\CloudFront` - Added support for configurable `MaxTTL` and `DefaultTTL`.
+* `Aws\ConfigService` - Added support for recording changes for specific 
+  resource types.
+* `Aws\Ecs` - Added support for sorting, deregistering, and overriding 
+  environment variables for task definitions.
+* `Aws\Glacier` - Added support for the `AddTagsToVault`, `ListTagsForVault`, 
+  and `RemoveTagsFromVault` API operations.
+* `Aws\OpwWorks` - Added support for specifying agent versions to be used on 
+  instances.
+* `Aws\Redshift` - Added support for the `CreateSnapshotCopyGrant`, 
+  `DescribeSnapshotCopyGrants`, and `DeleteSnapshotCopyGrant` API operations.
+* Fixed empty list serialization for Elastic Load Balancing and CloudFormation
+  operations.
+
+## 2.8.10 - 2015-06-11
+
+* `Aws\AutoScaling` - Added support for attaching and detaching load balancers.
+* `Aws\Ec2` - Added support for VPC flow logs and the M4 instance types.
+* `Aws\Ecs` - Added support for the UpdateContainerAgent operation.
+* `Aws\CloudHsm` - Fixed a configuration issue that was affecting some operations.
+
+## 2.8.9 - 2015-06-04
+
+* `Aws\CloudWatchLogs` - Added support for the PutSubscriptionFilter,
+  DescribeSubscriptionFilters, and DeleteSubscriptionFilter operations.
+* `Aws\DynamoDb` - Fixed the DynamoDB `Marshaler` to better handler empty maps.
+* `Aws\CognitoIdentity` - Added support for the DeleteIdentities operation,
+  and hiding disabled identities with the ListIdentities operation.
+* `Aws\StorageGateway` - Added support for the ListVolumeInitiators operation.
+
+## 2.8.8 - 2015-05-28
+
+* `Aws\Lambda` - Added Amazon S3 upload support.
+
+## 2.8.7 - 2015-05-26
+
+* `Aws\Efs` - [Amazon Elastic File System (Amazon EFS)](http://aws.amazon.com/efs/)
+* Failing to parse an XML error response will now fail gracefully as a
+  `PhpInternalXmlParseError` AWS error code.
+
+## 2.8.6 - 2015-05-21
+
+* `Aws\ElasticBeanstalk` - Added support for ResourceName configuration.
+* `Aws\ElasticTranscoder` - Added support for configuring AudioPackingMode and
+  additional CodecOptions.
+* `Aws\Kinesis` - Added support for MillisBehindLatest in the result of
+  GetRecordsOutput.
+* `Aws\Kms` - Added support for the UpdateAlias operation.
+* `Aws\Lambda` - Fixed an issue with the UpdateFunctionCode operation.
+
+## 2.8.5 - 2015-05-18
+
+* `Aws\Ec2\Ec2Client` - Added support for the new spot fleet API operations.
+* `Aws\OpsWorks\OpsWorksClient` - Added support for custom auto-scaling based
+  on CloudWatch alarms.
+
+## 2.8.4 - 2015-05-14
+
+* `Aws\DirectoryService` - Added support for the AWS Directory Service.
+* `Aws\CloudWatchLogs` - Adds support for the FilterLogEvents operation.
+* `Aws\CloudFormation` - Adds additional data to the GetTemplateSummary
+  operation.
+* `Aws\Ec2` - Adds support for Amazon VPC endpoints for Amazon S3 and APIs for
+  migrating Elastic IP Address from EC2-Classic to EC2-VPC.
+* `Aws\Ec2` - Fixed an issue with cross-region CopySnapshot such that it now
+  works with temporary credentials.
+* `Aws\Common` - During credential discovery, an invalid credentials file now
+  allows failover to Instance Profile credentials.
+
 ## 2.8.3 - 2015-05-07
 
 * `Aws\Glacier` - Added support for vault access policies.

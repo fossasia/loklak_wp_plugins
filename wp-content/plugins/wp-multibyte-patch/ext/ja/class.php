@@ -3,7 +3,7 @@
  * WP Multibyte Patch Japanese Locale Extension
  *
  * @package WP_Multibyte_Patch
- * @version 2.4
+ * @version 2.5
  * @author Seisuke Kuraishi <210pura@gmail.com>
  * @copyright Copyright (c) 2015 Seisuke Kuraishi, Tinybit Inc.
  * @license http://opensource.org/licenses/gpl-2.0.php GPLv2
@@ -150,10 +150,7 @@ if ( class_exists( 'multibyte_patch' ) ) :
 	}
 
 	function wp_trim_words( $text = '', $num_words = 110, $more = '', $original_text = '' ) {
-		if (
-			$this->is_wp_required_version( '4.3-RC1' ) && 0 !== strpos( _x( 'words', 'Word count type. Do not translate!' ), 'characters' ) || 
-			!$this->is_wp_required_version( '4.3-RC1' ) && 'characters' != _x( 'words', 'word count: words or characters?' )
-		)
+		if ( 0 !== strpos( _x( 'words', 'Word count type. Do not translate!' ), 'characters' ) )
 			return $text;
 
 		// If the caller is wp_dashboard_recent_drafts()

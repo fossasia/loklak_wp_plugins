@@ -20,6 +20,7 @@ $options = array(
 	'tantan_wordpress_s3',
 	'update_meta_with_region_session',
 	'update_file_sizes_session',
+	'as3cf_compat_addons_to_install'
 );
 
 $postmeta = array(

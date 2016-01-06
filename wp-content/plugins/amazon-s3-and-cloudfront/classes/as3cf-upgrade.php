@@ -276,17 +276,17 @@ abstract class AS3CF_Upgrade {
 
 		switch ( $this->get_upgrade_status() ) {
 			case self::STATUS_RUNNING:
-				$msg         = sprintf( __( '<strong>Running %s Update</strong> &mdash; We&#8217;re going through all the Media Library items uploaded to S3 %s This will be done quietly in the background, processing a small batch of Media Library items every %d minutes. There should be no noticeable impact on your server&#8217;s performance.', 'as3cf' ), ucfirst( $this->upgrade_type ), $this->running_update_text, $this->cron_interval_in_minutes );
-				$action_text = __( 'Pause Update', 'as3cf' );
+				$msg         = sprintf( __( '<strong>Running %s Update</strong> &mdash; We&#8217;re going through all the Media Library items uploaded to S3 %s This will be done quietly in the background, processing a small batch of Media Library items every %d minutes. There should be no noticeable impact on your server&#8217;s performance.', 'amazon-s3-and-cloudfront' ), ucfirst( $this->upgrade_type ), $this->running_update_text, $this->cron_interval_in_minutes );
+				$action_text = __( 'Pause Update', 'amazon-s3-and-cloudfront' );
 				$action_url  = $this->as3cf->get_plugin_page_url( array( 'action' => 'pause_update', 'update' => $this->upgrade_name ), 'self' );
 				break;
 			case self::STATUS_PAUSED:
-				$msg         = sprintf( __( '<strong>%s Update Paused</strong> &mdash; Updating Media Library %s has been paused.', 'as3cf' ), ucfirst( $this->upgrade_type ), $this->upgrade_type );
-				$action_text = __( 'Restart Update', 'as3cf' );
+				$msg         = sprintf( __( '<strong>%s Update Paused</strong> &mdash; Updating Media Library %s has been paused.', 'amazon-s3-and-cloudfront' ), ucfirst( $this->upgrade_type ), $this->upgrade_type );
+				$action_text = __( 'Restart Update', 'amazon-s3-and-cloudfront' );
 				break;
 			case self::STATUS_ERROR:
-				$msg         = sprintf( __( '<strong>Error Updating %s</strong> &mdash; We ran into some errors attempting to update the %s for all your Media Library items that have been uploaded to S3. Please check your error log for details.', 'as3cf' ), ucfirst( $this->upgrade_type ), $this->upgrade_type );
-				$action_text = __( 'Try Run It Again', 'as3cf' );
+				$msg         = sprintf( __( '<strong>Error Updating %s</strong> &mdash; We ran into some errors attempting to update the %s for all your Media Library items that have been uploaded to S3. Please check your error log for details. (#%d)', 'amazon-s3-and-cloudfront' ), ucfirst( $this->upgrade_type ), $this->upgrade_type, $this->upgrade_id );
+				$action_text = __( 'Try Run It Again', 'amazon-s3-and-cloudfront' );
 				$msg_type    = 'error';
 				break;
 			default:
@@ -388,7 +388,7 @@ abstract class AS3CF_Upgrade {
 		// Add the upgrade interval to the existing schedules.
 		$schedules[ $this->cron_schedule_key ] = array(
 			'interval' => $this->cron_interval_in_minutes * 60,
-			'display'  => sprintf( __( 'Every %d Minutes', 'as3cf' ), $this->cron_interval_in_minutes ),
+			'display'  => sprintf( __( 'Every %d Minutes', 'amazon-s3-and-cloudfront' ), $this->cron_interval_in_minutes ),
 		);
 
 		return $schedules;

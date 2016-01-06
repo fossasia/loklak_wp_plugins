@@ -47,6 +47,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model deregisterInstance(array $args = array()) {@command OpsWorks DeregisterInstance}
  * @method Model deregisterRdsDbInstance(array $args = array()) {@command OpsWorks DeregisterRdsDbInstance}
  * @method Model deregisterVolume(array $args = array()) {@command OpsWorks DeregisterVolume}
+ * @method Model describeAgentVersions(array $args = array()) {@command OpsWorks DescribeAgentVersions}
  * @method Model describeApps(array $args = array()) {@command OpsWorks DescribeApps}
  * @method Model describeCommands(array $args = array()) {@command OpsWorks DescribeCommands}
  * @method Model describeDeployments(array $args = array()) {@command OpsWorks DescribeDeployments}
@@ -69,6 +70,7 @@ use Guzzle\Service\Resource\ResourceIteratorInterface;
  * @method Model detachElasticLoadBalancer(array $args = array()) {@command OpsWorks DetachElasticLoadBalancer}
  * @method Model disassociateElasticIp(array $args = array()) {@command OpsWorks DisassociateElasticIp}
  * @method Model getHostnameSuggestion(array $args = array()) {@command OpsWorks GetHostnameSuggestion}
+ * @method Model grantAccess(array $args = array()) {@command OpsWorks GrantAccess}
  * @method Model rebootInstance(array $args = array()) {@command OpsWorks RebootInstance}
  * @method Model registerElasticIp(array $args = array()) {@command OpsWorks RegisterElasticIp}
  * @method Model registerInstance(array $args = array()) {@command OpsWorks RegisterInstance}

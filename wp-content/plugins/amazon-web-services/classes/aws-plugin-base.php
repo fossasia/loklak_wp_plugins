@@ -48,6 +48,15 @@ class AWS_Plugin_Base {
 	}
 
 	/**
+	 * Accessor for plugin file path
+	 *
+	 * @return string
+	 */
+	public function get_plugin_file_path() {
+		return $this->plugin_file_path;
+	}
+
+	/**
 	 * Accessor for plugin dir path
 	 *
 	 * @return string

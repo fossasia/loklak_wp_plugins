@@ -33,7 +33,7 @@ class AS3CF_Upgrade_Region_Meta extends AS3CF_Upgrade {
 		$this->upgrade_name = 'meta_with_region';
 		$this->upgrade_type = 'metadata';
 
-		$this->running_update_text = __( 'and updating the metadata with the bucket region it is served from. This will allow us to serve your files from the proper S3 region subdomain <span style="white-space:nowrap;">(e.g. s3-us-west-2.amazonaws.com)</span>.', 'as3cf' );
+		$this->running_update_text = __( 'and updating the metadata with the bucket region it is served from. This will allow us to serve your files from the proper S3 region subdomain <span style="white-space:nowrap;">(e.g. s3-us-west-2.amazonaws.com)</span>.', 'amazon-s3-and-cloudfront' );
 
 		parent::__construct( $as3cf );
 	}

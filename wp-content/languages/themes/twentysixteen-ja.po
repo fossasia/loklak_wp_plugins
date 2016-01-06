@@ -1,0 +1,328 @@
+# Translation of Twenty Sixteen in Japanese
+# This file is distributed under the same license as the Twenty Sixteen package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2015-11-21 09:15:38+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: GlotPress/1.0-alpha-1100\n"
+"Project-Id-Version: Twenty Sixteen\n"
+
+#. Description of the plugin/theme
+msgid "Twenty Sixteen is a modernized take on an ever-popular WordPress layout — the horizontal masthead with an optional right sidebar that works perfectly for blogs and websites. It has custom color options with beautiful default color schemes, a harmonious fluid grid using a mobile-first approach, and impeccable polish in every detail. Twenty Sixteen will make your WordPress look beautiful everywhere."
+msgstr "Twenty Sixteen は ずっと人気の WordPress レイアウト — ブログとウェブサイト用に完全に動作する、オプションの右サイドバーのある水平の題字 — に対するモダンな試みです。美しいデフォルトカラースキームのカラーオプション、モバイルファーストのアプローチによる調和した柔軟なグリッド、細部にまで非の打ち所がない上品さを備えています。Twenty Sixteen は WordPress の外観をどこであろうとも美しく見せるでしょう。"
+
+#. Theme Name of the plugin/theme
+msgid "Twenty Sixteen"
+msgstr "Twenty Sixteen"
+
+#. translators: %s: Name of current post
+#: image.php:84 template-parts/content-page.php:37
+#: template-parts/content-search.php:28 template-parts/content-search.php:43
+#: template-parts/content-single.php:45 template-parts/content.php:49
+msgid "Edit<span class=\"screen-reader-text\"> \"%s\"</span>"
+msgstr "<span class=\"screen-reader-text\">\"%s\"を</span>編集"
+
+#. translators: %s: Name of current post
+#: inc/template-tags.php:184 template-parts/content.php:28
+msgid "Continue reading<span class=\"screen-reader-text\"> \"%s\"</span>"
+msgstr "<span class=\"screen-reader-text\">\"%s\"の</span>続きを読む"
+
+#: inc/customizer.php:246
+msgid "Red"
+msgstr "赤"
+
+#. translators: %s: post title
+#: comments.php:31
+msgctxt "comments title"
+msgid "One thought on &ldquo;%s&rdquo;"
+msgstr "&ldquo;%s&rdquo; への 1 件のフィードバック"
+
+#: searchform.php:16
+msgctxt "submit button"
+msgid "Search"
+msgstr "検索"
+
+#: searchform.php:14
+msgctxt "placeholder"
+msgid "Search &hellip;"
+msgstr "検索 &hellip;"
+
+#: searchform.php:13 searchform.php:14
+msgctxt "label"
+msgid "Search for:"
+msgstr "検索対象:"
+
+#: footer.php:17
+msgid "Footer Primary Menu"
+msgstr "フッターメインメニュー"
+
+#: footer.php:28
+msgid "Footer Social Links Menu"
+msgstr "フッターソーシャルリンクメニュー"
+
+#: functions.php:144
+msgid "Add widgets here to appear in your sidebar."
+msgstr "サイドバーに表示させるにはここにウィジェットを追加してください。"
+
+#: template-parts/content.php:14
+msgid "Featured"
+msgstr "注目"
+
+#: template-parts/content-none.php:28
+msgid "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help."
+msgstr "お探しのものが見つからないようです。検索すると良いかもしれません。"
+
+#: template-parts/content-none.php:23
+msgid "Sorry, but nothing matched your search terms. Please try again with some different keywords."
+msgstr "検索キーワードに一致するものが見つかりませんでした。 別のキーワードで試してみてください。"
+
+#: template-parts/content-none.php:19
+msgid "Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+msgstr "最初の投稿を公開する準備はできましたか ? <a href=\"%1$s\">ここから始めましょう</a>。"
+
+#: template-parts/content-none.php:13
+msgid "Nothing Found"
+msgstr "何も見つかりませんでした"
+
+#: template-parts/biography.php:33
+msgid "View all posts by %s"
+msgstr "%s のすべての投稿を表示"
+
+#: template-parts/biography.php:28
+msgid "Author:"
+msgstr "投稿者:"
+
+#: single.php:38
+msgid "Previous post:"
+msgstr "過去の投稿:"
+
+#: single.php:35
+msgid "Next post:"
+msgstr "次の投稿:"
+
+#: single.php:37
+msgid "Previous"
+msgstr "前"
+
+#: single.php:34
+msgid "Next"
+msgstr "次"
+
+#: search.php:18
+msgid "Search Results for: %s"
+msgstr "「%s」の検索結果"
+
+#: inc/template-tags.php:106
+msgctxt "Used before tag names."
+msgid "Tags"
+msgstr "タグ"
+
+#: inc/template-tags.php:98
+msgctxt "Used before category names."
+msgid "Categories"
+msgstr "カテゴリー"
+
+#: inc/template-tags.php:95 inc/template-tags.php:103
+msgctxt "Used between list items, there is a space after the comma."
+msgid ", "
+msgstr ", "
+
+#: inc/template-tags.php:79
+msgctxt "Used before publish date."
+msgid "Posted on"
+msgstr "投稿日:"
+
+#: inc/template-tags.php:50
+msgid "Leave a comment<span class=\"screen-reader-text\"> on %s</span>"
+msgstr "<span class=\"screen-reader-text\">%sに</span>コメント"
+
+#: inc/template-tags.php:38
+msgctxt "Used before post format."
+msgid "Format"
+msgstr "フォーマット"
+
+#: inc/template-tags.php:25
+msgctxt "Used before post author name."
+msgid "Author"
+msgstr "投稿者"
+
+#: inc/customizer.php:256
+msgid "Yellow"
+msgstr "黄"
+
+#: inc/customizer.php:236
+msgid "Gray"
+msgstr "グレー"
+
+#: inc/customizer.php:226
+msgid "Dark"
+msgstr "ダーク"
+
+#: inc/customizer.php:171
+msgid "Secondary Text Color"
+msgstr "サブのテキストカラー"
+
+#: inc/customizer.php:216
+msgid "Default"
+msgstr "デフォルト"
+
+#: inc/customizer.php:159
+msgid "Main Text Color"
+msgstr "メインのテキストカラー"
+
+#: inc/customizer.php:132
+msgid "Page Background Color"
+msgstr "ページ背景色"
+
+#: inc/customizer.php:147
+msgid "Link Color"
+msgstr "リンク色"
+
+#: inc/customizer.php:117
+msgid "Base Color Scheme"
+msgstr "ベース配色"
+
+#: inc/back-compat.php:41 inc/back-compat.php:53 inc/back-compat.php:68
+msgid "Twenty Sixteen requires at least WordPress version 4.4. You are running version %s. Please upgrade and try again."
+msgstr "Twenty Sixteen には WordPress 4.4 以降のバージョンが必要です。現在ご利用中のバージョンは %s です。アップグレードしてもう一度お試しください。"
+
+#: image.php:102 single.php:29
+msgctxt "Parent post link"
+msgid "<span class=\"meta-nav\">Published in</span><span class=\"post-title\">%title</span>"
+msgstr "<span class=\"post-title\">%title</span> <span class=\"meta-nav\">内で公開</span>"
+
+#: image.php:73
+msgctxt "Used before full size attachment link."
+msgid "Full size"
+msgstr "フルサイズ"
+
+#: image.php:56 template-parts/content-page.php:23
+#: template-parts/content-single.php:25 template-parts/content.php:33
+msgid "Pages:"
+msgstr "ページ:"
+
+#: image.php:25
+msgid "Next Image"
+msgstr "次の画像"
+
+#: image.php:24
+msgid "Previous Image"
+msgstr "前の画像"
+
+#: header.php:45
+msgid "Menu"
+msgstr "メニュー"
+
+#: header.php:27
+msgid "Skip to content"
+msgstr "コンテンツへスキップ"
+
+#: functions.php:271
+msgid "collapse child menu"
+msgstr "サブメニューを閉じる"
+
+#: functions.php:270
+msgid "expand child menu"
+msgstr "サブメニューを展開"
+
+#. translators: If there are characters in your language that are not supported
+#. by Montserrat, translate this to 'off'. Do not translate into your own
+#. language.
+#: functions.php:194
+msgctxt "Montserrat font: on or off"
+msgid "on"
+msgstr "off"
+
+#. translators: If there are characters in your language that are not supported
+#. by Merriweather, translate this to 'off'. Do not translate into your own
+#. language.
+#: functions.php:189
+msgctxt "Merriweather font: on or off"
+msgid "on"
+msgstr "on"
+
+#: functions.php:162
+msgid "Content Bottom 2"
+msgstr "コンテンツ下 2"
+
+#: functions.php:154 functions.php:164
+msgid "Appears at the bottom of the content on posts and pages."
+msgstr "投稿や固定ページのコンテンツの下部に表示されます。"
+
+#: functions.php:152
+msgid "Content Bottom 1"
+msgstr "コンテンツ下 1"
+
+#. translators: If there are characters in your language that are not supported
+#. by Inconsolata, translate this to 'off'. Do not translate into your own
+#. language.
+#: functions.php:199
+msgctxt "Inconsolata font: on or off"
+msgid "on"
+msgstr "on"
+
+#: functions.php:142
+msgid "Sidebar"
+msgstr "サイドバー"
+
+#: functions.php:78 header.php:60
+msgid "Social Links Menu"
+msgstr "﻿ソーシャルリンクメニュー"
+
+#: functions.php:77 header.php:49
+msgid "Primary Menu"
+msgstr "メインメニュー"
+
+#: footer.php:51
+msgid "Proudly powered by %s"
+msgstr "Proudly powered by %s"
+
+#: comments.php:69
+msgid "Comments are closed."
+msgstr "コメントは受け付けていません。"
+
+#. translators: 1: number of comments, 2: post title
+#: comments.php:35
+msgctxt "comments title"
+msgid "%1$s thought on &ldquo;%2$s&rdquo;"
+msgid_plural "%1$s thoughts on &ldquo;%2$s&rdquo;"
+msgstr[0] "&ldquo;%2$s&rdquo; への %1$s 件のフィードバック"
+
+#: archive.php:51 image.php:60 index.php:48 search.php:39
+#: template-parts/content-page.php:27 template-parts/content-single.php:29
+#: template-parts/content.php:37
+msgid "Page"
+msgstr "ページ"
+
+#: archive.php:50 index.php:47 search.php:38
+msgid "Next page"
+msgstr "次のページ"
+
+#: archive.php:49 index.php:46 search.php:37
+msgid "Previous page"
+msgstr "前のページ"
+
+#: 404.php:21
+msgid "It looks like nothing was found at this location. Maybe try a search?"
+msgstr "こちらには何もありません。検索をお試しください。"
+
+#: 404.php:17
+msgid "Oops! That page can&rsquo;t be found."
+msgstr "お探しのページが見つかりません。"
+
+#. Author of the plugin/theme
+msgid "the WordPress team"
+msgstr "WordPress チーム"
+
+#. Theme URI of the plugin/theme
+msgid "https://wordpress.org/themes/twentysixteen/"
+msgstr "https://ja.wordpress.org/themes/twentysixteen/"
+
+#. #-#-#-#-#  twentysixteen.pot (Twenty Sixteen 1.0)  #-#-#-#-#
+#. Author URI of the plugin/theme
+#: footer.php:51
+msgid "https://wordpress.org/"
+msgstr "https://ja.wordpress.org/"

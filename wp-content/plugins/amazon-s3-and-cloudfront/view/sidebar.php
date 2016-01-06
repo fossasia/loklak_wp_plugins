@@ -7,49 +7,49 @@
 	<div class="as3cf-upgrade-details">
 
 		<ul>
-			<li><?php echo wptexturize( __( 'Upload existing Media Library to S3', 'as3cf' ) ); // xss ok ?></li>
-			<li><?php echo wptexturize( __( 'Find & replace file URLs in content', 'as3cf' ) ); // xss ok ?></li>
-			<li><?php echo wptexturize( __( 'Manage S3 files in WordPress', 'as3cf' ) ); // xss ok ?></li>
-			<li><?php echo wptexturize( __( 'Assets addon - Serve your CSS & JS from S3/CloudFront', 'as3cf' ) ); // xss ok ?></li>
-			<li><?php echo wptexturize( __( 'WooCommerce addon', 'as3cf' ) ); // xss ok ?></li>
-			<li><?php echo wptexturize( __( 'Easy Digital Downloads addon', 'as3cf' ) ); // xss ok ?></li>
-			<li><?php echo wptexturize( __( 'PriorityExpert™ email support', 'as3cf' ) ); // xss ok ?></li>
+			<li><?php echo wptexturize( __( 'Upload existing Media Library to S3', 'amazon-s3-and-cloudfront' ) ); // xss ok ?></li>
+			<li><?php echo wptexturize( __( 'Find & replace file URLs in content', 'amazon-s3-and-cloudfront' ) ); // xss ok ?></li>
+			<li><?php echo wptexturize( __( 'Manage S3 files in WordPress', 'amazon-s3-and-cloudfront' ) ); // xss ok ?></li>
+			<li><?php echo wptexturize( __( 'Assets addon - Serve your CSS & JS from S3/CloudFront', 'amazon-s3-and-cloudfront' ) ); // xss ok ?></li>
+			<li><?php echo wptexturize( __( 'WooCommerce addon', 'amazon-s3-and-cloudfront' ) ); // xss ok ?></li>
+			<li><?php echo wptexturize( __( 'Easy Digital Downloads addon', 'amazon-s3-and-cloudfront' ) ); // xss ok ?></li>
+			<li><?php echo wptexturize( __( 'PriorityExpert™ email support', 'amazon-s3-and-cloudfront' ) ); // xss ok ?></li>
 		</ul>
 
-		<p><a href="https://deliciousbrains.com/wp-offload-s3/?utm_source=insideplugin&amp;utm_medium=web&amp;utm_content=sidebar&amp;utm_campaign=os3-free-plugin"><?php echo __( 'Visit deliciousbrains.com &rarr;', 'as3cf' ); ?></a></p>
+		<p><a href="https://deliciousbrains.com/wp-offload-s3/?utm_source=insideplugin&amp;utm_medium=web&amp;utm_content=sidebar&amp;utm_campaign=os3-free-plugin"><?php echo __( 'Visit deliciousbrains.com &rarr;', 'amazon-s3-and-cloudfront' ); ?></a></p>
 
 	</div>
 
 	<form method="post" action="https://deliciousbrains.com/email-subscribe/" target="_blank" class="subscribe block">
 		<?php $user = wp_get_current_user(); ?>
 
-		<h2><?php _e( 'Get 20% Off!', 'as3cf' ); ?></h2>
+		<h2><?php _e( 'Get 20% Off!', 'amazon-s3-and-cloudfront' ); ?></h2>
 
 		<p class="intro">
-			<?php echo wptexturize( __( 'Submit your name and email and we’ll send you a coupon for 20% off your upgrade.', 'as3cf' ) ); // xss ok ?>
+			<?php echo wptexturize( __( 'Submit your name and email and we’ll send you a coupon for 20% off your upgrade.', 'amazon-s3-and-cloudfront' ) ); // xss ok ?>
 		</p>
 
 		<div class="field">
-			<input type="email" name="email" value="<?php echo esc_attr( $user->user_email ); ?>" placeholder="<?php _e( 'Your Email', 'as3cf' ); ?>"/>
+			<input type="email" name="email" value="<?php echo esc_attr( $user->user_email ); ?>" placeholder="<?php _e( 'Your Email', 'amazon-s3-and-cloudfront' ); ?>"/>
 		</div>
 
 		<div class="field">
-			<input type="text" name="first_name" value="<?php echo esc_attr( trim( $user->first_name ) ); ?>" placeholder="<?php _e( 'First Name', 'as3cf' ); ?>"/>
+			<input type="text" name="first_name" value="<?php echo esc_attr( trim( $user->first_name ) ); ?>" placeholder="<?php _e( 'First Name', 'amazon-s3-and-cloudfront' ); ?>"/>
 		</div>
 
 		<div class="field">
-			<input type="text" name="last_name" value="<?php echo esc_attr( trim( $user->last_name ) ); ?>" placeholder="<?php _e( 'Last Name', 'as3cf' ); ?>"/>
+			<input type="text" name="last_name" value="<?php echo esc_attr( trim( $user->last_name ) ); ?>" placeholder="<?php _e( 'Last Name', 'amazon-s3-and-cloudfront' ); ?>"/>
 		</div>
 
 		<input type="hidden" name="campaigns[]" value="5" />
 		<input type="hidden" name="source" value="1" />
 
 		<div class="field submit-button">
-			<input type="submit" class="button" value="<?php _e( 'Send me the coupon', 'as3cf' ); ?>"/>
+			<input type="submit" class="button" value="<?php _e( 'Send me the coupon', 'amazon-s3-and-cloudfront' ); ?>"/>
 		</div>
 
 		<p class="promise">
-			<?php _e( 'We promise we will not use your email for anything else and you can unsubscribe with 1-click anytime.', 'as3cf' ); ?>
+			<?php _e( 'We promise we will not use your email for anything else and you can unsubscribe with 1-click anytime.', 'amazon-s3-and-cloudfront' ); ?>
 		</p>
 	</form>
 

@@ -178,15 +178,15 @@ class StreamWrapper
 
         if (!$errors) {
             if ($mode == 'r') {
-                $this->openReadStream($params, $errors);
+                return $this->openReadStream($params, $errors);
             } elseif ($mode == 'a') {
-                $this->openAppendStream($params, $errors);
+                return $this->openAppendStream($params, $errors);
             } else {
-                $this->openWriteStream($params, $errors);
+                return $this->openWriteStream($params, $errors);
             }
         }
 
-        return $errors ? $this->triggerError($errors) : true;
+        return $this->triggerError($errors);
     }
 
     /**
@@ -691,6 +691,19 @@ class StreamWrapper
         $factory = $this->getOption('stream_factory') ?: new PhpStreamRequestFactory();
         $this->body = $factory->fromRequest($request, array(), array('stream_class' => 'Guzzle\Http\EntityBody'));
 
+        // Headers are placed in the "wrapper_data" array. The array of headers
+        // is simply an array of header lines of which the first line is the
+        // status line of the HTTP response.
+        $headers = $this->body->getMetaData('wrapper_data');
+
+        if ($headers && isset($headers[0])) {
+            $statusParts = explode(' ', $headers[0]);
+            $status = $statusParts[1];
+            if ($status != 200) {
+                return $this->triggerError('Cannot open file: ' . $this->body);
+            }
+        }
+
         // Wrap the body in a caching entity body if seeking is allowed
         if ($this->getOption('seekable')) {
             $this->body = new CachingEntityBody($this->body);
@@ -710,6 +723,8 @@ class StreamWrapper
     protected function openWriteStream(array $params, array &$errors)
     {
         $this->body = new EntityBody(fopen('php://temp', 'r+'));
+
+        return true;
     }
 
     /**

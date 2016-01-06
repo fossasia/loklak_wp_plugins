@@ -715,6 +715,9 @@ $_old_files = array(
  * Directories should be noted by suffixing it with a trailing slash (/)
  *
  * @since 3.2.0
+ * @since 4.4.0 New themes are not automatically installed on upgrade.
+ *              This can still be explicitly asked for by defining
+ *              CORE_UPGRADE_SKIP_NEW_BUNDLED as false.
  * @global array $_new_bundled_files
  * @var array
  * @name $_new_bundled_files
@@ -729,7 +732,13 @@ $_new_bundled_files = array(
 	'themes/twentythirteen/' => '3.6',
 	'themes/twentyfourteen/' => '3.8',
 	'themes/twentyfifteen/'  => '4.1',
+	'themes/twentysixteen/'  => '4.4',
 );
+
+// If not explicitly defined as false, don't install new default themes.
+if ( ! defined( 'CORE_UPGRADE_SKIP_NEW_BUNDLED' ) || CORE_UPGRADE_SKIP_NEW_BUNDLED ) {
+	$_new_bundled_files = array( 'plugins/akismet/' => '2.0' );
+}
 
 /**
  * Upgrade the core of WordPress.
@@ -881,7 +890,7 @@ function update_core($from, $to) {
 		if ( is_array( $checksums ) && isset( $checksums[ $wp_version ] ) )
 			$checksums = $checksums[ $wp_version ]; // Compat code for 3.7-beta2
 		if ( is_array( $checksums ) ) {
-			foreach( $checksums as $file => $checksum ) {
+			foreach ( $checksums as $file => $checksum ) {
 				if ( 'wp-content' == substr( $file, 0, 10 ) )
 					continue;
 				if ( ! file_exists( ABSPATH . $file ) )
@@ -1072,6 +1081,9 @@ function update_core($from, $to) {
 
 	// Remove any Genericons example.html's from the filesystem
 	_upgrade_422_remove_genericons();
+
+	// Remove the REST API plugin if its version is Beta 4 or lower
+	_upgrade_440_force_deactivate_incompatible_plugins();
 
 	// Upgrade DB with separate request
 	/** This filter is documented in wp-admin/includes/update-core.php */
@@ -1286,4 +1298,14 @@ function _upgrade_422_find_genericons_files_in_folder( $directory ) {
 	}
 
 	return $files;
+}
+
+/**
+ * @ignore
+ * @since 4.4.0
+ */
+function _upgrade_440_force_deactivate_incompatible_plugins() {
+	if ( defined( 'REST_API_VERSION' ) && version_compare( REST_API_VERSION, '2.0-beta4', '<=' ) ) {
+		deactivate_plugins( array( 'rest-api/plugin.php' ), true );
+	}
 }

@@ -124,6 +124,54 @@ return array (
                 ),
             ),
         ),
+        'DeleteDestination' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'Logs_20140328.DeleteDestination',
+                ),
+                'destinationName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 512,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Returned if a parameter of the request is incorrectly specified.',
+                    'class' => 'InvalidParameterException',
+                ),
+                array(
+                    'reason' => 'Returned if the specified resource does not exist.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+                array(
+                    'reason' => 'Returned if multiple requests to update the same resource were in conflict.',
+                    'class' => 'OperationAbortedException',
+                ),
+                array(
+                    'reason' => 'Returned if the service cannot complete the request.',
+                    'class' => 'ServiceUnavailableException',
+                ),
+            ),
+        ),
         'DeleteLogGroup' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -330,6 +378,111 @@ return array (
                 ),
             ),
         ),
+        'DeleteSubscriptionFilter' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'Logs_20140328.DeleteSubscriptionFilter',
+                ),
+                'logGroupName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 512,
+                ),
+                'filterName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 512,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Returned if a parameter of the request is incorrectly specified.',
+                    'class' => 'InvalidParameterException',
+                ),
+                array(
+                    'reason' => 'Returned if the specified resource does not exist.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+                array(
+                    'reason' => 'Returned if multiple requests to update the same resource were in conflict.',
+                    'class' => 'OperationAbortedException',
+                ),
+                array(
+                    'reason' => 'Returned if the service cannot complete the request.',
+                    'class' => 'ServiceUnavailableException',
+                ),
+            ),
+        ),
+        'DescribeDestinations' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'DescribeDestinationsResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'Logs_20140328.DescribeDestinations',
+                ),
+                'DestinationNamePrefix' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 512,
+                ),
+                'nextToken' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                ),
+                'limit' => array(
+                    'type' => 'numeric',
+                    'location' => 'json',
+                    'minimum' => 1,
+                    'maximum' => 50,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Returned if a parameter of the request is incorrectly specified.',
+                    'class' => 'InvalidParameterException',
+                ),
+                array(
+                    'reason' => 'Returned if the service cannot complete the request.',
+                    'class' => 'ServiceUnavailableException',
+                ),
+            ),
+        ),
         'DescribeLogGroups' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -511,6 +664,152 @@ return array (
                 ),
             ),
         ),
+        'DescribeSubscriptionFilters' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'DescribeSubscriptionFiltersResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'Logs_20140328.DescribeSubscriptionFilters',
+                ),
+                'logGroupName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 512,
+                ),
+                'filterNamePrefix' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 512,
+                ),
+                'nextToken' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                ),
+                'limit' => array(
+                    'type' => 'numeric',
+                    'location' => 'json',
+                    'minimum' => 1,
+                    'maximum' => 50,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Returned if a parameter of the request is incorrectly specified.',
+                    'class' => 'InvalidParameterException',
+                ),
+                array(
+                    'reason' => 'Returned if the specified resource does not exist.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+                array(
+                    'reason' => 'Returned if the service cannot complete the request.',
+                    'class' => 'ServiceUnavailableException',
+                ),
+            ),
+        ),
+        'FilterLogEvents' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'FilterLogEventsResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'Logs_20140328.FilterLogEvents',
+                ),
+                'logGroupName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 512,
+                ),
+                'logStreamNames' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'minItems' => 1,
+                    'maxItems' => 100,
+                    'items' => array(
+                        'name' => 'LogStreamName',
+                        'type' => 'string',
+                        'minLength' => 1,
+                        'maxLength' => 512,
+                    ),
+                ),
+                'startTime' => array(
+                    'type' => 'numeric',
+                    'location' => 'json',
+                ),
+                'endTime' => array(
+                    'type' => 'numeric',
+                    'location' => 'json',
+                ),
+                'filterPattern' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'maxLength' => 512,
+                ),
+                'nextToken' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                ),
+                'limit' => array(
+                    'type' => 'numeric',
+                    'location' => 'json',
+                    'minimum' => 1,
+                    'maximum' => 10000,
+                ),
+                'interleaved' => array(
+                    'type' => 'boolean',
+                    'format' => 'boolean-string',
+                    'location' => 'json',
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Returned if a parameter of the request is incorrectly specified.',
+                    'class' => 'InvalidParameterException',
+                ),
+                array(
+                    'reason' => 'Returned if the specified resource does not exist.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+                array(
+                    'reason' => 'Returned if the service cannot complete the request.',
+                    'class' => 'ServiceUnavailableException',
+                ),
+            ),
+        ),
         'GetLogEvents' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -579,6 +878,112 @@ return array (
                 array(
                     'reason' => 'Returned if the specified resource does not exist.',
                     'class' => 'ResourceNotFoundException',
+                ),
+                array(
+                    'reason' => 'Returned if the service cannot complete the request.',
+                    'class' => 'ServiceUnavailableException',
+                ),
+            ),
+        ),
+        'PutDestination' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'PutDestinationResponse',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'Logs_20140328.PutDestination',
+                ),
+                'destinationName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 512,
+                ),
+                'targetArn' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                ),
+                'roleArn' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Returned if a parameter of the request is incorrectly specified.',
+                    'class' => 'InvalidParameterException',
+                ),
+                array(
+                    'reason' => 'Returned if multiple requests to update the same resource were in conflict.',
+                    'class' => 'OperationAbortedException',
+                ),
+                array(
+                    'reason' => 'Returned if the service cannot complete the request.',
+                    'class' => 'ServiceUnavailableException',
+                ),
+            ),
+        ),
+        'PutDestinationPolicy' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'Logs_20140328.PutDestinationPolicy',
+                ),
+                'destinationName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 512,
+                ),
+                'accessPolicy' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Returned if a parameter of the request is incorrectly specified.',
+                    'class' => 'InvalidParameterException',
+                ),
+                array(
+                    'reason' => 'Returned if multiple requests to update the same resource were in conflict.',
+                    'class' => 'OperationAbortedException',
                 ),
                 array(
                     'reason' => 'Returned if the service cannot complete the request.',
@@ -820,6 +1225,82 @@ return array (
                 ),
             ),
         ),
+        'PutSubscriptionFilter' => array(
+            'httpMethod' => 'POST',
+            'uri' => '/',
+            'class' => 'Aws\\Common\\Command\\JsonCommand',
+            'responseClass' => 'EmptyOutput',
+            'responseType' => 'model',
+            'parameters' => array(
+                'Content-Type' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'application/x-amz-json-1.1',
+                ),
+                'command.expects' => array(
+                    'static' => true,
+                    'default' => 'application/json',
+                ),
+                'X-Amz-Target' => array(
+                    'static' => true,
+                    'location' => 'header',
+                    'default' => 'Logs_20140328.PutSubscriptionFilter',
+                ),
+                'logGroupName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 512,
+                ),
+                'filterName' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                    'maxLength' => 512,
+                ),
+                'filterPattern' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'maxLength' => 512,
+                ),
+                'destinationArn' => array(
+                    'required' => true,
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                ),
+                'roleArn' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                    'minLength' => 1,
+                ),
+            ),
+            'errorResponses' => array(
+                array(
+                    'reason' => 'Returned if a parameter of the request is incorrectly specified.',
+                    'class' => 'InvalidParameterException',
+                ),
+                array(
+                    'reason' => 'Returned if the specified resource does not exist.',
+                    'class' => 'ResourceNotFoundException',
+                ),
+                array(
+                    'reason' => 'Returned if multiple requests to update the same resource were in conflict.',
+                    'class' => 'OperationAbortedException',
+                ),
+                array(
+                    'reason' => 'Returned if you have reached the maximum number of resources that can be created.',
+                    'class' => 'LimitExceededException',
+                ),
+                array(
+                    'reason' => 'Returned if the service cannot complete the request.',
+                    'class' => 'ServiceUnavailableException',
+                ),
+            ),
+        ),
         'TestMetricFilter' => array(
             'httpMethod' => 'POST',
             'uri' => '/',
@@ -876,6 +1357,44 @@ return array (
         'EmptyOutput' => array(
             'type' => 'object',
             'additionalProperties' => true,
+        ),
+        'DescribeDestinationsResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'destinations' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'Destination',
+                        'type' => 'object',
+                        'properties' => array(
+                            'destinationName' => array(
+                                'type' => 'string',
+                            ),
+                            'targetArn' => array(
+                                'type' => 'string',
+                            ),
+                            'roleArn' => array(
+                                'type' => 'string',
+                            ),
+                            'accessPolicy' => array(
+                                'type' => 'string',
+                            ),
+                            'arn' => array(
+                                'type' => 'string',
+                            ),
+                            'creationTime' => array(
+                                'type' => 'numeric',
+                            ),
+                        ),
+                    ),
+                ),
+                'nextToken' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
         ),
         'DescribeLogGroupsResponse' => array(
             'type' => 'object',
@@ -1006,6 +1525,95 @@ return array (
                 ),
             ),
         ),
+        'DescribeSubscriptionFiltersResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'subscriptionFilters' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'SubscriptionFilter',
+                        'type' => 'object',
+                        'properties' => array(
+                            'filterName' => array(
+                                'type' => 'string',
+                            ),
+                            'logGroupName' => array(
+                                'type' => 'string',
+                            ),
+                            'filterPattern' => array(
+                                'type' => 'string',
+                            ),
+                            'destinationArn' => array(
+                                'type' => 'string',
+                            ),
+                            'roleArn' => array(
+                                'type' => 'string',
+                            ),
+                            'creationTime' => array(
+                                'type' => 'numeric',
+                            ),
+                        ),
+                    ),
+                ),
+                'nextToken' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+        ),
+        'FilterLogEventsResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'events' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'FilteredLogEvent',
+                        'type' => 'object',
+                        'properties' => array(
+                            'logStreamName' => array(
+                                'type' => 'string',
+                            ),
+                            'timestamp' => array(
+                                'type' => 'numeric',
+                            ),
+                            'message' => array(
+                                'type' => 'string',
+                            ),
+                            'ingestionTime' => array(
+                                'type' => 'numeric',
+                            ),
+                            'eventId' => array(
+                                'type' => 'string',
+                            ),
+                        ),
+                    ),
+                ),
+                'searchedLogStreams' => array(
+                    'type' => 'array',
+                    'location' => 'json',
+                    'items' => array(
+                        'name' => 'SearchedLogStream',
+                        'type' => 'object',
+                        'properties' => array(
+                            'logStreamName' => array(
+                                'type' => 'string',
+                            ),
+                            'searchedCompletely' => array(
+                                'type' => 'boolean',
+                            ),
+                        ),
+                    ),
+                ),
+                'nextToken' => array(
+                    'type' => 'string',
+                    'location' => 'json',
+                ),
+            ),
+        ),
         'GetLogEventsResponse' => array(
             'type' => 'object',
             'additionalProperties' => true,
@@ -1036,6 +1644,36 @@ return array (
                 'nextBackwardToken' => array(
                     'type' => 'string',
                     'location' => 'json',
+                ),
+            ),
+        ),
+        'PutDestinationResponse' => array(
+            'type' => 'object',
+            'additionalProperties' => true,
+            'properties' => array(
+                'destination' => array(
+                    'type' => 'object',
+                    'location' => 'json',
+                    'properties' => array(
+                        'destinationName' => array(
+                            'type' => 'string',
+                        ),
+                        'targetArn' => array(
+                            'type' => 'string',
+                        ),
+                        'roleArn' => array(
+                            'type' => 'string',
+                        ),
+                        'accessPolicy' => array(
+                            'type' => 'string',
+                        ),
+                        'arn' => array(
+                            'type' => 'string',
+                        ),
+                        'creationTime' => array(
+                            'type' => 'numeric',
+                        ),
+                    ),
                 ),
             ),
         ),
@@ -1094,6 +1732,12 @@ return array (
         ),
     ),
     'iterators' => array(
+        'DescribeDestinations' => array(
+            'input_token' => 'nextToken',
+            'output_token' => 'nextToken',
+            'limit_key' => 'limit',
+            'result_key' => 'destinations',
+        ),
         'DescribeLogGroups' => array(
             'input_token' => 'nextToken',
             'output_token' => 'nextToken',

@@ -32,6 +32,25 @@
 		$checkbox.attr( 'checked', switchOn ).trigger( 'change' );
 	}
 
+	/**
+	 * Validate custom domain
+	 *
+	 * @param {object} $input
+	 */
+	function validateCustomDomain( $input ) {
+		var $error  = $input.next( '.as3cf-validation-error' );
+		var $submit = $( '#' + $activeTab.attr( 'id' ) + ' form button[type="submit"]' );
+		var pattern = /[^a-zA-Z0-9\.\-]/;
+
+		if ( pattern.test( $input.val() ) ) {
+			$error.show();
+			$submit.attr( 'disabled', true );
+		} else {
+			$error.hide();
+			$submit.attr( 'disabled', false );
+		}
+	}
+
 	as3cf.tabs = {
 		defaultTab: 'media',
 		/**
@@ -348,7 +367,7 @@
 			var $manualBucketForm = $( '.as3cf-bucket-container.' + as3cfModal.prefix + ' .as3cf-manual-save-bucket-form' );
 			var $activeBucket = $( '#' + as3cfModal.prefix + '-active-bucket' );
 
-			if ( 'as3cf' === as3cfModal.prefix && '' === $activeBucket.text() ) {
+			if ( 'as3cf' === as3cfModal.prefix && 0 === $activeBucket.text().trim().length ) {
 				// first time bucket select - enable main options by default
 				setCheckbox( 'copy-to-s3-wrap' );
 				setCheckbox( 'serve-from-s3-wrap' );
@@ -375,6 +394,8 @@
 			if ( 'as3cf' === as3cfModal.prefix ) {
 				generateUrlPreview();
 			}
+
+			setBucketLink();
 
 			as3cfModal.close( unlockBucketSelect );
 		},
@@ -480,6 +501,25 @@
 	};
 
 	/**
+	 * Get the link to the bucket on the AWS Console and update the DOM
+	 *
+	 * @returns {string}
+	 */
+	function setBucketLink() {
+		var bucket = $( '#' + as3cfModal.prefix + '-bucket' ).val();
+		var $objectPrefix = $activeTab.find( 'input[name="object-prefix"]' );
+		var prefix = $objectPrefix.val();
+
+		if ( '' !== prefix ) {
+			prefix = '&prefix=' + encodeURIComponent( prefix );
+		}
+
+		var url = as3cf.aws_bucket_link + bucket + prefix;
+
+		$( '#' + as3cfModal.prefix + '-view-bucket' ).attr( 'href', url );
+	}
+
+	/**
 	 * Generate URL preview
 	 */
 	function generateUrlPreview() {
@@ -523,6 +563,28 @@
 	function unlockBucketSelect( target ) {
 		// Unlock setting the bucket
 		as3cf.buckets.bucketSelectLock = false;
+	}
+
+	/*
+	 * Toggle the lost files notice
+	 */
+	function toggleLostFilesNotice() {
+		if ( $( '#remove-local-file' ).is( ':checked' ) && $( '#serve-from-s3' ).is( ':not(:checked)' ) ) {
+			$( '#as3cf-lost-files-notice' ).show();
+		} else {
+			$( '#as3cf-lost-files-notice' ).hide();
+		}
+	}
+
+	/*
+	 * Toggle the remove local files notice
+	 */
+	function toggleRemoveLocalNotice() {
+		if ( $( '#remove-local-file' ).is( ':checked' ) ) {
+			$( '#as3cf-remove-local-notice' ).show();
+		} else {
+			$( '#as3cf-remove-local-notice' ).hide();
+		}
 	}
 
 	$( document ).ready( function() {
@@ -630,6 +692,16 @@
 			generateUrlPreview();
 		} );
 
+		toggleLostFilesNotice();
+		$( '#serve-from-s3,#remove-local-file' ).on( 'change', function( e ) {
+			toggleLostFilesNotice();
+		} );
+
+		toggleRemoveLocalNotice();
+		$( '#remove-local-file' ).on( 'change', function( e ) {
+			toggleRemoveLocalNotice();
+		} );
+
 		// Don't allow 'enter' key to submit form on text input settings
 		$( '.as3cf-setting input[type="text"]' ).keypress( function( event ) {
 			if ( 13 === event.which ) {
@@ -638,6 +710,28 @@
 				return false;
 			}
 
+		} );
+
+		// Validate custom domain
+		$( 'input[name="cloudfront"]' ).on( 'keyup', function( e ) {
+			validateCustomDomain( $( this ) );
+		} );
+
+		// Re-enable submit button on domain change
+		$( 'input[name="domain"]' ).on( 'change', function( e ) {
+			var $input = $( this );
+			var $submit = $( '#' + $activeTab.attr( 'id' ) + ' form button[type="submit"]' );
+
+			if ( 'cloudfront' !== $input.val() ) {
+				$submit.attr( 'disabled', false );
+			} else {
+				validateCustomDomain( $input.next( '.as3cf-setting' ).find( 'input[name="cloudfront"]' ) );
+			}
+		} );
+
+		// Change bucket link when custom path changes
+		$( 'input[name="object-prefix"]' ).on( 'change', function( e ) {
+			setBucketLink();
 		} );
 
 		// Bucket select

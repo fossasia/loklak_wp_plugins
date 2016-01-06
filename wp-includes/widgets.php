@@ -1,9 +1,13 @@
 <?php
 /**
- * API for creating dynamic sidebar without hardcoding functionality into
- * themes. Includes both internal WordPress routines and theme use routines.
+ * Core Widgets API
  *
- * This functionality was found in a plugin before WordPress 2.2 release which
+ * This API is used for creating dynamic sidebar without hardcoding functionality into
+ * themes
+ *
+ * Includes both internal WordPress routines and theme-use routines.
+ *
+ * This functionality was found in a plugin before the WordPress 2.2 release, which
  * included it in the core from that point on.
  *
  * @link https://codex.wordpress.org/Plugins/WordPress_Widgets WordPress Widgets
@@ -11,625 +15,12 @@
  *
  * @package WordPress
  * @subpackage Widgets
+ * @since 2.2.0
  */
 
-/**
- * This class must be extended for each widget and WP_Widget::widget(), WP_Widget::update()
- * and WP_Widget::form() need to be over-ridden.
- *
- * @package WordPress
- * @subpackage Widgets
- * @since 2.8.0
- */
-class WP_Widget {
-
-	/**
-	 * Root ID for all widgets of this type.
-	 *
-	 * @since 2.8.0
-	 * @access public
-	 * @var mixed|string
-	 */
-	public $id_base;
-
-	/**
-	 * Name for this widget type.
-	 *
-	 * @since 2.8.0
-	 * @access public
-	 * @var string
-	 */
-	public $name;
-
-	/**
-	 * Option array passed to {@see wp_register_sidebar_widget()}.
-	 *
-	 * @since 2.8.0
-	 * @access public
-	 * @var array
-	 */
-	public $widget_options;
-
-	/**
-	 * Option array passed to {@see wp_register_widget_control()}.
-	 *
-	 * @since 2.8.0
-	 * @access public
-	 * @var array
-	 */
-	public $control_options;
-
-	/**
-	 * Unique ID number of the current instance.
-	 *
-	 * @since 2.8.0
-	 * @access public
-	 * @var bool|int
-	 */
-	public $number = false;
-
-	/**
-	 * Unique ID string of the current instance (id_base-number).
-	 *
-	 * @since 2.8.0
-	 * @access public
-	 * @var bool|string
-	 */
-	public $id = false;
-
-	/**
-	 * Whether the widget data has been updated.
-	 *
-	 * Set to true when the data is updated after a POST submit - ensures it does
-	 * not happen twice.
-	 *
-	 * @since 2.8.0
-	 * @access public
-	 * @var bool
-	 */
-	public $updated = false;
-
-	// Member functions that you must over-ride.
-
-	/**
-	 * Echo the widget content.
-	 *
-	 * Subclasses should over-ride this function to generate their widget code.
-	 *
-	 * @since 2.8.0
-	 * @access public
-	 *
-	 * @param array $args     Display arguments including before_title, after_title,
-	 *                        before_widget, and after_widget.
-	 * @param array $instance The settings for the particular instance of the widget.
-	 */
-	public function widget( $args, $instance ) {
-		die('function WP_Widget::widget() must be over-ridden in a sub-class.');
-	}
-
-	/**
-	 * Update a particular instance.
-	 *
-	 * This function should check that $new_instance is set correctly. The newly-calculated
-	 * value of `$instance` should be returned. If false is returned, the instance won't be
-	 * saved/updated.
-	 *
-	 * @since 2.8.0
-	 * @access public
-	 *
-	 * @param array $new_instance New settings for this instance as input by the user via
-	 *                            {@see WP_Widget::form()}.
-	 * @param array $old_instance Old settings for this instance.
-	 * @return array Settings to save or bool false to cancel saving.
-	 */
-	public function update( $new_instance, $old_instance ) {
-		return $new_instance;
-	}
-
-	/**
-	 * Output the settings update form.
-	 *
-	 * @since 2.8.0
-	 * @access public
-	 *
-	 * @param array $instance Current settings.
-	 * @return string Default return is 'noform'.
-	 */
-	public function form($instance) {
-		echo '<p class="no-options-widget">' . __('There are no options for this widget.') . '</p>';
-		return 'noform';
-	}
-
-	// Functions you'll need to call.
-
-	/**
-	 * PHP5 constructor.
-	 *
-	 * @since 2.8.0
-	 * @access public
-	 *
-	 * @param string $id_base         Optional Base ID for the widget, lowercase and unique. If left empty,
-	 *                                a portion of the widget's class name will be used Has to be unique.
-	 * @param string $name            Name for the widget displayed on the configuration page.
-	 * @param array  $widget_options  Optional. Widget options. See {@see wp_register_sidebar_widget()} for
-	 *                                information on accepted arguments. Default empty array.
-	 * @param array  $control_options Optional. Widget control options. See {@see wp_register_widget_control()}
-	 *                                for information on accepted arguments. Default empty array.
-	 */
-	public function __construct( $id_base, $name, $widget_options = array(), $control_options = array() ) {
-		$this->id_base = empty($id_base) ? preg_replace( '/(wp_)?widget_/', '', strtolower(get_class($this)) ) : strtolower($id_base);
-		$this->name = $name;
-		$this->option_name = 'widget_' . $this->id_base;
-		$this->widget_options = wp_parse_args( $widget_options, array('classname' => $this->option_name) );
-		$this->control_options = wp_parse_args( $control_options, array('id_base' => $this->id_base) );
-	}
-
-	/**
-	 * PHP4 constructor
-	 *
-	 * @param string $id_base
-	 * @param string $name
-	 * @param array  $widget_options
-	 * @param array  $control_options
-	 */
-	public function WP_Widget( $id_base, $name, $widget_options = array(), $control_options = array() ) {
-		_deprecated_constructor( 'WP_Widget', '4.3.0' );
-		WP_Widget::__construct( $id_base, $name, $widget_options, $control_options );
-	}
-
-	/**
-	 * Constructs name attributes for use in form() fields
-	 *
-	 * This function should be used in form() methods to create name attributes for fields to be saved by update()
-	 *
-	 * @param string $field_name Field name
-	 * @return string Name attribute for $field_name
-	 */
-	public function get_field_name($field_name) {
-		return 'widget-' . $this->id_base . '[' . $this->number . '][' . $field_name . ']';
-	}
-
-	/**
-	 * Constructs id attributes for use in {@see WP_Widget::form()} fields.
-	 *
-	 * This function should be used in form() methods to create id attributes
-	 * for fields to be saved by {@see WP_Widget::update()}.
-	 *
-	 * @since 2.8.0
-	 * @access public
-	 *
-	 * @param string $field_name Field name.
-	 * @return string ID attribute for `$field_name`.
-	 */
-	public function get_field_id( $field_name ) {
-		return 'widget-' . $this->id_base . '-' . $this->number . '-' . $field_name;
-	}
-
-	/**
-	 * Register all widget instances of this widget class.
-	 *
-	 * @since 2.8.0
-	 * @access private
-	 */
-	public function _register() {
-		$settings = $this->get_settings();
-		$empty = true;
-
-		// When $settings is an array-like object, get an intrinsic array for use with array_keys().
-		if ( $settings instanceof ArrayObject || $settings instanceof ArrayIterator ) {
-			$settings = $settings->getArrayCopy();
-		}
-
-		if ( is_array( $settings ) ) {
-			foreach ( array_keys( $settings ) as $number ) {
-				if ( is_numeric( $number ) ) {
-					$this->_set( $number );
-					$this->_register_one( $number );
-					$empty = false;
-				}
-			}
-		}
-
-		if ( $empty ) {
-			// If there are none, we register the widget's existence with a generic template.
-			$this->_set( 1 );
-			$this->_register_one();
-		}
-	}
-
-	/**
-	 * Set the internal order number for the widget instance.
-	 *
-	 * @since 2.8.0
-	 * @access private
-	 *
-	 * @param int $number The unique order number of this widget instance compared to other
-	 *                    instances of the same class.
-	 */
-	public function _set($number) {
-		$this->number = $number;
-		$this->id = $this->id_base . '-' . $number;
-	}
-
-	/**
-	 * @return callback
-	 */
-	public function _get_display_callback() {
-		return array($this, 'display_callback');
-	}
-	/**
-	 * @return callback
-	 */
-	public function _get_update_callback() {
-		return array($this, 'update_callback');
-	}
-	/**
-	 * @return callback
-	 */
-	public function _get_form_callback() {
-		return array($this, 'form_callback');
-	}
-
-	/**
-	 * Determine whether the current request is inside the Customizer preview.
-	 *
-	 * If true -- the current request is inside the Customizer preview, then
-	 * the object cache gets suspended and widgets should check this to decide
-	 * whether they should store anything persistently to the object cache,
-	 * to transients, or anywhere else.
-	 *
-	 * @since 3.9.0
-	 * @access public
-	 *
-	 * @global WP_Customize_Manager $wp_customize
-	 *
-	 * @return bool True if within the Customizer preview, false if not.
-	 */
-	public function is_preview() {
-		global $wp_customize;
-		return ( isset( $wp_customize ) && $wp_customize->is_preview() ) ;
-	}
-
-	/**
-	 * Generate the actual widget content (Do NOT override).
-	 *
-	 * Finds the instance and calls {@see WP_Widget::widget()}.
-	 *
-	 * @since 2.8.0
-	 * @access public
-	 *
-	 * @param array     $args        Display arguments. See {@see WP_Widget::widget()} for information
-	 *                               on accepted arguments.
-	 * @param int|array $widget_args {
-	 *     Optional. Internal order number of the widget instance, or array of multi-widget arguments.
-	 *     Default 1.
-	 *
-	 *     @type int $number Number increment used for multiples of the same widget.
-	 * }
-	 */
-	public function display_callback( $args, $widget_args = 1 ) {
-		if ( is_numeric( $widget_args ) ) {
-			$widget_args = array( 'number' => $widget_args );
-		}
-
-		$widget_args = wp_parse_args( $widget_args, array( 'number' => -1 ) );
-		$this->_set( $widget_args['number'] );
-		$instances = $this->get_settings();
-
-		if ( array_key_exists( $this->number, $instances ) ) {
-			$instance = $instances[ $this->number ];
-
-			/**
-			 * Filter the settings for a particular widget instance.
-			 *
-			 * Returning false will effectively short-circuit display of the widget.
-			 *
-			 * @since 2.8.0
-			 *
-			 * @param array     $instance The current widget instance's settings.
-			 * @param WP_Widget $this     The current widget instance.
-			 * @param array     $args     An array of default widget arguments.
-			 */
-			$instance = apply_filters( 'widget_display_callback', $instance, $this, $args );
-
-			if ( false === $instance ) {
-				return;
-			}
-
-			$was_cache_addition_suspended = wp_suspend_cache_addition();
-			if ( $this->is_preview() && ! $was_cache_addition_suspended ) {
-				wp_suspend_cache_addition( true );
-			}
-
-			$this->widget( $args, $instance );
-
-			if ( $this->is_preview() ) {
-				wp_suspend_cache_addition( $was_cache_addition_suspended );
-			}
-		}
-	}
-
-	/**
-	 * Deal with changed settings (Do NOT override).
-	 *
-	 * @since 2.8.0
-	 * @access public
-	 *
-	 * @global array $wp_registered_widgets
-	 *
-	 * @param int $deprecated Not used.
-	 */
-	public function update_callback( $deprecated = 1 ) {
-		global $wp_registered_widgets;
-
-		$all_instances = $this->get_settings();
-
-		// We need to update the data
-		if ( $this->updated )
-			return;
-
-		if ( isset($_POST['delete_widget']) && $_POST['delete_widget'] ) {
-			// Delete the settings for this instance of the widget
-			if ( isset($_POST['the-widget-id']) )
-				$del_id = $_POST['the-widget-id'];
-			else
-				return;
-
-			if ( isset($wp_registered_widgets[$del_id]['params'][0]['number']) ) {
-				$number = $wp_registered_widgets[$del_id]['params'][0]['number'];
-
-				if ( $this->id_base . '-' . $number == $del_id )
-					unset($all_instances[$number]);
-			}
-		} else {
-			if ( isset($_POST['widget-' . $this->id_base]) && is_array($_POST['widget-' . $this->id_base]) ) {
-				$settings = $_POST['widget-' . $this->id_base];
-			} elseif ( isset($_POST['id_base']) && $_POST['id_base'] == $this->id_base ) {
-				$num = $_POST['multi_number'] ? (int) $_POST['multi_number'] : (int) $_POST['widget_number'];
-				$settings = array( $num => array() );
-			} else {
-				return;
-			}
-
-			foreach ( $settings as $number => $new_instance ) {
-				$new_instance = stripslashes_deep($new_instance);
-				$this->_set($number);
-
-				$old_instance = isset($all_instances[$number]) ? $all_instances[$number] : array();
-
-				$was_cache_addition_suspended = wp_suspend_cache_addition();
-				if ( $this->is_preview() && ! $was_cache_addition_suspended ) {
-					wp_suspend_cache_addition( true );
-				}
-
-				$instance = $this->update( $new_instance, $old_instance );
-
-				if ( $this->is_preview() ) {
-					wp_suspend_cache_addition( $was_cache_addition_suspended );
-				}
-
-				/**
-				 * Filter a widget's settings before saving.
-				 *
-				 * Returning false will effectively short-circuit the widget's ability
-				 * to update settings.
-				 *
-				 * @since 2.8.0
-				 *
-				 * @param array     $instance     The current widget instance's settings.
-				 * @param array     $new_instance Array of new widget settings.
-				 * @param array     $old_instance Array of old widget settings.
-				 * @param WP_Widget $this         The current widget instance.
-				 */
-				$instance = apply_filters( 'widget_update_callback', $instance, $new_instance, $old_instance, $this );
-				if ( false !== $instance ) {
-					$all_instances[$number] = $instance;
-				}
-
-				break; // run only once
-			}
-		}
-
-		$this->save_settings($all_instances);
-		$this->updated = true;
-	}
-
-	/**
-	 * Generate the widget control form (Do NOT override).
-	 *
-	 * @since 2.8.0
-	 * @access public
-	 *
-	 * @param int|array $widget_args Widget instance number or array of widget arguments.
-	 * @return string|null
-	 */
-	public function form_callback( $widget_args = 1 ) {
-		if ( is_numeric($widget_args) )
-			$widget_args = array( 'number' => $widget_args );
-
-		$widget_args = wp_parse_args( $widget_args, array( 'number' => -1 ) );
-		$all_instances = $this->get_settings();
-
-		if ( -1 == $widget_args['number'] ) {
-			// We echo out a form where 'number' can be set later
-			$this->_set('__i__');
-			$instance = array();
-		} else {
-			$this->_set($widget_args['number']);
-			$instance = $all_instances[ $widget_args['number'] ];
-		}
-
-		/**
-		 * Filter the widget instance's settings before displaying the control form.
-		 *
-		 * Returning false effectively short-circuits display of the control form.
-		 *
-		 * @since 2.8.0
-		 *
-		 * @param array     $instance The current widget instance's settings.
-		 * @param WP_Widget $this     The current widget instance.
-		 */
-		$instance = apply_filters( 'widget_form_callback', $instance, $this );
-
-		$return = null;
-		if ( false !== $instance ) {
-			$return = $this->form($instance);
-
-			/**
-			 * Fires at the end of the widget control form.
-			 *
-			 * Use this hook to add extra fields to the widget form. The hook
-			 * is only fired if the value passed to the 'widget_form_callback'
-			 * hook is not false.
-			 *
-			 * Note: If the widget has no form, the text echoed from the default
-			 * form method can be hidden using CSS.
-			 *
-			 * @since 2.8.0
-			 *
-			 * @param WP_Widget $this     The widget instance, passed by reference.
-			 * @param null      $return   Return null if new fields are added.
-			 * @param array     $instance An array of the widget's settings.
-			 */
-			do_action_ref_array( 'in_widget_form', array( &$this, &$return, $instance ) );
-		}
-		return $return;
-	}
-
-	/**
-	 * Register an instance of the widget class.
-	 *
-	 * @since 2.8.0
-	 * @access private
-	 *
-	 * @param integer $number Optional. The unique order number of this widget instance
-	 *                        compared to other instances of the same class. Default -1.
-	 */
-	public function _register_one( $number = -1 ) {
-		wp_register_sidebar_widget(	$this->id, $this->name,	$this->_get_display_callback(), $this->widget_options, array( 'number' => $number ) );
-		_register_widget_update_callback( $this->id_base, $this->_get_update_callback(), $this->control_options, array( 'number' => -1 ) );
-		_register_widget_form_callback(	$this->id, $this->name,	$this->_get_form_callback(), $this->control_options, array( 'number' => $number ) );
-	}
-
-	/**
-	 * Save the settings for all instances of the widget class.
-	 *
-	 * @since 2.8.0
-	 * @access public
-	 *
-	 * @param array $settings Multi-dimensional array of widget instance settings.
-	 */
-	public function save_settings( $settings ) {
-		$settings['_multiwidget'] = 1;
-		update_option( $this->option_name, $settings );
-	}
-
-	/**
-	 * Get the settings for all instances of the widget class.
-	 *
-	 * @since 2.8.0
-	 * @access public
-	 *
-	 * @return array Multi-dimensional array of widget instance settings.
-	 */
-	public function get_settings() {
-
-		$settings = get_option( $this->option_name );
-
-		if ( false === $settings && isset( $this->alt_option_name ) ) {
-			$settings = get_option( $this->alt_option_name );
-		}
-
-		if ( ! is_array( $settings ) && ! ( $settings instanceof ArrayObject || $settings instanceof ArrayIterator ) ) {
-			$settings = array();
-		}
-
-		if ( ! empty( $settings ) && ! isset( $settings['_multiwidget'] ) ) {
-			// Old format, convert if single widget.
-			$settings = wp_convert_widget_settings( $this->id_base, $this->option_name, $settings );
-		}
-
-		unset( $settings['_multiwidget'], $settings['__i__'] );
-		return $settings;
-	}
-}
-
-/**
- * Singleton that registers and instantiates WP_Widget classes.
- *
- * @package WordPress
- * @subpackage Widgets
- * @since 2.8.0
- */
-class WP_Widget_Factory {
-	public $widgets = array();
-
-	/**
-	 * PHP5 constructor.
-	 */
-	public function __construct() {
-		add_action( 'widgets_init', array( $this, '_register_widgets' ), 100 );
-	}
-
-	/**
-	 * PHP4 constructor.
-	 */
-	public function WP_Widget_Factory() {
-		_deprecated_constructor( 'WP_Widget_Factory', '4.2.0' );
-		self::__construct();
-	}
-
-	/**
-	 * Register a widget subclass.
-	 *
-	 * @since 2.8.0
-	 * @access public
-	 *
-	 * @param string $widget_class The name of a {@see WP_Widget} subclass.
-	 */
-	public function register( $widget_class ) {
-		$this->widgets[$widget_class] = new $widget_class();
-	}
-
-	/**
-	 * Un-register a widget subclass.
-	 *
-	 * @since 2.8.0
-	 * @access public
-	 *
-	 * @param string $widget_class The name of a {@see WP_Widget} subclass.
-	 */
-	public function unregister( $widget_class ) {
-		unset( $this->widgets[ $widget_class ] );
-	}
-
-	/**
-	 * Utility method for adding widgets to the registered widgets global.
-	 *
-	 * @since 2.8.0
-	 * @access public
-	 *
-	 * @global array $wp_registered_widgets
-	 */
-	public function _register_widgets() {
-		global $wp_registered_widgets;
-		$keys = array_keys($this->widgets);
-		$registered = array_keys($wp_registered_widgets);
-		$registered = array_map('_get_widget_id_base', $registered);
-
-		foreach ( $keys as $key ) {
-			// don't register new widget if old widget with the same id is already registered
-			if ( in_array($this->widgets[$key]->id_base, $registered, true) ) {
-				unset($this->widgets[$key]);
-				continue;
-			}
-
-			$this->widgets[$key]->_register();
-		}
-	}
-}
-
-/* Global Variables */
+//
+// Global Variables
+//
 
 /** @ignore */
 global $wp_registered_sidebars, $wp_registered_widgets, $wp_registered_widget_controls, $wp_registered_widget_updates;
@@ -699,7 +90,9 @@ $GLOBALS['_wp_deprecated_widgets_callbacks'] = array(
 	'wp_widget_recent_comments_control'
 );
 
-/* Template tags & API functions */
+//
+// Template tags & API functions
+//
 
 /**
  * Register a widget
@@ -786,13 +179,14 @@ function register_sidebars( $number = 1, $args = array() ) {
 		if ( isset($args['id']) ) {
 			$_args['id'] = $args['id'];
 			$n = 2; // Start at -2 for conflicting custom ID's
-			while ( isset($wp_registered_sidebars[$_args['id']]) )
+			while ( is_registered_sidebar( $_args['id'] ) ) {
 				$_args['id'] = $args['id'] . '-' . $n++;
+			}
 		} else {
-			$n = count($wp_registered_sidebars);
+			$n = count( $wp_registered_sidebars );
 			do {
 				$_args['id'] = 'sidebar-' . ++$n;
-			} while ( isset($wp_registered_sidebars[$_args['id']]) );
+			} while ( is_registered_sidebar( $_args['id'] ) );
 		}
 		register_sidebar($_args);
 	}
@@ -896,6 +290,22 @@ function unregister_sidebar( $name ) {
 }
 
 /**
+ * Checks if a sidebar is registered.
+ *
+ * @since 4.4.0
+ *
+ * @global array $wp_registered_sidebars Registered sidebars.
+ *
+ * @param string|int $sidebar_id The ID of the sidebar when it was registered.
+ * @return bool True if the sidebar is registered, false otherwise.
+ */
+function is_registered_sidebar( $sidebar_id ) {
+	global $wp_registered_sidebars;
+
+	return isset( $wp_registered_sidebars[ $sidebar_id ] );
+}
+
+/**
  * Register an instance of a widget.
  *
  * The default widget option is 'classname' that can be overridden.
@@ -912,7 +322,7 @@ function unregister_sidebar( $name ) {
  *
  * @param int|string $id              Widget ID.
  * @param string     $name            Widget display title.
- * @param callback   $output_callback Run when widget is called.
+ * @param callable   $output_callback Run when widget is called.
  * @param array      $options {
  *     Optional. An array of supplementary widget options for the instance.
  *
@@ -1054,7 +464,7 @@ function wp_unregister_sidebar_widget($id) {
  *
  * @param int|string   $id               Sidebar ID.
  * @param string       $name             Sidebar display name.
- * @param callback     $control_callback Run when sidebar is displayed.
+ * @param callable     $control_callback Run when sidebar is displayed.
  * @param array|string $options          Optional. Widget options. See description above. Default empty array.
  */
 function wp_register_widget_control( $id, $name, $control_callback, $options = array() ) {
@@ -1191,15 +601,15 @@ function wp_unregister_widget_control($id) {
  * @param int|string $index Optional, default is 1. Index, name or ID of dynamic sidebar.
  * @return bool True, if widget sidebar was found and called. False if not found or not called.
  */
-function dynamic_sidebar($index = 1) {
+function dynamic_sidebar( $index = 1 ) {
 	global $wp_registered_sidebars, $wp_registered_widgets;
 
-	if ( is_int($index) ) {
+	if ( is_int( $index ) ) {
 		$index = "sidebar-$index";
 	} else {
-		$index = sanitize_title($index);
+		$sanitized_index = sanitize_title( $index );
 		foreach ( (array) $wp_registered_sidebars as $key => $value ) {
-			if ( sanitize_title($value['name']) == $index ) {
+			if ( sanitize_title( $value['name'] ) == $sanitized_index ) {
 				$index = $key;
 				break;
 			}
@@ -1208,11 +618,11 @@ function dynamic_sidebar($index = 1) {
 
 	$sidebars_widgets = wp_get_sidebars_widgets();
 	if ( empty( $wp_registered_sidebars[ $index ] ) || empty( $sidebars_widgets[ $index ] ) || ! is_array( $sidebars_widgets[ $index ] ) ) {
-		/** This action is documented in wp-includes/widgets.php */
+		/** This action is documented in wp-includes/widget.php */
 		do_action( 'dynamic_sidebar_before', $index, false );
-		/** This action is documented in wp-includes/widgets.php */
+		/** This action is documented in wp-includes/widget.php */
 		do_action( 'dynamic_sidebar_after',  $index, false );
-		/** This filter is documented in wp-includes/widgets.php */
+		/** This filter is documented in wp-includes/widget.php */
 		return apply_filters( 'dynamic_sidebar_has_widgets', false, $index );
 	}
 
@@ -1303,7 +713,7 @@ function dynamic_sidebar($index = 1) {
 		 *
 		 *     @type string $name                Name of the widget.
 		 *     @type string $id                  Widget ID.
-		 *     @type array|callback $callback    When the hook is fired on the front-end, $callback is an array
+		 *     @type array|callable $callback    When the hook is fired on the front-end, $callback is an array
 		 *                                       containing the widget object. Fired on the back-end, $callback
 		 *                                       is 'wp_widget_control', see $_callback.
 		 *     @type array          $params      An associative array of multi-widget arguments.
@@ -1445,7 +855,9 @@ function is_active_sidebar( $index ) {
 	return apply_filters( 'is_active_sidebar', $is_active_sidebar, $index );
 }
 
-/* Internal Functions */
+//
+// Internal Functions
+//
 
 /**
  * Retrieve full list of sidebars and their widget instance IDs.
@@ -1597,7 +1009,7 @@ function wp_convert_widget_settings($base_name, $option_name, $settings) {
  *
  * @global WP_Widget_Factory $wp_widget_factory
  *
- * @param string $widget   The widget's PHP class name (see default-widgets.php).
+ * @param string $widget   The widget's PHP class name (see class-wp-widget.php).
  * @param array  $instance Optional. The widget's instance settings. Default empty array.
  * @param array  $args {
  *     Optional. Array of arguments to configure the display of the widget.
@@ -1620,10 +1032,15 @@ function the_widget( $widget, $instance = array(), $args = array() ) {
 		return;
 	}
 
-	$before_widget = sprintf('<div class="widget %s">', $widget_obj->widget_options['classname'] );
-	$default_args = array( 'before_widget' => $before_widget, 'after_widget' => "</div>", 'before_title' => '<h2 class="widgettitle">', 'after_title' => '</h2>' );
+	$default_args = array(
+		'before_widget' => '<div class="widget %s">',
+		'after_widget'  => "</div>",
+		'before_title'  => '<h2 class="widgettitle">',
+		'after_title'   => '</h2>',
+	);
+	$args = wp_parse_args( $args, $default_args );
+	$args['before_widget'] = sprintf( $args['before_widget'], $widget_obj->widget_options['classname'] );
 
-	$args = wp_parse_args($args, $default_args);
 	$instance = wp_parse_args($instance);
 
 	/**
@@ -1782,4 +1199,266 @@ function retrieve_widgets( $theme_changed = false ) {
 	}
 
 	return $sidebars_widgets;
+}
+
+/**
+ * Display the RSS entries in a list.
+ *
+ * @since 2.5.0
+ *
+ * @param string|array|object $rss RSS url.
+ * @param array $args Widget arguments.
+ */
+function wp_widget_rss_output( $rss, $args = array() ) {
+	if ( is_string( $rss ) ) {
+		$rss = fetch_feed($rss);
+	} elseif ( is_array($rss) && isset($rss['url']) ) {
+		$args = $rss;
+		$rss = fetch_feed($rss['url']);
+	} elseif ( !is_object($rss) ) {
+		return;
+	}
+
+	if ( is_wp_error($rss) ) {
+		if ( is_admin() || current_user_can('manage_options') )
+			echo '<p>' . sprintf( __('<strong>RSS Error</strong>: %s'), $rss->get_error_message() ) . '</p>';
+		return;
+	}
+
+	$default_args = array( 'show_author' => 0, 'show_date' => 0, 'show_summary' => 0, 'items' => 0 );
+	$args = wp_parse_args( $args, $default_args );
+
+	$items = (int) $args['items'];
+	if ( $items < 1 || 20 < $items )
+		$items = 10;
+	$show_summary  = (int) $args['show_summary'];
+	$show_author   = (int) $args['show_author'];
+	$show_date     = (int) $args['show_date'];
+
+	if ( !$rss->get_item_quantity() ) {
+		echo '<ul><li>' . __( 'An error has occurred, which probably means the feed is down. Try again later.' ) . '</li></ul>';
+		$rss->__destruct();
+		unset($rss);
+		return;
+	}
+
+	echo '<ul>';
+	foreach ( $rss->get_items( 0, $items ) as $item ) {
+		$link = $item->get_link();
+		while ( stristr( $link, 'http' ) != $link ) {
+			$link = substr( $link, 1 );
+		}
+		$link = esc_url( strip_tags( $link ) );
+
+		$title = esc_html( trim( strip_tags( $item->get_title() ) ) );
+		if ( empty( $title ) ) {
+			$title = __( 'Untitled' );
+		}
+
+		$desc = @html_entity_decode( $item->get_description(), ENT_QUOTES, get_option( 'blog_charset' ) );
+		$desc = esc_attr( wp_trim_words( $desc, 55, ' [&hellip;]' ) );
+
+		$summary = '';
+		if ( $show_summary ) {
+			$summary = $desc;
+
+			// Change existing [...] to [&hellip;].
+			if ( '[...]' == substr( $summary, -5 ) ) {
+				$summary = substr( $summary, 0, -5 ) . '[&hellip;]';
+			}
+
+			$summary = '<div class="rssSummary">' . esc_html( $summary ) . '</div>';
+		}
+
+		$date = '';
+		if ( $show_date ) {
+			$date = $item->get_date( 'U' );
+
+			if ( $date ) {
+				$date = ' <span class="rss-date">' . date_i18n( get_option( 'date_format' ), $date ) . '</span>';
+			}
+		}
+
+		$author = '';
+		if ( $show_author ) {
+			$author = $item->get_author();
+			if ( is_object($author) ) {
+				$author = $author->get_name();
+				$author = ' <cite>' . esc_html( strip_tags( $author ) ) . '</cite>';
+			}
+		}
+
+		if ( $link == '' ) {
+			echo "<li>$title{$date}{$summary}{$author}</li>";
+		} elseif ( $show_summary ) {
+			echo "<li><a class='rsswidget' href='$link'>$title</a>{$date}{$summary}{$author}</li>";
+		} else {
+			echo "<li><a class='rsswidget' href='$link'>$title</a>{$date}{$author}</li>";
+		}
+	}
+	echo '</ul>';
+	$rss->__destruct();
+	unset($rss);
+}
+
+/**
+ * Display RSS widget options form.
+ *
+ * The options for what fields are displayed for the RSS form are all booleans
+ * and are as follows: 'url', 'title', 'items', 'show_summary', 'show_author',
+ * 'show_date'.
+ *
+ * @since 2.5.0
+ *
+ * @param array|string $args Values for input fields.
+ * @param array $inputs Override default display options.
+ */
+function wp_widget_rss_form( $args, $inputs = null ) {
+	$default_inputs = array( 'url' => true, 'title' => true, 'items' => true, 'show_summary' => true, 'show_author' => true, 'show_date' => true );
+	$inputs = wp_parse_args( $inputs, $default_inputs );
+
+	$args['title'] = isset( $args['title'] ) ? $args['title'] : '';
+	$args['url'] = isset( $args['url'] ) ? $args['url'] : '';
+	$args['items'] = isset( $args['items'] ) ? (int) $args['items'] : 0;
+
+	if ( $args['items'] < 1 || 20 < $args['items'] ) {
+		$args['items'] = 10;
+	}
+
+	$args['show_summary']   = isset( $args['show_summary'] ) ? (int) $args['show_summary'] : (int) $inputs['show_summary'];
+	$args['show_author']    = isset( $args['show_author'] ) ? (int) $args['show_author'] : (int) $inputs['show_author'];
+	$args['show_date']      = isset( $args['show_date'] ) ? (int) $args['show_date'] : (int) $inputs['show_date'];
+
+	if ( ! empty( $args['error'] ) ) {
+		echo '<p class="widget-error"><strong>' . sprintf( __( 'RSS Error: %s' ), $args['error'] ) . '</strong></p>';
+	}
+
+	$esc_number = esc_attr( $args['number'] );
+	if ( $inputs['url'] ) :
+?>
+	<p><label for="rss-url-<?php echo $esc_number; ?>"><?php _e( 'Enter the RSS feed URL here:' ); ?></label>
+	<input class="widefat" id="rss-url-<?php echo $esc_number; ?>" name="widget-rss[<?php echo $esc_number; ?>][url]" type="text" value="<?php echo esc_url( $args['url'] ); ?>" /></p>
+<?php endif; if ( $inputs['title'] ) : ?>
+	<p><label for="rss-title-<?php echo $esc_number; ?>"><?php _e( 'Give the feed a title (optional):' ); ?></label>
+	<input class="widefat" id="rss-title-<?php echo $esc_number; ?>" name="widget-rss[<?php echo $esc_number; ?>][title]" type="text" value="<?php echo esc_attr( $args['title'] ); ?>" /></p>
+<?php endif; if ( $inputs['items'] ) : ?>
+	<p><label for="rss-items-<?php echo $esc_number; ?>"><?php _e( 'How many items would you like to display?' ); ?></label>
+	<select id="rss-items-<?php echo $esc_number; ?>" name="widget-rss[<?php echo $esc_number; ?>][items]">
+	<?php
+	for ( $i = 1; $i <= 20; ++$i ) {
+		echo "<option value='$i' " . selected( $args['items'], $i, false ) . ">$i</option>";
+	}
+	?>
+	</select></p>
+<?php endif; if ( $inputs['show_summary'] ) : ?>
+	<p><input id="rss-show-summary-<?php echo $esc_number; ?>" name="widget-rss[<?php echo $esc_number; ?>][show_summary]" type="checkbox" value="1" <?php checked( $args['show_summary'] ); ?> />
+	<label for="rss-show-summary-<?php echo $esc_number; ?>"><?php _e( 'Display item content?' ); ?></label></p>
+<?php endif; if ( $inputs['show_author'] ) : ?>
+	<p><input id="rss-show-author-<?php echo $esc_number; ?>" name="widget-rss[<?php echo $esc_number; ?>][show_author]" type="checkbox" value="1" <?php checked( $args['show_author'] ); ?> />
+	<label for="rss-show-author-<?php echo $esc_number; ?>"><?php _e( 'Display item author if available?' ); ?></label></p>
+<?php endif; if ( $inputs['show_date'] ) : ?>
+	<p><input id="rss-show-date-<?php echo $esc_number; ?>" name="widget-rss[<?php echo $esc_number; ?>][show_date]" type="checkbox" value="1" <?php checked( $args['show_date'] ); ?>/>
+	<label for="rss-show-date-<?php echo $esc_number; ?>"><?php _e( 'Display item date?' ); ?></label></p>
+<?php
+	endif;
+	foreach ( array_keys($default_inputs) as $input ) :
+		if ( 'hidden' === $inputs[$input] ) :
+			$id = str_replace( '_', '-', $input );
+?>
+	<input type="hidden" id="rss-<?php echo esc_attr( $id ); ?>-<?php echo $esc_number; ?>" name="widget-rss[<?php echo $esc_number; ?>][<?php echo esc_attr( $input ); ?>]" value="<?php echo esc_attr( $args[ $input ] ); ?>" />
+<?php
+		endif;
+	endforeach;
+}
+
+/**
+ * Process RSS feed widget data and optionally retrieve feed items.
+ *
+ * The feed widget can not have more than 20 items or it will reset back to the
+ * default, which is 10.
+ *
+ * The resulting array has the feed title, feed url, feed link (from channel),
+ * feed items, error (if any), and whether to show summary, author, and date.
+ * All respectively in the order of the array elements.
+ *
+ * @since 2.5.0
+ *
+ * @param array $widget_rss RSS widget feed data. Expects unescaped data.
+ * @param bool $check_feed Optional, default is true. Whether to check feed for errors.
+ * @return array
+ */
+function wp_widget_rss_process( $widget_rss, $check_feed = true ) {
+	$items = (int) $widget_rss['items'];
+	if ( $items < 1 || 20 < $items )
+		$items = 10;
+	$url           = esc_url_raw( strip_tags( $widget_rss['url'] ) );
+	$title         = isset( $widget_rss['title'] ) ? trim( strip_tags( $widget_rss['title'] ) ) : '';
+	$show_summary  = isset( $widget_rss['show_summary'] ) ? (int) $widget_rss['show_summary'] : 0;
+	$show_author   = isset( $widget_rss['show_author'] ) ? (int) $widget_rss['show_author'] :0;
+	$show_date     = isset( $widget_rss['show_date'] ) ? (int) $widget_rss['show_date'] : 0;
+
+	if ( $check_feed ) {
+		$rss = fetch_feed($url);
+		$error = false;
+		$link = '';
+		if ( is_wp_error($rss) ) {
+			$error = $rss->get_error_message();
+		} else {
+			$link = esc_url(strip_tags($rss->get_permalink()));
+			while ( stristr($link, 'http') != $link )
+				$link = substr($link, 1);
+
+			$rss->__destruct();
+			unset($rss);
+		}
+	}
+
+	return compact( 'title', 'url', 'link', 'items', 'error', 'show_summary', 'show_author', 'show_date' );
+}
+
+/**
+ * Register all of the default WordPress widgets on startup.
+ *
+ * Calls 'widgets_init' action after all of the WordPress widgets have been
+ * registered.
+ *
+ * @since 2.2.0
+ */
+function wp_widgets_init() {
+	if ( !is_blog_installed() )
+		return;
+
+	register_widget('WP_Widget_Pages');
+
+	register_widget('WP_Widget_Calendar');
+
+	register_widget('WP_Widget_Archives');
+
+	if ( get_option( 'link_manager_enabled' ) )
+		register_widget('WP_Widget_Links');
+
+	register_widget('WP_Widget_Meta');
+
+	register_widget('WP_Widget_Search');
+
+	register_widget('WP_Widget_Text');
+
+	register_widget('WP_Widget_Categories');
+
+	register_widget('WP_Widget_Recent_Posts');
+
+	register_widget('WP_Widget_Recent_Comments');
+
+	register_widget('WP_Widget_RSS');
+
+	register_widget('WP_Widget_Tag_Cloud');
+
+	register_widget('WP_Nav_Menu_Widget');
+
+	/**
+	 * Fires after all default WordPress widgets have been registered.
+	 *
+	 * @since 2.2.0
+	 */
+	do_action( 'widgets_init' );
 }

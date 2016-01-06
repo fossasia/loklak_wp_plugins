@@ -340,9 +340,11 @@ class Amazon_Web_Services extends AWS_Plugin_Base {
 	/**
 	 * Get all defined addons that use this plugin
 	 *
+	 * @param bool $unfiltered
+	 *
 	 * @return array
 	 */
-	function get_addons() {
+	function get_addons( $unfiltered = false ) {
 		$addons = array(
 			'amazon-s3-and-cloudfront' => array(
 				'title'   => __( 'WP Offload S3', 'amazon-web-services' ),
@@ -353,26 +355,50 @@ class Amazon_Web_Services extends AWS_Plugin_Base {
 						'title'  => __( 'Pro Upgrade', 'amazon-web-services' ),
 						'url'    => 'https://deliciousbrains.com/wp-offload-s3/',
 						'addons' => array(
-							'amazon-s3-and-cloudfront-assets'      => array(
+							'amazon-s3-and-cloudfront-assets'               => array(
 								'title' => __( 'Assets', 'amazon-web-services' ),
-								'url'   => 'https://deliciousbrains.com/wp-offload-s3/#assets-addon',
+								'url'   => 'https://deliciousbrains.com/wp-offload-s3/doc/assets-addon/',
 								'label' => __( 'Addon', 'amazon-web-services' ),
 							),
-							'amazon-s3-and-cloudfront-edd'         => array(
-								'title' => __( 'Easy Digital Downloads', 'amazon-web-services' ),
-								'url'   => 'https://deliciousbrains.com/wp-offload-s3/#edd-addon',
-								'label' => __( 'Addon', 'amazon-web-services' ),
+							'amazon-s3-and-cloudfront-woocommerce'          => array(
+								'title'                  => __( 'WooCommerce', 'amazon-web-services' ),
+								'url'                    => 'https://deliciousbrains.com/wp-offload-s3/doc/woocommerce-addon/',
+								'label'                  => __( 'Addon', 'amazon-web-services' ),
+								'parent_plugin_basename' => 'woocommerce/woocommerce.php',
 							),
-							'amazon-s3-and-cloudfront-woocommerce' => array(
-								'title' => __( 'WooCommerce', 'amazon-web-services' ),
-								'url'   => 'https://deliciousbrains.com/wp-offload-s3/#woocommerce-addon',
-								'label' => __( 'Addon', 'amazon-web-services' ),
+							'amazon-s3-and-cloudfront-edd'                  => array(
+								'title'                  => __( 'Easy Digital Downloads', 'amazon-web-services' ),
+								'url'                    => 'https://deliciousbrains.com/wp-offload-s3/doc/edd-addon/',
+								'label'                  => __( 'Addon', 'amazon-web-services' ),
+								'parent_plugin_basename' => 'easy-digital-downloads/easy-digital-downloads.php',
+							),
+							'amazon-s3-and-cloudfront-wpml'                 => array(
+								'title'                  => __( 'WPML', 'amazon-web-services' ),
+								'url'                    => 'https://deliciousbrains.com/wp-offload-s3/doc/wpml-addon/',
+								'label'                  => __( 'Addon', 'amazon-web-services' ),
+								'parent_plugin_basename' => 'wpml-media/plugin.php',
+							),
+							'amazon-s3-and-cloudfront-meta-slider'          => array(
+								'title'                  => __( 'Meta Slider', 'amazon-web-services' ),
+								'url'                    => 'https://deliciousbrains.com/wp-offload-s3/doc/meta-slider-addon/',
+								'label'                  => __( 'Addon', 'amazon-web-services' ),
+								'parent_plugin_basename' => 'ml-slider/ml-slider.php',
+							),
+							'amazon-s3-and-cloudfront-enable-media-replace' => array(
+								'title'                  => __( 'Enable Media Replace', 'amazon-web-services' ),
+								'url'                    => 'https://deliciousbrains.com/wp-offload-s3/doc/enable-media-replace-addon/',
+								'label'                  => __( 'Addon', 'amazon-web-services' ),
+								'parent_plugin_basename' => 'enable-media-replace/enable-media-replace.php',
 							),
 						),
 					),
 				),
 			),
 		);
+
+		if ( $unfiltered ) {
+			return $addons;
+		}
 
 		$addons = apply_filters( 'aws_addons', $addons );
 

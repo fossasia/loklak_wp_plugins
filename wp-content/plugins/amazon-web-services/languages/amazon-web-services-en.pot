@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: amazon-web-services\n"
 "Report-Msgid-Bugs-To: nom@deliciousbrains.com\n"
-"POT-Creation-Date: 2015-08-26 15:07+0100\n"
+"POT-Creation-Date: 2015-11-02 14:25+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,57 +50,72 @@ msgid ""
 "You must first <a href=\"%s\">set your AWS access keys</a> to use this addon."
 msgstr ""
 
-#: classes/amazon-web-services.php:348
+#: classes/amazon-web-services.php:350
 msgid "WP Offload S3"
 msgstr ""
 
-#: classes/amazon-web-services.php:353
+#: classes/amazon-web-services.php:355
 msgid "Pro Upgrade"
 msgstr ""
 
-#: classes/amazon-web-services.php:357
+#: classes/amazon-web-services.php:359
 msgid "Assets"
 msgstr ""
 
-#: classes/amazon-web-services.php:359
-#: classes/amazon-web-services.php:364
-#: classes/amazon-web-services.php:369
+#: classes/amazon-web-services.php:361
+#: classes/amazon-web-services.php:366
+#: classes/amazon-web-services.php:372
+#: classes/amazon-web-services.php:378
+#: classes/amazon-web-services.php:384
+#: classes/amazon-web-services.php:390
 msgid "Addon"
 msgstr ""
 
-#: classes/amazon-web-services.php:362
-msgid "Easy Digital Downloads"
-msgstr ""
-
-#: classes/amazon-web-services.php:367
+#: classes/amazon-web-services.php:364
 msgid "WooCommerce"
 msgstr ""
 
-#: classes/amazon-web-services.php:408
+#: classes/amazon-web-services.php:370
+msgid "Easy Digital Downloads"
+msgstr ""
+
+#: classes/amazon-web-services.php:376
+msgid "WPML"
+msgstr ""
+
+#: classes/amazon-web-services.php:382
+msgid "Meta Slider"
+msgstr ""
+
+#: classes/amazon-web-services.php:388
+msgid "Enable Media Replace"
+msgstr ""
+
+#: classes/amazon-web-services.php:434
 msgctxt "Plugin already installed and activated"
 msgid "Installed & Activated"
 msgstr ""
 
-#: classes/amazon-web-services.php:410
+#: classes/amazon-web-services.php:436
 msgctxt "Plugin already installed"
 msgid "Installed"
 msgstr ""
 
-#: classes/amazon-web-services.php:411
+#: classes/amazon-web-services.php:437
 msgctxt "Activate plugin now"
 msgid "Activate Now"
 msgstr ""
 
-#: classes/amazon-web-services.php:414
+#: classes/amazon-web-services.php:440
 msgctxt "Install plugin now"
 msgid "Install Now"
 msgstr ""
 
-#: classes/amazon-web-services.php:437
+#: classes/amazon-web-services.php:463
 msgid "Visit Site"
 msgstr ""
 
-#: classes/amazon-web-services.php:440
+#: classes/amazon-web-services.php:466
 msgctxt "View plugin details"
 msgid "View Details"
 msgstr ""
@@ -127,7 +142,7 @@ msgid ""
 "7.16.2+ compiled with OpenSSL and zlib. Your server currently has"
 msgstr ""
 
-#: classes/aws-plugin-base.php:157
+#: classes/aws-plugin-base.php:166
 msgid "Settings"
 msgstr ""
 
@@ -175,6 +190,7 @@ msgid "You currently have version %s installed."
 msgstr ""
 
 #: classes/wp-aws-compatibility-check.php:350
+#: classes/wp-aws-compatibility-check.php:388
 #, php-format
 msgid "A valid license for %s is required to update."
 msgstr ""
@@ -202,7 +218,7 @@ msgstr ""
 msgid "Update %s to the latest version"
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:442
+#: classes/wp-aws-compatibility-check.php:451
 #, php-format
 msgid "The %s plugin has been deactivated."
 msgstr ""

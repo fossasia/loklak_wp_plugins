@@ -7,6 +7,15 @@ $aws_orange: #f7a80d;
 	max-width: 650px;
 }
 
+.toplevel_page_amazon-web-services {
+	.error,
+	.notice,
+	.updated {
+		box-sizing: border-box;
+		max-width: 650px;
+	}
+}
+
 .aws-addons,
 .aws-main[data-view="addons"] .aws-compatibility-notice {
 	max-width: 772px;
@@ -48,7 +57,7 @@ $aws_orange: #f7a80d;
 }
 
 body.toplevel_page_amazon-web-services .wrap {
-	h2 {
+	h1 {
 		color: #fff;
 		font-weight: 600;
 		font-size: 26px;
@@ -153,7 +162,7 @@ body.toplevel_page_amazon-web-services .wrap {
 
 				.info {
 					position: static;
-					padding: 25px 20px 25px 100px;
+					padding: 25px 20px 25px 110px;
 
 					ul {
 						margin: 12px 0 0;
@@ -173,7 +182,7 @@ body.toplevel_page_amazon-web-services .wrap {
 					height: 80px;
 
 					.info {
-						padding: 19px 10px 19px 80px;
+						padding: 19px 10px 19px 90px;
 
 						ul {
 							margin: 8px 0 0;
@@ -219,6 +228,21 @@ body.toplevel_page_amazon-web-services .wrap {
 
 		.amazon-s3-and-cloudfront-assets article {
 			background: #0769ad url(../img/icon-assets.svg) no-repeat 15px center;
+			background-size: 50px 50px;
+		}
+
+		.amazon-s3-and-cloudfront-wpml article {
+			background: #277f91 url(../img/icon-wpml.svg) no-repeat 15px center;
+			background-size: 50px 50px;
+		}
+
+		.amazon-s3-and-cloudfront-meta-slider article {
+			background: #03b0d8 url(../img/icon-meta-slider.svg) no-repeat 15px center;
+			background-size: 50px 50px;
+		}
+
+		.amazon-s3-and-cloudfront-enable-media-replace article {
+			background: #33cc66 url(../img/icon-enable-media-replace.svg) no-repeat 15px center;
 			background-size: 50px 50px;
 		}
 

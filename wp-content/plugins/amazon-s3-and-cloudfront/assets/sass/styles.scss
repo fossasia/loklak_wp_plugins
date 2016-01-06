@@ -3,12 +3,11 @@
  * AWS wrap
  */
 .aws-main.wrap {
-	&> h2 {
+	& > h1 {
 		float: left;
 	}
 
 	.as3cf-notice, .as3cf-updated, .as3cf-error {
-		margin-bottom: 0;
 		-webkit-box-sizing: border-box;
 		-moz-box-sizing: border-box;
 		box-sizing: border-box;
@@ -21,11 +20,10 @@
 
 	h2.nav-tab-wrapper {
 		float: none;
-		margin-bottom: 0;
+		margin-bottom: 15px;
 		width: 650px;
 		margin-top: 10px;
-		padding-left: 5px;
-		padding-right: 0;
+		padding: 9px 0 0 5px;
 
 		a.nav-tab-active {
 			color: #464646;
@@ -247,6 +245,7 @@
 
 	.form-table {
 		margin: 0;
+
 		tr {
 			&.as3cf-border-bottom td {
 				border-bottom: 1px solid #ddd;
@@ -264,6 +263,16 @@
 					vertical-align: top;
 					min-width: 120px;
 				}
+
+				.as3cf-notice:last-child {
+					margin-bottom: 0;
+				}
+			}
+
+			&:first-of-type {
+				td {
+					padding-top: 5px;
+				}
 			}
 		}
 		h3 {
@@ -275,10 +284,21 @@
 		}
 	}
 
-  .as3cf-active-bucket {
-	font-weight: bold;
-	margin-right: 10px;
-  }
+	.as3cf-active-bucket {
+		font-weight: bold;
+		margin-right: 10px;
+	}
+	.as3cf-view-bucket {
+		color: #444;
+		text-decoration: none;
+		margin-right: 10px;
+		&:hover, &:active {
+			color: #00a0d2;
+		}
+		.dashicons-external {
+			margin-top: -2px;
+		}
+	}
 
   .tooltip {
 	position: relative;
@@ -403,11 +423,6 @@
 				vertical-align: top;
 			}
 		}
-	}
-
-	.as3cf-invalid-bucket-name {
-		font-size: 12px;
-		color: #a00;
 	}
 
 	.bucket-actions {
@@ -714,4 +729,12 @@
 	span.title {
 		font-weight: bold;
 	}
+}
+
+.as3cf-invalid-bucket-name,
+.as3cf-validation-error {
+	display: block;
+	margin-top: 2px;
+	font-size: 12px;
+	color: #a00;
 }

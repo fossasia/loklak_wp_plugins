@@ -4,7 +4,25 @@ class Akismet_Admin {
 	const NONCE = 'akismet-update-key';
 
 	private static $initiated = false;
-	private static $notices = array();
+	private static $notices   = array();
+	private static $allowed   = array(
+	    'a' => array(
+	        'href' => true,
+	        'title' => true,
+	    ),
+	    'b' => array(),
+	    'code' => array(),
+	    'del' => array(
+	        'datetime' => true,
+	    ),
+	    'em' => array(),
+	    'i' => array(),
+	    'q' => array(
+	        'cite' => true,
+	    ),
+	    'strike' => array(),
+	    'strong' => array(),
+	);
 
 	public static function init() {
 		if ( ! self::$initiated ) {
@@ -41,7 +59,6 @@ class Akismet_Admin {
 
 		add_filter( 'plugin_action_links', array( 'Akismet_Admin', 'plugin_action_links' ), 10, 2 );
 		add_filter( 'comment_row_actions', array( 'Akismet_Admin', 'comment_row_action' ), 10, 2 );
-		add_filter( 'comment_text', array( 'Akismet_Admin', 'text_add_link_class' ) );
 		
 		add_filter( 'plugin_action_links_'.plugin_basename( plugin_dir_path( __FILE__ ) . 'akismet.php'), array( 'Akismet_Admin', 'admin_plugin_settings_link' ) );
 		
@@ -92,6 +109,7 @@ class Akismet_Admin {
 			'post.php',
 			'settings_page_akismet-key-config',
 			'jetpack_page_akismet-key-config',
+			'plugins.php',
 		) ) ) {
 			wp_register_style( 'akismet.css', AKISMET__PLUGIN_URL . '_inc/akismet.css', array(), AKISMET_VERSION );
 			wp_enqueue_style( 'akismet.css');
@@ -129,8 +147,8 @@ class Akismet_Admin {
 						'title'		=> __( 'Overview' , 'akismet'),
 						'content'	=>
 							'<p><strong>' . esc_html__( 'Akismet Setup' , 'akismet') . '</strong></p>' .
-							'<p>' . esc_html__( 'Akismet filters out your comment and trackback spam for you, so you can focus on more important things.' , 'akismet') . '</p>' .
-							'<p>' . esc_html__( 'On this page, you are able to setup the Akismet plugin.' , 'akismet') . '</p>',
+							'<p>' . esc_html__( 'Akismet filters out spam, so you can focus on more important things.' , 'akismet') . '</p>' .
+							'<p>' . esc_html__( 'On this page, you are able to set up the Akismet plugin.' , 'akismet') . '</p>',
 					)
 				);
 
@@ -141,7 +159,7 @@ class Akismet_Admin {
 						'content'	=>
 							'<p><strong>' . esc_html__( 'Akismet Setup' , 'akismet') . '</strong></p>' .
 							'<p>' . esc_html__( 'You need to enter an API key to activate the Akismet service on your site.' , 'akismet') . '</p>' .
-							'<p>' . sprintf( __( 'Signup for an account on %s to get an API Key.' , 'akismet'), '<a href="https://akismet.com/plugin-signup/" target="_blank">Akismet.com</a>' ) . '</p>',
+							'<p>' . sprintf( __( 'Sign up for an account on %s to get an API Key.' , 'akismet'), '<a href="https://akismet.com/plugin-signup/" target="_blank">Akismet.com</a>' ) . '</p>',
 					)
 				);
 
@@ -167,7 +185,7 @@ class Akismet_Admin {
 						'title'		=> __( 'Overview' , 'akismet'),
 						'content'	=>
 							'<p><strong>' . esc_html__( 'Akismet Stats' , 'akismet') . '</strong></p>' .
-							'<p>' . esc_html__( 'Akismet filters out your comment and trackback spam for you, so you can focus on more important things.' , 'akismet') . '</p>' .
+							'<p>' . esc_html__( 'Akismet filters out spam, so you can focus on more important things.' , 'akismet') . '</p>' .
 							'<p>' . esc_html__( 'On this page, you are able to view stats on spam filtered on your site.' , 'akismet') . '</p>',
 					)
 				);
@@ -180,7 +198,7 @@ class Akismet_Admin {
 						'title'		=> __( 'Overview' , 'akismet'),
 						'content'	=>
 							'<p><strong>' . esc_html__( 'Akismet Configuration' , 'akismet') . '</strong></p>' .
-							'<p>' . esc_html__( 'Akismet filters out your comment and trackback spam for you, so you can focus on more important things.' , 'akismet') . '</p>' .
+							'<p>' . esc_html__( 'Akismet filters out spam, so you can focus on more important things.' , 'akismet') . '</p>' .
 							'<p>' . esc_html__( 'On this page, you are able to enter/remove an API key, view account information and view spam stats.' , 'akismet') . '</p>',
 					)
 				);
@@ -258,8 +276,10 @@ class Akismet_Admin {
 				if ( in_array( $akismet_user->status, array( 'active', 'active-dunning', 'no-sub' ) ) )
 					update_option( 'wordpress_api_key', $api_key );
 				
-				if (  $akismet_user->status == 'active' )
+				if ( $akismet_user->status == 'active' )
 					self::$notices['status'] = 'new-key-valid';
+				elseif ( $akismet_user->status == 'notice' )
+					self::$notices['status'] = $akismet_user;
 				else
 					self::$notices['status'] = $akismet_user->status;
 			}
@@ -592,18 +612,6 @@ class Akismet_Admin {
 		return $links;
 	}
 
-	public static function text_add_link_callback( $m ) {
-		// bare link?
-		if ( $m[4] == $m[2] )
-			return '<a '.$m[1].' href="'.$m[2].'" '.$m[3].' class="comment-link">'.$m[4].'</a>';
-		else
-			return '<span title="'.$m[2].'" class="comment-link"><a '.$m[1].' href="'.$m[2].'" '.$m[3].' class="comment-link">'.$m[4].'</a></span>';
-	}
-
-	public static function text_add_link_class( $comment_text ) {
-		return preg_replace_callback( '#<a ([^>]*)href="([^"]+)"([^>]*)>(.*?)</a>#i', array( 'Akismet_Admin', 'text_add_link_callback' ), $comment_text );
-	}
-
 	// Total spam in queue
 	// get_option( 'akismet_spam_count' ) is the total caught ever
 	public static function get_spam_count( $type = false ) {
@@ -880,11 +888,11 @@ class Akismet_Admin {
 					$cleaning_up      = __( 'Cleaning up spam takes time.' , 'akismet');
 
 					if ( $total_in_days > 1 )
-						$time_saved = $cleaning_up . ' ' . sprintf( __( 'Since you joined us, Akismet has saved you %s days!' , 'akismet'), number_format_i18n( $total_in_days ) );
+						$time_saved = $cleaning_up . ' ' . sprintf( _n( 'Akismet has saved you %s day!', 'Akismet has saved you %s days!', $total_in_days, 'akismet' ), number_format_i18n( $total_in_days ) );
 					elseif ( $total_in_hours > 1 )
-						$time_saved = $cleaning_up . ' ' . sprintf( __( 'Since you joined us, Akismet has saved you %d hours!' , 'akismet'), $total_in_hours );
+						$time_saved = $cleaning_up . ' ' . sprintf( _n( 'Akismet has saved you %d hour!', 'Akismet has saved you %d hours!', $total_in_hours, 'akismet' ), $total_in_hours );
 					elseif ( $total_in_minutes >= 30 )
-						$time_saved = $cleaning_up . ' ' . sprintf( __( 'Since you joined us, Akismet has saved you %d minutes!' , 'akismet'), $total_in_minutes );
+						$time_saved = $cleaning_up . ' ' . sprintf( _n( 'Akismet has saved you %d minute!', 'Akismet has saved you %d minutes!', $total_in_minutes, 'akismet' ), $total_in_minutes );
 				}
 
 				Akismet::view( 'notice', array( 'type' => 'active-notice', 'time_saved' => $time_saved ) );
@@ -931,8 +939,24 @@ class Akismet_Admin {
 		if ( !empty( $type ) )
 			Akismet::view( 'notice', compact( 'type' ) );
 		elseif ( !empty( self::$notices ) ) {
-			foreach ( self::$notices as $type )
-				Akismet::view( 'notice', compact( 'type' ) );
+			foreach ( self::$notices as $type ) {
+				if ( is_object( $type ) ) {
+					$notice_header = $notice_text = '';
+					
+					if ( property_exists( $type, 'notice_header' ) )
+						$notice_header = wp_kses( $type->notice_header, self::$allowed );
+				
+					if ( property_exists( $type, 'notice_text' ) )
+						$notice_text = wp_kses( $type->notice_text, self::$allowed );
+					
+					if ( property_exists( $type, 'status' ) ) {
+						$type = wp_kses( $type->status, self::$allowed );
+						Akismet::view( 'notice', compact( 'type', 'notice_header', 'notice_text' ) );
+					}
+				}
+				else
+					Akismet::view( 'notice', compact( 'type' ) );
+			}				
 		}
 	}
 
