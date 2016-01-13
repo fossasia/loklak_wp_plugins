@@ -1,4 +1,4 @@
-# WordPress 4.4-ja + pg4wp2 Heroku
+# WordPress 4.4.1-ja + pg4wp2 Heroku
 
 This project is a template for installing and running [WordPress](http://wordpress.org/) on [Heroku](http://www.heroku.com/). The repository comes bundled with:
 * [PostgreSQL for WordPress](http://wordpress.org/extend/plugins/postgresql-for-wordpress/)
