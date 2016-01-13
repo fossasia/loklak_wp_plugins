@@ -550,11 +550,11 @@ function wp_list_categories( $args = '' ) {
 		$exclude_tree = array();
 
 		if ( $r['exclude_tree'] ) {
-			$exclude_tree = array_merge( $exclude_tree, (array) $r['exclude_tree'] );
+			$exclude_tree = array_merge( $exclude_tree, wp_parse_id_list( $r['exclude_tree'] ) );
 		}
 
 		if ( $r['exclude'] ) {
-			$exclude_tree = array_merge( $exclude_tree, (array) $r['exclude'] );
+			$exclude_tree = array_merge( $exclude_tree, wp_parse_id_list( $r['exclude'] ) );
 		}
 
 		$r['exclude_tree'] = $exclude_tree;
@@ -1148,14 +1148,18 @@ function get_the_terms( $post, $taxonomy ) {
 	$terms = get_object_term_cache( $post->ID, $taxonomy );
 	if ( false === $terms ) {
 		$terms = wp_get_object_terms( $post->ID, $taxonomy );
-		$to_cache = array();
-		foreach ( $terms as $key => $term ) {
-			$to_cache[ $key ] = $term->data;
+		if ( ! is_wp_error( $terms ) ) {
+			$to_cache = array();
+			foreach ( $terms as $key => $term ) {
+				$to_cache[ $key ] = $term->data;
+			}
+			wp_cache_add( $post->ID, $to_cache, $taxonomy . '_relationships' );
 		}
-		wp_cache_add( $post->ID, $to_cache, $taxonomy . '_relationships' );
 	}
 
-	$terms = array_map( 'get_term', $terms );
+	if ( ! is_wp_error( $terms ) ) {
+		$terms = array_map( 'get_term', $terms );
+	}
 
 	/**
 	 * Filter the list of terms attached to the given post.

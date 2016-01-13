@@ -736,7 +736,7 @@ function get_comment_link( $comment = null, $args = array() ) {
 		}
 	}
 
-	if ( $cpage ) {
+	if ( $cpage && get_option( 'page_comments' ) ) {
 		if ( $wp_rewrite->using_permalinks() ) {
 			if ( $cpage ) {
 				$link = trailingslashit( $link ) . $wp_rewrite->comments_pagination_base . '-' . $cpage;
@@ -1313,12 +1313,19 @@ function comments_template( $file = '/comments.php', $separate_comments = false 
 		} else {
 			// If fetching the first page of 'newest', we need a top-level comment count.
 			$top_level_query = new WP_Comment_Query();
-			$top_level_count = $top_level_query->query( array(
+			$top_level_args  = array(
 				'count'   => true,
 				'orderby' => false,
 				'post_id' => $post->ID,
 				'parent'  => 0,
-			) );
+				'status'  => 'approve',
+			);
+
+			if ( isset( $comment_args['include_unapproved'] ) ) {
+				$top_level_args['include_unapproved'] = $comment_args['include_unapproved'];
+			}
+
+			$top_level_count = $top_level_query->query( $top_level_args );
 
 			$comment_args['offset'] = ( ceil( $top_level_count / $per_page ) - 1 ) * $per_page;
 		}
@@ -1330,11 +1337,16 @@ function comments_template( $file = '/comments.php', $separate_comments = false 
 	// Trees must be flattened before they're passed to the walker.
 	$comments_flat = array();
 	foreach ( $_comments as $_comment ) {
-		$comments_flat = array_merge( $comments_flat, array( $_comment ), $_comment->get_children( array(
+		$comments_flat[]  = $_comment;
+		$comment_children = $_comment->get_children( array(
 			'format' => 'flat',
 			'status' => $comment_args['status'],
 			'orderby' => $comment_args['orderby']
-		) ) );
+		) );
+
+		foreach ( $comment_children as $comment_child ) {
+			$comments_flat[] = $comment_child;
+		}
 	}
 
 	/**
@@ -1912,6 +1924,27 @@ function wp_list_comments( $args = array(), $comments = null ) {
 	 * @param array $r An array of arguments for displaying comments.
 	 */
 	$r = apply_filters( 'wp_list_comments_args', $r );
+
+	/*
+	 * If 'page' or 'per_page' has been passed, and does not match what's in $wp_query,
+	 * perform a separate comment query and allow Walker_Comment to paginate.
+	 */
+	if ( is_singular() && ( $r['page'] || $r['per_page'] ) ) {
+		$current_cpage = get_query_var( 'cpage' );
+		if ( ! $current_cpage ) {
+			$current_cpage = 'newest' === get_option( 'default_comments_page' ) ? 1 : $wp_query->max_num_comment_pages;
+		}
+
+		$current_per_page = get_query_var( 'comments_per_page' );
+		if ( $r['page'] != $current_cpage || $r['per_page'] != $current_per_page ) {
+			$comments = get_comments( array(
+				'post_id' => get_queried_object_id(),
+				'orderby' => 'comment_date_gmt',
+				'order' => 'ASC',
+				'status' => 'all',
+			) );
+		}
+	}
 
 	// Figure out what comments we'll be looping through ($_comments)
 	if ( null !== $comments ) {

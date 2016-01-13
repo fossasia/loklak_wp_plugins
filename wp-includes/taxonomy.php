@@ -390,6 +390,9 @@ function register_taxonomy( $taxonomy, $object_type, $args = array() ) {
 		else
 			$args['query_var'] = sanitize_title_with_dashes( $args['query_var'] );
 		$wp->add_query_var( $args['query_var'] );
+	} else {
+		// Force query_var to false for non-public taxonomies.
+		$args['query_var'] = false;
 	}
 
 	if ( false !== $args['rewrite'] && ( is_admin() || '' != get_option( 'permalink_structure' ) ) ) {
@@ -1353,12 +1356,14 @@ function get_terms( $taxonomies, $args = '' ) {
 
 	// Meta query support.
 	$join = '';
+	$distinct = '';
 	if ( ! empty( $args['meta_query'] ) ) {
 		$mquery = new WP_Meta_Query( $args['meta_query'] );
 		$mq_sql = $mquery->get_sql( 'term', 't', 'term_id' );
 
 		$join  .= $mq_sql['join'];
 		$where .= $mq_sql['where'];
+		$distinct .= "DISTINCT";
 	}
 
 	$selects = array();
@@ -1408,7 +1413,7 @@ function get_terms( $taxonomies, $args = '' ) {
 
 	$join .= " INNER JOIN $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id";
 
-	$pieces = array( 'fields', 'join', 'where', 'orderby', 'order', 'limits' );
+	$pieces = array( 'fields', 'join', 'where', 'distinct', 'orderby', 'order', 'limits' );
 
 	/**
 	 * Filter the terms query SQL clauses.
@@ -1424,11 +1429,12 @@ function get_terms( $taxonomies, $args = '' ) {
 	$fields = isset( $clauses[ 'fields' ] ) ? $clauses[ 'fields' ] : '';
 	$join = isset( $clauses[ 'join' ] ) ? $clauses[ 'join' ] : '';
 	$where = isset( $clauses[ 'where' ] ) ? $clauses[ 'where' ] : '';
+	$distinct = isset( $clauses[ 'distinct' ] ) ? $clauses[ 'distinct' ] : '';
 	$orderby = isset( $clauses[ 'orderby' ] ) ? $clauses[ 'orderby' ] : '';
 	$order = isset( $clauses[ 'order' ] ) ? $clauses[ 'order' ] : '';
 	$limits = isset( $clauses[ 'limits' ] ) ? $clauses[ 'limits' ] : '';
 
-	$query = "SELECT $fields FROM $wpdb->terms AS t $join WHERE $where $orderby $order $limits";
+	$query = "SELECT $distinct $fields FROM $wpdb->terms AS t $join WHERE $where $orderby $order $limits";
 
 	// $args can be anything. Only use the args defined in defaults to compute the key.
 	$key = md5( serialize( wp_array_slice_assoc( $args, array_keys( $defaults ) ) ) . serialize( $taxonomies ) . $query );
@@ -3604,7 +3610,7 @@ function update_object_term_cache($object_ids, $object_type) {
 
 	$terms = wp_get_object_terms( $ids, $taxonomies, array(
 		'fields' => 'all_with_object_id',
-		'orderby' => 'none',
+		'orderby' => 'name',
 		'update_term_meta_cache' => false,
 	) );
 

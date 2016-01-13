@@ -10,60 +10,6 @@ msgstr ""
 "X-Generator: GlotPress/1.0-alpha-1100\n"
 "Project-Id-Version: Twenty Thirteen\n"
 
-#. Theme URI of the plugin/theme
-msgid "https://wordpress.org/themes/twentythirteen/"
-msgstr "https://ja.wordpress.org/themes/twentythirteen/"
-
-#. #-#-#-#-#  twentythirteen.pot (Twenty Thirteen 1.6)  #-#-#-#-#
-#. Author URI of the plugin/theme
-#: footer.php:19
-msgid "https://wordpress.org/"
-msgstr "https://ja.wordpress.org/"
-
-#. translators: %s: Name of current post
-#: content-aside.php:16 content-audio.php:27 content-chat.php:26
-#: content-gallery.php:27 content-image.php:26 content-link.php:27
-#: content-quote.php:16 content-status.php:16 content-video.php:26
-#: content.php:44 functions.php:478
-msgid "Continue reading %s <span class=\"meta-nav\">&rarr;</span>"
-msgstr "続きを読む %s <span class=\"meta-nav\">&rarr;</span>"
-
-#: 404.php:16
-msgid "Not Found"
-msgstr "見つかりません"
-
-#. Description of the plugin/theme
-msgid "The 2013 theme for WordPress takes us back to the blog, featuring a full range of post formats, each displayed beautifully in their own unique way. Design details abound, starting with a vibrant color scheme and matching header images, beautiful typography and icons, and a flexible layout that looks great on any device, big or small."
-msgstr "2013年版の WordPress テーマはブログ向けデザインに回帰しました。幅広い投稿フォーマットに対応し、それぞれを美しくユニークに表現します。鮮やかな色合いとそれに合わせたヘッダー画像、美しいタイポグラフィーとアイコン、大小どんなデバイスでも適切に表示できる柔軟なレイアウトなど、デザインのディテールにあふれています。"
-
-#: functions.php:233
-msgid "Appears in the footer section of the site."
-msgstr "サイトのフッター領域に表示されます。"
-
-#: image.php:38
-msgid "Link to full-size image"
-msgstr "フルサイズの画像にリンク"
-
-#: functions.php:231
-msgid "Main Widget Area"
-msgstr "メインウィジェットエリア"
-
-#: functions.php:241
-msgid "Secondary Widget Area"
-msgstr "副ウィジェットエリア"
-
-#: functions.php:243
-msgid "Appears on posts and pages in the sidebar."
-msgstr "投稿とページのサイドバーに表示します。"
-
-#: image.php:39
-msgid "Full resolution"
-msgstr "フル解像度"
-
-#: inc/back-compat.php:37 inc/back-compat.php:47 inc/back-compat.php:60
-msgid "Twenty Thirteen requires at least WordPress version 3.6. You are running version %s. Please upgrade and try again."
-msgstr "Twenty Thirteen には WordPress バージョン 3.6 以上が必要です。使用中のバージョンは %s です。更新して、もう一度試してください。"
-
 #: 404.php:21
 msgid "This is somewhat embarrassing, isn&rsquo;t it?"
 msgstr "おっと、失礼しました。"
@@ -124,10 +70,6 @@ msgstr[0] "「%2$s」への%1$s件のフィードバック"
 msgid "Comment navigation"
 msgstr "コメントナビゲーション"
 
-#: comments.php:46
-msgid "&larr; Older Comments"
-msgstr "&larr; 古いコメント"
-
 #: comments.php:47
 msgid "Newer Comments &rarr;"
 msgstr "新しいコメント &rarr;"
@@ -164,11 +106,6 @@ msgstr "コメントをどうぞ"
 msgid "One comment so far"
 msgstr "1件のコメント"
 
-#: content-gallery.php:43 content-image.php:39 content-quote.php:29
-#: content-video.php:39 content.php:56
-msgid "View all % comments"
-msgstr "全%件のコメントを表示"
-
 #: content-none.php:12
 msgid "Nothing Found"
 msgstr "見つかりません"
@@ -197,21 +134,6 @@ msgstr "Proudly powered by %s"
 msgid "Navigation Menu"
 msgstr "ナビゲーションメニュー"
 
-#. Translators: If there are characters in your language that are not supported
-#. by Source Sans Pro, translate this to 'off'. Do not translate into your own
-#. language.
-#: functions.php:128
-msgctxt "Source Sans Pro font: on or off"
-msgid "on"
-msgstr "on"
-
-#. Translators: If there are characters in your language that are not supported
-#. by Bitter, translate this to 'off'. Do not translate into your own language.
-#: functions.php:134
-msgctxt "Bitter font: on or off"
-msgid "on"
-msgstr "on"
-
 #: functions.php:218
 msgid "Page %s"
 msgstr "ページ %s"
@@ -219,10 +141,6 @@ msgstr "ページ %s"
 #: functions.php:266
 msgid "Posts navigation"
 msgstr "投稿ナビゲーション"
-
-#: functions.php:270
-msgid "<span class=\"meta-nav\">&larr;</span> Older posts"
-msgstr "<span class=\"meta-nav\">&larr;</span> 古い投稿"
 
 #: functions.php:274
 msgid "Newer posts <span class=\"meta-nav\">&rarr;</span>"
@@ -268,10 +186,6 @@ msgstr "メニュー"
 msgid "Skip to content"
 msgstr "コンテンツへ移動"
 
-#: image.php:22
-msgid "<span class=\"attachment-meta\">Published on <time class=\"entry-date\" datetime=\"%1$s\">%2$s</time> in <a href=\"%3$s\" title=\"Return to %4$s\" rel=\"gallery\">%5$s</a></span>"
-msgstr "<span class=\"attachment-meta\">公開日: <time class=\"entry-date\" datetime=\"%1$s\">%2$s</time> <a href=\"%3$s\" title=\"%4$s へ戻る\" rel=\"gallery\">%5$s</a></span>"
-
 #: image.php:51
 msgid "<span class=\"meta-nav\">&larr;</span> Previous"
 msgstr "<span class=\"meta-nav\">&larr;</span> 前へ"
@@ -314,3 +228,89 @@ msgstr "Twenty Thirteen"
 #. Author of the plugin/theme
 msgid "the WordPress team"
 msgstr "WordPress チーム"
+
+#: content-gallery.php:43 content-image.php:39 content-quote.php:29
+#: content-video.php:39 content.php:56
+msgid "View all % comments"
+msgstr "全%件のコメントを表示"
+
+#: image.php:22
+msgid "<span class=\"attachment-meta\">Published on <time class=\"entry-date\" datetime=\"%1$s\">%2$s</time> in <a href=\"%3$s\" title=\"Return to %4$s\" rel=\"gallery\">%5$s</a></span>"
+msgstr "<span class=\"attachment-meta\">公開日: <time class=\"entry-date\" datetime=\"%1$s\">%2$s</time> <a href=\"%3$s\" title=\"%4$s へ戻る\" rel=\"gallery\">%5$s</a></span>"
+
+#: comments.php:46
+msgid "&larr; Older Comments"
+msgstr "&larr; 古いコメント"
+
+#: functions.php:270
+msgid "<span class=\"meta-nav\">&larr;</span> Older posts"
+msgstr "<span class=\"meta-nav\">&larr;</span> 古い投稿"
+
+#: functions.php:241
+msgid "Secondary Widget Area"
+msgstr "副ウィジェットエリア"
+
+#: image.php:39
+msgid "Full resolution"
+msgstr "フル解像度"
+
+#: image.php:38
+msgid "Link to full-size image"
+msgstr "フルサイズの画像にリンク"
+
+#: inc/back-compat.php:37 inc/back-compat.php:47 inc/back-compat.php:60
+msgid "Twenty Thirteen requires at least WordPress version 3.6. You are running version %s. Please upgrade and try again."
+msgstr "Twenty Thirteen には WordPress バージョン 3.6 以上が必要です。使用中のバージョンは %s です。更新して、もう一度試してください。"
+
+#: functions.php:231
+msgid "Main Widget Area"
+msgstr "メインウィジェットエリア"
+
+#. Translators: If there are characters in your language that are not supported
+#. by Bitter, translate this to 'off'. Do not translate into your own language.
+#: functions.php:134
+msgctxt "Bitter font: on or off"
+msgid "on"
+msgstr "on"
+
+#. Translators: If there are characters in your language that are not supported
+#. by Source Sans Pro, translate this to 'off'. Do not translate into your own
+#. language.
+#: functions.php:128
+msgctxt "Source Sans Pro font: on or off"
+msgid "on"
+msgstr "on"
+
+#: functions.php:243
+msgid "Appears on posts and pages in the sidebar."
+msgstr "投稿とページのサイドバーに表示します。"
+
+#: functions.php:233
+msgid "Appears in the footer section of the site."
+msgstr "サイトのフッター領域に表示されます。"
+
+#. Description of the plugin/theme
+msgid "The 2013 theme for WordPress takes us back to the blog, featuring a full range of post formats, each displayed beautifully in their own unique way. Design details abound, starting with a vibrant color scheme and matching header images, beautiful typography and icons, and a flexible layout that looks great on any device, big or small."
+msgstr "2013年版の WordPress テーマはブログ向けデザインに回帰しました。幅広い投稿フォーマットに対応し、それぞれを美しくユニークに表現します。鮮やかな色合いとそれに合わせたヘッダー画像、美しいタイポグラフィーとアイコン、大小どんなデバイスでも適切に表示できる柔軟なレイアウトなど、デザインのディテールにあふれています。"
+
+#: 404.php:16
+msgid "Not Found"
+msgstr "見つかりません"
+
+#. #-#-#-#-#  twentythirteen.pot (Twenty Thirteen 1.6)  #-#-#-#-#
+#. Author URI of the plugin/theme
+#: footer.php:19
+msgid "https://wordpress.org/"
+msgstr "https://ja.wordpress.org/"
+
+#. translators: %s: Name of current post
+#: content-aside.php:16 content-audio.php:27 content-chat.php:26
+#: content-gallery.php:27 content-image.php:26 content-link.php:27
+#: content-quote.php:16 content-status.php:16 content-video.php:26
+#: content.php:44 functions.php:478
+msgid "Continue reading %s <span class=\"meta-nav\">&rarr;</span>"
+msgstr "続きを読む %s <span class=\"meta-nav\">&rarr;</span>"
+
+#. Theme URI of the plugin/theme
+msgid "https://wordpress.org/themes/twentythirteen/"
+msgstr "https://ja.wordpress.org/themes/twentythirteen/"
