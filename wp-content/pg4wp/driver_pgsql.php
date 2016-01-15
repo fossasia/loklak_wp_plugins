@@ -476,7 +476,8 @@
 			$pattern = '/INSERT INTO (\w+)\s+\([ a-zA-Z_"]+/';
 			preg_match($pattern, $sql, $matches);
 			$GLOBALS['pg4wp_ins_table'] = $matches[1];
-			$match_list = split(' ', $matches[0]);
+//			$match_list = split(' ', $matches[0]);
+			$match_list = explode(' ', $matches[0]);
 			if( $GLOBALS['pg4wp_ins_table'])
 			{
 				$GLOBALS['pg4wp_ins_field'] = trim($match_list[3],' ()	');
