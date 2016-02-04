@@ -308,6 +308,10 @@
 			$pattern = '/[ ]*`([^` ]+)`[ ]*=/';
 			$sql = preg_replace( $pattern, ' $1 =', $sql);
 
+			// For when update wp_options violates not-null constraint error
+			$pattern = '/UPDATE wp_options SET option_value = NULL/';
+			$sql = preg_replace( $pattern, 'UPDATE wp_options SET option_value = 0', $sql);
+
 			// For correct ID quoting
 			$pattern = '/[ ]*([^ ]*ID[^ ]*)[ ]*=/';
 			$sql = preg_replace( $pattern, ' "$1" =', $sql);
