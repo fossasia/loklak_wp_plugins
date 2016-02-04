@@ -1285,10 +1285,15 @@ function comments_template( $file = '/comments.php', $separate_comments = false 
 		'order' => 'ASC',
 		'status'  => 'approve',
 		'post_id' => $post->ID,
-		'hierarchical' => 'threaded',
 		'no_found_rows' => false,
 		'update_comment_meta_cache' => false, // We lazy-load comment meta for performance.
 	);
+
+	if ( get_option('thread_comments') ) {
+		$comment_args['hierarchical'] = 'threaded';
+	} else {
+		$comment_args['hierarchical'] = false;
+	}
 
 	if ( $user_ID ) {
 		$comment_args['include_unapproved'] = array( $user_ID );
@@ -1317,9 +1322,12 @@ function comments_template( $file = '/comments.php', $separate_comments = false 
 				'count'   => true,
 				'orderby' => false,
 				'post_id' => $post->ID,
-				'parent'  => 0,
 				'status'  => 'approve',
 			);
+
+			if ( $comment_args['hierarchical'] ) {
+				$top_level_args['parent'] = 0;
+			}
 
 			if ( isset( $comment_args['include_unapproved'] ) ) {
 				$top_level_args['include_unapproved'] = $comment_args['include_unapproved'];
@@ -1335,18 +1343,22 @@ function comments_template( $file = '/comments.php', $separate_comments = false 
 	$_comments = $comment_query->comments;
 
 	// Trees must be flattened before they're passed to the walker.
-	$comments_flat = array();
-	foreach ( $_comments as $_comment ) {
-		$comments_flat[]  = $_comment;
-		$comment_children = $_comment->get_children( array(
-			'format' => 'flat',
-			'status' => $comment_args['status'],
-			'orderby' => $comment_args['orderby']
-		) );
+	if ( $comment_args['hierarchical'] ) {
+		$comments_flat = array();
+		foreach ( $_comments as $_comment ) {
+			$comments_flat[]  = $_comment;
+			$comment_children = $_comment->get_children( array(
+				'format' => 'flat',
+				'status' => $comment_args['status'],
+				'orderby' => $comment_args['orderby']
+			) );
 
-		foreach ( $comment_children as $comment_child ) {
-			$comments_flat[] = $comment_child;
+			foreach ( $comment_children as $comment_child ) {
+				$comments_flat[] = $comment_child;
+			}
 		}
+	} else {
+		$comments_flat = $_comments;
 	}
 
 	/**
@@ -1925,27 +1937,6 @@ function wp_list_comments( $args = array(), $comments = null ) {
 	 */
 	$r = apply_filters( 'wp_list_comments_args', $r );
 
-	/*
-	 * If 'page' or 'per_page' has been passed, and does not match what's in $wp_query,
-	 * perform a separate comment query and allow Walker_Comment to paginate.
-	 */
-	if ( is_singular() && ( $r['page'] || $r['per_page'] ) ) {
-		$current_cpage = get_query_var( 'cpage' );
-		if ( ! $current_cpage ) {
-			$current_cpage = 'newest' === get_option( 'default_comments_page' ) ? 1 : $wp_query->max_num_comment_pages;
-		}
-
-		$current_per_page = get_query_var( 'comments_per_page' );
-		if ( $r['page'] != $current_cpage || $r['per_page'] != $current_per_page ) {
-			$comments = get_comments( array(
-				'post_id' => get_queried_object_id(),
-				'orderby' => 'comment_date_gmt',
-				'order' => 'ASC',
-				'status' => 'all',
-			) );
-		}
-	}
-
 	// Figure out what comments we'll be looping through ($_comments)
 	if ( null !== $comments ) {
 		$comments = (array) $comments;
@@ -1960,34 +1951,71 @@ function wp_list_comments( $args = array(), $comments = null ) {
 			$_comments = $comments;
 		}
 	} else {
-		if ( empty($wp_query->comments) )
-			return;
-		if ( 'all' != $r['type'] ) {
-			if ( empty($wp_query->comments_by_type) )
-				$wp_query->comments_by_type = separate_comments($wp_query->comments);
-			if ( empty($wp_query->comments_by_type[$r['type']]) )
-				return;
-			$_comments = $wp_query->comments_by_type[$r['type']];
-		} else {
-			$_comments = $wp_query->comments;
-		}
-
-		// Pagination is already handled by `WP_Comment_Query`, so we tell Walker not to bother.
-		if ( $wp_query->max_num_comment_pages ) {
-			$default_comments_page = get_option( 'default_comments_page' );
-			$cpage = get_query_var( 'cpage' );
-			if ( 'newest' === $default_comments_page ) {
-				$r['cpage'] = $cpage;
-
-			// When first page shows oldest comments, post permalink is the same as the comment permalink.
-			} elseif ( $cpage == 1 ) {
-				$r['cpage'] = '';
-			} else {
-				$r['cpage'] = $cpage;
+		/*
+		 * If 'page' or 'per_page' has been passed, and does not match what's in $wp_query,
+		 * perform a separate comment query and allow Walker_Comment to paginate.
+		 */
+		if ( $r['page'] || $r['per_page'] ) {
+			$current_cpage = get_query_var( 'cpage' );
+			if ( ! $current_cpage ) {
+				$current_cpage = 'newest' === get_option( 'default_comments_page' ) ? 1 : $wp_query->max_num_comment_pages;
 			}
 
-			$r['page'] = 0;
-			$r['per_page'] = 0;
+			$current_per_page = get_query_var( 'comments_per_page' );
+			if ( $r['page'] != $current_cpage || $r['per_page'] != $current_per_page ) {
+
+				$comments = get_comments( array(
+					'post_id' => get_the_ID(),
+					'orderby' => 'comment_date_gmt',
+					'order' => 'ASC',
+					'status' => 'all',
+				) );
+
+				if ( 'all' != $r['type'] ) {
+					$comments_by_type = separate_comments( $comments );
+					if ( empty( $comments_by_type[ $r['type'] ] ) ) {
+						return;
+					}
+
+					$_comments = $comments_by_type[ $r['type'] ];
+				} else {
+					$_comments = $comments;
+				}
+			}
+
+		// Otherwise, fall back on the comments from `$wp_query->comments`.
+		} else {
+			if ( empty($wp_query->comments) )
+				return;
+			if ( 'all' != $r['type'] ) {
+				if ( empty($wp_query->comments_by_type) )
+					$wp_query->comments_by_type = separate_comments($wp_query->comments);
+				if ( empty($wp_query->comments_by_type[$r['type']]) )
+					return;
+				$_comments = $wp_query->comments_by_type[$r['type']];
+			} else {
+				$_comments = $wp_query->comments;
+			}
+
+			if ( $wp_query->max_num_comment_pages ) {
+				$default_comments_page = get_option( 'default_comments_page' );
+				$cpage = get_query_var( 'cpage' );
+				if ( 'newest' === $default_comments_page ) {
+					$r['cpage'] = $cpage;
+
+				/*
+				 * When first page shows oldest comments, post permalink is the same as
+				 * the comment permalink.
+				 */
+				} elseif ( $cpage == 1 ) {
+					$r['cpage'] = '';
+				} else {
+					$r['cpage'] = $cpage;
+				}
+
+				$r['page'] = 0;
+				$r['per_page'] = 0;
+			}
 		}
 	}
 

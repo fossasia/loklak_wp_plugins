@@ -1,0 +1,274 @@
+# Copyright (C) 2015 Amazon Web Services
+# This file is distributed under the same license as the Amazon Web Services package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Amazon Web Services 0.3.4\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/amazon-web-"
+"services\n"
+"POT-Creation-Date: 2015-11-02 14:27:20+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2015-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#. #-#-#-#-#  tmp-amazon-web-services.pot (Amazon Web Services 0.3.4)  #-#-#-#-#
+#. Plugin Name of the plugin/theme
+#: classes/amazon-web-services.php:50 classes/amazon-web-services.php:196
+msgid "Amazon Web Services"
+msgstr ""
+
+#: classes/amazon-web-services.php:51
+msgid "AWS"
+msgstr ""
+
+#: classes/amazon-web-services.php:74
+msgid "Addons"
+msgstr ""
+
+#: classes/amazon-web-services.php:82 classes/amazon-web-services.php:337
+#: view/settings.php:14
+msgid "Access Keys"
+msgstr ""
+
+#: classes/amazon-web-services.php:154
+msgid "Cheatin' eh?"
+msgstr ""
+
+#: classes/amazon-web-services.php:205
+msgid "Amazon Web Services: Addons"
+msgstr ""
+
+#: classes/amazon-web-services.php:285
+msgid ""
+"You must first <a href=\"%s\">set your AWS access keys</a> to use this addon."
+msgstr ""
+
+#: classes/amazon-web-services.php:350
+msgid "WP Offload S3"
+msgstr ""
+
+#: classes/amazon-web-services.php:355
+msgid "Pro Upgrade"
+msgstr ""
+
+#: classes/amazon-web-services.php:359
+msgid "Assets"
+msgstr ""
+
+#: classes/amazon-web-services.php:361 classes/amazon-web-services.php:366
+#: classes/amazon-web-services.php:372 classes/amazon-web-services.php:378
+#: classes/amazon-web-services.php:384 classes/amazon-web-services.php:390
+msgid "Addon"
+msgstr ""
+
+#: classes/amazon-web-services.php:364
+msgid "WooCommerce"
+msgstr ""
+
+#: classes/amazon-web-services.php:370
+msgid "Easy Digital Downloads"
+msgstr ""
+
+#: classes/amazon-web-services.php:376
+msgid "WPML"
+msgstr ""
+
+#: classes/amazon-web-services.php:382
+msgid "Meta Slider"
+msgstr ""
+
+#: classes/amazon-web-services.php:388
+msgid "Enable Media Replace"
+msgstr ""
+
+#: classes/amazon-web-services.php:434
+msgctxt "Plugin already installed and activated"
+msgid "Installed & Activated"
+msgstr ""
+
+#: classes/amazon-web-services.php:436
+msgctxt "Plugin already installed"
+msgid "Installed"
+msgstr ""
+
+#: classes/amazon-web-services.php:437
+msgctxt "Activate plugin now"
+msgid "Activate Now"
+msgstr ""
+
+#: classes/amazon-web-services.php:440
+msgctxt "Install plugin now"
+msgid "Install Now"
+msgstr ""
+
+#: classes/amazon-web-services.php:463
+msgid "Visit Site"
+msgstr ""
+
+#: classes/amazon-web-services.php:466
+msgctxt "View plugin details"
+msgid "View Details"
+msgstr ""
+
+#: classes/aws-compatibility-check.php:25
+msgid "a PHP version less than 5.3.3"
+msgstr ""
+
+#: classes/aws-compatibility-check.php:29
+msgid "no PHP cURL library activated"
+msgstr ""
+
+#: classes/aws-compatibility-check.php:35
+msgid "a cURL version less than 7.16.2"
+msgstr ""
+
+#: classes/aws-compatibility-check.php:50
+msgid "cURL compiled without"
+msgstr ""
+
+#: classes/aws-compatibility-check.php:69
+msgid ""
+"The official Amazon&nbsp;Web&nbsp;Services SDK requires PHP 5.3.3+ and cURL "
+"7.16.2+ compiled with OpenSSL and zlib. Your server currently has"
+msgstr ""
+
+#: classes/aws-plugin-base.php:166
+msgid "Settings"
+msgstr ""
+
+#: classes/wp-aws-compatibility-check.php:310
+msgid "deactivate"
+msgstr ""
+
+#: classes/wp-aws-compatibility-check.php:311
+msgid "You can %s the %s plugin to get rid of this notice."
+msgstr ""
+
+#: classes/wp-aws-compatibility-check.php:314
+msgid "%s has been disabled as it requires the %s plugin."
+msgstr ""
+
+#: classes/wp-aws-compatibility-check.php:318
+msgid "which is currently disabled."
+msgstr ""
+
+#: classes/wp-aws-compatibility-check.php:320
+msgid "It appears to be installed already."
+msgstr ""
+
+#: classes/wp-aws-compatibility-check.php:322
+msgctxt "Activate plugin"
+msgid "Activate it now."
+msgstr ""
+
+#: classes/wp-aws-compatibility-check.php:329
+msgid "<a href=\"%s\">Install</a> and activate it."
+msgstr ""
+
+#: classes/wp-aws-compatibility-check.php:340
+msgid ""
+"%s has been disabled as it requires version %s or later of the %s plugin."
+msgstr ""
+
+#: classes/wp-aws-compatibility-check.php:343
+msgid "You currently have version %s installed."
+msgstr ""
+
+#: classes/wp-aws-compatibility-check.php:350
+#: classes/wp-aws-compatibility-check.php:388
+msgid "A valid license for %s is required to update."
+msgstr ""
+
+#: classes/wp-aws-compatibility-check.php:358
+msgid "Update to the latest version"
+msgstr ""
+
+#: classes/wp-aws-compatibility-check.php:370
+msgid ""
+"%1$s has been disabled because it is not a supported addon of the %2$s "
+"plugin."
+msgstr ""
+
+#: classes/wp-aws-compatibility-check.php:379
+msgid ""
+"%1$s has been disabled because it will not work with the version of the %2$s "
+"plugin installed. %1$s %3$s or later is required."
+msgstr ""
+
+#: classes/wp-aws-compatibility-check.php:382
+msgid "Update %s to the latest version"
+msgstr ""
+
+#: classes/wp-aws-compatibility-check.php:451
+msgid "The %s plugin has been deactivated."
+msgstr ""
+
+#: view/activation-error.php:5
+msgid "Activation Error"
+msgstr ""
+
+#: view/settings.php:9
+msgid ""
+"Need help getting your Access Keys? <a href=\"%s\">Check out the Quick Start "
+"Guide &rarr;</a>"
+msgstr ""
+
+#: view/settings.php:19
+msgid "You have enabled the use of IAM roles for Amazon EC2 instances."
+msgstr ""
+
+#: view/settings.php:25
+msgid ""
+"You&#8217;ve already defined your AWS access keys in your wp-config.php. If "
+"you&#8217;d prefer to manage them here and store them in the database (not "
+"recommended), simply remove the lines from your wp-config."
+msgstr ""
+
+#: view/settings.php:31
+msgid ""
+"We recommend defining your Access Keys in wp-config.php so long as you "
+"don&#8217;t commit it to source control (you shouldn&#8217;t be). Simply "
+"copy the following snippet and replace the stars with the keys."
+msgstr ""
+
+#: view/settings.php:38
+msgid ""
+"If you&#8217;d rather store your Access Keys in the database, <a href="
+"\"\">click here to reveal a form.</a>"
+msgstr ""
+
+#: view/settings.php:54
+msgid "Access Key ID:"
+msgstr ""
+
+#: view/settings.php:60
+msgid "Secret Access Key:"
+msgstr ""
+
+#: view/settings.php:67
+msgid "Save Changes"
+msgstr ""
+
+#: view/settings.php:70
+msgid "Remove Keys"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "http://wordpress.org/extend/plugins/amazon-web-services/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Includes the Amazon Web Services PHP libraries, stores access keys, and "
+"allows other plugins to hook into it."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Delicious Brains"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://deliciousbrains.com/"
+msgstr ""

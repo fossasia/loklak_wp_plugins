@@ -738,3 +738,15 @@
 	font-size: 12px;
 	color: #a00;
 }
+
+.as3cf-notice-toggle-content {
+	max-height: 100px;
+	overflow-y: scroll;
+
+	.as3cf-notice-toggle-list {
+		margin-top: 0;
+		margin-left: 0;
+		padding-left: 26px;
+		color: #dc3232;
+	}
+}

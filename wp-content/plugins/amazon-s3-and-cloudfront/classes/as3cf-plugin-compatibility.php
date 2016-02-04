@@ -34,6 +34,11 @@ class AS3CF_Plugin_Compatibility {
 	protected static $stream_wrappers = array();
 
 	/**
+	 * @var array
+	 */
+	protected $compatibility_addons;
+
+	/**
 	 * @param Amazon_S3_And_CloudFront $as3cf
 	 */
 	function __construct( $as3cf ) {
@@ -53,14 +58,20 @@ class AS3CF_Plugin_Compatibility {
 		add_filter( 'attachment_url_to_postid', array( $this, 'customizer_background_image' ), 10, 2 );
 
 		/*
-		 * Responsive Images WP 4.4+
+		 * Responsive Images WP 4.4
 		 */
+		add_filter( 'wp_calculate_image_srcset', array( $this, 'wp_calculate_image_srcset' ), 10, 5 );
+
 		global $wp_version;
 		if ( 0 === version_compare( $wp_version, '4.4' ) ) {
+			// Hot fix for 4.4
 			add_filter( 'the_content', array( $this, 'wp_make_content_images_responsive' ), 11 );
 		}
 
-		add_filter( 'wp_calculate_image_srcset', array( $this, 'wp_calculate_image_srcset' ), 10, 5 );
+		/*
+		 * Responsive Images WP 4.4.1+
+		 */
+		add_filter( 'wp_calculate_image_srcset_meta', array( $this, 'wp_calculate_image_srcset_meta' ), 10, 4 );
 
 		if ( $this->as3cf->is_plugin_setup() ) {
 			$this->compatibility_init_if_setup();
@@ -124,8 +135,11 @@ class AS3CF_Plugin_Compatibility {
 	 * @return array
 	 */
 	public function get_compatibility_addons_to_install() {
-		$addons = $this->get_pro_addons();
+		if ( isset( $this->compatibility_addons ) ) {
+			return $this->compatibility_addons;
+		}
 
+		$addons            = $this->get_pro_addons();
 		$addons_to_install = array();
 
 		if ( empty ( $addons ) ) {
@@ -154,6 +168,8 @@ class AS3CF_Plugin_Compatibility {
 			);
 		}
 
+		$this->compatibility_addons = $addons_to_install;
+
 		return $addons_to_install;
 	}
 
@@ -172,15 +188,16 @@ class AS3CF_Plugin_Compatibility {
 			return;
 		}
 
-		$addons_to_install = $this->get_compatibility_addons_to_install();
-
-		$notice_id = 'as3cf-compat-addons';
-
-		$this->maybe_prepare_compatibility_addons_notice( $notice_id, $addons_to_install );
-
-		if ( empty( $addons_to_install ) ) {
+		if ( ! $this->should_show_compatibility_notice() ) {
+			// No addons to install, or addons haven't changed
 			return;
 		}
+
+		$notice_id         = 'as3cf-compat-addons';
+		$addons_to_install = $this->get_compatibility_addons_to_install();
+
+		// Remove previous notice to refresh addon list
+		$this->remove_compatibility_notice();
 
 		$title       = __( 'WP Offload S3 Compatibility Addons', 'amazon-s3-and-cloudfront' );
 		$compat_url  = 'https://deliciousbrains.com/wp-offload-s3/doc/compatibility-with-other-plugins/';
@@ -219,28 +236,50 @@ class AS3CF_Plugin_Compatibility {
 	}
 
 	/**
-	 * Remove the notice if exists already and undismiss the notice
-	 * if the addons available have changed.
+	 * Should show compatibility notice
 	 *
-	 * @param int $notice_id
-	 * @param array $addons_to_install
+	 * @return bool
 	 */
-	protected function maybe_prepare_compatibility_addons_notice( $notice_id, $addons_to_install ) {
-		$notice = $this->as3cf->notices->find_notice_by_id( $notice_id );
+	protected function should_show_compatibility_notice() {
+		$addons          = $this->get_compatibility_addons_to_install();
+		$previous_addons = get_site_option( 'as3cf_compat_addons_to_install', array() );
 
-		if ( is_null( $notice ) ) {
-			return;
+		if ( empty( $addons ) && empty( $previous_addons ) ) {
+			// No addons to install
+			return false;
 		}
 
-		$previous_addons_to_install = get_site_option( 'as3cf_compat_addons_to_install', array() );
+		if ( empty( $addons ) && ! empty( $previous_addons ) ) {
+			// No addons to install but previous exist
+			$this->remove_compatibility_notice( true );
 
-		if ( ! empty( $previous_addons_to_install ) && $addons_to_install !== $previous_addons_to_install ) {
-			// Remove dismissed flag for all users, so we reshow the notice with new addons
+			return false;
+		}
+
+		if ( $previous_addons === $addons ) {
+			// Addons have not changed
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Remove compatibility notice
+	 *
+	 * @param bool $delete_option
+	 */
+	protected function remove_compatibility_notice( $delete_option = false ) {
+		$notice_id = 'as3cf-compat-addons';
+
+		if ( $this->as3cf->notices->find_notice_by_id( $notice_id ) ) {
 			$this->as3cf->notices->undismiss_notice_for_all( $notice_id );
+			$this->as3cf->notices->remove_notice_by_id( $notice_id );
 		}
 
-		// Remove the notice so we refresh it later on
-		$this->as3cf->notices->remove_notice( $notice );
+		if ( $delete_option ) {
+			delete_site_option( 'as3cf_compat_addons_to_install' );
+		}
 	}
 
 	/**
@@ -839,6 +878,41 @@ class AS3CF_Plugin_Compatibility {
 		}
 
 		return $image;
+	}
+
+	/**
+	 * Alter the image meta data to add srcset support for object versioned S3 URLs
+	 *
+	 * @param array  $image_meta
+	 * @param array  $size_array
+	 * @param string $image_src
+	 * @param int    $attachment_id
+	 *
+	 * @return array
+	 */
+	public function wp_calculate_image_srcset_meta( $image_meta, $size_array, $image_src, $attachment_id ) {
+		if ( false !== strpos( $image_src, $image_meta['file']  ) ) {
+			// Path matches URL, no need to change
+			return $image_meta;
+		}
+
+		if ( ! ( $s3object = $this->as3cf->get_attachment_s3_info( $attachment_id ) ) ) {
+			// Attachment not uploaded to S3, abort
+			return $image_meta;
+		}
+
+		$image_basename = wp_basename( $image_meta['file'] );
+
+		if ( false === strpos( $s3object['key'], $image_basename ) ) {
+			// Not the correct attachment, abort
+			return $image_meta;
+		}
+
+		// Strip the meta file prefix so the just the filename will always match
+		// the S3 URL regardless of different prefixes for the offloaded file
+		$image_meta['file'] = $image_basename;
+
+		return $image_meta;
 	}
 
 	/**

@@ -22,7 +22,7 @@ $selected_bucket_prefix = $this->get_object_prefix(); ?>
 	</div>
 
 	<?php
-	do_action( 'as3cf_media_pre_tab_render' );
+	do_action( 'as3cf_pre_tab_render', 'media' );
 	$this->render_bucket_permission_errors(); ?>
 
 	<div class="as3cf-main-settings">
@@ -151,7 +151,7 @@ $selected_bucket_prefix = $this->get_object_prefix(); ?>
 						);
 						$this->render_view( 'notice', $lost_files_args );
 
-						$remove_local_link = sprintf( '<a href="%s">%s &raquo;</a>', 'https://deliciousbrains.com/wp-offload-s3/doc/compatibility-with-other-plugins/', __( 'More info', 'amazon-s3-and-cloudfront' ) );
+						$remove_local_link = $this->more_info_link( 'https://deliciousbrains.com/wp-offload-s3/doc/compatibility-with-other-plugins/' );
 						$remove_local_msg  = apply_filters( 'as3cf_remove_local_notice', sprintf( __( '<strong>Warning</strong> &mdash; Some plugins depend on the file being present on the local server and may not work when the file is removed. %s', 'amazon-s3-and-cloudfront' ), $remove_local_link ) );
 						$remove_local_args = array(
 							'message' => $remove_local_msg,
@@ -171,9 +171,7 @@ $selected_bucket_prefix = $this->get_object_prefix(); ?>
 						<h4><?php _e( 'Object Versioning', 'amazon-s3-and-cloudfront' ) ?></h4>
 						<p>
 							<?php _e( 'Append a timestamp to the S3 file path. Recommended when using CloudFront so you don\'t have to worry about cache invalidation.' ); ?>
-							<a href="http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/ReplacingObjects.html">
-								<?php _e( 'More info', 'amazon-s3-and-cloudfront' ) ?> &raquo;
-							</a>
+							<?php echo $this->more_info_link( 'http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/ReplacingObjects.html', '', false ); ?>
 						</p>
 					</td>
 				</tr>
@@ -183,10 +181,9 @@ $selected_bucket_prefix = $this->get_object_prefix(); ?>
 					</td>
 					<td>
 						<h4><?php _e( 'Far Future Expiration Header', 'amazon-s3-and-cloudfront' ) ?></h4>
-						<p><?php _e( 'Implements a "Never Expire" caching policy for browsers by setting an Expires header for 10 years in the future. Should be used in conjunction with object versioning above.' ); ?>
-							<a href="http://developer.yahoo.com/performance/rules.html#expires">
-								<?php _e( 'More info', 'amazon-s3-and-cloudfront' ) ?> &raquo;
-							</a>
+						<p>
+							<?php _e( 'Implements a "Never Expire" caching policy for browsers by setting an Expires header for 10 years in the future. Should be used in conjunction with object versioning above.' ); ?>
+							<?php echo $this->more_info_link( 'http://developer.yahoo.com/performance/rules.html', 'expires', false ); ?>
 						</p>
 					</td>
 				</tr>

@@ -1,0 +1,154 @@
+msgid ""
+msgstr "MIME-Version: 1.0\n"
+
+#. Name.
+msgid "Amazon Web Services"
+msgstr ""
+
+#. Short description.
+msgid "Houses the Amazon Web Services (AWS) PHP libraries and manages access keys. Required by other AWS plugins."
+msgstr ""
+
+#. Screenshot description.
+msgid "Settings screen"
+msgstr ""
+
+#. Found in description header.
+msgid "Requirements"
+msgstr ""
+
+#. Found in description list item.
+msgid "<a href=\"http://wordpress.org/plugins/amazon-s3-and-cloudfront/\">WP Offload S3</a>"
+msgstr ""
+
+#. Found in description list item.
+msgid "PHP version 5.3.3 or greater"
+msgstr ""
+
+#. Found in description list item.
+msgid "PHP cURL library 7.16.2 or greater"
+msgstr ""
+
+#. Found in description list item.
+msgid "cURL compiled with OpenSSL and zlib"
+msgstr ""
+
+#. Found in description paragraph.
+msgid "This plugin is required by other plugins, which uses its libraries and its settings to connect to AWS services. Currently, there is only one plugin that requires this plugin:"
+msgstr ""
+
+#. Found in installation list item.
+msgid "Use WordPress' built-in installer"
+msgstr ""
+
+#. Found in installation list item.
+msgid "A new AWS menu will appear in the side menu"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Improvement: Compatibility with WP Offload S3 Pro 1.0.3"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Improvement: Updated Amazon SDK to version 2.8.18"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Improvement: Fix inconsistent notice widths on <em>Access Keys</em> screen"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "New: WP Offload S3 Pro addons (Enable Media Replace, Meta Slider, WPML) added to the <em>Addons</em> screen"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "New: WP Offload S3 Pro upgrade and addons added to the <em>Addons</em> screen"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Bug fix: Style inconsistencies on the <em>Addons</em> screen"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "New: Support for <a href=\"https://deliciousbrains.com/wp-offload-s3/doc/iam-roles/\">IAM Roles on Amazon EC2</a> using the <code>AWS_USE_EC2_IAM_ROLE</code> constant"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "New: Redesigned <em>Access Keys</em> and <em>Addons</em> screens"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Improvement: <em>Settings</em> menu item renamed to <em>Access Keys</em>"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Improvement: <em>Access Keys</em> link added to plugin row on <em>Plugins</em> screen"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Improvement: Activate addons directly from within <em>Addons</em> screen"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Improvement: <a href=\"https://deliciousbrains.com/wp-offload-s3/doc/quick-start-guide/\">Quick Start Guide</a> documentation"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Bug Fix: Reverting AWS client config of region and signature"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "New: AWS SDK updated to 2.7.13"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "New: Translation ready"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Improvement: Code cleanup to WordPress coding standards"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Improvement: Settings notice UI aligned with WordPress style"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Bug: Error if migrating keys over from old Amazon S3 and CloudFront plugin settings"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "New: AWS SDK updated to 2.6.16"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "New: Set the region for the AWS client by defining <code>AWS_REGION</code> in your wp-config.php"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "New: Composer file for Packagist support"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Improvement: Base plugin class performance of installed version"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Improvement: Base plugin class accessor for various properties"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Improvement: Addon plugin modal now responsive"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Improvement: Better menu icon"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "Improvement: Code formatting to WordPress standards"
+msgstr ""
+
+#. Found in changelog list item.
+msgid "First release"
+msgstr ""

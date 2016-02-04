@@ -3,7 +3,7 @@ Contributors: bradt, deliciousbrains
 Tags: uploads, amazon, s3, amazon s3, mirror, admin, media, cdn, cloudfront
 Requires at least: 3.7
 Tested up to: 4.4
-Stable tag: 0.9.11
+Stable tag: 0.9.12
 License: GPLv3
 
 Copies files to Amazon S3 as they are uploaded to the Media Library. Optionally configure Amazon CloudFront for faster delivery.
@@ -68,6 +68,10 @@ This version requires PHP 5.3.3+ and the Amazon Web Services plugin
 This version requires PHP 5.3.3+ and the Amazon Web Services plugin
 
 == Changelog ==
+
+= WP Offload S3 0.9.12 - 2016-02-03 =
+* Improvement: Compatibility with WP Offload S3 Assets 1.1
+* Bug fix: Object versioned responsive images in post content not working when served from S3 on WordPress 4.4+
 
 = WP Offload S3 0.9.11 - 2015-12-19 =
 * Bug fix: Responsive images in post content not working when served from S3

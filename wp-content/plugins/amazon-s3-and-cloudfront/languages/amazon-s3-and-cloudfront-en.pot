@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: amazon-s3-and-cloudfront\n"
 "Report-Msgid-Bugs-To: nom@deliciousbrains.com\n"
-"POT-Creation-Date: 2015-12-19 11:14+0000\n"
+"POT-Creation-Date: 2016-02-03 13:22+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,112 +25,112 @@ msgstr ""
 msgid "S3 and CloudFront"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:567
+#: classes/amazon-s3-and-cloudfront.php:574
 msgid "Upload aborted by filter 'as3cf_pre_upload_attachment'"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:578
+#: classes/amazon-s3-and-cloudfront.php:585
 #, php-format
 msgid "File %s does not exist"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:589
+#: classes/amazon-s3-and-cloudfront.php:596
 #, php-format
 msgid "Mime type %s is not allowed"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:670
+#: classes/amazon-s3-and-cloudfront.php:686
 #, php-format
 msgid "Error uploading %s to S3: %s"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:1608
+#: classes/amazon-s3-and-cloudfront.php:1669
 msgid "Cheatin&#8217; eh?"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:1612
+#: classes/amazon-s3-and-cloudfront.php:1673
 msgid "You do not have sufficient permissions to access this page."
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:1618
+#: classes/amazon-s3-and-cloudfront.php:1679
 msgid "No bucket name provided."
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:1903
+#: classes/amazon-s3-and-cloudfront.php:1964
 msgid "Error Getting Bucket Region"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:1904
+#: classes/amazon-s3-and-cloudfront.php:1965
 #, php-format
 msgid "There was an error attempting to get the region of the bucket %s: %s"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:2024
+#: classes/amazon-s3-and-cloudfront.php:2085
 msgid ""
 "This is a test file to check if the user has write permission to S3. Delete "
 "me if found."
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:2056
+#: classes/amazon-s3-and-cloudfront.php:2117
 #, php-format
 msgid ""
 "There was an error attempting to check the permissions of the bucket %s: %s"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:2113
+#: classes/amazon-s3-and-cloudfront.php:2174
 msgid "Error creating bucket"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:2114
+#: classes/amazon-s3-and-cloudfront.php:2175
 msgid "Bucket name too short."
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:2115
+#: classes/amazon-s3-and-cloudfront.php:2176
 msgid "Bucket name too long."
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:2116
+#: classes/amazon-s3-and-cloudfront.php:2177
 msgid ""
 "Invalid character. Bucket names can contain lowercase letters, numbers, "
 "periods and hyphens."
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:2117
+#: classes/amazon-s3-and-cloudfront.php:2178
 msgid "Error saving bucket"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:2118
+#: classes/amazon-s3-and-cloudfront.php:2179
 msgid "Error fetching buckets"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:2119
+#: classes/amazon-s3-and-cloudfront.php:2180
 msgid "Error getting URL preview: "
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:2120
+#: classes/amazon-s3-and-cloudfront.php:2181
 msgid "The changes you made will be lost if you navigate away from this page"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:2180
+#: classes/amazon-s3-and-cloudfront.php:2241
 msgid "Cheatin' eh?"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:2283
+#: classes/amazon-s3-and-cloudfront.php:2344
 msgctxt "Show the media library tab"
 msgid "Media Library"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:2284
+#: classes/amazon-s3-and-cloudfront.php:2345
 msgctxt "Show the support tab"
 msgid "Support"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:2436
+#: classes/amazon-s3-and-cloudfront.php:2497
 #, php-format
 msgid "The file %s has been given %s permissions on Amazon S3."
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:2448
+#: classes/amazon-s3-and-cloudfront.php:2509
 msgid ""
 "<strong>Image Manipulation Library Missing</strong> &mdash; Looks like you "
 "don't have an image manipulation library installed on this server and "
@@ -138,11 +138,11 @@ msgid ""
 "Please setup GD or ImageMagick."
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:2978
+#: classes/amazon-s3-and-cloudfront.php:3039
 msgid "Quick Start Guide"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:2980
+#: classes/amazon-s3-and-cloudfront.php:3041
 #, php-format
 msgid ""
 "Looks like we don't have write access to this bucket. It's likely that the "
@@ -151,7 +151,7 @@ msgid ""
 "correctly."
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:2982
+#: classes/amazon-s3-and-cloudfront.php:3043
 #, php-format
 msgid ""
 "Looks like we don't have access to the buckets. It's likely that the user "
@@ -159,23 +159,27 @@ msgid ""
 "Please see our %s for instructions on setting up permissions correctly."
 msgstr ""
 
-#: classes/as3cf-notices.php:374
+#: classes/amazon-s3-and-cloudfront.php:3219
+msgid "More info"
+msgstr ""
+
+#: classes/as3cf-notices.php:398
 msgid "Error dismissing notice."
 msgstr ""
 
-#: classes/as3cf-notices.php:389
+#: classes/as3cf-notices.php:413
 msgid "Invalid notice ID."
 msgstr ""
 
-#: classes/as3cf-plugin-compatibility.php:185
+#: classes/as3cf-plugin-compatibility.php:202
 msgid "WP Offload S3 Compatibility Addons"
 msgstr ""
 
-#: classes/as3cf-plugin-compatibility.php:187
+#: classes/as3cf-plugin-compatibility.php:204
 msgid "compatibility addons"
 msgstr ""
 
-#: classes/as3cf-plugin-compatibility.php:188
+#: classes/as3cf-plugin-compatibility.php:205
 #, php-format
 msgid ""
 "To get WP Offload S3 to work with certain 3rd party plugins, you might need "
@@ -184,7 +188,7 @@ msgid ""
 "about each addon to determine if you need it or not."
 msgstr ""
 
-#: classes/as3cf-plugin-compatibility.php:194
+#: classes/as3cf-plugin-compatibility.php:211
 #, php-format
 msgid ""
 "You will need to purchase a license to get access to these addons. If you're "
@@ -192,11 +196,11 @@ msgid ""
 "to %s."
 msgstr ""
 
-#: classes/as3cf-plugin-compatibility.php:195
+#: classes/as3cf-plugin-compatibility.php:212
 msgid "View Licenses"
 msgstr ""
 
-#: classes/as3cf-plugin-compatibility.php:634
+#: classes/as3cf-plugin-compatibility.php:673
 #: classes/upgrades/as3cf-meta-wp-error.php:72
 #, php-format
 msgid "There was an error attempting to download the file %s from S3: %s"
@@ -473,6 +477,14 @@ msgstr ""
 msgid "Access Denied to Bucket"
 msgstr ""
 
+#: view/notice.php:17
+msgid "Hide"
+msgstr ""
+
+#: view/notice.php:17
+msgid "Show"
+msgstr ""
+
 #: view/settings.php:10
 msgid "Settings saved."
 msgstr ""
@@ -573,12 +585,6 @@ msgid ""
 "URLs</strong> to use the S3 URLs."
 msgstr ""
 
-#: view/settings.php:154
-#: view/settings.php:175
-#: view/settings.php:188
-msgid "More info"
-msgstr ""
-
 #: view/settings.php:155
 #, php-format
 msgid ""
@@ -596,22 +602,22 @@ msgid ""
 "you don't have to worry about cache invalidation."
 msgstr ""
 
-#: view/settings.php:185
+#: view/settings.php:183
 msgid "Far Future Expiration Header"
 msgstr ""
 
-#: view/settings.php:186
+#: view/settings.php:185
 msgid ""
 "Implements a \"Never Expire\" caching policy for browsers by setting an "
 "Expires header for 10 years in the future. Should be used in conjunction "
 "with object versioning above."
 msgstr ""
 
-#: view/settings.php:198
+#: view/settings.php:195
 msgid "Copy HiDPI (@2x) Images"
 msgstr ""
 
-#: view/settings.php:199
+#: view/settings.php:196
 #, php-format
 msgid ""
 "When uploading a file to S3, checks if there's a file of the same name with "
@@ -619,7 +625,7 @@ msgid ""
 "Retina 2x</a> plugin."
 msgstr ""
 
-#: view/settings.php:205
+#: view/settings.php:202
 msgid "Save Changes"
 msgstr ""
 
