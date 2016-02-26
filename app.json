@@ -53,6 +53,11 @@
             "required": false,
             "value": ""
         },
+        "TZ": {
+            "description": "Your Time Zone.",
+            "required": false,
+            "value": "Asia/Tokyo"
+        },
         "ADMINAUTH": {
             "description": "Login Basic authentication(ex. USERNAME:CRYPT PASSWORD).",
             "value": ""
