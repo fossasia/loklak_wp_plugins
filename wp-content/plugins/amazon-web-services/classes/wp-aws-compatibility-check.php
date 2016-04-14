@@ -30,7 +30,7 @@ if ( ! class_exists( 'WP_AWS_Compatibility_Check' ) ) {
 		protected $plugin_slug;
 
 		/**
-		 * @var string The name of the plugin, e.g. WP Offload S3 - Pro Upgrade
+		 * @var string The name of the plugin, e.g. WP Offload S3
 		 */
 		protected $plugin_name;
 
@@ -121,6 +121,19 @@ if ( ! class_exists( 'WP_AWS_Compatibility_Check' ) ) {
 			$GLOBALS['aws_meta'][ $this->plugin_slug ]['compatible'] = $compatible;
 
 			return $compatible;
+		}
+
+		/**
+		 * Is a plugin active
+		 *
+		 * @param string $plugin_base
+		 *
+		 * @return bool
+		 */
+		function is_plugin_active( $plugin_base ) {
+			include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+
+			return is_plugin_active( $plugin_base );
 		}
 
 		/**

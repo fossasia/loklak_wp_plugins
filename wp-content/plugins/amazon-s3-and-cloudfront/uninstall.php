@@ -14,12 +14,18 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
+if ( 'amazon-s3-and-cloudfront/wordpress-s3.php' === WP_UNINSTALL_PLUGIN && file_exists( WP_PLUGIN_DIR . '/amazon-s3-and-cloudfront-pro/amazon-s3-and-cloudfront-pro.php' ) ) {
+	// Don't uninstall if the pro plugin is installed
+	return;
+}
+
 require dirname( __FILE__ ) . '/classes/wp-aws-uninstall.php';
 
 $options = array(
 	'tantan_wordpress_s3',
 	'update_meta_with_region_session',
 	'update_file_sizes_session',
+	'update_meta_error_session',
 	'as3cf_compat_addons_to_install',
 );
 
@@ -41,4 +47,9 @@ $transients = array(
 	'subsite' => array( 'wpos3_site_space_used' ),
 );
 
-$as3cf_uninstall = new WP_AWS_Uninstall( $options, $postmeta, $crons, $transients );
+$usermeta = array(
+	'as3cf_notices',
+	'as3cf_dismissed_notices',
+);
+
+$as3cf_uninstall = new WP_AWS_Uninstall( $options, $postmeta, $crons, $transients, $usermeta );

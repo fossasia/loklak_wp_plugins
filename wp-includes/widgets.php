@@ -445,16 +445,8 @@ function wp_unregister_sidebar_widget($id) {
 /**
  * Registers widget control callback for customizing options.
  *
- * The options contains the 'height', 'width', and 'id_base' keys. The 'height'
- * option is never used. The 'width' option is the width of the fully expanded
- * control form, but try hard to use the default width. The 'id_base' is for
- * multi-widgets (widgets which allow multiple instances such as the text
- * widget), an id_base must be provided. The widget id will end up looking like
- * `{$id_base}-{$unique_number}`.
- *
  * @since 2.2.0
  *
- * @todo Document `$options` as a hash notation, re: WP_Widget::__construct() cross-reference.
  * @todo `$params` parameter?
  *
  * @global array $wp_registered_widget_controls
@@ -465,7 +457,15 @@ function wp_unregister_sidebar_widget($id) {
  * @param int|string   $id               Sidebar ID.
  * @param string       $name             Sidebar display name.
  * @param callable     $control_callback Run when sidebar is displayed.
- * @param array|string $options          Optional. Widget options. See description above. Default empty array.
+ * @param array $options {
+ *     Optional. Array or string of control options. Default empty array.
+ *
+ *     @type int        $height  Never used. Default 200.
+ *     @type int        $width   Width of the fully expanded control form (but try hard to use the default width).
+ *                               Default 250.
+ *     @type int|string $id_base Required for multi-widgets, i.e widgets that allow multiple instances such as the
+ *                               text widget. The widget id will end up looking like `{$id_base}-{$unique_number}`.
+ * }
  */
 function wp_register_widget_control( $id, $name, $control_callback, $options = array() ) {
 	global $wp_registered_widget_controls, $wp_registered_widget_updates, $wp_registered_widgets, $_wp_deprecated_widgets_callbacks;
@@ -513,13 +513,18 @@ function wp_register_widget_control( $id, $name, $control_callback, $options = a
 }
 
 /**
+ * Registers the update callback for a widget.
+ *
+ * @since 2.8.0
+ *
  * @global array $wp_registered_widget_updates
  *
- * @param string   $id_base
- * @param callable $update_callback
- * @param array    $options
+ * @param string   $id_base         The base ID of a widget created by extending WP_Widget.
+ * @param callable $update_callback Update callback method for the widget.
+ * @param array    $options         Optional. Widget control options. See {@see wp_register_widget_control()}.
+ *                                  Default empty array.
  */
-function _register_widget_update_callback($id_base, $update_callback, $options = array()) {
+function _register_widget_update_callback( $id_base, $update_callback, $options = array() ) {
 	global $wp_registered_widget_updates;
 
 	if ( isset($wp_registered_widget_updates[$id_base]) ) {
@@ -538,13 +543,17 @@ function _register_widget_update_callback($id_base, $update_callback, $options =
 }
 
 /**
+ * Registers the form callback for a widget.
+ *
+ * @since 2.8.0
  *
  * @global array $wp_registered_widget_controls
  *
- * @param int|string $id
- * @param string     $name
- * @param callable   $form_callback
- * @param array      $options
+ * @param int|string $id            Widget ID.
+ * @param string     $name          Name attribute for the widget.
+ * @param callable   $form_callback Form callback.
+ * @param array      $options       Optional. Widget control options. See {@see wp_register_widget_control()}.
+ *                                  Default empty array.
  */
 function _register_widget_form_callback($id, $name, $form_callback, $options = array()) {
 	global $wp_registered_widget_controls;
@@ -629,8 +638,8 @@ function dynamic_sidebar( $index = 1 ) {
 	/**
 	 * Fires before widgets are rendered in a dynamic sidebar.
 	 *
-	 * Note: The action also fires for empty sidebars, and on both the front-end
-	 * and back-end, including the Inactive Widgets sidebar on the Widgets screen.
+	 * Note: The action also fires for empty sidebars, and on both the front end
+	 * and back end, including the Inactive Widgets sidebar on the Widgets screen.
 	 *
 	 * @since 3.9.0
 	 *
@@ -665,7 +674,7 @@ function dynamic_sidebar( $index = 1 ) {
 		/**
 		 * Filter the parameters passed to a widget's display callback.
 		 *
-		 * Note: The filter is evaluated on both the front-end and back-end,
+		 * Note: The filter is evaluated on both the front end and back end,
 		 * including for the Inactive Widgets sidebar on the Widgets screen.
 		 *
 		 * @since 2.5.0
@@ -701,7 +710,7 @@ function dynamic_sidebar( $index = 1 ) {
 		/**
 		 * Fires before a widget's display callback is called.
 		 *
-		 * Note: The action fires on both the front-end and back-end, including
+		 * Note: The action fires on both the front end and back end, including
 		 * for widgets in the Inactive Widgets sidebar on the Widgets screen.
 		 *
 		 * The action is not fired for empty sidebars.
@@ -713,13 +722,13 @@ function dynamic_sidebar( $index = 1 ) {
 		 *
 		 *     @type string $name                Name of the widget.
 		 *     @type string $id                  Widget ID.
-		 *     @type array|callable $callback    When the hook is fired on the front-end, $callback is an array
-		 *                                       containing the widget object. Fired on the back-end, $callback
+		 *     @type array|callable $callback    When the hook is fired on the front end, $callback is an array
+		 *                                       containing the widget object. Fired on the back end, $callback
 		 *                                       is 'wp_widget_control', see $_callback.
 		 *     @type array          $params      An associative array of multi-widget arguments.
 		 *     @type string         $classname   CSS class applied to the widget container.
 		 *     @type string         $description The widget description.
-		 *     @type array          $_callback   When the hook is fired on the back-end, $_callback is populated
+		 *     @type array          $_callback   When the hook is fired on the back end, $_callback is populated
 		 *                                       with an array containing the widget object, see $callback.
 		 * }
 		 */
@@ -734,8 +743,8 @@ function dynamic_sidebar( $index = 1 ) {
 	/**
 	 * Fires after widgets are rendered in a dynamic sidebar.
 	 *
-	 * Note: The action also fires for empty sidebars, and on both the front-end
-	 * and back-end, including the Inactive Widgets sidebar on the Widgets screen.
+	 * Note: The action also fires for empty sidebars, and on both the front end
+	 * and back end, including the Inactive Widgets sidebar on the Widgets screen.
 	 *
 	 * @since 3.9.0
 	 *
@@ -748,8 +757,8 @@ function dynamic_sidebar( $index = 1 ) {
 	/**
 	 * Filter whether a sidebar has widgets.
 	 *
-	 * Note: The filter is also evaluated for empty sidebars, and on both the front-end
-	 * and back-end, including the Inactive Widgets sidebar on the Widgets screen.
+	 * Note: The filter is also evaluated for empty sidebars, and on both the front end
+	 * and back end, including the Inactive Widgets sidebar on the Widgets screen.
 	 *
 	 * @since 3.9.0
 	 *
@@ -761,7 +770,7 @@ function dynamic_sidebar( $index = 1 ) {
 }
 
 /**
- * Whether widget is displayed on the front-end.
+ * Whether widget is displayed on the front end.
  *
  * Either $callback or $id_base can be used
  * $id_base is the first argument when extending WP_Widget class
@@ -777,13 +786,13 @@ function dynamic_sidebar( $index = 1 ) {
  *
  * @global array $wp_registered_widgets
  *
- * @param string $callback      Optional, Widget callback to check.
- * @param int    $widget_id     Optional, but needed for checking. Widget ID.
- * @param string $id_base       Optional, the base ID of a widget created by extending WP_Widget.
- * @param bool   $skip_inactive Optional, whether to check in 'wp_inactive_widgets'.
+ * @param string|false $callback      Optional, Widget callback to check. Default false.
+ * @param int|false    $widget_id     Optional. Widget ID. Optional, but needed for checking. Default false.
+ * @param string|false $id_base       Optional. The base ID of a widget created by extending WP_Widget. Default false.
+ * @param bool         $skip_inactive Optional. Whether to check in 'wp_inactive_widgets'. Default true.
  * @return string|false False if widget is not active or id of sidebar in which the widget is active.
  */
-function is_active_widget($callback = false, $widget_id = false, $id_base = false, $skip_inactive = true) {
+function is_active_widget( $callback = false, $widget_id = false, $id_base = false, $skip_inactive = true ) {
 	global $wp_registered_widgets;
 
 	$sidebars_widgets = wp_get_sidebars_widgets();
@@ -821,7 +830,7 @@ function is_dynamic_sidebar() {
 	global $wp_registered_widgets, $wp_registered_sidebars;
 	$sidebars_widgets = get_option('sidebars_widgets');
 	foreach ( (array) $wp_registered_sidebars as $index => $sidebar ) {
-		if ( count($sidebars_widgets[$index]) ) {
+		if ( ! empty( $sidebars_widgets[ $index ] ) ) {
 			foreach ( (array) $sidebars_widgets[$index] as $widget )
 				if ( array_key_exists($widget, $wp_registered_widgets) )
 					return true;
@@ -1059,11 +1068,14 @@ function the_widget( $widget, $instance = array(), $args = array() ) {
 }
 
 /**
- * Private
+ * Retrieves the widget ID base value.
  *
- * @return string
+ * @since 2.8.0
+ *
+ * @param string $id Widget ID.
+ * @return string Widget ID base.
  */
-function _get_widget_id_base($id) {
+function _get_widget_id_base( $id ) {
 	return preg_replace( '/-[0-9]+$/', '', $id );
 }
 

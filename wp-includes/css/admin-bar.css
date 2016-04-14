@@ -453,7 +453,7 @@ html:lang(he-il) .rtl #wpadminbar *  {
 }
 
 #wpadminbar #wp-admin-bar-user-info .username {
-	color: #999;
+	color: #a0a5aa;
 	font-size: 11px;
 }
 
@@ -669,19 +669,6 @@ html:lang(he-il) .rtl #wpadminbar *  {
 #wpadminbar.ie8 > #wp-toolbar > #wp-admin-bar-top-secondary > #wp-admin-bar-search #adminbarsearch input.adminbar-input:focus {
 	background: #fff;
 	z-index: -1;
-}
-
-#wpadminbar #adminbarsearch .adminbar-input::-webkit-input-placeholder {
-	color: #999;
-}
-#wpadminbar #adminbarsearch .adminbar-input:-moz-placeholder {
-	color: #999;
-}
-#wpadminbar #adminbarsearch .adminbar-input::-moz-placeholder {
-	color: #999;
-}
-#wpadminbar #adminbarsearch .adminbar-input:-ms-input-placeholder {
-	color: #999;
 }
 
 #wpadminbar #adminbarsearch .adminbar-button {
@@ -906,7 +893,7 @@ html:lang(he-il) .rtl #wpadminbar *  {
 		overflow: hidden;
 		width: 52px;
 		padding: 0;
-		color: #999;
+		color: #a0a5aa; /* @todo not needed? this text is hidden */
 		position: relative;
 	}
 

@@ -67,6 +67,15 @@ final class WP_Customize_Manager {
 	public $nav_menus;
 
 	/**
+	 * Methods and properties dealing with selective refresh in the Customizer preview.
+	 *
+	 * @since 4.5.0
+	 * @access public
+	 * @var WP_Customize_Selective_Refresh
+	 */
+	public $selective_refresh;
+
+	/**
 	 * Registered instances of WP_Customize_Setting.
 	 *
 	 * @since 3.4.0
@@ -92,6 +101,15 @@ final class WP_Customize_Manager {
 	 * @var array
 	 */
 	protected $panels = array();
+
+	/**
+	 * List of core components.
+	 *
+	 * @since 4.5.0
+	 * @access protected
+	 * @var array
+	 */
+	protected $components = array( 'widgets', 'nav_menus' );
 
 	/**
 	 * Registered instances of WP_Customize_Section.
@@ -228,7 +246,7 @@ final class WP_Customize_Manager {
 		 *
 		 * This allows Core components to be excluded from being instantiated by
 		 * filtering them out of the array. Note that this filter generally runs
-		 * during the <code>plugins_loaded</code> action, so it cannot be added
+		 * during the {@see 'plugins_loaded'} action, so it cannot be added
 		 * in a theme.
 		 *
 		 * @since 4.4.0
@@ -238,13 +256,17 @@ final class WP_Customize_Manager {
 		 * @param array                $components List of core components to load.
 		 * @param WP_Customize_Manager $this       WP_Customize_Manager instance.
 		 */
-		$components = apply_filters( 'customize_loaded_components', array( 'widgets', 'nav_menus' ), $this );
+		$components = apply_filters( 'customize_loaded_components', $this->components, $this );
 
-		if ( in_array( 'widgets', $components ) ) {
+		require_once( ABSPATH . WPINC . '/customize/class-wp-customize-selective-refresh.php' );
+		$this->selective_refresh = new WP_Customize_Selective_Refresh( $this );
+
+		if ( in_array( 'widgets', $components, true ) ) {
 			require_once( ABSPATH . WPINC . '/class-wp-customize-widgets.php' );
 			$this->widgets = new WP_Customize_Widgets( $this );
 		}
-		if ( in_array( 'nav_menus', $components ) ) {
+
+		if ( in_array( 'nav_menus', $components, true ) ) {
 			require_once( ABSPATH . WPINC . '/class-wp-customize-nav-menus.php' );
 			$this->nav_menus = new WP_Customize_Nav_Menus( $this );
 		}
@@ -679,7 +701,7 @@ final class WP_Customize_Manager {
 		 *
 		 * Fires when the {@see WP_Customize_Manager::set_post_value()} method is called.
 		 *
-		 * This is useful for <code>WP_Customize_Setting</code> instances to watch
+		 * This is useful for `WP_Customize_Setting` instances to watch
 		 * in order to update a cached previewed value.
 		 *
 		 * @since 4.4.0
@@ -792,18 +814,23 @@ final class WP_Customize_Manager {
 	 */
 	public function customize_preview_settings() {
 		$settings = array(
+			'theme' => array(
+				'stylesheet' => $this->get_stylesheet(),
+				'active'     => $this->is_theme_active(),
+			),
+			'url' => array(
+				'self' => empty( $_SERVER['REQUEST_URI'] ) ? home_url( '/' ) : esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ),
+			),
 			'channel' => wp_unslash( $_POST['customize_messenger_channel'] ),
 			'activePanels' => array(),
 			'activeSections' => array(),
 			'activeControls' => array(),
+			'nonce' => $this->get_nonces(),
+			'l10n' => array(
+				'shiftClickToEdit' => __( 'Shift-click to edit this element.' ),
+			),
+			'_dirty' => array_keys( $this->unsanitized_post_values() ),
 		);
-
-		if ( 2 == $this->nonce_tick ) {
-			$settings['nonce'] = array(
-				'save' => wp_create_nonce( 'save-customize_' . $this->get_stylesheet() ),
-				'preview' => wp_create_nonce( 'preview-customize_' . $this->get_stylesheet() )
-			);
-		}
 
 		foreach ( $this->panels as $panel_id => $panel ) {
 			if ( $panel->check_capabilities() ) {
@@ -1015,40 +1042,38 @@ final class WP_Customize_Manager {
 			wp_send_json_error( 'not_preview' );
 		}
 
-		$nonces = array(
-			'save'    => wp_create_nonce( 'save-customize_' . $this->get_stylesheet() ),
-			'preview' => wp_create_nonce( 'preview-customize_' . $this->get_stylesheet() ),
-		);
-
-		/**
-		 * Filter nonces for a customize_refresh_nonces AJAX request.
-		 *
-		 * @since 4.2.0
-		 *
-		 * @param array                $nonces Array of refreshed nonces for save and
-		 *                                     preview actions.
-		 * @param WP_Customize_Manager $this   WP_Customize_Manager instance.
-		 */
-		$nonces = apply_filters( 'customize_refresh_nonces', $nonces, $this );
-		wp_send_json_success( $nonces );
+		wp_send_json_success( $this->get_nonces() );
 	}
 
 	/**
 	 * Add a customize setting.
 	 *
 	 * @since 3.4.0
+	 * @since 4.5.0 Return added WP_Customize_Setting instance.
+	 * @access public
 	 *
-	 * @param WP_Customize_Setting|string $id Customize Setting object, or ID.
-	 * @param array $args                     Setting arguments; passed to WP_Customize_Setting
-	 *                                        constructor.
+	 * @param WP_Customize_Setting|string $id   Customize Setting object, or ID.
+	 * @param array                       $args Setting arguments; passed to WP_Customize_Setting
+	 *                                          constructor.
+	 * @return WP_Customize_Setting             The instance of the setting that was added.
 	 */
 	public function add_setting( $id, $args = array() ) {
 		if ( $id instanceof WP_Customize_Setting ) {
 			$setting = $id;
 		} else {
-			$setting = new WP_Customize_Setting( $this, $id, $args );
+			$class = 'WP_Customize_Setting';
+
+			/** This filter is documented in wp-includes/class-wp-customize-manager.php */
+			$args = apply_filters( 'customize_dynamic_setting_args', $args, $id );
+
+			/** This filter is documented in wp-includes/class-wp-customize-manager.php */
+			$class = apply_filters( 'customize_dynamic_setting_class', $class, $id, $args );
+
+			$setting = new $class( $this, $id, $args );
 		}
+
 		$this->settings[ $setting->id ] = $setting;
+		return $setting;
 	}
 
 	/**
@@ -1056,11 +1081,12 @@ final class WP_Customize_Manager {
 	 * that have no corresponding setting created.
 	 *
 	 * This is a mechanism to "wake up" settings that have been dynamically created
-	 * on the frontend and have been sent to WordPress in `$_POST['customized']`. When WP
+	 * on the front end and have been sent to WordPress in `$_POST['customized']`. When WP
 	 * loads, the dynamically-created settings then will get created and previewed
 	 * even though they are not directly created statically with code.
 	 *
 	 * @since 4.2.0
+	 * @access public
 	 *
 	 * @param array $setting_ids The setting IDs to add.
 	 * @return array The WP_Customize_Setting objects added.
@@ -1141,10 +1167,13 @@ final class WP_Customize_Manager {
 	 * Add a customize panel.
 	 *
 	 * @since 4.0.0
+	 * @since 4.5.0 Return added WP_Customize_Panel instance.
 	 * @access public
 	 *
 	 * @param WP_Customize_Panel|string $id   Customize Panel object, or Panel ID.
 	 * @param array                     $args Optional. Panel arguments. Default empty array.
+	 *
+	 * @return WP_Customize_Panel             The instance of the panel that was added.
 	 */
 	public function add_panel( $id, $args = array() ) {
 		if ( $id instanceof WP_Customize_Panel ) {
@@ -1154,6 +1183,7 @@ final class WP_Customize_Manager {
 		}
 
 		$this->panels[ $panel->id ] = $panel;
+		return $panel;
 	}
 
 	/**
@@ -1180,6 +1210,16 @@ final class WP_Customize_Manager {
 	 * @param string $id Panel ID to remove.
 	 */
 	public function remove_panel( $id ) {
+		// Removing core components this way is _doing_it_wrong().
+		if ( in_array( $id, $this->components, true ) ) {
+			/* translators: 1: panel id, 2: link to 'customize_loaded_components' filter reference */
+			$message = sprintf( __( 'Removing %1$s manually will cause PHP warnings. Use the %2$s filter instead.' ),
+				$id,
+				'<a href="' . esc_url( 'https://developer.wordpress.org/reference/hooks/customize_loaded_components/' ) . '"><code>customize_loaded_components</code></a>'
+			);
+
+			_doing_it_wrong( __METHOD__, $message, '4.5' );
+		}
 		unset( $this->panels[ $id ] );
 	}
 
@@ -1216,9 +1256,13 @@ final class WP_Customize_Manager {
 	 * Add a customize section.
 	 *
 	 * @since 3.4.0
+	 * @since 4.5.0 Return added WP_Customize_Section instance.
+	 * @access public
 	 *
 	 * @param WP_Customize_Section|string $id   Customize Section object, or Section ID.
 	 * @param array                       $args Section arguments.
+	 *
+	 * @return WP_Customize_Section             The instance of the section that was added.
 	 */
 	public function add_section( $id, $args = array() ) {
 		if ( $id instanceof WP_Customize_Section ) {
@@ -1226,7 +1270,9 @@ final class WP_Customize_Manager {
 		} else {
 			$section = new WP_Customize_Section( $this, $id, $args );
 		}
+
 		$this->sections[ $section->id ] = $section;
+		return $section;
 	}
 
 	/**
@@ -1286,10 +1332,13 @@ final class WP_Customize_Manager {
 	 * Add a customize control.
 	 *
 	 * @since 3.4.0
+	 * @since 4.5.0 Return added WP_Customize_Control instance.
+	 * @access public
 	 *
 	 * @param WP_Customize_Control|string $id   Customize Control object, or ID.
 	 * @param array                       $args Control arguments; passed to WP_Customize_Control
 	 *                                          constructor.
+	 * @return WP_Customize_Control             The instance of the control that was added.
 	 */
 	public function add_control( $id, $args = array() ) {
 		if ( $id instanceof WP_Customize_Control ) {
@@ -1297,7 +1346,9 @@ final class WP_Customize_Manager {
 		} else {
 			$control = new WP_Customize_Control( $this, $id, $args );
 		}
+
 		$this->controls[ $control->id ] = $control;
+		return $control;
 	}
 
 	/**
@@ -1347,7 +1398,9 @@ final class WP_Customize_Manager {
 	 */
 	public function render_control_templates() {
 		foreach ( $this->registered_control_types as $control_type ) {
-			$control = new $control_type( $this, 'temp', array() );
+			$control = new $control_type( $this, 'temp', array(
+				'settings' => array(),
+			) );
 			$control->print_template();
 		}
 	}
@@ -1586,16 +1639,42 @@ final class WP_Customize_Manager {
 	}
 
 	/**
+	 * Get nonces for the Customizer.
+	 *
+	 * @since 4.5.0
+	 * @return array Nonces.
+	 */
+	public function get_nonces() {
+		$nonces = array(
+			'save' => wp_create_nonce( 'save-customize_' . $this->get_stylesheet() ),
+			'preview' => wp_create_nonce( 'preview-customize_' . $this->get_stylesheet() ),
+		);
+
+		/**
+		 * Filter nonces for Customizer.
+		 *
+		 * @since 4.2.0
+		 *
+		 * @param array                $nonces Array of refreshed nonces for save and
+		 *                                     preview actions.
+		 * @param WP_Customize_Manager $this   WP_Customize_Manager instance.
+		 */
+		$nonces = apply_filters( 'customize_refresh_nonces', $nonces, $this );
+
+		return $nonces;
+	}
+
+	/**
 	 * Print JavaScript settings for parent window.
 	 *
 	 * @since 4.4.0
 	 */
 	public function customize_pane_settings() {
 		/*
-		 * If the frontend and the admin are served from the same domain, load the
+		 * If the front end and the admin are served from the same domain, load the
 		 * preview over ssl if the Customizer is being loaded over ssl. This avoids
-		 * insecure content warnings. This is not attempted if the admin and frontend
-		 * are on different domains to avoid the case where the frontend doesn't have
+		 * insecure content warnings. This is not attempted if the admin and front end
+		 * are on different domains to avoid the case where the front end doesn't have
 		 * ssl certs. Domain mapping plugins can allow other urls in these conditions
 		 * using the customize_allowed_urls filter.
 		 */
@@ -1645,12 +1724,10 @@ final class WP_Customize_Manager {
 			),
 			'panels'   => array(),
 			'sections' => array(),
-			'nonce'    => array(
-				'save'    => wp_create_nonce( 'save-customize_' . $this->get_stylesheet() ),
-				'preview' => wp_create_nonce( 'preview-customize_' . $this->get_stylesheet() ),
-			),
-			'autofocus' => array(),
+			'nonce'    => $this->get_nonces(),
+			'autofocus' => $this->get_autofocus(),
 			'documentTitleTmpl' => $this->get_document_title_template(),
+			'previewableDevices' => $this->get_previewable_devices(),
 		);
 
 		// Prepare Customize Section objects to pass to JavaScript.
@@ -1669,20 +1746,6 @@ final class WP_Customize_Manager {
 						$settings['sections'][ $section_id ] = $section->json();
 					}
 				}
-			}
-		}
-
-		// Pass to frontend the Customizer construct being deeplinked.
-		foreach ( $this->get_autofocus() as $type => $id ) {
-			$can_autofocus = (
-				( 'control' === $type && $this->get_control( $id ) && $this->get_control( $id )->check_capabilities() )
-				||
-				( 'section' === $type && isset( $settings['sections'][ $id ] ) )
-				||
-				( 'panel' === $type && isset( $settings['panels'][ $id ] ) )
-			);
-			if ( $can_autofocus ) {
-				$settings['autofocus'][ $type ] = $id;
 			}
 		}
 
@@ -1725,6 +1788,42 @@ final class WP_Customize_Manager {
 		?>
 		</script>
 		<?php
+	}
+
+	/**
+	 * Returns a list of devices to allow previewing.
+	 *
+	 * @access public
+	 * @since 4.5.0
+	 *
+	 * @return array List of devices with labels and default setting.
+	 */
+	public function get_previewable_devices() {
+		$devices = array(
+			'desktop' => array(
+				'label' => __( 'Enter desktop preview mode' ),
+				'default' => true,
+			),
+			'tablet' => array(
+				'label' => __( 'Enter tablet preview mode' ),
+			),
+			'mobile' => array(
+				'label' => __( 'Enter mobile preview mode' ),
+			),
+		);
+
+		/**
+		 * Filter the available devices to allow previewing in the Customizer.
+		 *
+		 * @since 4.5.0
+		 *
+		 * @see WP_Customize_Manager::get_previewable_devices()
+		 *
+		 * @param array $devices List of devices with labels and default setting.
+		 */
+		$devices = apply_filters( 'customize_previewable_devices', $devices );
+
+		return $devices;
 	}
 
 	/**
@@ -1820,6 +1919,22 @@ final class WP_Customize_Manager {
 			'section'    => 'title_tagline',
 		) );
 
+		// Add a setting to hide header text if the theme doesn't support custom headers.
+		if ( ! current_theme_supports( 'custom-header', 'header-text' ) ) {
+			$this->add_setting( 'header_text', array(
+				'theme_supports'    => array( 'custom-logo', 'header-text' ),
+				'default'           => 1,
+				'sanitize_callback' => 'absint',
+			) );
+
+			$this->add_control( 'header_text', array(
+				'label'    => __( 'Display Site Title and Tagline' ),
+				'section'  => 'title_tagline',
+				'settings' => 'header_text',
+				'type'     => 'checkbox',
+			) );
+		}
+
 		$this->add_setting( 'site_icon', array(
 			'type'       => 'option',
 			'capability' => 'manage_options',
@@ -1828,12 +1943,48 @@ final class WP_Customize_Manager {
 
 		$this->add_control( new WP_Customize_Site_Icon_Control( $this, 'site_icon', array(
 			'label'       => __( 'Site Icon' ),
-			'description' => __( 'The Site Icon is used as a browser and app icon for your site. Icons must be square, and at least 512px wide and tall.' ),
+			'description' => sprintf(
+				/* translators: %s: site icon size in pixels */
+				__( 'The Site Icon is used as a browser and app icon for your site. Icons must be square, and at least %s pixels wide and tall.' ),
+				'<strong>512</strong>'
+			),
 			'section'     => 'title_tagline',
 			'priority'    => 60,
 			'height'      => 512,
 			'width'       => 512,
 		) ) );
+
+		$this->add_setting( 'custom_logo', array(
+			'theme_supports' => array( 'custom-logo' ),
+			'transport'      => 'postMessage',
+		) );
+
+		$custom_logo_args = get_theme_support( 'custom-logo' );
+		$this->add_control( new WP_Customize_Cropped_Image_Control( $this, 'custom_logo', array(
+			'label'         => __( 'Logo' ),
+			'section'       => 'title_tagline',
+			'priority'      => 8,
+			'height'        => $custom_logo_args[0]['height'],
+			'width'         => $custom_logo_args[0]['width'],
+			'flex_height'   => $custom_logo_args[0]['flex-height'],
+			'flex_width'    => $custom_logo_args[0]['flex-width'],
+			'button_labels' => array(
+				'select'       => __( 'Select logo' ),
+				'change'       => __( 'Change logo' ),
+				'remove'       => __( 'Remove' ),
+				'default'      => __( 'Default' ),
+				'placeholder'  => __( 'No logo selected' ),
+				'frame_title'  => __( 'Select logo' ),
+				'frame_button' => __( 'Choose logo' ),
+			),
+		) ) );
+
+		$this->selective_refresh->add_partial( 'custom_logo', array(
+			'settings'            => array( 'custom_logo' ),
+			'selector'            => '.custom-logo-link',
+			'render_callback'     => array( $this, '_render_custom_logo_partial' ),
+			'container_inclusive' => true,
+		) );
 
 		/* Colors */
 
@@ -1854,7 +2005,7 @@ final class WP_Customize_Manager {
 		// With custom value
 		$this->add_control( 'display_header_text', array(
 			'settings' => 'header_textcolor',
-			'label'    => __( 'Display Header Text' ),
+			'label'    => __( 'Display Site Title and Tagline' ),
 			'section'  => 'title_tagline',
 			'type'     => 'checkbox',
 			'priority' => 40,
@@ -2063,6 +2214,26 @@ final class WP_Customize_Manager {
 			$color = get_theme_support( 'custom-header', 'default-text-color' );
 
 		return $color;
+	}
+
+	/**
+	 * Callback for rendering the custom logo, used in the custom_logo partial.
+	 *
+	 * This method exists because the partial object and context data are passed
+	 * into a partial's render_callback so we cannot use get_custom_logo() as
+	 * the render_callback directly since it expects a blog ID as the first
+	 * argument. When WP no longer supports PHP 5.3, this method can be removed
+	 * in favor of an anonymous function.
+	 *
+	 * @see WP_Customize_Manager::register_controls()
+	 *
+	 * @since 4.5.0
+	 * @access private
+	 *
+	 * @return string Custom logo.
+	 */
+	public function _render_custom_logo_partial() {
+		return get_custom_logo();
 	}
 }
 

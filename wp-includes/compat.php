@@ -42,29 +42,58 @@ function _wp_can_use_pcre_u( $set = null ) {
 }
 
 if ( ! function_exists( 'mb_substr' ) ) :
+	/**
+	 * Compat function to mimic mb_substr().
+	 *
+	 * @ignore
+	 * @since 3.2.0
+	 *
+	 * @see _mb_substr()
+	 *
+	 * @param string      $str      The string to extract the substring from.
+	 * @param int         $start    Position to being extraction from in `$str`.
+	 * @param int|null    $length   Optional. Maximum number of characters to extract from `$str`.
+	 *                              Default null.
+	 * @param string|null $encoding Optional. Character encoding to use. Default null.
+	 * @return string Extracted substring.
+	 */
 	function mb_substr( $str, $start, $length = null, $encoding = null ) {
 		return _mb_substr( $str, $start, $length, $encoding );
 	}
 endif;
 
-/*
+/**
+ * Internal compat function to mimic mb_substr().
+ *
  * Only understands UTF-8 and 8bit.  All other character sets will be treated as 8bit.
  * For $encoding === UTF-8, the $str input is expected to be a valid UTF-8 byte sequence.
  * The behavior of this function for invalid inputs is undefined.
+ *
+ * @ignore
+ * @since 3.2.0
+ *
+ * @param string      $str      The string to extract the substring from.
+ * @param int         $start    Position to being extraction from in `$str`.
+ * @param int|null    $length   Optional. Maximum number of characters to extract from `$str`.
+ *                              Default null.
+ * @param string|null $encoding Optional. Character encoding to use. Default null.
+ * @return string Extracted substring.
  */
 function _mb_substr( $str, $start, $length = null, $encoding = null ) {
 	if ( null === $encoding ) {
 		$encoding = get_option( 'blog_charset' );
 	}
 
-	// The solution below works only for UTF-8,
-	// so in case of a different charset just use built-in substr()
+	/*
+	 * The solution below works only for UTF-8, so in case of a different
+	 * charset just use built-in substr().
+	 */
 	if ( ! in_array( $encoding, array( 'utf8', 'utf-8', 'UTF8', 'UTF-8' ) ) ) {
 		return is_null( $length ) ? substr( $str, $start ) : substr( $str, $start, $length );
 	}
 
 	if ( _wp_can_use_pcre_u() ) {
-		// Use the regex unicode support to separate the UTF-8 characters into an array
+		// Use the regex unicode support to separate the UTF-8 characters into an array.
 		preg_match_all( '/./us', $str, $match );
 		$chars = is_null( $length ) ? array_slice( $match[0], $start ) : array_slice( $match[0], $start, $length );
 		return implode( '', $chars );
@@ -82,44 +111,73 @@ function _mb_substr( $str, $start, $length = null, $encoding = null ) {
 		| \xF4[\x80-\x8F][\x80-\xBF]{2}
 	)/x';
 
-	$chars = array( '' ); // Start with 1 element instead of 0 since the first thing we do is pop
+	// Start with 1 element instead of 0 since the first thing we do is pop.
+	$chars = array( '' );
 	do {
 		// We had some string left over from the last round, but we counted it in that last round.
 		array_pop( $chars );
 
-		// Split by UTF-8 character, limit to 1000 characters (last array element will contain the rest of the string)
+		/*
+		 * Split by UTF-8 character, limit to 1000 characters (last array element will contain
+		 * the rest of the string).
+		 */
 		$pieces = preg_split( $regex, $str, 1000, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY );
 
 		$chars = array_merge( $chars, $pieces );
-	} while ( count( $pieces ) > 1 && $str = array_pop( $pieces ) ); // If there's anything left over, repeat the loop.
+
+	// If there's anything left over, repeat the loop.
+	} while ( count( $pieces ) > 1 && $str = array_pop( $pieces ) );
 
 	return join( '', array_slice( $chars, $start, $length ) );
 }
 
 if ( ! function_exists( 'mb_strlen' ) ) :
+	/**
+	 * Compat function to mimic mb_strlen().
+	 *
+	 * @ignore
+	 * @since 4.2.0
+	 *
+	 * @see _mb_strlen()
+	 *
+	 * @param string      $str      The string to retrieve the character length from.
+	 * @param string|null $encoding Optional. Character encoding to use. Default null.
+	 * @return int String length of `$str`.
+	 */
 	function mb_strlen( $str, $encoding = null ) {
 		return _mb_strlen( $str, $encoding );
 	}
 endif;
 
-/*
+/**
+ * Internal compat function to mimic mb_strlen().
+ *
  * Only understands UTF-8 and 8bit.  All other character sets will be treated as 8bit.
- * For $encoding === UTF-8, the $str input is expected to be a valid UTF-8 byte sequence.
- * The behavior of this function for invalid inputs is undefined.
+ * For $encoding === UTF-8, the `$str` input is expected to be a valid UTF-8 byte
+ * sequence. The behavior of this function for invalid inputs is undefined.
+ *
+ * @ignore
+ * @since 4.2.0
+ *
+ * @param string      $str      The string to retrieve the character length from.
+ * @param string|null $encoding Optional. Character encoding to use. Default null.
+ * @return int String length of `$str`.
  */
 function _mb_strlen( $str, $encoding = null ) {
 	if ( null === $encoding ) {
 		$encoding = get_option( 'blog_charset' );
 	}
 
-	// The solution below works only for UTF-8,
-	// so in case of a different charset just use built-in strlen()
+	/*
+	 * The solution below works only for UTF-8, so in case of a different charset
+	 * just use built-in strlen().
+	 */
 	if ( ! in_array( $encoding, array( 'utf8', 'utf-8', 'UTF8', 'UTF-8' ) ) ) {
 		return strlen( $str );
 	}
 
 	if ( _wp_can_use_pcre_u() ) {
-		// Use the regex unicode support to separate the UTF-8 characters into an array
+		// Use the regex unicode support to separate the UTF-8 characters into an array.
 		preg_match_all( '/./us', $str, $match );
 		return count( $match[0] );
 	}
@@ -136,28 +194,64 @@ function _mb_strlen( $str, $encoding = null ) {
 		| \xF4[\x80-\x8F][\x80-\xBF]{2}
 	)/x';
 
-	$count = 1; // Start at 1 instead of 0 since the first thing we do is decrement
+	// Start at 1 instead of 0 since the first thing we do is decrement.
+	$count = 1;
 	do {
 		// We had some string left over from the last round, but we counted it in that last round.
 		$count--;
 
-		// Split by UTF-8 character, limit to 1000 characters (last array element will contain the rest of the string)
+		/*
+		 * Split by UTF-8 character, limit to 1000 characters (last array element will contain
+		 * the rest of the string).
+		 */
 		$pieces = preg_split( $regex, $str, 1000 );
 
-		// Increment
+		// Increment.
 		$count += count( $pieces );
-	} while ( $str = array_pop( $pieces ) ); // If there's anything left over, repeat the loop.
 
-	// Fencepost: preg_split() always returns one extra item in the array
+	// If there's anything left over, repeat the loop.
+	} while ( $str = array_pop( $pieces ) );
+
+	// Fencepost: preg_split() always returns one extra item in the array.
 	return --$count;
 }
 
 if ( !function_exists('hash_hmac') ):
+/**
+ * Compat function to mimic hash_hmac().
+ *
+ * @ignore
+ * @since 3.2.0
+ *
+ * @see _hash_hmac()
+ *
+ * @param string $algo       Hash algorithm. Accepts 'md5' or 'sha1'.
+ * @param string $data       Data to be hashed.
+ * @param string $key        Secret key to use for generating the hash.
+ * @param bool   $raw_output Optional. Whether to output raw binary data (true),
+ *                           or lowercase hexits (false). Default false.
+ * @return string|false The hash in output determined by `$raw_output`. False if `$algo`
+ *                      is unknown or invalid.
+ */
 function hash_hmac($algo, $data, $key, $raw_output = false) {
 	return _hash_hmac($algo, $data, $key, $raw_output);
 }
 endif;
 
+/**
+ * Internal compat function to mimic hash_hmac().
+ *
+ * @ignore
+ * @since 3.2.0
+ *
+ * @param string $algo       Hash algorithm. Accepts 'md5' or 'sha1'.
+ * @param string $data       Data to be hashed.
+ * @param string $key        Secret key to use for generating the hash.
+ * @param bool   $raw_output Optional. Whether to output raw binary data (true),
+ *                           or lowercase hexits (false). Default false.
+ * @return string|false The hash in output determined by `$raw_output`. False if `$algo`
+ *                      is unknown or invalid.
+ */
 function _hash_hmac($algo, $data, $key, $raw_output = false) {
 	$packs = array('md5' => 'H32', 'sha1' => 'H40');
 
@@ -228,15 +322,18 @@ if ( !function_exists('json_decode') ) {
 
 if ( ! function_exists( 'hash_equals' ) ) :
 /**
- * Compare two strings in constant time.
+ * Timing attack safe string comparison
+ *
+ * Compares two strings using the same time whether they're equal or not.
  *
  * This function was added in PHP 5.6.
- * It can leak the length of a string.
+ *
+ * Note: It can leak the length of a string when arguments of differing length are supplied.
  *
  * @since 3.9.2
  *
  * @param string $a Expected string.
- * @param string $b Actual string.
+ * @param string $b Actual, user supplied, string.
  * @return bool Whether strings are equal.
  */
 function hash_equals( $a, $b ) {
@@ -324,7 +421,7 @@ if ( ! interface_exists( 'JsonSerializable' ) ) {
 	 *
 	 * Compatibility shim for PHP <5.4
 	 *
-     * @link http://php.net/jsonserializable
+	 * @link http://php.net/jsonserializable
 	 *
 	 * @since 4.4.0
 	 */

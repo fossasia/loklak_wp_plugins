@@ -841,6 +841,28 @@ class WP_Rewrite {
 		}
 	}
 
+
+	/**
+	 * Removes an existing rewrite tag.
+	 *
+	 * @since 4.5.0
+	 * @access public
+	 *
+	 * @see WP_Rewrite::$rewritecode
+	 * @see WP_Rewrite::$rewritereplace
+	 * @see WP_Rewrite::$queryreplace
+	 *
+	 * @param string $tag Name of the rewrite tag to remove.
+	 */
+	public function remove_rewrite_tag( $tag ) {
+		$position = array_search( $tag, $this->rewritecode );
+		if ( false !== $position && null !== $position ) {
+			unset( $this->rewritecode[ $position ] );
+			unset( $this->rewritereplace[ $position ] );
+			unset( $this->queryreplace[ $position ] );
+		}
+	}
+
 	/**
 	 * Generates rewrite rules from a permalink structure.
 	 *
@@ -1000,6 +1022,10 @@ class WP_Rewrite {
 			$feedmatch2 = $match . $feedregex2;
 			$feedquery2 = $feedindex . '?' . $query . '&feed=' . $this->preg_index($num_toks + 1);
 
+			// Create query and regex for embeds.
+			$embedmatch = $match . $embedregex;
+			$embedquery = $embedindex . '?' . $query . '&embed=true';
+
 			// If asked to, turn the feed queries into comment feed ones.
 			if ( $forcomments ) {
 				$feedquery .= '&withcomments=1';
@@ -1011,7 +1037,7 @@ class WP_Rewrite {
 
 			// ...adding on /feed/ regexes => queries
 			if ( $feed ) {
-				$rewrite = array( $feedmatch => $feedquery, $feedmatch2 => $feedquery2 );
+				$rewrite = array( $feedmatch => $feedquery, $feedmatch2 => $feedquery2, $embedmatch => $embedquery );
 			}
 
 			//...and /page/xx ones
@@ -1552,7 +1578,9 @@ class WP_Rewrite {
 	 * @since 2.8.0
 	 * @access public
 	 *
-	 * @return string
+	 * @param bool $add_parent_tags Optional. Whether to add parent tags to the rewrite rule sets.
+	 *                              Default false.
+	 * @return string IIS7 URL rewrite rule sets.
 	 */
 	public function iis7_url_rewrite_rules( $add_parent_tags = false ) {
 		if ( ! $this->using_permalinks() )
@@ -1566,7 +1594,7 @@ class WP_Rewrite {
 		}
 
 		$rules .= '
-			<rule name="wordpress" patternSyntax="Wildcard">
+			<rule name="WordPress: ' . esc_attr( home_url() ) . '" patternSyntax="Wildcard">
 				<match url="*" />
 					<conditions>
 						<add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true" />
@@ -1743,6 +1771,18 @@ class WP_Rewrite {
 	}
 
 	/**
+	 * Removes a permalink structure.
+	 *
+	 * @since 4.5.0
+	 * @access public
+	 *
+	 * @param string $name Name for permalink structure.
+	 */
+	public function remove_permastruct( $name ) {
+		unset( $this->extra_permastructs[ $name ] );
+	}
+
+	/**
 	 * Removes rewrite rules and then recreate rewrite rules.
 	 *
 	 * Calls WP_Rewrite::wp_rewrite_rules() after removing the 'rewrite_rules' option.
@@ -1770,7 +1810,7 @@ class WP_Rewrite {
 			unset( $do_hard_later );
 		}
 
-		delete_option('rewrite_rules');
+		update_option( 'rewrite_rules', '' );
 		$this->wp_rewrite_rules();
 
 		/**

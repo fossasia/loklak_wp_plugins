@@ -1,10 +1,10 @@
 <?php
 /*
-Plugin Name: WP Offload S3
+Plugin Name: WP Offload S3 Lite
 Plugin URI: http://wordpress.org/extend/plugins/amazon-s3-and-cloudfront/
 Description: Automatically copies media uploads to Amazon S3 for storage and delivery. Optionally configure Amazon CloudFront for even faster delivery.
 Author: Delicious Brains
-Version: 0.9.12
+Version: 1.0.3
 Author URI: http://deliciousbrains.com/
 Network: True
 Text Domain: amazon-s3-and-cloudfront
@@ -26,18 +26,18 @@ Domain Path: /languages/
 // Then completely rewritten.
 */
 
-$GLOBALS['aws_meta']['amazon-s3-and-cloudfront']['version'] = '0.9.12';
+$GLOBALS['aws_meta']['amazon-s3-and-cloudfront']['version'] = '1.0.3';
 
-$GLOBALS['aws_meta']['amazon-s3-and-cloudfront']['supported_addon_versions'] = array(
-	'amazon-s3-and-cloudfront-pro' => '1.0b1',
-);
+$aws_plugin_version_required = '0.3.5';
 
-$aws_plugin_version_required = '0.3.4';
+require_once dirname( __FILE__ ) . '/classes/wp-aws-compatibility-check.php';
+require_once dirname( __FILE__ ) . '/classes/as3cf-utils.php';
 
-require dirname( __FILE__ ) . '/classes/wp-aws-compatibility-check.php';
+add_action( 'activated_plugin', array( 'AS3CF_Utils', 'deactivate_other_instances' ) );
+
 global $as3cf_compat_check;
 $as3cf_compat_check = new WP_AWS_Compatibility_Check(
-	'WP Offload S3',
+	'WP Offload S3 Lite',
 	'amazon-s3-and-cloudfront',
 	__FILE__,
 	'Amazon Web Services',
@@ -47,6 +47,12 @@ $as3cf_compat_check = new WP_AWS_Compatibility_Check(
 
 function as3cf_init( $aws ) {
 	global $as3cf_compat_check;
+
+	if ( method_exists( 'WP_AWS_Compatibility_Check', 'is_plugin_active' ) && $as3cf_compat_check->is_plugin_active( 'amazon-s3-and-cloudfront-pro/amazon-s3-and-cloudfront-pro.php' ) ) {
+		// Don't load if pro plugin installed
+		return;
+	}
+
 	if ( ! $as3cf_compat_check->is_compatible() ) {
 		return;
 	}

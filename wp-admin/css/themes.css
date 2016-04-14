@@ -9,7 +9,6 @@
 
 .theme-browser .themes {
 	clear: both;
-	padding: 0 0 100px;
 }
 
 .themes-php .wrap h1 {
@@ -45,10 +44,6 @@
 	clear: both;
 }
 
-.themes-php div.updated a {
-	text-decoration: underline;
-}
-
 /**
  * Main theme element
  * (has flexible margins)
@@ -59,7 +54,7 @@
 	margin: 0 4% 4% 0;
 	position: relative;
 	width: 30.6%;
-	border: 1px solid #dedede;
+	border: 1px solid #ddd;
 	-webkit-box-shadow: 0 1px 1px -1px rgba(0,0,0,0.1);
 	box-shadow: 0 1px 1px -1px rgba(0,0,0,0.1);
 	-webkit-box-sizing: border-box;
@@ -137,6 +132,7 @@
 	display: block;
 	overflow: hidden;
 	position: relative;
+	-webkit-backface-visibility: hidden; /* Prevents flicker of the screenshot on hover. */
 	-webkit-transition: opacity 0.2s ease-in-out;
 	transition: opacity 0.2s ease-in-out;
 }
@@ -251,7 +247,7 @@
  * The currently active theme
  */
 .theme-browser .theme.active .theme-name {
-	background: #2f2f2f;
+	background: #23282d;
 	color: #fff;
 	padding-right: 110px;
 	font-weight: 300;
@@ -307,7 +303,6 @@
 }
 
 .theme-browser .theme.add-new-theme a {
-	color: #999;
 	text-decoration: none;
 	display: block;
 	position: relative;
@@ -442,7 +437,7 @@
 
 .theme-overlay .theme-header .close:before {
 	font: normal 22px/50px dashicons !important;
-	color: #777;
+	color: #72777c;
 	display: inline-block;
 	content: "\f335";
 	font-weight: 300;
@@ -452,7 +447,7 @@
 .theme-overlay .theme-header .right,
 .theme-overlay .theme-header .left {
 	cursor: pointer;
-	color: #777;
+	color: #72777c;
 	background-color: transparent;
 	height: 48px;
 	width: 54px;
@@ -529,14 +524,6 @@
 	-webkit-overflow-scrolling: touch;
 }
 
-.theme-overlay .theme-wrap:after {
-	content: ".";
-	display: block;
-	height: 0;
-	clear: both;
-	visibility: hidden;
-}
-
 body.folded .theme-overlay .theme-wrap {
 	left: 70px;
 }
@@ -549,13 +536,6 @@ body.folded .theme-overlay .theme-wrap {
 	right: 0;
 	overflow: auto;
 	padding: 2% 4%;
-}
-.theme-overlay .theme-about:after {
-	content: ".";
-	display: block;
-	height: 0;
-	clear: both;
-	visibility: hidden;
 }
 
 .theme-overlay .theme-actions {
@@ -744,7 +724,7 @@ body.folded .theme-overlay .theme-wrap {
 }
 
 .theme-overlay .theme-version {
-	color: #999;
+	color: #72777c;
 	font-size: 13px;
 	font-weight: 400;
 	float: none;
@@ -754,7 +734,7 @@ body.folded .theme-overlay .theme-wrap {
 
 .theme-overlay .theme-author {
 	margin: 15px 0 25px;
-	color: #686868;
+	color: #72777c;
 	font-size: 16px;
 	font-weight: 400;
 	line-height: inherit;
@@ -1110,7 +1090,7 @@ body.show-upload-theme .upload-theme,
 }
 .upload-theme .install-help,
 .upload-plugin .install-help {
-	color: #999;
+	color: #555d66; /* #f1f1f1 background */
 	font-size: 18px;
 	font-style: normal;
 	margin: 0;
@@ -1128,13 +1108,15 @@ p.no-themes {
 	font-size: 18px;
 	font-style: normal;
 	margin: 0;
-	padding: 0;
+	padding: 100px 0;
 	text-align: center;
 	display: none;
 }
+
 body.no-results p.no-themes {
 	display: block;
 }
+
 body.show-upload-theme p.no-themes {
 	display: none !important;
 }
@@ -1166,7 +1148,7 @@ body.show-upload-theme p.no-themes {
 .theme-details .num-ratings,
 .theme-details .no-rating {
 	font-size: 11px;
-	color: #999;
+	color: #72777c;
 }
 
 .theme-details .no-rating {
@@ -1179,7 +1161,7 @@ body.show-upload-theme p.no-themes {
 ------------------------------------------------------------------------------*/
 
 .appearance_page_custom-header #headimg {
-	border: 1px solid #DFDFDF;
+	border: 1px solid #ddd;
 	overflow: hidden;
 	width: 100%;
 }
@@ -1215,7 +1197,7 @@ body.show-upload-theme p.no-themes {
 
 div#custom-background-image {
 	min-height: 100px;
-	border: 1px solid #dfdfdf;
+	border: 1px solid #ddd;
 }
 
 div#custom-background-image img {
@@ -1296,16 +1278,6 @@ body.full-overlay-active {
 	top: 0;
 	bottom: 0;
 	height: 100%;
-}
-
-#customize-preview.wp-full-overlay-main {
-	background: url(../images/spinner.gif) no-repeat center center;
-	-webkit-background-size: 20px 20px;
-	background-size: 20px 20px;
-}
-
-#customize-preview.wp-full-overlay-main.iframe-ready {
-	background: none;
 }
 
 .wp-full-overlay-sidebar .wp-full-overlay-header {
@@ -1508,6 +1480,121 @@ body.full-overlay-active {
 	transition-duration: 0.2s;
 }
 
+/* Device/preview size toggles */
+
+.wp-full-overlay {
+	background: #191e23;
+}
+
+.wp-full-overlay-main {
+	background-color: #f1f1f1;
+}
+
+.expanded .wp-full-overlay-footer {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 300px;
+	height: 45px;
+	border-top: 1px solid #ddd;
+}
+
+.wp-full-overlay-footer .devices {
+	float: right;
+}
+
+.wp-full-overlay-footer .devices button {
+	cursor: pointer;
+	background: transparent;
+	border: none;
+	height: 45px;
+	padding: 0 3px;
+	margin: 0 0 0 -4px;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	border-top: 1px solid transparent;
+	border-bottom: 4px solid transparent;
+	-webkit-transition: background .1s ease-in-out;
+	transition: background .1s ease-in-out;
+}
+
+.wp-full-overlay-footer .devices button:focus {
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	outline: none;
+}
+
+.wp-full-overlay-footer .devices button:before {
+	display: inline-block;
+	-webkit-font-smoothing: antialiased;
+	font: normal 20px/30px "dashicons";
+	vertical-align: top;
+	margin: 3px 0;
+	padding: 4px 8px;
+	color: #656a6f;
+}
+
+.wp-full-overlay-footer .devices button.active {
+	border-bottom-color: #191e23;
+}
+
+.wp-full-overlay-footer .devices button:hover,
+.wp-full-overlay-footer .devices button:focus {
+	background-color: #fff;
+}
+
+.wp-full-overlay-footer .devices button:focus {
+	background-color: #fff;
+	border-bottom-color: #0073aa;
+}
+
+.wp-full-overlay-footer .devices button.active:before,
+.wp-full-overlay-footer .devices button:hover:before,
+.wp-full-overlay-footer .devices button:focus:before {
+	color: #191e23;
+}
+
+.wp-full-overlay-footer .devices .preview-desktop:before {
+	content: "\f472";
+}
+
+.wp-full-overlay-footer .devices .preview-tablet:before {
+	content: "\f471";
+}
+
+.wp-full-overlay-footer .devices .preview-mobile:before {
+	content: "\f470";
+}
+
+@media screen and (max-width:1024px) {
+	.wp-full-overlay-footer .devices {
+		display: none;
+	}
+}
+
+.collapsed .wp-full-overlay-footer .devices button:before {
+	display: none;
+}
+
+.preview-mobile .wp-full-overlay-main {
+	margin: auto 0 auto -160px;
+	width: 320px;
+	height: 480px;
+	max-height: 100%;
+	max-width: 100%;
+	left: 50%;
+}
+
+.preview-tablet .wp-full-overlay-main {
+	margin: auto 0 auto -3in;
+	width: 6in; /* Size is loosely based on a typical "tablet" device size. Intentionally ambiguous - this does not represent any particular device precisely. */
+	height: 9in;
+	max-height: 100%;
+	max-width: 100%;
+	left: 50%;
+}
+
+
 /*------------------------------------------------------------------------------
   24.0 - Customize Loader
 ------------------------------------------------------------------------------*/
@@ -1540,12 +1627,6 @@ body.full-overlay-active {
 
 .customize-loading #customize-container iframe {
 	opacity: 0;
-}
-
-.customize-loading #customize-container {
-	background: #fff url(../images/spinner.gif) no-repeat fixed center center;
-	-webkit-background-size: 20px 20px;
-	background-size: 20px 20px;
 }
 
 #customize-container iframe,
@@ -1610,7 +1691,7 @@ body.full-overlay-active {
 
 .theme-details .theme-description {
 	float: left;
-	color: #777;
+	color: #72777c;
 	line-height: 20px;
 	max-width: 100%;
 }
@@ -1634,13 +1715,19 @@ body.full-overlay-active {
 }
 
 .theme-install-overlay .wp-full-overlay-main {
-	position: relative;
+	position: absolute;
 	z-index: 0;
-	background-color: #fff;
+	background-color: #f1f1f1;
 }
 
+.customize-loading #customize-container {
+	background-color: #f1f1f1;
+}
+
+#customize-preview.wp-full-overlay-main:before,
+.customize-loading #customize-container:before,
 .theme-install-overlay .wp-full-overlay-main:before {
-	content: '';
+	content: "";
 	display: block;
 	width: 20px;
 	height: 20px;
@@ -1651,11 +1738,12 @@ body.full-overlay-active {
 	margin: -10px 0 0 -10px;
 	-webkit-transform: translateZ(0);
 	transform: translateZ(0);
-	background: #fff url(../images/spinner.gif) no-repeat center center;
+	background: transparent url(../images/spinner.gif) no-repeat center center;
 	-webkit-background-size: 20px 20px;
 	background-size: 20px 20px;
 }
 
+#customize-preview.wp-full-overlay-main.iframe-ready:before,
 .theme-install-overlay.iframe-ready .wp-full-overlay-main:before {
 	background-image: none;
 }
@@ -1675,8 +1763,8 @@ body.full-overlay-active {
 		background-size: 15px 123px;
 	}
 
-	#customize-preview.wp-full-overlay-main,
-	.customize-loading #customize-container,
+	#customize-preview.wp-full-overlay-main:before,
+	.customize-loading #customize-container:before,
 	.theme-install-overlay .wp-full-overlay-main:before {
 		background-image: url(../images/spinner-2x.gif);
 	}

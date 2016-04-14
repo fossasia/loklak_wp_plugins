@@ -69,6 +69,7 @@ input[type="url"] {
 
 /* Vertically align the number selector with the input. */
 input[type="number"] {
+	height: 28px;
 	line-height: inherit;
 }
 
@@ -233,9 +234,17 @@ textarea[readonly] {
 	background-color: #eee;
 }
 
-:-moz-placeholder,
-.wp-core-ui :-moz-placeholder {
-   color: #a9a9a9;
+::-webkit-input-placeholder {
+	color: #72777c;
+}
+
+::-moz-placeholder {
+   color: #72777c;
+   opacity: 1;
+}
+
+:-ms-input-placeholder {
+	color: #72777c;
 }
 
 .form-invalid input, .form-invalid input:focus,
@@ -427,10 +436,6 @@ input[type="number"].tiny-text {
 
 #timezone_string option {
 	margin-right: 1em;
-}
-
-#upload-form label {
-	color: #777;
 }
 
 button.wp-hide-pw > .dashicons {
@@ -654,6 +659,14 @@ ul#add-to-blog-users {
 	margin-bottom: 0;
 }
 
+.form-table .date-time-doc {
+	margin-top: 1em;
+}
+
+.form-table p.timezone-info {
+	margin: 1em 0;
+}
+
 .form-table td fieldset label {
 	margin: 0.25em 0 0.5em !important;
 	display: inline-block;
@@ -809,10 +822,10 @@ table.form-table td .updated p {
 	position: relative;
 	cursor: move;
 	color: #32373c;
-	background: #e6e6e6;
+	background: #e5e5e5;
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
-	border: 1px solid #b4b4b4;
+	border: 1px solid #b4b9be;
 	font-style: normal;
 	line-height: 16px;
 	font-size: 14px;
@@ -854,7 +867,7 @@ table.form-table td .updated p {
 }
 
 .pressthis-bookmarklet span:before {
-	color: #777;
+	color: #72777c;
 	font: normal 20px/1 dashicons;
 	content: "\f157";
 	position: relative;
@@ -870,11 +883,6 @@ table.form-table td .updated p {
 	vertical-align: top;
 }
 
-.pressthis-js-toggle .dashicons {
-	margin: 5px 7px 6px 8px;
-	color: #777;
-}
-
 /* to override the button class being applied */
 .pressthis-js-toggle.button.button {
 	margin-right: 10px;
@@ -885,21 +893,25 @@ table.form-table td .updated p {
 
 .pressthis-js-toggle .dashicons {
 	margin: 5px 7px 6px 8px;
-	color: #777;
+	color: #555d66;
 }
 
 /*------------------------------------------------------------------------------
   20.0 - Settings
 ------------------------------------------------------------------------------*/
 
-#utc-time, #local-time {
-	padding-right: 25px;
-	font-style: italic;
+.timezone-info code {
+	white-space: nowrap;
 }
 
 .defaultavatarpicker .avatar {
 	margin: 2px 0;
 	vertical-align: middle;
+}
+
+.options-general-php .date-time-text {
+	display: inline-block;
+	min-width: 10em;
 }
 
 .options-general-php input.small-text {
@@ -1048,6 +1060,10 @@ table.form-table td .updated p {
 	input[type="number"] {
 		-webkit-appearance: none;
 		padding: 6px 10px;
+	}
+
+	input[type="number"] {
+		height: 40px;
 	}
 
 	input.code {
@@ -1263,16 +1279,11 @@ table.form-table td .updated p {
 		display: block;
 	}
 
-	#utc-time {
-		margin-top: 10px;
-	}
-
 	#utc-time,
 	#local-time {
 		display: block;
 		float: none;
-		padding: 0;
-		line-height: 2;
+		margin-top: 0.5em;
 	}
 
 	.form-field #domain {
@@ -1310,6 +1321,11 @@ table.form-table td .updated p {
 
 	.wp-pwd .button .text {
 		display: none;
+	}
+
+	.options-general-php input[type="text"].small-text {
+		max-width: 60px;
+		margin: 0;
 	}
 }
 
@@ -1351,5 +1367,12 @@ table.form-table td .updated p {
 	/* Color Picker Options */
 	.color-option {
 		width: 49%;
+	}
+}
+
+@media only screen and (max-width: 320px) {
+	.options-general-php .date-time-text.date-time-custom-text {
+		min-width: 0;
+		margin-left: 0.5em;
 	}
 }

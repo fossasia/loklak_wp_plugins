@@ -7,14 +7,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: GlotPress/1.0-alpha-1100\n"
+"X-Generator: GlotPress/2.1.0-alpha\n"
 "Project-Id-Version: Twenty Fourteen\n"
 
 #. Theme URI of the plugin/theme
 msgid "https://wordpress.org/themes/twentyfourteen/"
 msgstr "https://ja.wordpress.org/themes/twentyfourteen/"
 
-#. #-#-#-#-#  twentyfourteen.pot (Twenty Fourteen 1.6)  #-#-#-#-#
+#. #-#-#-#-#  twentyfourteen.pot (Twenty Fourteen 1.7)  #-#-#-#-#
 #. Author URI of the plugin/theme
 #: footer.php:21
 msgid "https://wordpress.org/"
@@ -27,44 +27,44 @@ msgstr "https://ja.wordpress.org/"
 msgid "Continue reading %s <span class=\"meta-nav\">&rarr;</span>"
 msgstr "続きを読む %s <span class=\"meta-nav\">&rarr;</span>"
 
-#: inc/customizer.php:31 inc/customizer.php:32
+#: inc/customizer.php:44 inc/customizer.php:45
 msgid "May only be visible on wide screens."
 msgstr "ワイド画面でのみしか表示されない場合があります。"
 
-#: inc/customizer.php:108
+#: inc/customizer.php:145
 msgid "The home page features your choice of up to 6 posts prominently displayed in a grid or slider, controlled by a <a href=\"%1$s\">tag</a>; you can change the tag and layout in <a href=\"%2$s\">Appearance &rarr; Customize</a>. If no posts match the tag, <a href=\"%3$s\">sticky posts</a> will be displayed instead."
 msgstr "ホームページでは、<a href=\"%1$s\">タグ</a>を使うことで、グリッドまたはスライダーにずっと表示される投稿を6個まで選んで、目立たせることができます。<a href=\"%2$s\">外観 &rarr; カスタマイズ</a>からタグやレイアウトを変更できます。タグに一致する投稿がない場合は、代わりに<a href=\"%3$s\">先頭固定表示</a>指定の投稿が表示されます。"
 
-#: inc/widgets.php:59
+#: inc/widgets.php:80
 msgid "More videos"
 msgstr "次のビデオ"
 
-#: inc/widgets.php:63
+#: inc/widgets.php:84
 msgid "More audio"
 msgstr "次の音声"
 
-#: inc/widgets.php:67
+#: inc/widgets.php:88
 msgid "More quotes"
 msgstr "次の引用"
 
-#: inc/widgets.php:71
+#: inc/widgets.php:92
 msgid "More links"
 msgstr "次のリンク"
 
-#: inc/widgets.php:75
+#: inc/widgets.php:96
 msgid "More galleries"
 msgstr "次のギャラリー"
 
-#: inc/widgets.php:80
+#: inc/widgets.php:101
 msgid "More asides"
 msgstr "次のアサイド"
 
 #. translators: used with More archives link
-#: inc/widgets.php:206
+#: inc/widgets.php:227
 msgid "%s <span class=\"meta-nav\">&rarr;</span>"
 msgstr "%s <span class=\"meta-nav\">&rarr;</span>"
 
-#: inc/customizer.php:42 inc/customizer.php:108 inc/featured-content.php:405
+#: inc/customizer.php:55 inc/customizer.php:145 inc/featured-content.php:405
 #: inc/featured-content.php:414 inc/featured-content.php:474
 msgctxt "featured content default tag slug"
 msgid "featured"
@@ -74,7 +74,7 @@ msgstr "featured"
 msgid "Use this widget to list your recent Aside, Quote, Video, Audio, Image, Gallery, and Link posts."
 msgstr "最近のアサイド、引用、動画、音声、画像、ギャラリー、リンクの投稿の一覧を表示したい場合はこのウィジェットを使ってください。"
 
-#: inc/customizer.php:41 inc/featured-content.php:404
+#: inc/customizer.php:54 inc/featured-content.php:404
 msgid "Use a <a href=\"%1$s\">tag</a> to feature your posts. If no posts match the tag, <a href=\"%2$s\">sticky posts</a> will be displayed instead."
 msgstr "投稿を目立たせるには<a href=\"%1$s\">タグ</a>を使ってください。タグに一致する投稿がない場合は、代わりに<a href=\"%2$s\">先頭固定表示</a>指定の投稿が表示されます。"
 
@@ -82,11 +82,11 @@ msgstr "投稿を目立たせるには<a href=\"%1$s\">タグ</a>を使ってく
 msgid "Not Found"
 msgstr "見つかりません"
 
-#: inc/customizer.php:27
+#: inc/customizer.php:40
 msgid "Display Site Title &amp; Tagline"
 msgstr "サイト名とタグラインを表示"
 
-#: inc/customizer.php:110
+#: inc/customizer.php:147
 msgid "For an in-depth tutorial, and more tips and tricks, visit the <a href=\"%s\">Twenty Fourteen documentation</a>."
 msgstr "詳しいチュートリアルやカスタマイズのヒントを知りたい方は <a href=\"%s\">Twenty Fourteen ドキュメンテーション</a>をご覧ください。"
 
@@ -100,7 +100,7 @@ msgctxt "yearly archives date format"
 msgid "Y"
 msgstr "Y年"
 
-#: inc/customizer.php:24
+#: inc/customizer.php:37
 msgid "Site Title Color"
 msgstr "サイト名の色"
 
@@ -116,11 +116,11 @@ msgstr "フロントエンドにタグを表示しない。"
 msgid "In 2014, our default theme lets you create a responsive magazine website with a sleek, modern design. Feature your favorite homepage content in either a grid or a slider. Use the three widget areas to customize your website, and change your content's layout with a full-width page template and a contributor page to show off your authors. Creating a magazine website with WordPress has never been easier."
 msgstr "2014年のデフォルトテーマでは、おしゃれで現代的なレスポンシブデザインのマガジンスタイル・サイトを作ることができます。お気に入りのホームページコンテンツをグリッドまたはスライダー形式でおすすめしましょう。3つのウィジェットエリアを使ってサイトをカスタマイズしたり、全幅ページテンプレートや執筆者を表示できる参加者ページでコンテンツのレイアウトを変えてみたりしてみませんか。WordPress でマガジンサイトを作るのが今までになく簡単になりました。"
 
-#: functions.php:258
+#: functions.php:261
 msgid "Previous"
 msgstr "前"
 
-#: functions.php:259
+#: functions.php:262
 msgid "Next"
 msgstr "次"
 
@@ -139,19 +139,19 @@ msgctxt "Used between list items, there is a space after the comma."
 msgid ", "
 msgstr ", "
 
-#: functions.php:182
+#: functions.php:185
 msgid "Additional sidebar that appears on the right."
 msgstr "右側に表示される追加のサイドバー。"
 
-#: functions.php:189
+#: functions.php:192
 msgid "Footer Widget Area"
 msgstr "フッターウィジェットエリア"
 
-#: functions.php:191
+#: functions.php:194
 msgid "Appears in the footer section of the site."
 msgstr "サイトのフッター領域に表示されます。"
 
-#: functions.php:376
+#: functions.php:379
 msgid "%d Article"
 msgid_plural "%d Articles"
 msgstr[0] "%d件の記事"
@@ -168,27 +168,27 @@ msgstr "次の画像"
 msgid "Twenty Fourteen requires at least WordPress version 3.6. You are running version %s. Please upgrade and try again."
 msgstr "Twenty Fourteen は WordPress バージョン 3.6 以上を必要とします。現在のバージョンは %s です。アップグレードして、もう一度試してください。"
 
-#: inc/customizer.php:34 inc/customizer.php:35
+#: inc/customizer.php:47 inc/customizer.php:48
 msgid "Background may only be visible on wide screens."
 msgstr "背景は大画面の場合のみに表示される可能性があります。"
 
-#: inc/customizer.php:40 inc/featured-content.php:403
+#: inc/customizer.php:53 inc/featured-content.php:403
 msgid "Featured Content"
 msgstr "おすすめコンテンツ"
 
-#: inc/customizer.php:56
+#: inc/customizer.php:69
 msgid "Layout"
 msgstr "レイアウト"
 
-#: inc/customizer.php:60
+#: inc/customizer.php:73
 msgid "Grid"
 msgstr "グリッド"
 
-#: inc/customizer.php:61
+#: inc/customizer.php:74
 msgid "Slider"
 msgstr "スライダー"
 
-#: inc/customizer.php:109
+#: inc/customizer.php:146
 msgid "Enhance your site design by using <a href=\"%s\">Featured Images</a> for posts you&rsquo;d like to stand out (also known as post thumbnails). This allows you to associate an image with your post without inserting it. Twenty Fourteen uses featured images for posts and pages&mdash;above the title&mdash;and in the Featured Content area on the home page."
 msgstr "目立たせたい投稿に<a href=\"%s\">アイキャッチ画像</a>（投稿サムネイルとも言います）を使うことで、サイトデザインをさらによくしてください。こうすることで、画像を挿入することなく、投稿と画像を紐付けることができます。Twenty Fourteen は投稿と固定ページの記事タイトルの上とホームページのおすすめコンテンツエリアにアイキャッチ画像を使います。"
 
@@ -212,24 +212,24 @@ msgstr "<span class=\"meta-nav\">次の投稿</span>%title"
 msgid "Twenty Fourteen Ephemera"
 msgstr "Twenty Fourteen 短冊"
 
-#: inc/widgets.php:62 taxonomy-post_format.php:39
+#: inc/widgets.php:83 taxonomy-post_format.php:39
 msgid "Audio"
 msgstr "音声"
 
-#: inc/widgets.php:162
+#: inc/widgets.php:183
 msgid "This gallery contains <a href=\"%1$s\" rel=\"bookmark\">%2$s photo</a>."
 msgid_plural "This gallery contains <a href=\"%1$s\" rel=\"bookmark\">%2$s photos</a>."
 msgstr[0] "このギャラリーには<a href=\"%1$s\" rel=\"bookmark\">%2$s枚の写真</a>が含まれています。"
 
-#: inc/widgets.php:255
+#: inc/widgets.php:276
 msgid "Title:"
 msgstr "タイトル:"
 
-#: inc/widgets.php:258
+#: inc/widgets.php:279
 msgid "Number of posts to show:"
 msgstr "表示する投稿数:"
 
-#: inc/widgets.php:261
+#: inc/widgets.php:282
 msgid "Post format to show:"
 msgstr "表示する投稿フォーマット:"
 
@@ -297,23 +297,23 @@ msgstr "編集"
 
 #: content-aside.php:37 content-audio.php:37 content-gallery.php:37
 #: content-image.php:37 content-link.php:37 content-quote.php:37
-#: content-video.php:37 content.php:38 inc/widgets.php:194
+#: content-video.php:37 content.php:38 inc/widgets.php:215
 msgid "Leave a comment"
 msgstr "コメントをどうぞ"
 
 #: content-aside.php:37 content-audio.php:37 content-gallery.php:37
 #: content-image.php:37 content-link.php:37 content-quote.php:37
-#: content-video.php:37 content.php:38 inc/widgets.php:194
+#: content-video.php:37 content.php:38 inc/widgets.php:215
 msgid "1 Comment"
 msgstr "1件のコメント"
 
 #: content-aside.php:37 content-audio.php:37 content-gallery.php:37
 #: content-image.php:37 content-link.php:37 content-quote.php:37
-#: content-video.php:37 content.php:38 inc/widgets.php:194
+#: content-video.php:37 content.php:38 inc/widgets.php:215
 msgid "% Comments"
 msgstr "%件のコメント"
 
-#: inc/widgets.php:127 inc/widgets.php:172
+#: inc/widgets.php:148 inc/widgets.php:193
 msgid "Continue reading <span class=\"meta-nav\">&rarr;</span>"
 msgstr "続きを読む <span class=\"meta-nav\">&rarr;</span>"
 
@@ -329,26 +329,26 @@ msgstr "トップメインメニュー"
 msgid "Secondary menu in left sidebar"
 msgstr "左サイドバーのメニュー 2"
 
-#: functions.php:171
+#: functions.php:174
 msgid "Primary Sidebar"
 msgstr "メインサイドバー"
 
-#: functions.php:173
+#: functions.php:176
 msgid "Main sidebar that appears on the left."
 msgstr "左側に表示されるメインサイドバー。"
 
-#: functions.php:180
+#: functions.php:183
 msgid "Content Sidebar"
 msgstr "コンテンツサイドバー"
 
 #. Translators: If there are characters in your language that are not supported
 #. by Lato, translate this to 'off'. Do not translate into your own language.
-#: functions.php:213
+#: functions.php:216
 msgctxt "Lato font: on or off"
 msgid "on"
 msgstr "on"
 
-#: functions.php:495
+#: functions.php:498
 msgid "Page %s"
 msgstr "ページ %s"
 
@@ -396,31 +396,31 @@ msgstr "ご指定の検索条件に一致する投稿がありませんでした
 msgid "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help."
 msgstr "お探しのコンテンツを見つけられませんでした。検索をお試しください。"
 
-#: inc/widgets.php:58 taxonomy-post_format.php:36
+#: inc/widgets.php:79 taxonomy-post_format.php:36
 msgid "Videos"
 msgstr "動画"
 
-#: inc/widgets.php:54 taxonomy-post_format.php:33
+#: inc/widgets.php:75 taxonomy-post_format.php:33
 msgid "Images"
 msgstr "画像"
 
-#: inc/widgets.php:55
+#: inc/widgets.php:76
 msgid "More images"
 msgstr "画像一覧へ"
 
-#: inc/widgets.php:74 taxonomy-post_format.php:48
+#: inc/widgets.php:95 taxonomy-post_format.php:48
 msgid "Galleries"
 msgstr "ギャラリー"
 
-#: inc/widgets.php:79 taxonomy-post_format.php:30
+#: inc/widgets.php:100 taxonomy-post_format.php:30
 msgid "Asides"
 msgstr "アサイド"
 
-#: inc/widgets.php:70 taxonomy-post_format.php:45
+#: inc/widgets.php:91 taxonomy-post_format.php:45
 msgid "Links"
 msgstr "リンク"
 
-#: inc/widgets.php:66 taxonomy-post_format.php:42
+#: inc/widgets.php:87 taxonomy-post_format.php:42
 msgid "Quotes"
 msgstr "引用"
 
@@ -428,9 +428,9 @@ msgstr "引用"
 msgid "Search Results for: %s"
 msgstr "検索結果: %s"
 
-#. #-#-#-#-#  twentyfourteen.pot (Twenty Fourteen 1.6)  #-#-#-#-#
+#. #-#-#-#-#  twentyfourteen.pot (Twenty Fourteen 1.7)  #-#-#-#-#
 #. Theme Name of the plugin/theme
-#: inc/customizer.php:105
+#: inc/customizer.php:142
 msgid "Twenty Fourteen"
 msgstr "Twenty Fourteen"
 

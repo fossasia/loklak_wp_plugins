@@ -50,7 +50,7 @@ if ( ! isset( $wp_current_filter ) )
  *
  *     function example_callback( $example ) {
  *         // Maybe modify $example in some way.
- *     	   return $example;
+ *         return $example;
  *     }
  *     add_filter( 'example_filter', 'example_callback' );
  *
@@ -191,9 +191,9 @@ function has_filter($tag, $function_to_check = false) {
  * @global array $merged_filters    Merges the filter hooks using this function.
  * @global array $wp_current_filter Stores the list of current filters with the current one last.
  *
- * @param string $tag   The name of the filter hook.
- * @param mixed  $value The value on which the filters hooked to `$tag` are applied on.
- * @param mixed  $var   Additional variables passed to the functions hooked to `$tag`.
+ * @param string $tag     The name of the filter hook.
+ * @param mixed  $value   The value on which the filters hooked to `$tag` are applied on.
+ * @param mixed  $var,... Additional variables passed to the functions hooked to `$tag`.
  * @return mixed The filtered value after all hooked functions are applied to it.
  */
 function apply_filters( $tag, $value ) {
@@ -245,7 +245,7 @@ function apply_filters( $tag, $value ) {
 /**
  * Execute functions hooked on a specific filter hook, specifying arguments in an array.
  *
- * @see 3.0.0
+ * @since 3.0.0
  *
  * @see apply_filters() This function is identical, but the arguments passed to the
  * functions hooked to `$tag` are supplied using an array.
@@ -475,9 +475,9 @@ function add_action($tag, $function_to_add, $priority = 10, $accepted_args = 1) 
  * @global array $merged_filters    Merges the filter hooks using this function.
  * @global array $wp_current_filter Stores the list of current filters with the current one last
  *
- * @param string $tag The name of the action to be executed.
- * @param mixed  $arg Optional. Additional arguments which are passed on to the
- *                    functions hooked to the action. Default empty.
+ * @param string $tag     The name of the action to be executed.
+ * @param mixed  $arg,... Optional. Additional arguments which are passed on to the
+ *                        functions hooked to the action. Default empty.
  */
 function do_action($tag, $arg = '') {
 	global $wp_filter, $wp_actions, $merged_filters, $wp_current_filter;

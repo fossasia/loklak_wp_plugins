@@ -7,7 +7,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: GlotPress/1.0-alpha-1100\n"
+"X-Generator: GlotPress/2.1.0-alpha\n"
 "Project-Id-Version: Twenty Sixteen\n"
 
 #. Description of the plugin/theme
@@ -30,7 +30,7 @@ msgstr "<span class=\"screen-reader-text\">\"%s\"を</span>編集"
 msgid "Continue reading<span class=\"screen-reader-text\"> \"%s\"</span>"
 msgstr "<span class=\"screen-reader-text\">\"%s\"の</span>続きを読む"
 
-#: inc/customizer.php:246
+#: inc/customizer.php:283
 msgid "Red"
 msgstr "赤"
 
@@ -50,7 +50,7 @@ msgctxt "placeholder"
 msgid "Search &hellip;"
 msgstr "検索 &hellip;"
 
-#: searchform.php:13 searchform.php:14
+#: searchform.php:13
 msgctxt "label"
 msgid "Search for:"
 msgstr "検索対象:"
@@ -63,7 +63,7 @@ msgstr "フッターメインメニュー"
 msgid "Footer Social Links Menu"
 msgstr "フッターソーシャルリンクメニュー"
 
-#: functions.php:144
+#: functions.php:158
 msgid "Add widgets here to appear in your sidebar."
 msgstr "サイドバーに表示させるにはここにウィジェットを追加してください。"
 
@@ -149,39 +149,39 @@ msgctxt "Used before post author name."
 msgid "Author"
 msgstr "投稿者"
 
-#: inc/customizer.php:256
+#: inc/customizer.php:293
 msgid "Yellow"
 msgstr "黄"
 
-#: inc/customizer.php:236
+#: inc/customizer.php:273
 msgid "Gray"
 msgstr "グレー"
 
-#: inc/customizer.php:226
+#: inc/customizer.php:263
 msgid "Dark"
 msgstr "ダーク"
 
-#: inc/customizer.php:171
+#: inc/customizer.php:184
 msgid "Secondary Text Color"
 msgstr "サブのテキストカラー"
 
-#: inc/customizer.php:216
+#: inc/customizer.php:253
 msgid "Default"
 msgstr "デフォルト"
 
-#: inc/customizer.php:159
+#: inc/customizer.php:172
 msgid "Main Text Color"
 msgstr "メインのテキストカラー"
 
-#: inc/customizer.php:132
+#: inc/customizer.php:145
 msgid "Page Background Color"
 msgstr "ページ背景色"
 
-#: inc/customizer.php:147
+#: inc/customizer.php:160
 msgid "Link Color"
 msgstr "リンク色"
 
-#: inc/customizer.php:117
+#: inc/customizer.php:130
 msgid "Base Color Scheme"
 msgstr "ベース配色"
 
@@ -212,7 +212,7 @@ msgstr "次の画像"
 msgid "Previous Image"
 msgstr "前の画像"
 
-#: header.php:45
+#: header.php:47
 msgid "Menu"
 msgstr "メニュー"
 
@@ -220,18 +220,18 @@ msgstr "メニュー"
 msgid "Skip to content"
 msgstr "コンテンツへスキップ"
 
-#: functions.php:271
+#: functions.php:285
 msgid "collapse child menu"
 msgstr "サブメニューを閉じる"
 
-#: functions.php:270
+#: functions.php:284
 msgid "expand child menu"
 msgstr "サブメニューを展開"
 
 #. translators: If there are characters in your language that are not supported
 #. by Montserrat, translate this to 'off'. Do not translate into your own
 #. language.
-#: functions.php:194
+#: functions.php:208
 msgctxt "Montserrat font: on or off"
 msgid "on"
 msgstr "off"
@@ -239,40 +239,40 @@ msgstr "off"
 #. translators: If there are characters in your language that are not supported
 #. by Merriweather, translate this to 'off'. Do not translate into your own
 #. language.
-#: functions.php:189
+#: functions.php:203
 msgctxt "Merriweather font: on or off"
 msgid "on"
 msgstr "on"
 
-#: functions.php:162
+#: functions.php:176
 msgid "Content Bottom 2"
 msgstr "コンテンツ下 2"
 
-#: functions.php:154 functions.php:164
+#: functions.php:168 functions.php:178
 msgid "Appears at the bottom of the content on posts and pages."
 msgstr "投稿や固定ページのコンテンツの下部に表示されます。"
 
-#: functions.php:152
+#: functions.php:166
 msgid "Content Bottom 1"
 msgstr "コンテンツ下 1"
 
 #. translators: If there are characters in your language that are not supported
 #. by Inconsolata, translate this to 'off'. Do not translate into your own
 #. language.
-#: functions.php:199
+#: functions.php:213
 msgctxt "Inconsolata font: on or off"
 msgid "on"
 msgstr "on"
 
-#: functions.php:142
+#: functions.php:156
 msgid "Sidebar"
 msgstr "サイドバー"
 
-#: functions.php:78 header.php:60
+#: functions.php:89 header.php:62
 msgid "Social Links Menu"
 msgstr "﻿ソーシャルリンクメニュー"
 
-#: functions.php:77 header.php:49
+#: functions.php:88 header.php:51
 msgid "Primary Menu"
 msgstr "メインメニュー"
 
@@ -321,7 +321,7 @@ msgstr "WordPress チーム"
 msgid "https://wordpress.org/themes/twentysixteen/"
 msgstr "https://ja.wordpress.org/themes/twentysixteen/"
 
-#. #-#-#-#-#  twentysixteen.pot (Twenty Sixteen 1.1)  #-#-#-#-#
+#. #-#-#-#-#  twentysixteen.pot (Twenty Sixteen 1.2)  #-#-#-#-#
 #. Author URI of the plugin/theme
 #: footer.php:51
 msgid "https://wordpress.org/"

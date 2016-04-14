@@ -1,4 +1,4 @@
-(function($) {
+(function( $ ) {
 
 	$( document ).ready( function() {
 
@@ -9,8 +9,7 @@
 				var $form = $( 'form', $container );
 				if ( 'block' === $form.css( 'display' ) ) {
 					$form.hide();
-				}
-				else {
+				} else {
 					$form.show();
 				}
 				return false;
@@ -23,4 +22,4 @@
 
 	} );
 
-})(jQuery);
+})( jQuery );

@@ -7,7 +7,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: GlotPress/1.0-alpha-1100\n"
+"X-Generator: GlotPress/2.1.0-alpha\n"
 "Project-Id-Version: Twenty Fifteen\n"
 
 #. translators: %s: post title
@@ -27,7 +27,7 @@ msgstr "前の投稿:"
 msgid "Next post:"
 msgstr "次の投稿:"
 
-#: inc/customizer.php:47 inc/customizer.php:63 inc/customizer.php:68
+#: inc/customizer.php:60 inc/customizer.php:76 inc/customizer.php:81
 msgid "Applied to the header on small screens and the sidebar on wide screens."
 msgstr "﻿小さい画面上のヘッダーと、幅広い画面上のサイドバーに適用されます。"
 
@@ -106,39 +106,39 @@ msgstr "注目"
 msgid "Comment navigation"
 msgstr "コメントナビゲーション"
 
-#: inc/customizer.php:168
+#: inc/customizer.php:205
 msgid "Blue"
 msgstr "ブルー"
 
-#: inc/customizer.php:157
+#: inc/customizer.php:194
 msgid "Purple"
 msgstr "紫"
 
-#: inc/customizer.php:146
+#: inc/customizer.php:183
 msgid "Pink"
 msgstr "ピンク"
 
-#: inc/customizer.php:124
+#: inc/customizer.php:161
 msgid "Dark"
 msgstr "ダーク"
 
-#: inc/customizer.php:135
+#: inc/customizer.php:172
 msgid "Yellow"
 msgstr "黄"
 
-#: inc/customizer.php:113
+#: inc/customizer.php:150
 msgid "Default"
 msgstr "デフォルト"
 
-#: inc/customizer.php:62
+#: inc/customizer.php:75
 msgid "Header and Sidebar Background Color"
 msgstr "ヘッダー・サイドバー背景色"
 
-#: inc/customizer.php:31
+#: inc/customizer.php:44
 msgid "Base Color Scheme"
 msgstr "ベース配色"
 
-#: inc/customizer.php:46
+#: inc/customizer.php:59
 msgid "Header and Sidebar Text Color"
 msgstr "ヘッダー・サイドバーテキスト色"
 
@@ -159,15 +159,15 @@ msgctxt "Parent post link"
 msgid "<span class=\"meta-nav\">Published in</span><span class=\"post-title\">%title</span>"
 msgstr "<span class=\"post-title\">%title</span> <span class=\"meta-nav\">内で公開</span>"
 
-#: header.php:43
+#: header.php:45
 msgid "Menu and widgets"
 msgstr "﻿メニューとウィジェット"
 
-#: functions.php:255
+#: functions.php:269
 msgid "expand child menu"
 msgstr "サブメニューを展開"
 
-#: functions.php:256
+#: functions.php:270
 msgid "collapse child menu"
 msgstr "サブメニューを閉じる"
 
@@ -178,7 +178,7 @@ msgstr "コンテンツへ移動"
 #. Translators: To add an additional character subset specific to your
 #. language, translate this to 'greek', 'cyrillic', 'devanagari' or
 #. 'vietnamese'. Do not translate into your own language.
-#: functions.php:185
+#: functions.php:199
 msgctxt "Add new subset (greek, cyrillic, devanagari, vietnamese)"
 msgid "no-subset"
 msgstr "no-subset"
@@ -186,7 +186,7 @@ msgstr "no-subset"
 #. Translators: If there are characters in your language that are not supported
 #. by Inconsolata, translate this to 'off'. Do not translate into your own
 #. language.
-#: functions.php:177
+#: functions.php:191
 msgctxt "Inconsolata font: on or off"
 msgid "on"
 msgstr "on"
@@ -194,7 +194,7 @@ msgstr "on"
 #. Translators: If there are characters in your language that are not supported
 #. by Noto Sans, translate this to 'off'. Do not translate into your own
 #. language.
-#: functions.php:161
+#: functions.php:175
 msgctxt "Noto Sans font: on or off"
 msgid "on"
 msgstr "on"
@@ -202,16 +202,16 @@ msgstr "on"
 #. Translators: If there are characters in your language that are not supported
 #. by Noto Serif, translate this to 'off'. Do not translate into your own
 #. language.
-#: functions.php:169
+#: functions.php:183
 msgctxt "Noto Serif font: on or off"
 msgid "on"
 msgstr "on"
 
-#: functions.php:135
+#: functions.php:149
 msgid "Add widgets here to appear in your sidebar."
 msgstr "サイドバーに表示させるにはここにウィジェットを追加してください。"
 
-#: functions.php:133
+#: functions.php:147
 msgid "Widget Area"
 msgstr "﻿ウィジェット エリア"
 
@@ -227,7 +227,7 @@ msgstr "﻿ソーシャルリンクメニュー"
 msgid "Proudly powered by %s"
 msgstr "Proudly powered by %s"
 
-#. #-#-#-#-#  twentyfifteen.pot (Twenty Fifteen 1.4)  #-#-#-#-#
+#. #-#-#-#-#  twentyfifteen.pot (Twenty Fifteen 1.5)  #-#-#-#-#
 #. Author URI of the plugin/theme
 #: footer.php:25
 msgid "https://wordpress.org/"

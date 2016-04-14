@@ -751,6 +751,69 @@ class WP_Upgrader {
 		}
 	}
 
+	/**
+ 	 * Creates a lock using WordPress options.
+ 	 *
+ 	 * @since 4.5.0
+ 	 * @access public
+ 	 * @static
+ 	 *
+ 	 * @param string $lock_name       The name of this unique lock.
+ 	 * @param int    $release_timeout Optional. The duration in seconds to respect an existing lock.
+	 *                                Default: 1 hour.
+ 	 * @return bool False if a lock couldn't be created or if the lock is no longer valid. True otherwise.
+ 	 */
+	public static function create_lock( $lock_name, $release_timeout = null ) {
+		global $wpdb;
+		if ( ! $release_timeout ) {
+			$release_timeout = HOUR_IN_SECONDS;
+		}
+		$lock_option = $lock_name . '.lock';
+
+		// Try to lock.
+		$lock_result = $wpdb->query( $wpdb->prepare( "INSERT IGNORE INTO `$wpdb->options` ( `option_name`, `option_value`, `autoload` ) VALUES (%s, %s, 'no') /* LOCK */", $lock_option, time() ) );
+
+		if ( ! $lock_result ) {
+			$lock_result = get_option( $lock_option );
+
+			// If a lock couldn't be created, and there isn't a lock, bail.
+			if ( ! $lock_result ) {
+				return false;
+			}
+
+			// Check to see if the lock is still valid. If not, bail.
+			if ( $lock_result > ( time() - $release_timeout ) ) {
+				return false;
+			}
+
+			// There must exist an expired lock, clear it and re-gain it.
+			WP_Upgrader::release_lock( $lock_name );
+
+			return WP_Upgrader::create_lock( $lock_name, $release_timeout );
+		}
+
+		// Update the lock, as by this point we've definitely got a lock, just need to fire the actions.
+		update_option( $lock_option, time() );
+
+		return true;
+	}
+
+	/**
+ 	 * Releases an upgrader lock.
+ 	 *
+ 	 * @since 4.5.0
+ 	 * @access public
+ 	 * @static
+	 *
+	 * @see WP_Upgrader::create_lock()
+ 	 *
+ 	 * @param string $lock_name The name of this unique lock.
+	 * @return bool True if the lock was successfully released. False on failure.
+ 	 */
+	public static function release_lock( $lock_name ) {
+		return delete_option( $lock_name . '.lock' );
+	}
+
 }
 
 /**
@@ -2168,6 +2231,7 @@ class Core_Upgrader extends WP_Upgrader {
 	 */
 	public function upgrade_strings() {
 		$this->strings['up_to_date'] = __('WordPress is at the latest version.');
+		$this->strings['locked'] = __('Another update is currently in progress.');
 		$this->strings['no_package'] = __('Update package not available.');
 		$this->strings['downloading_package'] = __('Downloading update from <span class="code">%s</span>&#8230;');
 		$this->strings['unpack_package'] = __('Unpacking the update&#8230;');
@@ -2252,25 +2316,38 @@ class Core_Upgrader extends WP_Upgrader {
 		else
 			$to_download = 'full';
 
+		// Lock to prevent multiple Core Updates occuring
+		$lock = WP_Upgrader::create_lock( 'core_updater', 15 * MINUTE_IN_SECONDS );
+		if ( ! $lock ) {
+			return new WP_Error( 'locked', $this->strings['locked'] );
+		}
+
 		$download = $this->download_package( $current->packages->$to_download );
-		if ( is_wp_error($download) )
+		if ( is_wp_error( $download ) ) {
+			WP_Upgrader::release_lock( 'core_updater' );
 			return $download;
+		}
 
 		$working_dir = $this->unpack_package( $download );
-		if ( is_wp_error($working_dir) )
+		if ( is_wp_error( $working_dir ) ) {
+			WP_Upgrader::release_lock( 'core_updater' );
 			return $working_dir;
+		}
 
 		// Copy update-core.php from the new version into place.
 		if ( !$wp_filesystem->copy($working_dir . '/wordpress/wp-admin/includes/update-core.php', $wp_dir . 'wp-admin/includes/update-core.php', true) ) {
 			$wp_filesystem->delete($working_dir, true);
+			WP_Upgrader::release_lock( 'core_updater' );
 			return new WP_Error( 'copy_failed_for_update_core_file', __( 'The update cannot be installed because we will be unable to copy some files. This is usually due to inconsistent file permissions.' ), 'wp-admin/includes/update-core.php' );
 		}
 		$wp_filesystem->chmod($wp_dir . 'wp-admin/includes/update-core.php', FS_CHMOD_FILE);
 
 		require_once( ABSPATH . 'wp-admin/includes/update-core.php' );
 
-		if ( ! function_exists( 'update_core' ) )
+		if ( ! function_exists( 'update_core' ) ) {
+			WP_Upgrader::release_lock( 'core_updater' );
 			return new WP_Error( 'copy_failed_space', $this->strings['copy_failed_space'] );
+		}
 
 		$result = update_core( $working_dir, $wp_dir );
 
@@ -2344,6 +2421,8 @@ class Core_Upgrader extends WP_Upgrader {
 
 			wp_version_check( $stats );
 		}
+
+		WP_Upgrader::release_lock( 'core_updater' );
 
 		return $result;
 	}
@@ -2938,8 +3017,13 @@ class WP_Automatic_Updater {
 			$upgrade_result = new WP_Error( 'fs_unavailable', __( 'Could not access filesystem.' ) );
 		}
 
-		// Core doesn't output this, so let's append it so we don't get confused.
 		if ( 'core' == $type ) {
+			if ( is_wp_error( $upgrade_result ) && ( 'up_to_date' == $upgrade_result->get_error_code() || 'locked' == $upgrade_result->get_error_code() ) ) {
+				// These aren't actual errors, treat it as a skipped-update instead to avoid triggering the post-core update failure routines.
+				return false;
+			}
+
+			// Core doesn't output this, so let's append it so we don't get confused.
 			if ( is_wp_error( $upgrade_result ) ) {
 				$skin->error( __( 'Installation Failed' ), $upgrade_result );
 			} else {
@@ -2975,25 +3059,8 @@ class WP_Automatic_Updater {
 		if ( ! is_main_network() || ! is_main_site() )
 			return;
 
-		$lock_name = 'auto_updater.lock';
-
-		// Try to lock
-		$lock_result = $wpdb->query( $wpdb->prepare( "INSERT IGNORE INTO `$wpdb->options` ( `option_name`, `option_value`, `autoload` ) VALUES (%s, %s, 'no') /* LOCK */", $lock_name, time() ) );
-
-		if ( ! $lock_result ) {
-			$lock_result = get_option( $lock_name );
-
-			// If we couldn't create a lock, and there isn't a lock, bail
-			if ( ! $lock_result )
-				return;
-
-			// Check to see if the lock is still valid
-			if ( $lock_result > ( time() - HOUR_IN_SECONDS ) )
-				return;
-		}
-
-		// Update the lock, as by this point we've definitely got a lock, just need to fire the actions
-		update_option( $lock_name, time() );
+		if ( ! WP_Upgrader::create_lock( 'auto_updater' ) )
+			return;
 
 		// Don't automatically run these thins, as we'll handle it ourselves
 		remove_action( 'upgrader_process_complete', array( 'Language_Pack_Upgrader', 'async_upgrade' ), 20 );
@@ -3092,8 +3159,7 @@ class WP_Automatic_Updater {
 			do_action( 'automatic_updates_complete', $this->update_results );
 		}
 
-		// Clear the lock
-		delete_option( $lock_name );
+		WP_Upgrader::release_lock( 'auto_updater' );
 	}
 
 	/**
@@ -3105,7 +3171,7 @@ class WP_Automatic_Updater {
 	 *
 	 * @global string $wp_version
 	 *
-	 * @param object|WP_Error $update_result The result of the core update. Includes the update offer and result.
+	 * @param object $update_result The result of the core update. Includes the update offer and result.
 	 */
 	protected function after_core_update( $update_result ) {
 		global $wp_version;
@@ -3163,7 +3229,7 @@ class WP_Automatic_Updater {
 		 * the issue could actually be on WordPress.org's side.) If that one fails, then email.
 		 */
 		$send = true;
-  		$transient_failures = array( 'incompatible_archive', 'download_failed', 'insane_distro' );
+  		$transient_failures = array( 'incompatible_archive', 'download_failed', 'insane_distro', 'locked' );
   		if ( in_array( $error_code, $transient_failures ) && ! get_site_option( 'auto_core_update_failed' ) ) {
   			wp_schedule_single_event( time() + HOUR_IN_SECONDS, 'wp_maybe_auto_update' );
   			$send = false;

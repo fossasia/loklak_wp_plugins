@@ -23,7 +23,10 @@
 	 * @access public
 	 */
 	public function __construct() {
-		$widget_ops = array( 'description' => __('Add a custom menu to your sidebar.') );
+		$widget_ops = array(
+			'description' => __( 'Add a custom menu to your sidebar.' ),
+			'customize_selective_refresh' => true,
+		);
 		parent::__construct( 'nav_menu', __('Custom Menu'), $widget_ops );
 	}
 
@@ -92,7 +95,7 @@
 	public function update( $new_instance, $old_instance ) {
 		$instance = array();
 		if ( ! empty( $new_instance['title'] ) ) {
-			$instance['title'] = sanitize_text_field( stripslashes( $new_instance['title'] ) );
+			$instance['title'] = sanitize_text_field( $new_instance['title'] );
 		}
 		if ( ! empty( $new_instance['nav_menu'] ) ) {
 			$instance['nav_menu'] = (int) $new_instance['nav_menu'];

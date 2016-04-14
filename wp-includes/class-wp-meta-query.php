@@ -124,8 +124,9 @@ class WP_Meta_Query {
 	 *         @type string $key     Meta key to filter by.
 	 *         @type string $value   Meta value to filter by.
 	 *         @type string $compare MySQL operator used for comparing the $value. Accepts '=',
-	 *                               '!=', '>', '>=', '<', '<=', 'LIKE', 'NOT LIKE', 'IN', 'NOT IN',
-	 *                               'BETWEEN', 'NOT BETWEEN', 'REGEXP', 'NOT REGEXP', or 'RLIKE'.
+	 *                               '!=', '>', '>=', '<', '<=', 'LIKE', 'NOT LIKE',
+	 *                               'IN', 'NOT IN', 'BETWEEN', 'NOT BETWEEN', 'REGEXP',
+	 *                               'NOT REGEXP', 'RLIKE', 'EXISTS' or 'NOT EXISTS'.
 	 *                               Default is 'IN' when `$value` is an array, '=' otherwise.
 	 *         @type string $type    MySQL data type that the meta_value column will be CAST to for
 	 *                               comparisons. Accepts 'NUMERIC', 'BINARY', 'CHAR', 'DATE',
@@ -346,16 +347,12 @@ class WP_Meta_Query {
 		 *
 		 * @since 3.1.0
 		 *
-		 * @param array $args {
-		 *     An array of meta query SQL arguments.
-		 *
-		 *     @type array  $clauses           Array containing the query's JOIN and WHERE clauses.
-		 *     @type array  $queries           Array of meta queries.
-		 *     @type string $type              Type of meta.
-		 *     @type string $primary_table     Primary table.
-		 *     @type string $primary_id_column Primary column ID.
-		 *     @type object $context           The main query object.
-		 * }
+		 * @param array  $clauses           Array containing the query's JOIN and WHERE clauses.
+		 * @param array  $queries           Array of meta queries.
+		 * @param string $type              Type of meta.
+		 * @param string $primary_table     Primary table.
+		 * @param string $primary_id_column Primary column ID.
+		 * @param object $context           The main query object.
 		 */
 		return apply_filters_ref_array( 'get_meta_sql', array( $sql, $this->queries, $type, $primary_table, $primary_id_column, $context ) );
 	}

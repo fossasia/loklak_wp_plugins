@@ -1,9 +1,9 @@
-=== WP Offload S3 ===
+=== WP Offload S3 Lite ===
 Contributors: bradt, deliciousbrains
 Tags: uploads, amazon, s3, amazon s3, mirror, admin, media, cdn, cloudfront
 Requires at least: 3.7
-Tested up to: 4.4
-Stable tag: 0.9.12
+Tested up to: 4.5
+Stable tag: 1.0.3
 License: GPLv3
 
 Copies files to Amazon S3 as they are uploaded to the Media Library. Optionally configure Amazon CloudFront for faster delivery.
@@ -68,6 +68,32 @@ This version requires PHP 5.3.3+ and the Amazon Web Services plugin
 This version requires PHP 5.3.3+ and the Amazon Web Services plugin
 
 == Changelog ==
+
+= WP Offload S3 Lite 1.0.3 - 2016-03-23 =
+* Bug fix: Don't replace srcset URLs when Rewrite File URLs option disabled
+* Bug fix: Fatal error: Cannot redeclare as3cf_get_secure_attachment_url()
+
+= WP Offload S3 Lite 1.0.2 - 2016-03-08 =
+* Bug fix: Uninstall would run even if pro plugin installed
+
+= WP Offload S3 Lite 1.0.1 - 2016-03-08 =
+* Bug fix: Fatal error on plugin activation
+* Bug fix: Unable to activate Pro upgrade
+
+= WP Offload S3 Lite 1.0 - 2016-03-07 =
+* New: Plugin renamed to "WP Offload S3 Lite"
+* New: Define any and all settings with a constant in wp-config.php
+* New: Documentation links for each setting
+* Improvement: Simplified domain setting UI
+* Improvement: Far future expiration header set by default
+* Improvement: Newly created bucket now immediately appears in the bucket list
+* Improvement: Cleanup user meta on uninstall
+* Improvement: WP Retina 2x integration [removed](https://deliciousbrains.com/wp-offload-s3/doc/copy-hidpi-2x-images-support/)
+* Bug fix: Year/Month folder structure on S3 not created if the 'Organise my uploads into month and year-based folders' WordPress setting is disabled
+* Bug fix: Responsive srcset PHP notices
+* Bug fix: Compatibility addon notices displayed to non-admin users
+* Bug fix: Potential PHP fatal error in MySQL version check in diagnostic log
+* Bug fix: Missing image library notices displaying before plugin is setup
 
 = WP Offload S3 0.9.12 - 2016-02-03 =
 * Improvement: Compatibility with WP Offload S3 Assets 1.1

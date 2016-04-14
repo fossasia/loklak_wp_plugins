@@ -83,7 +83,7 @@ validateForm = function( form ) {
 		.addClass( 'form-invalid' )
 		.find( 'input:visible' )
 		.change( function() { $( this ).closest( '.form-invalid' ).removeClass( 'form-invalid' ); } )
-		.size();
+		.length;
 };
 
 // stub for doing better warnings
@@ -897,12 +897,25 @@ $document.ready( function() {
 		}
 	};
 
+	// Add an ARIA role `button` to elements that behave like UI controls when JavaScript is on.
+	function aria_button_if_js() {
+		$( '.aria-button-if-js' ).attr( 'role', 'button' );
+	}
+
+	$( document ).ajaxComplete( function() {
+		aria_button_if_js();
+	});
+
 	window.wpResponsive.init();
 	setPinMenu();
 	currentMenuItemHasPopup();
 	makeNoticesDismissible();
+	aria_button_if_js();
 
 	$document.on( 'wp-pin-menu wp-window-resized.pin-menu postboxes-columnchange.pin-menu postbox-toggled.pin-menu wp-collapse-menu.pin-menu wp-scroll-start.pin-menu', setPinMenu );
+
+	// Set initial focus on a specific element.
+	$( '.wp-initial-focus' ).focus();
 });
 
 // Fire a custom jQuery event at the end of window resize

@@ -266,9 +266,9 @@ function get_editable_authors( $user_id ) {
  *
  * @deprecated 3.1.0 Use get_users()
  *
- * @param int $user_id User ID.
- * @param bool $exclude_zeros Optional, default is true. Whether to exclude zeros.
- * @return mixed
+ * @param int  $user_id       User ID.
+ * @param bool $exclude_zeros Optional. Whether to exclude zeroes. Default true.
+ * @return array Array of editable user IDs, empty array otherwise.
  */
 function get_editable_user_ids( $user_id, $exclude_zeros = true, $post_type = 'post' ) {
 	_deprecated_function( __FUNCTION__, '3.1', 'get_users()' );
@@ -658,16 +658,18 @@ class WP_User_Search {
 endif;
 
 /**
- * Retrieve editable posts from other users.
+ * Retrieves editable posts from other users.
  *
+ * @since 2.3.0
  * @deprecated 3.1.0 Use get_posts()
  * @see get_posts()
  *
- * @param int $user_id User ID to not retrieve posts from.
- * @param string $type Optional, defaults to 'any'. Post type to retrieve, can be 'draft' or 'pending'.
+ * @param int    $user_id User ID to not retrieve posts from.
+ * @param string $type    Optional. Post type to retrieve. Accepts 'draft', 'pending' or 'any' (all).
+ *                        Default 'any'.
  * @return array List of posts from others.
  */
-function get_others_unpublished_posts($user_id, $type='any') {
+function get_others_unpublished_posts( $user_id, $type = 'any' ) {
 	_deprecated_function( __FUNCTION__, '3.1' );
 
 	global $wpdb;
@@ -981,7 +983,7 @@ function add_contextual_help( $screen, $help ) {
 }
 
 /**
- * Get the allowed themes for the current blog.
+ * Get the allowed themes for the current site.
  *
  * @since 3.0.0
  * @deprecated 3.4.0 Use wp_get_themes()
@@ -1304,4 +1306,70 @@ function wp_dashboard_secondary_control() {}
  */
 function _relocate_children( $old_ID, $new_ID ) {
 	_deprecated_function( __FUNCTION__, '3.9' );
+}
+
+/**
+ * Add a top-level menu page in the 'objects' section.
+ *
+ * This function takes a capability which will be used to determine whether
+ * or not a page is included in the menu.
+ *
+ * The function which is hooked in to handle the output of the page must check
+ * that the user has the required capability as well.
+ *
+ * @since 2.7.0
+ *
+ * @deprecated 4.5.0 Use add_menu_page()
+ * @see add_menu_page()
+ * @global int $_wp_last_object_menu
+ *
+ * @param string   $page_title The text to be displayed in the title tags of the page when the menu is selected.
+ * @param string   $menu_title The text to be used for the menu.
+ * @param string   $capability The capability required for this menu to be displayed to the user.
+ * @param string   $menu_slug  The slug name to refer to this menu by (should be unique for this menu).
+ * @param callable $function   The function to be called to output the content for this page.
+ * @param string   $icon_url   The url to the icon to be used for this menu.
+ * @return string The resulting page's hook_suffix.
+ */
+function add_object_page( $page_title, $menu_title, $capability, $menu_slug, $function = '', $icon_url = '') {
+	_deprecated_function( __FUNCTION__, '4.5', 'add_menu_page()' );
+
+	global $_wp_last_object_menu;
+
+	$_wp_last_object_menu++;
+
+	return add_menu_page($page_title, $menu_title, $capability, $menu_slug, $function, $icon_url, $_wp_last_object_menu);
+}
+
+/**
+ * Add a top-level menu page in the 'utility' section.
+ *
+ * This function takes a capability which will be used to determine whether
+ * or not a page is included in the menu.
+ *
+ * The function which is hooked in to handle the output of the page must check
+ * that the user has the required capability as well.
+ *
+ * @since 2.7.0
+ *
+ * @deprecated 4.5.0 Use add_menu_page()
+ * @see add_menu_page()
+ * @global int $_wp_last_utility_menu
+ *
+ * @param string   $page_title The text to be displayed in the title tags of the page when the menu is selected.
+ * @param string   $menu_title The text to be used for the menu.
+ * @param string   $capability The capability required for this menu to be displayed to the user.
+ * @param string   $menu_slug  The slug name to refer to this menu by (should be unique for this menu).
+ * @param callable $function   The function to be called to output the content for this page.
+ * @param string   $icon_url   The url to the icon to be used for this menu.
+ * @return string The resulting page's hook_suffix.
+ */
+function add_utility_page( $page_title, $menu_title, $capability, $menu_slug, $function = '', $icon_url = '') {
+	_deprecated_function( __FUNCTION__, '4.5', 'add_menu_page()' );
+
+	global $_wp_last_utility_menu;
+
+	$_wp_last_utility_menu++;
+
+	return add_menu_page($page_title, $menu_title, $capability, $menu_slug, $function, $icon_url, $_wp_last_utility_menu);
 }

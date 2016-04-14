@@ -48,14 +48,14 @@ function check_upload_size( $file ) {
 }
 
 /**
- * Delete a blog.
+ * Delete a site.
  *
  * @since 3.0.0
  *
  * @global wpdb $wpdb WordPress database abstraction object.
  *
- * @param int  $blog_id Blog ID.
- * @param bool $drop    True if blog's table should be dropped. Default is false.
+ * @param int  $blog_id Site ID.
+ * @param bool $drop    True if site's database tables should be dropped. Default is false.
  */
 function wpmu_delete_blog( $blog_id, $drop = false ) {
 	global $wpdb;
@@ -68,12 +68,12 @@ function wpmu_delete_blog( $blog_id, $drop = false ) {
 
 	$blog = get_blog_details( $blog_id );
 	/**
-	 * Fires before a blog is deleted.
+	 * Fires before a site is deleted.
 	 *
 	 * @since MU
 	 *
-	 * @param int  $blog_id The blog ID.
-	 * @param bool $drop    True if blog's table should be dropped. Default is false.
+	 * @param int  $blog_id The site ID.
+	 * @param bool $drop    True if site's table should be dropped. Default is false.
 	 */
 	do_action( 'delete_blog', $blog_id, $drop );
 
@@ -108,16 +108,16 @@ function wpmu_delete_blog( $blog_id, $drop = false ) {
 	}
 
 	if ( $drop ) {
-		$uploads = wp_upload_dir();
+		$uploads = wp_get_upload_dir();
 
 		$tables = $wpdb->tables( 'blog' );
 		/**
-		 * Filter the tables to drop when the blog is deleted.
+		 * Filter the tables to drop when the site is deleted.
 		 *
 		 * @since MU
 		 *
-		 * @param array $tables  The blog tables to be dropped.
-		 * @param int   $blog_id The ID of the blog to drop tables for.
+		 * @param array $tables  The site tables to be dropped.
+		 * @param int   $blog_id The ID of the site to drop tables for.
 		 */
 		$drop_tables = apply_filters( 'wpmu_drop_tables', $tables, $blog_id );
 
@@ -128,12 +128,12 @@ function wpmu_delete_blog( $blog_id, $drop = false ) {
 		$wpdb->delete( $wpdb->blogs, array( 'blog_id' => $blog_id ) );
 
 		/**
-		 * Filter the upload base directory to delete when the blog is deleted.
+		 * Filter the upload base directory to delete when the site is deleted.
 		 *
 		 * @since MU
 		 *
 		 * @param string $uploads['basedir'] Uploads path without subdirectory. @see wp_upload_dir()
-		 * @param int    $blog_id            The blog ID.
+		 * @param int    $blog_id            The site ID.
 		 */
 		$dir = apply_filters( 'wpmu_delete_blog_upload_dir', $uploads['basedir'], $blog_id );
 		$dir = rtrim( $dir, DIRECTORY_SEPARATOR );
@@ -309,7 +309,7 @@ All at ###SITENAME###
 
 	$current_user = wp_get_current_user();
 	$content = str_replace( '###USERNAME###', $current_user->user_login, $content );
-	$content = str_replace( '###ADMIN_URL###', esc_url( admin_url( 'options.php?adminhash='.$hash ) ), $content );
+	$content = str_replace( '###ADMIN_URL###', esc_url( self_admin_url( 'options.php?adminhash='.$hash ) ), $content );
 	$content = str_replace( '###EMAIL###', $value, $content );
 	$content = str_replace( '###SITENAME###', get_site_option( 'site_name' ), $content );
 	$content = str_replace( '###SITEURL###', network_home_url(), $content );
@@ -342,16 +342,16 @@ function send_confirmation_on_profile_email() {
 
 		if ( $wpdb->get_var( $wpdb->prepare( "SELECT user_email FROM {$wpdb->users} WHERE user_email=%s", $_POST['email'] ) ) ) {
 			$errors->add( 'user_email', __( "<strong>ERROR</strong>: The email address is already used." ), array( 'form-field' => 'email' ) );
-			delete_option( $current_user->ID . '_new_email' );
+			delete_user_meta( $current_user->ID, '_new_email' );
 			return;
 		}
 
 		$hash = md5( $_POST['email'] . time() . mt_rand() );
 		$new_user_email = array(
-				'hash' => $hash,
-				'newemail' => $_POST['email']
-				);
-		update_option( $current_user->ID . '_new_email', $new_user_email );
+			'hash' => $hash,
+			'newemail' => $_POST['email']
+		);
+		update_user_meta( $current_user->ID, '_new_email', $new_user_email );
 
 		/* translators: Do not translate USERNAME, ADMIN_URL, EMAIL, SITENAME, SITEURL: those are placeholders. */
 		$email_text = __( 'Howdy ###USERNAME###,
@@ -403,14 +403,19 @@ All at ###SITENAME###
  * after email address change.
  *
  * @since 3.0.0
+ *
+ * @global string $pagenow
  */
 function new_user_email_admin_notice() {
-	if ( strpos( $_SERVER['PHP_SELF'], 'profile.php' ) && isset( $_GET['updated'] ) && $email = get_option( get_current_user_id() . '_new_email' ) )
-		echo "<div class='update-nag'>" . sprintf( __( "Your email address has not been updated yet. Please check your inbox at %s for a confirmation email." ), $email['newemail'] ) . "</div>";
+	global $pagenow;
+	if ( 'profile.php' === $pagenow && isset( $_GET['updated'] ) && $email = get_user_meta( get_current_user_id(), '_new_email', true ) ) {
+		/* translators: %s: New email address */
+		echo '<div class="notice notice-info"><p>' . sprintf( __( 'Your email address has not been updated yet. Please check your inbox at %s for a confirmation email.' ), '<code>' . esc_html( $email['newemail'] ) . '</code>' ) . '</p></div>';
+	}
 }
 
 /**
- * Check whether a blog has used its allotted upload space.
+ * Check whether a site has used its allotted upload space.
  *
  * @since MU
  *
@@ -437,7 +442,7 @@ function upload_is_user_over_quota( $echo = true ) {
 }
 
 /**
- * Displays the amount of disk space used by the current blog. Not used in core.
+ * Displays the amount of disk space used by the current site. Not used in core.
  *
  * @since MU
  */
@@ -462,7 +467,7 @@ function display_space_usage() {
 }
 
 /**
- * Get the remaining upload space for this blog.
+ * Get the remaining upload space for this site.
  *
  * @since MU
  *
@@ -478,11 +483,11 @@ function fix_import_form_size( $size ) {
 }
 
 /**
- * Displays the edit blog upload space setting form on the Edit Blog screen.
+ * Displays the site upload space quota setting form on the Edit Site Settings screen.
  *
  * @since 3.0.0
  *
- * @param int $id The ID of the blog to display the setting for.
+ * @param int $id The ID of the site to display the setting for.
  */
 function upload_space_setting( $id ) {
 	switch_to_blog( $id );
@@ -743,16 +748,25 @@ function mu_dropdown_languages( $lang_files = array(), $current = '' ) {
  *
  * @since 3.0.0
  *
- * @global int $wp_db_version The version number of the database.
+ * @global int    $wp_db_version The version number of the database.
+ * @global string $pagenow
  *
  * @return false False if the current user is not a super admin.
  */
 function site_admin_notice() {
-	global $wp_db_version;
-	if ( !is_super_admin() )
+	global $wp_db_version, $pagenow;
+
+	if ( ! is_super_admin() ) {
 		return false;
-	if ( get_site_option( 'wpmu_upgrade_site' ) != $wp_db_version )
+	}
+
+	if ( 'upgrade.php' == $pagenow ) {
+		return;
+	}
+
+	if ( get_site_option( 'wpmu_upgrade_site' ) != $wp_db_version ) {
 		echo "<div class='update-nag'>" . sprintf( __( 'Thank you for Updating! Please visit the <a href="%s">Upgrade Network</a> page to update all your sites.' ), esc_url( network_admin_url( 'upgrade.php' ) ) ) . "</div>";
+	}
 }
 
 /**
@@ -1074,7 +1088,7 @@ function confirm_delete_users( $users ) {
 	</table>
 	<?php
 	/** This action is documented in wp-admin/users.php */
-	do_action( 'delete_user_form', $current_user );
+	do_action( 'delete_user_form', $current_user, $allusers );
 
 	if ( 1 == count( $users ) ) : ?>
 		<p><?php _e( 'Once you hit &#8220;Confirm Deletion&#8221;, the user will be permanently removed.' ); ?></p>
@@ -1093,7 +1107,7 @@ function confirm_delete_users( $users ) {
  * Print JavaScript in the header on the Network Settings screen.
  *
  * @since 4.1.0
-*/
+ */
 function network_settings_add_js() {
 ?>
 <script type="text/javascript">

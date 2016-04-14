@@ -110,42 +110,42 @@ function create_initial_post_types() {
 	) );
 
 	register_post_status( 'publish', array(
-		'label'       => _x( 'Published', 'post' ),
+		'label'       => _x( 'Published', 'post status' ),
 		'public'      => true,
 		'_builtin'    => true, /* internal use only. */
 		'label_count' => _n_noop( 'Published <span class="count">(%s)</span>', 'Published <span class="count">(%s)</span>' ),
 	) );
 
 	register_post_status( 'future', array(
-		'label'       => _x( 'Scheduled', 'post' ),
+		'label'       => _x( 'Scheduled', 'post status' ),
 		'protected'   => true,
 		'_builtin'    => true, /* internal use only. */
 		'label_count' => _n_noop('Scheduled <span class="count">(%s)</span>', 'Scheduled <span class="count">(%s)</span>' ),
 	) );
 
 	register_post_status( 'draft', array(
-		'label'       => _x( 'Draft', 'post' ),
+		'label'       => _x( 'Draft', 'post status' ),
 		'protected'   => true,
 		'_builtin'    => true, /* internal use only. */
 		'label_count' => _n_noop( 'Draft <span class="count">(%s)</span>', 'Drafts <span class="count">(%s)</span>' ),
 	) );
 
 	register_post_status( 'pending', array(
-		'label'       => _x( 'Pending', 'post' ),
+		'label'       => _x( 'Pending', 'post status' ),
 		'protected'   => true,
 		'_builtin'    => true, /* internal use only. */
 		'label_count' => _n_noop( 'Pending <span class="count">(%s)</span>', 'Pending <span class="count">(%s)</span>' ),
 	) );
 
 	register_post_status( 'private', array(
-		'label'       => _x( 'Private', 'post' ),
+		'label'       => _x( 'Private', 'post status' ),
 		'private'     => true,
 		'_builtin'    => true, /* internal use only. */
 		'label_count' => _n_noop( 'Private <span class="count">(%s)</span>', 'Private <span class="count">(%s)</span>' ),
 	) );
 
 	register_post_status( 'trash', array(
-		'label'       => _x( 'Trash', 'post' ),
+		'label'       => _x( 'Trash', 'post status' ),
 		'internal'    => true,
 		'_builtin'    => true, /* internal use only. */
 		'label_count' => _n_noop( 'Trash <span class="count">(%s)</span>', 'Trash <span class="count">(%s)</span>' ),
@@ -186,11 +186,15 @@ function create_initial_post_types() {
  */
 function get_attached_file( $attachment_id, $unfiltered = false ) {
 	$file = get_post_meta( $attachment_id, '_wp_attached_file', true );
+
 	// If the file is relative, prepend upload dir.
-	if ( $file && 0 !== strpos($file, '/') && !preg_match('|^.:\\\|', $file) && ( ($uploads = wp_upload_dir()) && false === $uploads['error'] ) )
+	if ( $file && 0 !== strpos( $file, '/' ) && ! preg_match( '|^.:\\\|', $file ) && ( ( $uploads = wp_get_upload_dir() ) && false === $uploads['error'] ) ) {
 		$file = $uploads['basedir'] . "/$file";
-	if ( $unfiltered )
+	}
+
+	if ( $unfiltered ) {
 		return $file;
+	}
 
 	/**
 	 * Filter the attached file based on the given ID.
@@ -248,7 +252,7 @@ function update_attached_file( $attachment_id, $file ) {
 function _wp_relative_upload_path( $path ) {
 	$new_path = $path;
 
-	$uploads = wp_upload_dir();
+	$uploads = wp_get_upload_dir();
 	if ( 0 === strpos( $new_path, $uploads['basedir'] ) ) {
 			$new_path = str_replace( $uploads['basedir'], '', $new_path );
 			$new_path = ltrim( $new_path, '/' );
@@ -494,16 +498,17 @@ function get_post_ancestors( $post ) {
  * supported values are found within those functions.
  *
  * @since 2.3.0
+ * @since 4.5.0 The `$post` parameter was made optional.
  *
  * @see sanitize_post_field()
  *
  * @param string      $field   Post field name.
- * @param int|WP_Post $post    Post ID or post object.
+ * @param int|WP_Post $post    Optional. Post ID or post object. Defaults to current post.
  * @param string      $context Optional. How to filter the field. Accepts 'raw', 'edit', 'db',
  *                             or 'display'. Default 'display'.
  * @return string The value of the post field on success, empty string on failure.
  */
-function get_post_field( $field, $post, $context = 'display' ) {
+function get_post_field( $field, $post = null, $context = 'display' ) {
 	$post = get_post( $post );
 
 	if ( !$post )
@@ -864,7 +869,7 @@ function get_post_type_object( $post_type ) {
  *                               or 'objects'. Default 'names'.
  * @param string       $operator Optional. The logical operation to perform. 'or' means only one
  *                               element from the array needs to match; 'and' means all elements
- *                               must match. Accepts 'or' or 'and'. Default 'and'.
+ *                               must match; 'not' means no elements may match. Default 'and'.
  * @return array A list of post type names or objects.
  */
 function get_post_types( $args = array(), $output = 'names', $operator = 'and' ) {
@@ -1187,6 +1192,88 @@ function register_post_type( $post_type, $args = array() ) {
 }
 
 /**
+ * Unregisters a post type.
+ *
+ * Can not be used to unregister built-in post types.
+ *
+ * @since 4.5.0
+ *
+ * @global WP_Rewrite $wp_rewrite             WordPress rewrite component.
+ * @global WP         $wp                     Current WordPress environment instance.
+ * @global array      $_wp_post_type_features Used to remove post type features.
+ * @global array      $post_type_meta_caps    Used to remove meta capabilities.
+ * @global array      $wp_post_types          List of post types.
+ *
+ * @param string $post_type Post type to unregister.
+ * @return bool|WP_Error True on success, WP_Error on failure or if the post type doesn't exist.
+ */
+function unregister_post_type( $post_type ) {
+	if ( ! post_type_exists( $post_type ) ) {
+		return new WP_Error( 'invalid_post_type', __( 'Invalid post type' ) );
+	}
+
+	$post_type_args = get_post_type_object( $post_type );
+
+	// Do not allow unregistering internal post types.
+	if ( $post_type_args->_builtin ) {
+		return new WP_Error( 'invalid_post_type', __( 'Unregistering a built-in post type is not allowed' ) );
+	}
+
+	global $wp, $wp_rewrite, $_wp_post_type_features, $post_type_meta_caps, $wp_post_types;
+
+	// Remove query var.
+	if ( false !== $post_type_args->query_var ) {
+		$wp->remove_query_var( $post_type_args->query_var );
+	}
+
+	// Remove any rewrite rules, permastructs, and rules.
+	if ( false !== $post_type_args->rewrite ) {
+		remove_rewrite_tag( "%$post_type%" );
+		remove_permastruct( $post_type );
+		foreach ( $wp_rewrite->extra_rules_top as $regex => $query ) {
+			if ( false !== strpos( $query, "index.php?post_type=$post_type" ) ) {
+				unset( $wp_rewrite->extra_rules_top[ $regex ] );
+			}
+		}
+	}
+
+	// Remove registered custom meta capabilities.
+	foreach ( $post_type_args->cap as $cap ) {
+		unset( $post_type_meta_caps[ $cap ] );
+	}
+
+	// Remove all post type support.
+	unset( $_wp_post_type_features[ $post_type ] );
+
+	// Unregister the post type meta box if a custom callback was specified.
+	if ( $post_type_args->register_meta_box_cb ) {
+		remove_action( 'add_meta_boxes_' . $post_type, $post_type_args->register_meta_box_cb );
+	}
+
+	// Remove the post type from all taxonomies.
+	foreach ( get_object_taxonomies( $post_type ) as $taxonomy ) {
+		unregister_taxonomy_for_object_type( $taxonomy, $post_type );
+	}
+
+	// Remove the future post hook action.
+	remove_action( 'future_' . $post_type, '_future_post_hook', 5 );
+
+	// Remove the post type.
+	unset( $wp_post_types[ $post_type ] );
+
+	/**
+	 * Fires after a post type was unregistered.
+	 *
+	 * @since 4.5.0
+	 *
+	 * @param string $post_type Post type key.
+	 */
+	do_action( 'unregistered_post_type', $post_type );
+
+	return true;
+}
+
+/**
  * Build an object with all post type capabilities out of a post type object
  *
  * Post type capabilities use the 'capability_type' argument as a base, if the
@@ -1293,17 +1380,17 @@ function get_post_type_capabilities( $args ) {
  * @since 3.1.0
  * @access private
  *
- * @staticvar array $meta_caps
+ * @global array $post_type_meta_caps Used to store meta capabilities.
  *
- * @param array|void $capabilities Post type meta capabilities.
+ * @param array $capabilities Post type meta capabilities.
  */
 function _post_type_meta_capabilities( $capabilities = null ) {
-	static $meta_caps = array();
-	if ( null === $capabilities )
-		return $meta_caps;
+	global $post_type_meta_caps;
+
 	foreach ( $capabilities as $core => $custom ) {
-		if ( in_array( $core, array( 'read_post', 'delete_post', 'edit_post' ) ) )
-			$meta_caps[ $custom ] = $core;
+		if ( in_array( $core, array( 'read_post', 'delete_post', 'edit_post' ) ) ) {
+			$post_type_meta_caps[ $custom ] = $core;
+		}
 	}
 }
 
@@ -1327,7 +1414,7 @@ function _post_type_meta_capabilities( $capabilities = null ) {
  * - not_found - Default is No posts found/No pages found.
  * - not_found_in_trash - Default is No posts found in Trash/No pages found in Trash.
  * - parent_item_colon - This string isn't used on non-hierarchical types. In hierarchical
- *                       ones the default is 'Parent Page:'.
+ * ones the default is 'Parent Page:'.
  * - all_items - String for the submenu. Default is All Posts/All Pages.
  * - archives - String for use with archives in nav menus. Default is Post Archives/Page Archives.
  * - insert_into_item - String for the media frame button. Default is Insert into post/Insert into page.
@@ -1552,6 +1639,28 @@ function post_type_supports( $post_type, $feature ) {
 }
 
 /**
+ * Retrieves a list of post type names that support a specific feature.
+ *
+ * @since 4.5.0
+ *
+ * @global array $_wp_post_type_features Post type features
+ *
+ * @param array|string $feature  Single feature or an array of features the post types should support.
+ * @param string       $operator Optional. The logical operation to perform. 'or' means
+ *                               only one element from the array needs to match; 'and'
+ *                               means all elements must match; 'not' means no elements may
+ *                               match. Default 'and'.
+ * @return array A list of post type names.
+ */
+function get_post_types_by_support( $feature, $operator = 'and' ) {
+	global $_wp_post_type_features;
+
+	$features = array_fill_keys( (array) $feature, true );
+
+	return array_keys( wp_filter_object_list( $_wp_post_type_features, $features, $operator ) );
+}
+
+/**
  * Update the post type for the post ID.
  *
  * The page or post cache will be cleaned for the post ID.
@@ -1583,12 +1692,20 @@ function set_post_type( $post_id = 0, $post_type = 'post' ) {
  * For all others, the 'publicly_queryable' value will be used.
  *
  * @since 4.4.0
+ * @since 4.5.0 Added the ability to pass a post type name in addition to object.
  *
- * @param object $post_type_object Post type object.
+ * @param object $post_type Post type name or object.
  * @return bool Whether the post type should be considered viewable.
  */
-function is_post_type_viewable( $post_type_object ) {
-	return $post_type_object->publicly_queryable || ( $post_type_object->_builtin && $post_type_object->public );
+function is_post_type_viewable( $post_type ) {
+	if ( is_scalar( $post_type ) ) {
+		$post_type = get_post_type_object( $post_type );
+		if ( ! $post_type ) {
+			return false;
+		}
+	}
+
+	return $post_type->publicly_queryable || ( $post_type->_builtin && $post_type->public );
 }
 
 /**
@@ -2405,8 +2522,9 @@ function wp_delete_post( $postid = 0, $force_delete = false ) {
 		// Point children of this page to its parent, also clean the cache of affected children.
 		$children_query = $wpdb->prepare( "SELECT * FROM $wpdb->posts WHERE post_parent = %d AND post_type = %s", $postid, $post->post_type );
 		$children = $wpdb->get_results( $children_query );
-
-		$wpdb->update( $wpdb->posts, $parent_data, $parent_where + array( 'post_type' => $post->post_type ) );
+		if ( $children ) {
+			$wpdb->update( $wpdb->posts, $parent_data, $parent_where + array( 'post_type' => $post->post_type ) );
+		}
 	}
 
 	// Do raw query. wp_get_post_revisions() is filtered.
@@ -2872,7 +2990,8 @@ function wp_get_recent_posts( $args = array(), $output = ARRAY_A ) {
  *     @type string $ping_status           Whether the post can accept pings. Accepts 'open' or 'closed'.
  *                                         Default is the value of 'default_ping_status' option.
  *     @type string $post_password         The password to access the post. Default empty.
- *     @type string $post_name             The post name. Default is the sanitized post title.
+ *     @type string $post_name             The post name. Default is the sanitized post title
+ *                                         when creating a new post.
  *     @type string $to_ping               Space or carriage return-separated list of URLs to ping.
  *                                         Default empty.
  *     @type string $pinged                Space or carriage return-separated list of URLs that have
@@ -2953,6 +3072,9 @@ function wp_insert_post( $postarr, $wp_error = false ) {
 	$post_excerpt = $postarr['post_excerpt'];
 	if ( isset( $postarr['post_name'] ) ) {
 		$post_name = $postarr['post_name'];
+	} elseif ( $update ) {
+		// For an update, don't modify the post_name if it wasn't supplied as an argument.
+		$post_name = $post_before->post_name;
 	}
 
 	$maybe_empty = 'attachment' !== $post_type
@@ -3140,6 +3262,28 @@ function wp_insert_post( $postarr, $wp_error = false ) {
 	 * @param array $postarr     Array of sanitized, but otherwise unmodified post data.
 	 */
 	$post_parent = apply_filters( 'wp_insert_post_parent', $post_parent, $post_ID, compact( array_keys( $postarr ) ), $postarr );
+
+	/*
+	 * If the post is being untrashed and it has a desired slug stored in post meta,
+	 * reassign it.
+	 */
+	if ( 'trash' === $previous_status && 'trash' !== $post_status ) {
+		$desired_post_slug = get_post_meta( $post_ID, '_wp_desired_post_slug', true );
+		if ( $desired_post_slug ) {
+			delete_post_meta( $post_ID, '_wp_desired_post_slug' );
+			$post_name = $desired_post_slug;
+		}
+	}
+
+	// If a trashed post has the desired slug, change it and let this post have it.
+	if ( 'trash' !== $post_status && $post_name ) {
+		wp_add_trashed_suffix_to_post_name_for_trashed_posts( $post_name, $post_ID );
+	}
+
+	// When trashing an existing post, change its slug to allow non-trashed posts to use it.
+	if ( 'trash' === $post_status && 'trash' !== $previous_status && 'new' !== $previous_status ) {
+		$post_name = wp_add_trashed_suffix_to_post_name_for_post( $post_ID );
+	}
 
 	$post_name = wp_unique_post_slug( $post_name, $post_ID, $post_status, $post_type, $post_parent );
 
@@ -3569,7 +3713,7 @@ function wp_unique_post_slug( $slug, $post_ID, $post_status, $post_type, $post_p
 		 * @param bool   $bad_slug Whether the slug would be bad as an attachment slug.
 		 * @param string $slug     The post slug.
 		 */
-		if ( $post_name_check || in_array( $slug, $feeds ) || apply_filters( 'wp_unique_post_slug_is_bad_attachment_slug', false, $slug ) ) {
+		if ( $post_name_check || in_array( $slug, $feeds ) || 'embed' === $slug || apply_filters( 'wp_unique_post_slug_is_bad_attachment_slug', false, $slug ) ) {
 			$suffix = 2;
 			do {
 				$alt_post_name = _truncate_post_slug( $slug, 200 - ( strlen( $suffix ) + 1 ) ) . "-$suffix";
@@ -3599,7 +3743,7 @@ function wp_unique_post_slug( $slug, $post_ID, $post_status, $post_type, $post_p
 		 * @param string $post_type   Post type.
 		 * @param int    $post_parent Post parent ID.
 		 */
-		if ( $post_name_check || in_array( $slug, $feeds ) || preg_match( "@^($wp_rewrite->pagination_base)?\d+$@", $slug )  || apply_filters( 'wp_unique_post_slug_is_bad_hierarchical_slug', false, $slug, $post_type, $post_parent ) ) {
+		if ( $post_name_check || in_array( $slug, $feeds ) || 'embed' === $slug || preg_match( "@^($wp_rewrite->pagination_base)?\d+$@", $slug )  || apply_filters( 'wp_unique_post_slug_is_bad_hierarchical_slug', false, $slug, $post_type, $post_parent ) ) {
 			$suffix = 2;
 			do {
 				$alt_post_name = _truncate_post_slug( $slug, 200 - ( strlen( $suffix ) + 1 ) ) . "-$suffix";
@@ -3644,7 +3788,7 @@ function wp_unique_post_slug( $slug, $post_ID, $post_status, $post_type, $post_p
 		 * @param string $slug      The post slug.
 		 * @param string $post_type Post type.
 		 */
-		if ( $post_name_check || in_array( $slug, $feeds ) || $conflicts_with_date_archive || apply_filters( 'wp_unique_post_slug_is_bad_flat_slug', false, $slug, $post_type ) ) {
+		if ( $post_name_check || in_array( $slug, $feeds ) || 'embed' === $slug || $conflicts_with_date_archive || apply_filters( 'wp_unique_post_slug_is_bad_flat_slug', false, $slug, $post_type ) ) {
 			$suffix = 2;
 			do {
 				$alt_post_name = _truncate_post_slug( $slug, 200 - ( strlen( $suffix ) + 1 ) ) . "-$suffix";
@@ -3722,7 +3866,7 @@ function wp_add_post_tags( $post_id = 0, $tags = '' ) {
  *                              separated by commas. Default empty.
  * @param bool         $append  Optional. If true, don't delete existing tags, just add on. If false,
  *                              replace the tags with the new tags. Default false.
- * @return array|false|WP_Error Array of affected term IDs. WP_Error or false on failure.
+ * @return array|false|WP_Error Array of term taxonomy IDs of affected terms. WP_Error or false on failure.
  */
 function wp_set_post_tags( $post_id = 0, $tags = '', $append = false ) {
 	return wp_set_post_terms( $post_id, $tags, 'post_tag', $append);
@@ -3741,7 +3885,7 @@ function wp_set_post_tags( $post_id = 0, $tags = '', $append = false ) {
  * @param string       $taxonomy Optional. Taxonomy name. Default 'post_tag'.
  * @param bool         $append   Optional. If true, don't delete existing terms, just add on. If false,
  *                               replace the terms with the new terms. Default false.
- * @return array|false|WP_Error Array of affected term IDs. WP_Error or false on failure.
+ * @return array|false|WP_Error Array of term taxonomy IDs of affected terms. WP_Error or false on failure.
  */
 function wp_set_post_terms( $post_id = 0, $tags = '', $taxonomy = 'post_tag', $append = false ) {
 	$post_id = (int) $post_id;
@@ -3784,7 +3928,7 @@ function wp_set_post_terms( $post_id = 0, $tags = '', $taxonomy = 'post_tag', $a
  *                                   Default empty array.
  * @param bool      $append         If true, don't delete existing categories, just add on.
  *                                  If false, replace the categories with the new categories.
- * @return array|bool|WP_Error
+ * @return array|false|WP_Error Array of term taxonomy IDs of affected categories. WP_Error or false on failure.
  */
 function wp_set_post_categories( $post_ID = 0, $post_categories = array(), $append = false ) {
 	$post_ID = (int) $post_ID;
@@ -4117,6 +4261,11 @@ function get_page_by_path( $page_path, $output = OBJECT, $post_type = 'page' ) {
 		if ( $page->post_name == $revparts[0] ) {
 			$count = 0;
 			$p = $page;
+
+			/*
+			 * Loop through the given path parts from right to left,
+			 * ensuring each matches the post ancestry.
+			 */
 			while ( $p->post_parent != 0 && isset( $pages[ $p->post_parent ] ) ) {
 				$count++;
 				$parent = $pages[ $p->post_parent ];
@@ -4258,8 +4407,8 @@ function get_page_hierarchy( &$pages, $page_id = 0 ) {
  * @see _page_traverse_name()
  *
  * @param int   $page_id   Page ID.
- * @param array &$children Parent-children relations, passed by reference.
- * @param array &$result   Result, passed by reference.
+ * @param array $children  Parent-children relations, passed by reference.
+ * @param array $result    Result, passed by reference.
  */
 function _page_traverse_name( $page_id, &$children, &$result ){
 	if ( isset( $children[ $page_id ] ) ){
@@ -4271,7 +4420,7 @@ function _page_traverse_name( $page_id, &$children, &$result ){
 }
 
 /**
- * Build URI for a page.
+ * Build the URI path for a page.
  *
  * Sub pages will be in the "directory" under the parent page post name.
  *
@@ -4281,7 +4430,9 @@ function _page_traverse_name( $page_id, &$children, &$result ){
  * @return string|false Page URI, false on error.
  */
 function get_page_uri( $page ) {
-	$page = get_post( $page );
+	if ( ! $page instanceof WP_Post ) {
+		$page = get_post( $page );
+	}
 
 	if ( ! $page )
 		return false;
@@ -4744,7 +4895,7 @@ function wp_delete_attachment( $post_id, $force_delete = false ) {
 	/** This action is documented in wp-includes/post.php */
 	do_action( 'deleted_post', $post_id );
 
-	$uploadpath = wp_upload_dir();
+	$uploadpath = wp_get_upload_dir();
 
 	if ( ! empty($meta['thumb']) ) {
 		// Don't delete the thumb if another attachment uses it.
@@ -4861,9 +5012,9 @@ function wp_get_attachment_url( $post_id = 0 ) {
 
 	$url = '';
 	// Get attached file.
-	if ( $file = get_post_meta( $post->ID, '_wp_attached_file', true) ) {
+	if ( $file = get_post_meta( $post->ID, '_wp_attached_file', true ) ) {
 		// Get upload directory.
-		if ( ($uploads = wp_upload_dir()) && false === $uploads['error'] ) {
+		if ( ( $uploads = wp_get_upload_dir() ) && false === $uploads['error'] ) {
 			// Check that the upload base exists in the file location.
 			if ( 0 === strpos( $file, $uploads['basedir'] ) ) {
 				// Replace file location with url location.
@@ -4886,7 +5037,7 @@ function wp_get_attachment_url( $post_id = 0 ) {
 		$url = get_the_guid( $post->ID );
 	}
 
-	// On SSL front-end, URLs should be HTTPS.
+	// On SSL front end, URLs should be HTTPS.
 	if ( is_ssl() && ! is_admin() && 'wp-login.php' !== $GLOBALS['pagenow'] ) {
 		$url = set_url_scheme( $url );
 	}
@@ -5845,6 +5996,43 @@ function wp_delete_auto_drafts() {
 }
 
 /**
+ * Queues posts for lazy-loading of term meta.
+ *
+ * @since 4.5.0
+ *
+ * @param array $posts Array of WP_Post objects.
+ */
+function wp_queue_posts_for_term_meta_lazyload( $posts ) {
+	$post_type_taxonomies = $term_ids = array();
+	foreach ( $posts as $post ) {
+		if ( ! ( $post instanceof WP_Post ) ) {
+			continue;
+		}
+
+		if ( ! isset( $post_type_taxonomies[ $post->post_type ] ) ) {
+			$post_type_taxonomies[ $post->post_type ] = get_object_taxonomies( $post->post_type );
+		}
+
+		foreach ( $post_type_taxonomies[ $post->post_type ] as $taxonomy ) {
+			// Term cache should already be primed by `update_post_term_cache()`.
+			$terms = get_object_term_cache( $post->ID, $taxonomy );
+			if ( false !== $terms ) {
+				foreach ( $terms as $term ) {
+					if ( ! isset( $term_ids[ $term->term_id ] ) ) {
+						$term_ids[] = $term->term_id;
+					}
+				}
+			}
+		}
+	}
+
+	if ( $term_ids ) {
+		$lazyloader = wp_metadata_lazyloader();
+		$lazyloader->queue_objects( 'term', $term_ids );
+	}
+}
+
+/**
  * Update the custom taxonomies' term counts when a post's status is changed.
  *
  * For example, default posts term counts (for custom taxonomies) don't include
@@ -5888,4 +6076,62 @@ function _prime_post_caches( $ids, $update_term_cache = true, $update_meta_cache
 
 		update_post_caches( $fresh_posts, 'any', $update_term_cache, $update_meta_cache );
 	}
+}
+
+/**
+ * Adds a suffix if any trashed posts have a given slug.
+ *
+ * Store its desired (i.e. current) slug so it can try to reclaim it
+ * if the post is untrashed.
+ *
+ * For internal use.
+ *
+ * @since 4.5.0
+ * @access private
+ *
+ * @param string $post_name Slug.
+ * @param string $post_ID   Optional. Post ID that should be ignored. Default 0.
+ */
+function wp_add_trashed_suffix_to_post_name_for_trashed_posts( $post_name, $post_ID = 0 ) {
+	$trashed_posts_with_desired_slug = get_posts( array(
+		'name' => $post_name,
+		'post_status' => 'trash',
+		'post_type' => 'any',
+		'nopaging' => true,
+		'post__not_in' => array( $post_ID )
+	) );
+
+	if ( ! empty( $trashed_posts_with_desired_slug ) ) {
+		foreach ( $trashed_posts_with_desired_slug as $_post ) {
+			wp_add_trashed_suffix_to_post_name_for_post( $_post );
+		}
+	}
+}
+
+/**
+ * Adds a trashed suffix For a given post.
+ *
+ * Store its desired (i.e. current) slug so it can try to reclaim it
+ * if the post is untrashed.
+ *
+ * For internal use.
+ *
+ * @since 4.5.0
+ * @access private
+ *
+ * @param WP_Post $post The post.
+ */
+function wp_add_trashed_suffix_to_post_name_for_post( $post ) {
+	global $wpdb;
+
+	$post = get_post( $post );
+
+	if ( '__trashed' === substr( $post->post_name, -9 ) ) {
+		return $post->post_name;
+	}
+	add_post_meta( $post->ID, '_wp_desired_post_slug', $post->post_name );
+	$post_name = _truncate_post_slug( $post->post_name, 191 ) . '__trashed';
+	$wpdb->update( $wpdb->posts, array( 'post_name' => $post_name ), array( 'ID' => $post->ID ) );
+	clean_post_cache( $post->ID );
+	return $post_name;
 }

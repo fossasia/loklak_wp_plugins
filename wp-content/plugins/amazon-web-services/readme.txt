@@ -2,7 +2,7 @@
 Contributors: bradt, deliciousbrains
 Tags: amazon, amazon web services
 Requires at least: 3.7
-Tested up to: 4.3
+Tested up to: 4.5
 Stable tag: trunk
 License: GPLv3
 
@@ -30,6 +30,12 @@ This plugin is required by other plugins, which uses its libraries and its setti
 1. Settings screen
 
 == Changelog ==
+
+= 0.3.5 - 2016-03-07 =
+* Improvement: Support for `DBI_` prefixed constants to avoid conflicts with other plugins
+* Improvement: Redesign of the Addons page
+* Improvement: Compatibility with WP Offload S3 Lite 1.0
+* Improvement: Compatibility with WP Offload S3 1.1
 
 = 0.3.4 - 2015-11-02 =
 * Improvement: Compatibility with WP Offload S3 Pro 1.0.3

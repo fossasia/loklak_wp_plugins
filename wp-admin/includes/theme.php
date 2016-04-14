@@ -163,18 +163,38 @@ function get_theme_update_available( $theme ) {
 		$theme_name = $theme->display('Name');
 		$details_url = add_query_arg(array('TB_iframe' => 'true', 'width' => 1024, 'height' => 800), $update['url']); //Theme browser inside WP? replace this, Also, theme preview JS will override this on the available list.
 		$update_url = wp_nonce_url( admin_url( 'update.php?action=upgrade-theme&amp;theme=' . urlencode( $stylesheet ) ), 'upgrade-theme_' . $stylesheet );
-		$update_onclick = 'onclick="if ( confirm(\'' . esc_js( __("Updating this theme will lose any customizations you have made. 'Cancel' to stop, 'OK' to update.") ) . '\') ) {return true;}return false;"';
 
 		if ( !is_multisite() ) {
 			if ( ! current_user_can('update_themes') ) {
-				$html = sprintf( '<p><strong>' . __( 'There is a new version of %1$s available. <a href="%2$s" class="thickbox" title="%3$s">View version %4$s details</a>.' ) . '</strong></p>',
-					$theme_name, esc_url( $details_url ), esc_attr( $theme['Name'] ), $update['new_version'] );
+				/* translators: 1: theme name, 2: theme details URL, 3: accessibility text, 4: version number */
+				$html = sprintf( '<p><strong>' . __( 'There is a new version of %1$s available. <a href="%2$s" class="thickbox" aria-label="%3$s">View version %4$s details</a>.' ) . '</strong></p>',
+					$theme_name,
+					esc_url( $details_url ),
+					/* translators: 1: theme name, 2: version number */
+					esc_attr( sprintf( __( 'View %1$s version %2$s details' ), $theme_name, $update['new_version'] ) ),
+					$update['new_version']
+				);
 			} elseif ( empty( $update['package'] ) ) {
-				$html = sprintf( '<p><strong>' . __( 'There is a new version of %1$s available. <a href="%2$s" class="thickbox" title="%3$s">View version %4$s details</a>. <em>Automatic update is unavailable for this theme.</em>' ) . '</strong></p>',
-					$theme_name, esc_url( $details_url ), esc_attr( $theme['Name'] ), $update['new_version'] );
+				/* translators: 1: theme name, 2: theme details URL, 3: accessibility text, 4: version number */
+				$html = sprintf( '<p><strong>' . __( 'There is a new version of %1$s available. <a href="%2$s" class="thickbox" aria-label="%3$s">View version %4$s details</a>. <em>Automatic update is unavailable for this theme.</em>' ) . '</strong></p>',
+					$theme_name,
+					esc_url( $details_url ),
+					/* translators: 1: theme name, 2: version number */
+					esc_attr( sprintf( __( 'View %1$s version %2$s details' ), $theme_name, $update['new_version'] ) ),
+					$update['new_version']
+				);
 			} else {
-				$html = sprintf( '<p><strong>' . __( 'There is a new version of %1$s available. <a href="%2$s" class="thickbox" title="%3$s">View version %4$s details</a> or <a href="%5$s">update now</a>.' ) . '</strong></p>',
-					$theme_name, esc_url( $details_url ), esc_attr( $theme['Name'] ), $update['new_version'], $update_url, $update_onclick );
+				/* translators: 1: theme name, 2: theme details URL, 3: accessibility text, 4: version number, 5: update URL, 6: accessibility text */
+				$html = sprintf( '<p><strong>' . __( 'There is a new version of %1$s available. <a href="%2$s" class="thickbox" aria-label="%3$s">View version %4$s details</a> or <a href="%5$s" aria-label="%6$s">update now</a>.' ) . '</strong></p>',
+					$theme_name,
+					esc_url( $details_url ),
+					/* translators: 1: theme name, 2: version number */
+					esc_attr( sprintf( __( 'View %1$s version %2$s details' ), $theme_name, $update['new_version'] ) ),
+					$update['new_version'],
+					$update_url,
+					/* translators: %s: theme name */
+					esc_attr( sprintf( __( 'Update %s now' ), $theme_name ) )
+				);
 			}
 		}
 	}
@@ -586,13 +606,13 @@ function customize_themes_print_templates() {
 	?>
 	<script type="text/html" id="tmpl-customize-themes-details-view">
 		<div class="theme-backdrop"></div>
-		<div class="theme-wrap">
+		<div class="theme-wrap wp-clearfix">
 			<div class="theme-header">
 				<button type="button" class="left dashicons dashicons-no"><span class="screen-reader-text"><?php _e( 'Show previous theme' ); ?></span></button>
 				<button type="button" class="right dashicons dashicons-no"><span class="screen-reader-text"><?php _e( 'Show next theme' ); ?></span></button>
 				<button type="button" class="close dashicons dashicons-no"><span class="screen-reader-text"><?php _e( 'Close details dialog' ); ?></span></button>
 			</div>
-			<div class="theme-about">
+			<div class="theme-about wp-clearfix">
 				<div class="theme-screenshots">
 				<# if ( data.screenshot[0] ) { #>
 					<div class="screenshot"><img src="{{ data.screenshot[0] }}" alt="" /></div>

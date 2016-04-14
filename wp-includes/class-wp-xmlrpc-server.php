@@ -188,6 +188,9 @@ class wp_xmlrpc_server extends IXR_Server {
 	}
 
 	/**
+	 * Serves the XML-RPC request.
+	 *
+	 * @since 2.9.0
 	 * @access public
 	 */
 	public function serve_request() {
@@ -244,9 +247,22 @@ class wp_xmlrpc_server extends IXR_Server {
 		}
 
 		/**
-		 * Filter whether XML-RPC is enabled.
+		 * Filter whether XML-RPC methods requiring authentication are enabled.
 		 *
-		 * This is the proper filter for turning off XML-RPC.
+		 * Contrary to the way it's named, this filter does not control whether XML-RPC is *fully*
+		 * enabled, rather, it only controls whether XML-RPC methods requiring authentication - such
+		 * as for publishing purposes - are enabled.
+		 *
+		 * Further, the filter does not control whether pingbacks or other custom endpoints that don't
+		 * require authentication are enabled. This behavior is expected, and due to how parity was matched
+		 * with the `enable_xmlrpc` UI option the filter replaced when it was introduced in 3.5.
+		 *
+		 * To disable XML-RPC methods that require authentication, use:
+		 *
+		 *     add_filter( 'xmlrpc_enabled', '__return_false' );
+		 *
+		 * For more granular control over all XML-RPC methods and requests, see the {@see 'xmlrpc_methods'}
+		 * and {@see 'xmlrpc_element_limit'} hooks.
 		 *
 		 * @since 3.5.0
 		 *
@@ -1348,9 +1364,15 @@ class wp_xmlrpc_server extends IXR_Server {
 			$dateCreated = $post_data['post_date']->getIso();
 		}
 
+		// Default to not flagging the post date to be edited unless it's intentional.
+		$post_data['edit_date'] = false;
+
 		if ( ! empty( $dateCreated ) ) {
 			$post_data['post_date'] = get_date_from_gmt( iso8601_to_datetime( $dateCreated ) );
 			$post_data['post_date_gmt'] = iso8601_to_datetime( $dateCreated, 'GMT' );
+
+			// Flag the post date to be edited.
+			$post_data['edit_date'] = true;
 		}
 
 		if ( ! isset( $post_data['ID'] ) )
@@ -4327,11 +4349,18 @@ class wp_xmlrpc_server extends IXR_Server {
 	/**
 	 * Private function for retrieving a users blogs for multisite setups
 	 *
+	 * @since 3.0.0
 	 * @access protected
 	 *
+	 * @param array $args {
+	 *     Method arguments. Note: arguments must be ordered as documented.
+	 *
+	 *     @type string $username Username.
+	 *     @type string $password Password.
+	 * }
 	 * @return array|IXR_Error
 	 */
-	protected function _multisite_getUsersBlogs($args) {
+	protected function _multisite_getUsersBlogs( $args ) {
 		$current_blog = get_blog_details();
 
 		$domain = $current_blog->domain;
@@ -4520,7 +4549,9 @@ class wp_xmlrpc_server extends IXR_Server {
 	 *
 	 * @since 1.5.0
 	 * @deprecated 3.5.0
-	 * @return IXR_Error
+	 *
+	 * @param array $args Unused.
+	 * @return IXR_Error Error object.
 	 */
 	public function blogger_getTemplate($args) {
 		return new IXR_Error( 403, __('Sorry, that file cannot be edited.' ) );
@@ -4531,18 +4562,20 @@ class wp_xmlrpc_server extends IXR_Server {
 	 *
 	 * @since 1.5.0
 	 * @deprecated 3.5.0
-	 * @return IXR_Error
+	 *
+	 * @param array $args Unused.
+	 * @return IXR_Error Error object.
 	 */
 	public function blogger_setTemplate($args) {
 		return new IXR_Error( 403, __('Sorry, that file cannot be edited.' ) );
 	}
 
 	/**
-	 * Create new post.
+	 * Creates new post.
 	 *
 	 * @since 1.5.0
 	 *
-	 * @param array  $args {
+	 * @param array $args {
 	 *     Method arguments. Note: arguments must be ordered as documented.
 	 *
 	 *     @type string $appkey (unused)
@@ -5065,8 +5098,12 @@ class wp_xmlrpc_server extends IXR_Server {
 	}
 
 	/**
-	 * @param integer $post_ID
-	 * @param array   $enclosure
+	 * Adds an enclosure to a post if it's new.
+	 *
+	 * @since 2.8.0
+	 *
+	 * @param integer $post_ID   Post ID.
+	 * @param array   $enclosure Enclosure data.
 	 */
 	public function add_enclosure_if_new( $post_ID, $enclosure ) {
 		if ( is_array( $enclosure ) && isset( $enclosure['url'] ) && isset( $enclosure['length'] ) && isset( $enclosure['type'] ) ) {
@@ -5344,16 +5381,22 @@ class wp_xmlrpc_server extends IXR_Server {
 		elseif ( !empty( $content_struct['dateCreated']) )
 			$dateCreated = $content_struct['dateCreated']->getIso();
 
+		// Default to not flagging the post date to be edited unless it's intentional.
+		$edit_date = false;
+
 		if ( !empty( $dateCreated ) ) {
 			$post_date = get_date_from_gmt(iso8601_to_datetime($dateCreated));
 			$post_date_gmt = iso8601_to_datetime($dateCreated, 'GMT');
+
+			// Flag the post date to be edited.
+			$edit_date = true;
 		} else {
 			$post_date     = $postdata['post_date'];
 			$post_date_gmt = $postdata['post_date_gmt'];
 		}
 
 		// We've got all the data -- post it.
-		$newpost = compact('ID', 'post_content', 'post_title', 'post_category', 'post_status', 'post_excerpt', 'comment_status', 'ping_status', 'post_date', 'post_date_gmt', 'to_ping', 'post_name', 'post_password', 'post_parent', 'menu_order', 'post_author', 'tags_input', 'page_template');
+		$newpost = compact('ID', 'post_content', 'post_title', 'post_category', 'post_status', 'post_excerpt', 'comment_status', 'ping_status', 'edit_date', 'post_date', 'post_date_gmt', 'to_ping', 'post_name', 'post_password', 'post_parent', 'menu_order', 'post_author', 'tags_input', 'page_template');
 
 		$result = wp_update_post($newpost, true);
 		if ( is_wp_error( $result ) )
@@ -6259,35 +6302,37 @@ class wp_xmlrpc_server extends IXR_Server {
 				'X-Pingback-Forwarded-For' => $remote_ip,
 			),
 		);
-		$request = wp_safe_remote_get( $pagelinkedfrom, $http_api_args );
-		$linea = wp_remote_retrieve_body( $request );
 
-		if ( !$linea )
+		$request = wp_safe_remote_get( $pagelinkedfrom, $http_api_args );
+		$remote_source = $remote_source_original = wp_remote_retrieve_body( $request );
+
+		if ( ! $remote_source ) {
 			return $this->pingback_error( 16, __( 'The source URL does not exist.' ) );
+		}
 
 		/**
 		 * Filter the pingback remote source.
 		 *
 		 * @since 2.5.0
 		 *
-		 * @param string $linea        Response object for the page linked from.
-		 * @param string $pagelinkedto URL of the page linked to.
+		 * @param string $remote_source Response source for the page linked from.
+		 * @param string $pagelinkedto  URL of the page linked to.
 		 */
-		$linea = apply_filters( 'pre_remote_source', $linea, $pagelinkedto );
+		$remote_source = apply_filters( 'pre_remote_source', $remote_source, $pagelinkedto );
 
 		// Work around bug in strip_tags():
-		$linea = str_replace('<!DOC', '<DOC', $linea);
-		$linea = preg_replace( '/[\r\n\t ]+/', ' ', $linea ); // normalize spaces
-		$linea = preg_replace( "/<\/*(h1|h2|h3|h4|h5|h6|p|th|td|li|dt|dd|pre|caption|input|textarea|button|body)[^>]*>/", "\n\n", $linea );
+		$remote_source = str_replace( '<!DOC', '<DOC', $remote_source );
+		$remote_source = preg_replace( '/[\r\n\t ]+/', ' ', $remote_source ); // normalize spaces
+		$remote_source = preg_replace( "/<\/*(h1|h2|h3|h4|h5|h6|p|th|td|li|dt|dd|pre|caption|input|textarea|button|body)[^>]*>/", "\n\n", $remote_source );
 
-		preg_match('|<title>([^<]*?)</title>|is', $linea, $matchtitle);
+		preg_match( '|<title>([^<]*?)</title>|is', $remote_source, $matchtitle );
 		$title = $matchtitle[1];
 		if ( empty( $title ) )
 			return $this->pingback_error( 32, __('We cannot find a title on that page.' ) );
 
-		$linea = strip_tags( $linea, '<a>' ); // just keep the tag we need
+		$remote_source = strip_tags( $remote_source, '<a>' ); // just keep the tag we need
 
-		$p = explode( "\n\n", $linea );
+		$p = explode( "\n\n", $remote_source );
 
 		$preg_target = preg_quote($pagelinkedto, '|');
 
@@ -6335,7 +6380,10 @@ class wp_xmlrpc_server extends IXR_Server {
 		$this->escape($comment_content);
 		$comment_type = 'pingback';
 
-		$commentdata = compact('comment_post_ID', 'comment_author', 'comment_author_url', 'comment_author_email', 'comment_content', 'comment_type');
+		$commentdata = compact(
+			'comment_post_ID', 'comment_author', 'comment_author_url', 'comment_author_email',
+			'comment_content', 'comment_type', 'remote_source', 'remote_source_original'
+		);
 
 		$comment_ID = wp_new_comment($commentdata);
 
@@ -6399,9 +6447,13 @@ class wp_xmlrpc_server extends IXR_Server {
 	}
 
 	/**
-	 * @param integer $code
-	 * @param string $message
-	 * @return IXR_Error
+	 * Sends a pingback error based on the given error code and message.
+	 *
+	 * @since 3.6.0
+	 *
+	 * @param int    $code    Error code.
+	 * @param string $message Error message.
+	 * @return IXR_Error Error object.
 	 */
 	protected function pingback_error( $code, $message ) {
 		/**

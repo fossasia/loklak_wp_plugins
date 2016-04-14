@@ -39,28 +39,41 @@ $selected_bucket_prefix = $this->get_object_prefix(); ?>
 						'prefix'                 => $prefix,
 						'selected_bucket'        => $selected_bucket,
 						'selected_bucket_prefix' => $selected_bucket_prefix,
-						'tr_class'               => 'as3cf-border-bottom',
+						'tr_class'               => 'as3cf-border-bottom as3cf-bucket-setting',
 					)
 				); ?>
+
+				<?php $args = $this->get_setting_args( 'copy-to-s3' ); ?>
 				<tr class="as3cf-setting-title">
 					<td colspan="2"><h3><?php _e( 'Enable/Disable the Plugin', 'amazon-s3-and-cloudfront' ); ?></h3></td>
 				</tr>
-				<tr>
+				<tr class="<?php echo $args['tr_class']; ?>">
 					<td>
-						<?php $this->render_view( 'checkbox', array( 'key' => 'copy-to-s3' ) ); ?>
+						<?php $this->render_view( 'checkbox', $args ); ?>
 					</td>
 					<td>
+						<?php echo $args['setting_msg']; ?>
 						<h4><?php _e( 'Copy Files to S3', 'amazon-s3-and-cloudfront' ) ?></h4>
-						<p><?php _e( 'When a file is uploaded to the Media Library, copy it to S3. Existing files are <em>not</em> copied to S3.', 'amazon-s3-and-cloudfront' ) ?></p>
+						<p>
+							<?php _e( 'When a file is uploaded to the Media Library, copy it to S3. Existing files are <em>not</em> copied to S3.', 'amazon-s3-and-cloudfront' ); ?>
+							<?php echo $this->settings_more_info_link( 'copy-to-s3' ); ?>
+						</p>
+
 					</td>
 				</tr>
-				<tr class="as3cf-border-bottom">
+				<?php $args = $this->get_setting_args( 'serve-from-s3' ); ?>
+				<tr class="as3cf-border-bottom <?php echo $args['tr_class']; ?>">
 					<td>
-						<?php $this->render_view( 'checkbox', array( 'key' => 'serve-from-s3' ) ); ?>
+						<?php $this->render_view( 'checkbox', $args ); ?>
 					</td>
 					<td>
+						<?php echo $args['setting_msg']; ?>
 						<h4><?php _e( 'Rewrite File URLs', 'amazon-s3-and-cloudfront' ) ?></h4>
-						<p><?php _e( 'For Media Library files that have been copied to S3, rewrite the URLs so that they are served from S3/CloudFront instead of your server.', 'amazon-s3-and-cloudfront' ) ?></p>
+						<p>
+							<?php _e( 'For Media Library files that have been copied to S3, rewrite the URLs so that they are served from S3/CloudFront instead of your server.', 'amazon-s3-and-cloudfront' ); ?>
+							<?php echo $this->settings_more_info_link( 'serve-from-s3' ); ?>
+						</p>
+
 					</td>
 				</tr>
 				<tr class="configure-url as3cf-setting-title">
@@ -76,54 +89,79 @@ $selected_bucket_prefix = $this->get_object_prefix(); ?>
 						</div>
 					</td>
 				</tr>
-				<?php $this->render_view( 'domain-setting', array( 'tr_class' => 'configure-url url-preview' ) ); ?>
-				<tr class="configure-url url-preview">
+				<?php $this->render_view( 'domain-setting' ); ?>
+				<?php $args = $this->get_setting_args( 'enable-object-prefix' ); ?>
+				<tr class="configure-url url-preview <?php echo $args['tr_class']; ?>">
 					<td>
-						<?php $this->render_view( 'checkbox', array( 'key' => 'enable-object-prefix', 'class' => 'sub-toggle' ) ); ?>
+						<?php $args['class'] = 'sub-toggle'; ?>
+						<?php $this->render_view( 'checkbox', $args ); ?>
 					</td>
 					<td>
+						<?php echo $args['setting_msg']; ?>
 						<h4><?php _e( 'Path', 'amazon-s3-and-cloudfront' ) ?></h4>
 						<p class="object-prefix-desc">
-							<?php _e( 'By default the path is the same as your local WordPress files:', 'amazon-s3-and-cloudfront' ); ?>
-							<em><?php echo $this->get_default_object_prefix(); // xss ok ?></em>
+							<?php _e( 'By default the path is the same as your local WordPress files.', 'amazon-s3-and-cloudfront' ); ?>
+							<?php echo $this->settings_more_info_link( 'object-prefix' ); ?>
 						</p>
 						<p class="as3cf-setting enable-object-prefix <?php echo ( $this->get_setting( 'enable-object-prefix' ) ) ? '' : 'hide'; // xss ok ?>">
-							<input type="text" name="object-prefix" value="<?php echo esc_attr( $this->get_setting( 'object-prefix' ) ); ?>" size="30" />
+							<?php
+							$args = $this->get_setting_args( 'object-prefix' );
+							if ( false === $this->get_defined_setting( 'object-prefix', false ) ) {
+								$placeholder = 'placeholder="placeholder"';
+							} else {
+								$placeholder = '';
+							}
+							?>
+							<input type="text" name="object-prefix" value="<?php echo esc_attr( $this->get_setting( 'object-prefix' ) ); ?>" size="30" placeholder="<?php echo $placeholder; ?>" <?php echo $args['disabled_attr']; ?> />
 						</p>
 					</td>
 				</tr>
-				<tr class="configure-url url-preview">
+
+				<?php $args = $this->get_setting_args( 'use-yearmonth-folders' ); ?>
+				<tr class="configure-url url-preview <?php echo $args['tr_class']; ?>">
 					<td>
-						<?php $this->render_view( 'checkbox', array( 'key' => 'use-yearmonth-folders' ) ); ?>
+						<?php $this->render_view( 'checkbox', $args ); ?>
 					</td>
 					<td>
+						<?php echo $args['setting_msg']; ?>
 						<h4><?php _e( 'Year/Month', 'amazon-s3-and-cloudfront' ) ?></h4>
 						<p>
 							<?php _e( 'Add the Year/Month in the URL.' ); ?>
+							<?php echo $this->settings_more_info_link( 'use-yearmonth-folders' ); ?>
 						</p>
 					</td>
 				</tr>
-				<tr class="configure-url as3cf-border-bottom url-preview">
+
+				<?php $args = $this->get_setting_args( 'ssl' ); ?>
+				<tr class="configure-url as3cf-border-bottom url-preview <?php echo $args['tr_class']; ?>">
 					<td>
-						<h4><?php _e( 'SSL:', 'amazon-s3-and-cloudfront' ) ?></h4>
+						<h4><?php _e( 'SSL', 'amazon-s3-and-cloudfront' ); ?></h4>
 					</td>
 					<td>
+						<p>
+							<?php _e( 'Controls the protocol of the S3 URLs.' ); ?>
+							<?php echo $this->settings_more_info_link( 'ssl' ); ?>
+						</p>
 						<?php
-						$ssl = $this->get_setting( 'ssl' ); ?>
+						$ssl = $this->get_setting( 'ssl' );
+						echo $args['setting_msg'];
+						?>
 						<div class="as3cf-ssl as3cf-radio-group">
 							<label>
-								<input type="radio" name="ssl" value="request" <?php checked( $ssl, 'request' ); ?>>
+								<input type="radio" name="ssl" value="request" <?php checked( $ssl, 'request' ); ?> <?php echo $args['disabled_attr']; ?>>
 								<?php _e( 'Same as request', 'amazon-s3-and-cloudfront' ); ?>
 								<p><?php _e( 'When the request is https://, use https:// for the file URL as well.', 'amazon-s3-and-cloudfront' ); ?></p>
 							</label>
 							<label>
-								<input type="radio" name="ssl" value="https" <?php checked( $ssl, 'https' ); ?>>
+								<input type="radio" name="ssl" value="https" <?php checked( $ssl, 'https' ); ?> <?php echo $args['disabled_attr']; ?>>
 								<?php _e( 'Always SSL', 'amazon-s3-and-cloudfront' ); ?>
 								<p><?php _e( 'Forces https:// to be used.', 'amazon-s3-and-cloudfront' ); ?></p>
-								<p><?php _e( 'You cannot use the "Bucket as a subdomain" domain option when using SSL.', 'amazon-s3-and-cloudfront' ); ?></p>
-							</label>
+								<?php if ( $this->show_deprecated_domain_setting() ) : ?>
+									<p><?php _e( 'You cannot use the "Bucket as a subdomain" domain option when using SSL.', 'amazon-s3-and-cloudfront' ); ?></p>
+								<?php endif; ?>
+								</label>
 							<label>
-								<input type="radio" name="ssl" value="http" <?php checked( $ssl, 'http' ); ?>>
+								<input type="radio" name="ssl" value="http" <?php checked( $ssl, 'http' ); ?> <?php echo $args['disabled_attr']; ?>>
 								<?php _e( 'Always non-SSL', 'amazon-s3-and-cloudfront' ); ?>
 								<p><?php _e( 'Forces http:// to be used.', 'amazon-s3-and-cloudfront' ); ?></p>
 							</label>
@@ -133,13 +171,17 @@ $selected_bucket_prefix = $this->get_object_prefix(); ?>
 				<tr class="advanced-options as3cf-setting-title">
 					<td colspan="2"><h3><?php _e( 'Advanced Options', 'amazon-s3-and-cloudfront' ); ?></h3></td>
 				</tr>
-				<tr class="advanced-options">
+				<?php $args = $this->get_setting_args( 'remove-local-file' ); ?>
+				<tr class="advanced-options <?php echo $args['tr_class']; ?>">
 					<td>
-						<?php $this->render_view( 'checkbox', array( 'key' => 'remove-local-file' ) ); ?>
+						<?php $this->render_view( 'checkbox', $args ); ?>
 					</td>
 					<td>
+						<?php echo $args['setting_msg']; ?>
 						<h4><?php _e( 'Remove Files From Server', 'amazon-s3-and-cloudfront' ) ?></h4>
-						<p><?php _e( 'Once a file has been copied to S3, remove it from the local server.', 'amazon-s3-and-cloudfront' ) ?></p>
+						<p><?php _e( 'Once a file has been copied to S3, remove it from the local server.', 'amazon-s3-and-cloudfront' ); ?>
+							<?php echo $this->settings_more_info_link( 'remove-local-file' ); ?>
+						</p>
 						<?php
 						$lost_files_msg  = apply_filters( 'as3cf_lost_files_notice', __( '<strong>Broken URLs</strong> &mdash; There will be broken URLs for files that don\'t exist locally. You can fix this by enabling <strong>Rewrite File URLs</strong> to use the S3 URLs.', 'amazon-s3-and-cloudfront' ) );
 						$lost_files_args = array(
@@ -163,43 +205,23 @@ $selected_bucket_prefix = $this->get_object_prefix(); ?>
 						$this->render_view( 'notice', $remove_local_args ); ?>
 					</td>
 				</tr>
-				<tr class="advanced-options url-preview">
+				<?php $args = $this->get_setting_args( 'object-versioning' ); ?>
+				<tr class="advanced-options url-preview as3cf-border-bottom <?php echo $args['tr_class']; ?>">
 					<td>
-						<?php $this->render_view( 'checkbox', array( 'key' => 'object-versioning' ) ); ?>
+						<?php $this->render_view( 'checkbox', $args ); ?>
 					</td>
 					<td>
+						<?php echo $args['setting_msg']; ?>
 						<h4><?php _e( 'Object Versioning', 'amazon-s3-and-cloudfront' ) ?></h4>
 						<p>
 							<?php _e( 'Append a timestamp to the S3 file path. Recommended when using CloudFront so you don\'t have to worry about cache invalidation.' ); ?>
-							<?php echo $this->more_info_link( 'http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/ReplacingObjects.html', '', false ); ?>
+							<?php echo $this->settings_more_info_link( 'object-versioning' ); ?>
 						</p>
 					</td>
 				</tr>
-				<tr class="advanced-options">
-					<td>
-						<?php $this->render_view( 'checkbox', array( 'key' => 'expires' ) ); ?>
-					</td>
-					<td>
-						<h4><?php _e( 'Far Future Expiration Header', 'amazon-s3-and-cloudfront' ) ?></h4>
-						<p>
-							<?php _e( 'Implements a "Never Expire" caching policy for browsers by setting an Expires header for 10 years in the future. Should be used in conjunction with object versioning above.' ); ?>
-							<?php echo $this->more_info_link( 'http://developer.yahoo.com/performance/rules.html', 'expires', false ); ?>
-						</p>
-					</td>
-				</tr>
-				<tr class="advanced-options as3cf-border-bottom">
-					<td>
-						<?php $this->render_view( 'checkbox', array( 'key' => 'hidpi-images' ) ); ?>
-					</td>
-					<td>
-						<h4><?php _e( 'Copy HiDPI (@2x) Images', 'amazon-s3-and-cloudfront' ) ?></h4>
-						<p> <?php printf( __( 'When uploading a file to S3, checks if there\'s a file of the same name with an @2x suffix and copies it to S3 as well. Works with the <a href="%s">WP Retina 2x</a> plugin.', 'amazon-s3-and-cloudfront' ), 'https://wordpress.org/plugins/wp-retina-2x/' ); ?></p>
-					</td>
-				</tr>
-
 			</table>
 			<p>
-				<button type="submit" class="button button-primary"><?php _e( 'Save Changes', 'amazon-s3-and-cloudfront' ); ?></button>
+				<button type="submit" class="button button-primary" <?php echo $this->maybe_disable_save_button(); ?>><?php _e( 'Save Changes', 'amazon-s3-and-cloudfront' ); ?></button>
 			</p>
 		</form>
 	</div>

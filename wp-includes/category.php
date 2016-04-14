@@ -15,9 +15,12 @@
  *
  * @since 2.1.0
  * @see get_terms() Type of arguments that can be changed.
- * @link https://codex.wordpress.org/Function_Reference/get_categories
  *
- * @param string|array $args Optional. Change the defaults retrieving categories.
+ * @param string|array $args {
+ *     Optional. Arguments to retrieve categories. See {@see get_terms()} for additional options.
+ *
+ *     @type string $taxonomy Taxonomy to retrieve terms for. In this case, default 'category'.
+ * }
  * @return array List of categories.
  */
 function get_categories( $args = '' ) {
@@ -48,10 +51,16 @@ function get_categories( $args = '' ) {
 		$taxonomy = $args['taxonomy'] = 'link_category';
 	}
 
-	$categories = (array) get_terms( $taxonomy, $args );
+	$categories = get_terms( $taxonomy, $args );
 
-	foreach ( array_keys( $categories ) as $k )
-		_make_cat_compat( $categories[$k] );
+	if ( is_wp_error( $categories ) ) {
+		$categories = array();
+	} else {
+		$categories = (array) $categories;
+		foreach ( array_keys( $categories ) as $k ) {
+			_make_cat_compat( $categories[ $k ] );
+		}
+	}
 
 	return $categories;
 }

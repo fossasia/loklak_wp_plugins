@@ -111,10 +111,10 @@ class Akismet_Admin {
 			'jetpack_page_akismet-key-config',
 			'plugins.php',
 		) ) ) {
-			wp_register_style( 'akismet.css', AKISMET__PLUGIN_URL . '_inc/akismet.css', array(), AKISMET_VERSION );
+			wp_register_style( 'akismet.css', plugin_dir_url( __FILE__ ) . '_inc/akismet.css', array(), AKISMET_VERSION );
 			wp_enqueue_style( 'akismet.css');
 
-			wp_register_script( 'akismet.js', AKISMET__PLUGIN_URL . '_inc/akismet.js', array('jquery','postbox'), AKISMET_VERSION );
+			wp_register_script( 'akismet.js', plugin_dir_url( __FILE__ ) . '_inc/akismet.js', array('jquery','postbox'), AKISMET_VERSION );
 			wp_enqueue_script( 'akismet.js' );
 			wp_localize_script( 'akismet.js', 'WPAkismet', array(
 				'comment_author_url_nonce' => wp_create_nonce( 'comment_author_url_nonce' ),
@@ -605,7 +605,7 @@ class Akismet_Admin {
 	}
 
 	public static function plugin_action_links( $links, $file ) {
-		if ( $file == plugin_basename( AKISMET__PLUGIN_URL . '/akismet.php' ) ) {
+		if ( $file == plugin_basename( plugin_dir_url( __FILE__ ) . '/akismet.php' ) ) {
 			$links[] = '<a href="' . esc_url( self::get_page_url() ) . '">'.esc_html__( 'Settings' , 'akismet').'</a>';
 		}
 

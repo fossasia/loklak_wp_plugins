@@ -1,6 +1,9 @@
 <li class="addon <?php echo $slug; ?>">
 	<article>
 		<div class="info">
+			<?php if ( isset( $addon['icon'] ) ) : ?>
+				<img src="<?php echo $this->get_addon_icon_url( $slug ); ?>">
+			<?php endif; ?>
 			<h1><?php echo $addon['title']; // xss ok ?></h1>
 			<?php if ( isset( $addon['sub'] ) ) : ?>
 				<h2><?php echo esc_html( $addon['sub'] ); ?></h2>

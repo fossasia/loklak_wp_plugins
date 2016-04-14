@@ -77,7 +77,7 @@ function is_nav_menu( $menu ) {
 }
 
 /**
- * Register navigation menus for a theme.
+ * Registers navigation menu locations for a theme.
  *
  * @since 3.0.0
  *
@@ -94,7 +94,7 @@ function register_nav_menus( $locations = array() ) {
 }
 
 /**
- * Unregisters a navigation menu for a theme.
+ * Unregisters a navigation menu location for a theme.
  *
  * @global array $_wp_registered_nav_menus
  *
@@ -115,7 +115,7 @@ function unregister_nav_menu( $location ) {
 }
 
 /**
- * Register a navigation menu for a theme.
+ * Registers a navigation menu location for a theme.
  *
  * @since 3.0.0
  *
@@ -126,7 +126,7 @@ function register_nav_menu( $location, $description ) {
 	register_nav_menus( array( $location => $description ) );
 }
 /**
- * Returns an array of all registered navigation menus in a theme
+ * Returns all registered navigation menu locations in a theme.
  *
  * @since 3.0.0
  *
@@ -154,7 +154,7 @@ function get_nav_menu_locations() {
 }
 
 /**
- * Whether a registered nav menu location has a menu assigned to it.
+ * Determines whether a registered nav menu location has a menu assigned to it.
  *
  * @since 3.0.0
  *
@@ -182,7 +182,7 @@ function has_nav_menu( $location ) {
 }
 
 /**
- * Determine whether the given ID is a nav menu item.
+ * Determines whether the given ID is a nav menu item.
  *
  * @since 3.0.0
  *
@@ -194,7 +194,9 @@ function is_nav_menu_item( $menu_item_id = 0 ) {
 }
 
 /**
- * Create a Navigation Menu.
+ * Creates a navigation menu.
+ *
+ * Note that `$menu_name` is expected to be pre-slashed.
  *
  * @since 3.0.0
  *
@@ -202,6 +204,7 @@ function is_nav_menu_item( $menu_item_id = 0 ) {
  * @return int|WP_Error Menu ID on success, WP_Error object on failure.
  */
 function wp_create_nav_menu( $menu_name ) {
+	// expected_slashed ($menu_name)
 	return wp_update_nav_menu_object( 0, array( 'menu-name' => $menu_name ) );
 }
 
@@ -252,6 +255,8 @@ function wp_delete_nav_menu( $menu ) {
 /**
  * Save the properties of a menu or create a new menu with those properties.
  *
+ * Note that `$menu_data` is expected to be pre-slashed.
+ *
  * @since 3.0.0
  *
  * @param int   $menu_id   The ID of the menu or "0" to create a new menu.
@@ -259,6 +264,7 @@ function wp_delete_nav_menu( $menu ) {
  * @return int|WP_Error Menu ID on success, WP_Error object on failure.
  */
 function wp_update_nav_menu_object( $menu_id = 0, $menu_data = array() ) {
+	// expected_slashed ($menu_data)
 	$menu_id = (int) $menu_id;
 
 	$_menu = wp_get_nav_menu_object( $menu_id );
@@ -344,6 +350,9 @@ function wp_update_nav_menu_object( $menu_id = 0, $menu_data = array() ) {
 /**
  * Save the properties of a menu item or create a new one.
  *
+ * The menu-item-title, menu-item-description, and menu-item-attr-title are expected
+ * to be pre-slashed since they are passed directly into `wp_insert_post()`.
+ *
  * @since 3.0.0
  *
  * @param int   $menu_id         The ID of the menu. Required. If "0", makes the menu item a draft orphan.
@@ -417,7 +426,9 @@ function wp_update_nav_menu_item( $menu_id = 0, $menu_item_db_id = 0, $menu_item
 			$original_title = $original_object->post_title;
 		} elseif ( 'post_type_archive' == $args['menu-item-type'] ) {
 			$original_object = get_post_type_object( $args['menu-item-object'] );
-			$original_title = $original_object->labels->archives;
+			if ( $original_object ) {
+				$original_title = $original_object->labels->archives;
+			}
 		}
 
 		if ( $args['menu-item-title'] == $original_title )
@@ -664,7 +675,7 @@ function wp_get_nav_menu_items( $menu, $args = array() ) {
 
 	$items = array_map( 'wp_setup_nav_menu_item', $items );
 
-	if ( ! is_admin() ) { // Remove invalid items only in frontend
+	if ( ! is_admin() ) { // Remove invalid items only in front end
 		$items = array_filter( $items, '_is_valid_nav_menu_item' );
 	}
 
@@ -737,7 +748,8 @@ function wp_setup_nav_menu_item( $menu_item ) {
 				$menu_item->url = get_permalink( $menu_item->object_id );
 
 				$original_object = get_post( $menu_item->object_id );
-				$original_title = $original_object->post_title;
+				/** This filter is documented in wp-includes/post-template.php */
+				$original_title = apply_filters( 'the_title', $original_object->post_title, $original_object->ID );
 
 				if ( '' === $original_title ) {
 					/* translators: %d: ID of a post */
@@ -750,12 +762,15 @@ function wp_setup_nav_menu_item( $menu_item ) {
 				$object =  get_post_type_object( $menu_item->object );
 				if ( $object ) {
 					$menu_item->title = '' == $menu_item->post_title ? $object->labels->archives : $menu_item->post_title;
+					$post_type_description = $object->description;
 				} else {
 					$menu_item->_invalid = true;
+					$post_type_description = '';
 				}
 
 				$menu_item->type_label = __( 'Post Type Archive' );
-				$menu_item->description = '';
+				$post_content = wp_trim_words( $menu_item->post_content, 200 );
+				$post_type_description = '' == $post_content ? $post_type_description : $post_content; 
 				$menu_item->url = get_post_type_archive_link( $menu_item->object );
 			} elseif ( 'taxonomy' == $menu_item->type ) {
 				$object = get_taxonomy( $menu_item->object );
@@ -928,13 +943,14 @@ function _wp_delete_post_menu_item( $object_id = 0 ) {
 }
 
 /**
- * Callback for handling a menu item when its original object is deleted.
+ * Serves as a callback for handling a menu item when its original object is deleted.
  *
  * @since 3.0.0
  * @access private
  *
- * @param int $object_id The ID of the original object being trashed.
- *
+ * @param int    $object_id Optional. The ID of the original object being trashed. Default 0.
+ * @param int    $tt_id     Term taxonomy ID. Unused.
+ * @param string $taxonomy  Taxonomy slug.
  */
 function _wp_delete_tax_menu_item( $object_id = 0, $tt_id, $taxonomy ) {
 	$object_id = (int) $object_id;

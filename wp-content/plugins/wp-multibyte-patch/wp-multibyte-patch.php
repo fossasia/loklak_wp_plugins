@@ -2,7 +2,7 @@
 /*
 Plugin Name: WP Multibyte Patch
 Description: Multibyte functionality enhancement for the WordPress Japanese package.
-Version: 2.5
+Version: 2.6
 Plugin URI: http://eastcoder.com/code/wp-multibyte-patch/
 Author: Seisuke Kuraishi
 Author URI: http://tinybit.co.jp/
@@ -15,9 +15,9 @@ Domain Path: /languages
  * Multibyte functionality enhancement for the WordPress Japanese package.
  *
  * @package WP_Multibyte_Patch
- * @version 2.5
+ * @version 2.6
  * @author Seisuke Kuraishi <210pura@gmail.com>
- * @copyright Copyright (c) 2015 Seisuke Kuraishi, Tinybit Inc.
+ * @copyright Copyright (c) 2016 Seisuke Kuraishi, Tinybit Inc.
  * @license http://opensource.org/licenses/gpl-2.0.php GPLv2
  * @link http://eastcoder.com/code/wp-multibyte-patch/
  */
@@ -62,7 +62,7 @@ class multibyte_patch {
 	var $debug_suffix = '';
 	var $textdomain = 'wp-multibyte-patch';
 	var $lang_dir = 'languages';
-	var $required_version = '4.3-RC3';
+	var $required_version = '4.4-RC1';
 	var $query_based_vars = array();
 
 	// For fallback purpose only. (1.6)
@@ -126,10 +126,10 @@ class multibyte_patch {
 		return $commentdata;
 	}
 
-	function pre_remote_source( $linea, $pagelinkedto ) {
-		$this->pingback_ping_linea = $linea;
+	function pre_remote_source( $remote_source, $pagelinkedto ) {
+		$this->pingback_ping_remote_source = $remote_source;
 		$this->pingback_ping_pagelinkedto = $pagelinkedto;
-		return $linea;
+		return $remote_source;
 	}
 
 	function incoming_pingback( $commentdata ) {
@@ -140,23 +140,23 @@ class multibyte_patch {
 			return $commentdata;
 
 		$pagelinkedto = $this->pingback_ping_pagelinkedto;
-		$linea = $this->pingback_ping_linea;
+		$remote_source = $this->pingback_ping_remote_source;
 
-		$linea = preg_replace( "/" . preg_quote( '<!DOC', '/' ) . "/i", '<DOC', $linea );
-		$linea = preg_replace( "/[\r\n\t ]+/", ' ', $linea );
-		$linea = preg_replace( "/<\/*(h1|h2|h3|h4|h5|h6|p|th|td|li|dt|dd|pre|caption|input|textarea|button|body)[^>]*>/i", "\n\n", $linea );
+		$remote_source = preg_replace( "/" . preg_quote( '<!DOC', '/' ) . "/i", '<DOC', $remote_source );
+		$remote_source = preg_replace( "/[\r\n\t ]+/", ' ', $remote_source );
+		$remote_source = preg_replace( "/<\/*(h1|h2|h3|h4|h5|h6|p|th|td|li|dt|dd|pre|caption|input|textarea|button|body)[^>]*>/i", "\n\n", $remote_source );
 
-		preg_match( '|<title>([^<]*?)</title>|is', $linea, $matchtitle );
+		preg_match( '|<title>([^<]*?)</title>|is', $remote_source, $matchtitle );
 		$title = $matchtitle[1];
 
-		preg_match( "/<meta[^<>]+charset=\"*([a-zA-Z0-9\-_]+)\"*[^<>]*>/i", $linea, $matches );
+		preg_match( "/<meta[^<>]+charset=\"*([a-zA-Z0-9\-_]+)\"*[^<>]*>/i", $remote_source, $matches );
 		$charset = isset( $matches[1] ) ? $matches[1] : '';
-		$from_encoding = $this->guess_encoding( strip_tags( $linea ), $charset );
+		$from_encoding = $this->guess_encoding( strip_tags( $remote_source ), $charset );
 		$blog_encoding = $this->blog_encoding;
 
-		$linea = strip_tags( $linea, '<a>' );
-		$linea = $this->convenc( $linea, $blog_encoding, $from_encoding );
-		$p = explode( "\n\n", $linea );
+		$remote_source = strip_tags( $remote_source, '<a>' );
+		$remote_source = $this->convenc( $remote_source, $blog_encoding, $from_encoding );
+		$p = explode( "\n\n", $remote_source );
 
 		foreach ( $p as $para ) {
 			if ( strpos( $para, $pagelinkedto ) !== false && preg_match( "/^([^<>]*)(\<a[^<>]+[\"']" . preg_quote( $pagelinkedto, '/' ) . "[\"'][^<>]*\>)([^<>]+)(\<\/a\>)(.*)$/i", $para, $context ) )
@@ -270,12 +270,12 @@ class multibyte_patch {
 	}
 
 	function wplink_js( &$scripts ) {
-		$script_required_version = '4.4-RC1';
+		$script_required_version = '4.5-RC2';
 
 		if ( !$this->is_wp_required_version( $script_required_version ) )
-			$scripts->add( 'wplink', plugin_dir_url( __FILE__ ) . "js/20150818/wplink{$this->debug_suffix}.js", array( 'jquery' ), '20150818', 1 );
+			$scripts->add( 'wplink', plugin_dir_url( __FILE__ ) . "js/20151207/wplink{$this->debug_suffix}.js", array( 'jquery' ), '20151207', 1 );
 		else
-			$scripts->add( 'wplink', plugin_dir_url( __FILE__ ) . "js/wplink{$this->debug_suffix}.js", array( 'jquery' ), '20151207', 1 );
+			$scripts->add( 'wplink', plugin_dir_url( __FILE__ ) . "js/wplink{$this->debug_suffix}.js", array( 'jquery', 'wp-a11y' ), '20160411', 1 );
 	}
 
 	function force_character_count( $translations = '', $text = '', $context = '' ) {

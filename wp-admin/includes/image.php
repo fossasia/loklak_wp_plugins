@@ -28,7 +28,7 @@ function wp_crop_image( $src, $src_x, $src_y, $src_w, $src_h, $dst_w, $dst_h, $s
 		$src_file = get_attached_file( $src );
 
 		if ( ! file_exists( $src_file ) ) {
-			// If the file doesn't exist, attempt a url fopen on the src link.
+			// If the file doesn't exist, attempt a URL fopen on the src link.
 			// This can occur with certain file replication plugins.
 			$src = _load_image_to_edit_path( $src, 'full' );
 		} else {
@@ -110,7 +110,7 @@ function wp_generate_attachment_metadata( $attachment_id, $file ) {
 		 * Filter the image sizes automatically generated when uploading an image.
 		 *
 		 * @since 2.9.0
-		 * @since 4.4.0 The `$metadata` argument was addeed
+		 * @since 4.4.0 Added the `$metadata` argument.
 		 *
 		 * @param array $sizes    An associative array of image sizes.
 		 * @param array $metadata An associative array of image metadata: width, height, file.

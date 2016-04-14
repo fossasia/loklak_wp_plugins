@@ -391,9 +391,9 @@ class wpdb {
 	 */
 	public $termmeta;
 
-	/*
-	 * Global and Multisite tables
-	 */
+	//
+	// Global and Multisite tables
+	//
 
 	/**
 	 * WordPress User Metadata table
@@ -1044,9 +1044,9 @@ class wpdb {
 			$dbh = $this->dbh;
 
 		if ( $this->use_mysqli ) {
-			$success = @mysqli_select_db( $dbh, $db );
+			$success = mysqli_select_db( $dbh, $db );
 		} else {
-			$success = @mysql_select_db( $db, $dbh );
+			$success = mysql_select_db( $db, $dbh );
 		}
 		if ( ! $success ) {
 			$this->ready = false;
@@ -1271,13 +1271,15 @@ class wpdb {
 	 * Use this only before wpdb::prepare() or esc_sql().  Reversing the order is very bad for security.
 	 *
 	 * Example Prepared Statement:
-	 *  $wild = '%';
-	 *  $find = 'only 43% of planets';
-	 *  $like = $wild . $wpdb->esc_like( $find ) . $wild;
-	 *  $sql  = $wpdb->prepare( "SELECT * FROM $wpdb->posts WHERE post_content LIKE %s", $like );
+	 *
+	 *     $wild = '%';
+	 *     $find = 'only 43% of planets';
+	 *     $like = $wild . $wpdb->esc_like( $find ) . $wild;
+	 *     $sql  = $wpdb->prepare( "SELECT * FROM $wpdb->posts WHERE post_content LIKE '%s'", $like );
 	 *
 	 * Example Escape Chain:
-	 *  $sql  = esc_sql( $wpdb->esc_like( $input ) );
+	 *
+	 *     $sql  = esc_sql( $wpdb->esc_like( $input ) );
 	 *
 	 * @since 4.0.0
 	 * @access public
@@ -1484,11 +1486,7 @@ class wpdb {
 				}
 			}
 
-			if ( WP_DEBUG ) {
-				mysqli_real_connect( $this->dbh, $host, $this->dbuser, $this->dbpassword, null, $port, $socket, $client_flags );
-			} else {
-				@mysqli_real_connect( $this->dbh, $host, $this->dbuser, $this->dbpassword, null, $port, $socket, $client_flags );
-			}
+			mysqli_real_connect( $this->dbh, $host, $this->dbuser, $this->dbpassword, null, $port, $socket, $client_flags );
 
 			if ( $this->dbh->connect_errno ) {
 				$this->dbh = null;
@@ -1514,11 +1512,7 @@ class wpdb {
 				}
 			}
 		} else {
-			if ( WP_DEBUG ) {
-				$this->dbh = mysql_connect( $this->dbhost, $this->dbuser, $this->dbpassword, $new_link, $client_flags );
-			} else {
-				$this->dbh = @mysql_connect( $this->dbhost, $this->dbuser, $this->dbpassword, $new_link, $client_flags );
-			}
+			$this->dbh = mysql_connect( $this->dbhost, $this->dbuser, $this->dbpassword, $new_link, $client_flags );
 		}
 
 		if ( ! $this->dbh && $allow_bail ) {
@@ -1589,11 +1583,11 @@ class wpdb {
 	 */
 	public function check_connection( $allow_bail = true ) {
 		if ( $this->use_mysqli ) {
-			if ( @mysqli_ping( $this->dbh ) ) {
+			if ( ! empty( $this->dbh ) && mysqli_ping( $this->dbh ) ) {
 				return true;
 			}
 		} else {
-			if ( @mysql_ping( $this->dbh ) ) {
+			if ( ! empty( $this->dbh ) && mysql_ping( $this->dbh ) ) {
 				return true;
 			}
 		}
@@ -1770,12 +1764,12 @@ class wpdb {
 		} else {
 			$num_rows = 0;
 			if ( $this->use_mysqli && $this->result instanceof mysqli_result ) {
-				while ( $row = @mysqli_fetch_object( $this->result ) ) {
+				while ( $row = mysqli_fetch_object( $this->result ) ) {
 					$this->last_result[$num_rows] = $row;
 					$num_rows++;
 				}
 			} elseif ( is_resource( $this->result ) ) {
-				while ( $row = @mysql_fetch_object( $this->result ) ) {
+				while ( $row = mysql_fetch_object( $this->result ) ) {
 					$this->last_result[$num_rows] = $row;
 					$num_rows++;
 				}
@@ -1805,10 +1799,10 @@ class wpdb {
 			$this->timer_start();
 		}
 
-		if ( $this->use_mysqli ) {
-			$this->result = @mysqli_query( $this->dbh, $query );
-		} else {
-			$this->result = @mysql_query( $query, $this->dbh );
+		if ( ! empty( $this->dbh ) && $this->use_mysqli ) {
+			$this->result = mysqli_query( $this->dbh, $query );
+		} elseif ( ! empty( $this->dbh ) ) {
+			$this->result = mysql_query( $query, $this->dbh );
 		}
 		$this->num_queries++;
 
@@ -3016,14 +3010,14 @@ class wpdb {
 			return;
 
 		if ( $this->use_mysqli ) {
-			$num_fields = @mysqli_num_fields( $this->result );
+			$num_fields = mysqli_num_fields( $this->result );
 			for ( $i = 0; $i < $num_fields; $i++ ) {
-				$this->col_info[ $i ] = @mysqli_fetch_field( $this->result );
+				$this->col_info[ $i ] = mysqli_fetch_field( $this->result );
 			}
 		} else {
-			$num_fields = @mysql_num_fields( $this->result );
+			$num_fields = mysql_num_fields( $this->result );
 			for ( $i = 0; $i < $num_fields; $i++ ) {
-				$this->col_info[ $i ] = @mysql_fetch_field( $this->result, $i );
+				$this->col_info[ $i ] = mysql_fetch_field( $this->result, $i );
 			}
 		}
 	}
@@ -3099,6 +3093,36 @@ class wpdb {
 			return false;
 		}
 		wp_die($message);
+	}
+
+
+	/**
+	 * Closes the current database connection.
+	 *
+	 * @since 4.5.0
+	 * @access public
+	 *
+	 * @return bool True if the connection was successfully closed, false if it wasn't,
+	 *              or the connection doesn't exist.
+	 */
+	public function close() {
+		if ( ! $this->dbh ) {
+			return false;
+		}
+
+		if ( $this->use_mysqli ) {
+			$closed = mysqli_close( $this->dbh );
+		} else {
+			$closed = mysql_close( $this->dbh );
+		}
+
+		if ( $closed ) {
+			$this->dbh = null;
+			$this->ready = false;
+			$this->has_connected = false;
+		}
+
+		return $closed;
 	}
 
 	/**
@@ -3216,7 +3240,7 @@ class wpdb {
 	}
 
 	/**
-	 * The database version number.
+	 * Retrieves the MySQL server version.
 	 *
 	 * @since 2.7.0
 	 *

@@ -2,15 +2,277 @@
 # This file is distributed under the same license as the Network Admin package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2016-01-15 13:41:43+0000\n"
+"PO-Revision-Date: 2016-04-13 07:25:35+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: GlotPress/1.0-alpha-1100\n"
+"X-Generator: GlotPress/2.1.0-alpha\n"
 "Project-Id-Version: Network Admin\n"
 
-#: wp-admin/network/site-users.php:329 wp-admin/network/user-new.php:106
+#. translators: 1: theme name, 2: theme author
+#: wp-admin/network/themes.php:148
+msgctxt "theme"
+msgid "%1$s by %2$s"
+msgstr "%2$s の %1$s"
+
+#. translators: %s: edit page url
+#: wp-admin/network/user-new.php:83
+msgid "User added. <a href=\"%s\">Edit user</a>"
+msgstr "ユーザーを追加しました。 <a href=\"%s\">ユーザーを編集</a>"
+
+#. translators: 1: wp-config.php
+#: wp-admin/includes/network.php:448
+msgid "This unique authentication key is also missing from your %s file."
+msgstr "ユニーク認証キーが %s ファイルに見つかりません。"
+
+#. translators: 1: wp-config.php
+#: wp-admin/includes/network.php:454
+msgid "These unique authentication keys are also missing from your %s file."
+msgstr "ユニーク認証キーが %s ファイルに見つかりません。"
+
+#: wp-admin/network/site-new.php:154
+msgctxt "email \"From\" field"
+msgid "Site Admin"
+msgstr "サイト管理者"
+
+#: wp-admin/network/site-new.php:204
+msgid "Only lowercase letters (a-z), numbers, and hyphens are allowed."
+msgstr "半角小文字 (a-z)、数字、ハイフンのみが使用できます。"
+
+#. translators: 1: site url 2: host name 3. www
+#: wp-admin/includes/network.php:227
+msgid "We recommend you change your siteurl to %1$s before enabling the network feature. It will still be possible to visit your site using the %3$s prefix with an address like %2$s but any links will not have the %3$s prefix."
+msgstr "サイトネットワークの機能を有効にする前に siteurl を %1$s に変更することをおすすめします。%2$s のようなアドレスの前に %3$s を追加してもサイトへ行けますが、リンクには %3$s 接頭辞がつきません。"
+
+#. translators: %s: host name
+#: wp-admin/includes/network.php:238 wp-admin/includes/network.php:287
+msgid "The internet address of your network will be %s."
+msgstr "サイトネットワークのインターネットアドレスは %s になります。"
+
+#. translators: 1: localhost 2: localhost.localdomain
+#: wp-admin/includes/network.php:254
+msgid "Because you are using %1$s, the sites in your WordPress network must use sub-directories. Consider using %2$s if you wish to use sub-domains."
+msgstr "%1$s を使用しているため、WordPress サイトネットワーク内のサイトはサブディレクトリを使う必要があります。サブドメインを使いたい場合は %2$s を使用してください。"
+
+#. translators: 1: wp-config.php 2: .htaccess
+#. translators: 1: wp-config.php 2: web.config
+#: wp-admin/includes/network.php:382 wp-admin/includes/network.php:390
+msgid "We recommend you back up your existing %1$s and %2$s files."
+msgstr "既存の %1$s と %2$s ファイルをバックアップしておくことをお勧めします。"
+
+#. translators: 1: wp-config.php
+#: wp-admin/includes/network.php:398
+msgid "We recommend you back up your existing %s file."
+msgstr "既存の %s ファイルをバックアップしておくことをお勧めします。"
+
+#. translators: 1: wp-config.php 2: location of wp-config file
+#: wp-admin/includes/network.php:409
+msgid "Add the following to your %1$s file in %2$s <strong>above</strong> the line reading <code>/* That&#8217;s all, stop editing! Happy blogging. */</code>:"
+msgstr "次の内容を %2$s にある %1$s ファイルの <code>/* 編集が必要なのはここまでです ! WordPress でブログをお楽しみください。 */</code> という行の<strong>上に</strong>追加してください:"
+
+#. translators: 1: mod_rewrite, 2: mod_rewrite documentation URL, 3: Google
+#. search for mod_rewrite
+#: wp-admin/includes/network.php:181
+msgid "If %1$s is disabled, ask your administrator to enable that module, or look at the <a href=\"%2$s\">Apache documentation</a> or <a href=\"%3$s\">elsewhere</a> for help setting it up."
+msgstr "%1$s が無効化されている場合は、システム管理者に有効化を依頼してください。または、<a href=\"%2$s\">Apache の解説</a>(英語)や<a href=\"%3$s\">他のリファレンス</a>を読んで設定を行ってください。"
+
+#: wp-admin/includes/network.php:192
+msgid "Please choose whether you would like sites in your WordPress network to use sub-domains or sub-directories."
+msgstr "WordPress サイトネットワーク内のサイトでサブドメインまたはサブディレクトリのどちらを使うか選択してください。"
+
+#: wp-admin/includes/network.php:193
+msgid "You cannot change this later."
+msgstr "これは後で変更することができません。"
+
+#: wp-admin/includes/class-wp-ms-sites-list-table.php:41
+#: wp-admin/network/site-info.php:198
+msgid "Archived"
+msgstr "アーカイブ化"
+
+#: wp-admin/includes/class-wp-ms-sites-list-table.php:42
+#: wp-admin/includes/class-wp-ms-sites-list-table.php:523
+#: wp-admin/network/site-info.php:199
+msgctxt "site"
+msgid "Spam"
+msgstr "スパム"
+
+#: wp-admin/includes/class-wp-ms-sites-list-table.php:43
+#: wp-admin/network/site-info.php:200
+msgid "Deleted"
+msgstr "削除"
+
+#: wp-admin/includes/class-wp-ms-sites-list-table.php:44
+#: wp-admin/network/site-info.php:202
+msgid "Mature"
+msgstr "成人向け"
+
+#: wp-admin/includes/class-wp-ms-sites-list-table.php:179
+msgid "No sites found."
+msgstr "サイトは見つかりません。"
+
+#: wp-admin/includes/class-wp-ms-sites-list-table.php:190
+msgctxt "site"
+msgid "Mark as Spam"
+msgstr "スパムとしてマーク"
+
+#: wp-admin/includes/class-wp-ms-sites-list-table.php:191
+#: wp-admin/includes/class-wp-ms-sites-list-table.php:521
+msgctxt "site"
+msgid "Not Spam"
+msgstr "スパムを解除"
+
+#: wp-admin/includes/class-wp-ms-sites-list-table.php:217
+#: wp-admin/network/site-info.php:192
+msgid "Last Updated"
+msgstr "最終更新日時"
+
+#: wp-admin/includes/class-wp-ms-sites-list-table.php:218
+#: wp-admin/network/site-info.php:188
+msgctxt "site"
+msgid "Registered"
+msgstr "作成日時"
+
+#. translators: 1: site name, 2: site tagline.
+#: wp-admin/includes/class-wp-ms-sites-list-table.php:321
+msgid "%1$s &#8211; %2$s"
+msgstr "%1$s &#8211; %2$s"
+
+#: wp-admin/includes/class-wp-ms-sites-list-table.php:347
+msgid "Never"
+msgstr "なし"
+
+#: wp-admin/includes/class-wp-ms-sites-list-table.php:515
+msgid "Unarchive"
+msgstr "アーカイブ化解除"
+
+#: wp-admin/includes/class-wp-ms-sites-list-table.php:517
+msgctxt "verb; site"
+msgid "Archive"
+msgstr "アーカイブ化"
+
+#: wp-admin/includes/class-wp-ms-themes-list-table.php:229
+msgid "No themes found."
+msgstr "テーマは見つかりませんでした。"
+
+#: wp-admin/includes/class-wp-ms-themes-list-table.php:231
+msgid "You do not appear to have any themes available at this time."
+msgstr "現在ご利用いただけるテーマがないようです。"
+
+#: wp-admin/includes/class-wp-ms-themes-list-table.php:242
+msgid "Theme"
+msgstr "テーマ名"
+
+#: wp-admin/includes/class-wp-ms-themes-list-table.php:285
+msgctxt "themes"
+msgid "All <span class=\"count\">(%s)</span>"
+msgid_plural "All <span class=\"count\">(%s)</span>"
+msgstr[0] "すべて <span class=\"count\">(%s)</span>"
+
+#: wp-admin/includes/class-wp-ms-themes-list-table.php:288
+msgid "Enabled <span class=\"count\">(%s)</span>"
+msgid_plural "Enabled <span class=\"count\">(%s)</span>"
+msgstr[0] "有効 <span class=\"count\">(%s)</span>"
+
+#: wp-admin/includes/class-wp-ms-themes-list-table.php:291
+msgid "Disabled <span class=\"count\">(%s)</span>"
+msgid_plural "Disabled <span class=\"count\">(%s)</span>"
+msgstr[0] "無効 <span class=\"count\">(%s)</span>"
+
+#: wp-admin/includes/class-wp-ms-themes-list-table.php:297
+msgid "Broken <span class=\"count\">(%s)</span>"
+msgid_plural "Broken <span class=\"count\">(%s)</span>"
+msgstr[0] "要修正 <span class=\"count\">(%s)</span>"
+
+#: wp-admin/includes/class-wp-ms-themes-list-table.php:328
+#: wp-admin/includes/class-wp-ms-themes-list-table.php:420
+msgid "Enable"
+msgstr "有効"
+
+#: wp-admin/includes/class-wp-ms-themes-list-table.php:330
+#: wp-admin/includes/class-wp-ms-themes-list-table.php:442
+msgid "Disable"
+msgstr "無効化"
+
+#: wp-admin/includes/class-wp-ms-themes-list-table.php:330
+#: wp-admin/includes/class-wp-ms-themes-list-table.php:442
+msgid "Network Disable"
+msgstr "ネットワーク無効化"
+
+#. translators: %s: theme name
+#: wp-admin/includes/class-wp-ms-themes-list-table.php:411
+msgid "Enable %s"
+msgstr "%s を有効化"
+
+#. translators: %s: theme name
+#: wp-admin/includes/class-wp-ms-themes-list-table.php:414
+msgid "Network Enable %s"
+msgstr "%s をネットワークで有効化"
+
+#. translators: %s: theme name
+#: wp-admin/includes/class-wp-ms-themes-list-table.php:433
+msgid "Disable %s"
+msgstr "%s を無効化"
+
+#. translators: %s: theme name
+#: wp-admin/includes/class-wp-ms-themes-list-table.php:436
+msgid "Network Disable %s"
+msgstr "%s をネットワークで無効化"
+
+#. translators: %s: theme name
+#: wp-admin/includes/class-wp-ms-themes-list-table.php:452
+msgid "Open %s in the Theme Editor"
+msgstr "%s をテーマエディターで開く"
+
+#: wp-admin/includes/class-wp-ms-themes-list-table.php:536
+msgid "Broken Theme:"
+msgstr "修正が必要なテーマ:"
+
+#. translators: %s: theme name
+#: wp-admin/includes/class-wp-ms-themes-list-table.php:563
+msgid "Visit %s homepage"
+msgstr "%s のホームページを表示"
+
+#: wp-admin/includes/class-wp-ms-themes-list-table.php:568
+msgid "Visit Theme Site"
+msgstr "テーマサイトを表示"
+
+#: wp-admin/includes/class-wp-ms-users-list-table.php:113
+msgctxt "user"
+msgid "Mark as Spam"
+msgstr "スパムとしてマーク"
+
+#: wp-admin/includes/class-wp-ms-users-list-table.php:114
+msgctxt "user"
+msgid "Not Spam"
+msgstr "スパムを解除"
+
+#: wp-admin/includes/class-wp-ms-users-list-table.php:142
+msgid "Super Admin <span class=\"count\">(%s)</span>"
+msgid_plural "Super Admins <span class=\"count\">(%s)</span>"
+msgstr[0] "特権管理者 <span class=\"count\">(%s)</span>"
+
+#: wp-admin/includes/class-wp-ms-users-list-table.php:171
+msgctxt "user"
+msgid "Registered"
+msgstr "作成日時"
+
+#. translators: %s: port number
+#: wp-admin/includes/network.php:125
+msgid "You cannot use port numbers such as %s."
+msgstr "%s のようなポート番号は使用できません。"
+
+#. translators: %s: mod_rewrite
+#: wp-admin/includes/network.php:165
+msgid "Please make sure the Apache %s module is installed as it will be used at the end of this installation."
+msgstr "Apache %s モジュールがインストールされているか確認してください。インストールの最後に必要になります。"
+
+#. translators: %s: mod_rewrite
+#: wp-admin/includes/network.php:172
+msgid "It looks like the Apache %s module is not installed."
+msgstr "Apache の %s モジュールがインストールされていないようです。"
+
+#: wp-admin/network/site-users.php:329 wp-admin/network/user-new.php:120
 msgid "A password reset link will be sent to the user via email."
 msgstr "ユーザーにパスワードリセット用リンクがメールで送信されます。"
 
@@ -35,7 +297,7 @@ msgstr "サイト一覧のナビゲーション"
 msgid "Sites list"
 msgstr "サイト一覧"
 
-#: wp-admin/network/themes.php:256
+#: wp-admin/network/themes.php:231
 msgid "Themes list navigation"
 msgstr "テーマ一覧のナビゲーション"
 
@@ -44,13 +306,9 @@ msgstr "テーマ一覧のナビゲーション"
 msgid "You must define the %1$s constant as true in your %2$s file to allow creation of a Network."
 msgstr "サイトネットワークを作成するには %2$s ファイルで %1$s 定数を true として定義しなければいけません。"
 
-#: wp-admin/network/site-new.php:95
+#: wp-admin/network/site-new.php:109
 msgid "The domain or path entered conflicts with an existing username."
 msgstr "入力されたドメインやパスは既存のユーザ名と重複しています。"
-
-#: wp-admin/network/site-new.php:178
-msgid "Only lowercase letters (a-z) and numbers are allowed."
-msgstr "アルファベット小文字のa～zと数字だけ使うことができます。"
 
 #: wp-admin/network/site-themes.php:37
 msgid "Filter site themes list"
@@ -101,21 +359,17 @@ msgid "You are about to unarchive the site %s."
 msgstr "サイト %s のアーカイブ化を解除しようとしています。"
 
 #: wp-admin/network/sites.php:63
-msgid "You are about to deactivate the site %s"
+msgid "You are about to deactivate the site %s."
 msgstr "サイト %s を停止しようとしています。"
 
 #: wp-admin/network/sites.php:62
-msgid "You are about to activate the site %s"
+msgid "You are about to activate the site %s."
 msgstr "サイト %s を有効化しようとしています。"
 
 #: wp-admin/network/site-info.php:46 wp-admin/network/site-settings.php:43
 #: wp-admin/network/site-themes.php:66 wp-admin/network/site-users.php:59
 msgid "The requested site does not exist."
 msgstr "お探しのサイトが存在しません。"
-
-#: wp-admin/network/site-info.php:170 wp-admin/network/site-info.php:177
-msgid "Site URL"
-msgstr "サイト URL"
 
 #: wp-admin/network/upgrade.php:32
 msgid "<a href=\"https://codex.wordpress.org/Network_Admin_Updates_Screen\" target=\"_blank\">Documentation on Upgrade Network</a>"
@@ -143,7 +397,7 @@ msgstr "<a href=\"http://wpdocs.sourceforge.jp/Network_Admin_Sites_Screen\" targ
 msgid "<a href=\"https://codex.wordpress.org/Create_A_Network\" target=\"_blank\">Documentation on Creating a Network</a>"
 msgstr "<a href=\"http://wpdocs.sourceforge.jp/Create_A_Network\" target=\"_blank\">ネットワークの作成の解説</a>"
 
-#: wp-admin/network/themes.php:250
+#: wp-admin/network/themes.php:225
 msgid "<a href=\"https://codex.wordpress.org/Network_Admin_Themes_Screen\" target=\"_blank\">Documentation on Network Themes</a>"
 msgstr "<a href=\"http://wpdocs.sourceforge.jp/Network_Admin_Themes_Screen\" target=\"_blank\">ネットワークテーマの解説</a>"
 
@@ -156,38 +410,38 @@ msgstr "<a href=\"http://wpdocs.sourceforge.jp/Network_Admin_Settings_Screen\" t
 msgid "Warning! Problem updating %1$s. Your server may not be able to connect to sites running on it. Error message: %2$s"
 msgstr "注意してください！%1$s の更新中に問題が発生しました。サーバーは稼働しているサイトに接続できないようです。エラーメッセージ: %2$s"
 
-#: wp-admin/network/themes.php:157
+#: wp-admin/network/themes.php:139
 msgid "Delete Themes"
 msgstr "テーマの削除"
 
-#: wp-admin/network/themes.php:187
+#: wp-admin/network/themes.php:173
 msgid "Yes, delete these themes"
 msgstr "はい、これらのテーマを削除します"
 
-#: wp-admin/network/themes.php:297
+#: wp-admin/network/themes.php:275
 msgid "%s theme deleted."
 msgid_plural "%s themes deleted."
 msgstr[0] "%s個のテーマが削除されました。"
 
-#: wp-admin/network/site-themes.php:172 wp-admin/network/themes.php:281
+#: wp-admin/network/site-themes.php:172 wp-admin/network/themes.php:259
 msgid "%s theme enabled."
 msgid_plural "%s themes enabled."
 msgstr[0] "%s個のテーマが有効化されました。"
 
-#: wp-admin/network/site-themes.php:180 wp-admin/network/themes.php:289
+#: wp-admin/network/site-themes.php:180 wp-admin/network/themes.php:267
 msgid "%s theme disabled."
 msgid_plural "%s themes disabled."
 msgstr[0] "%s個のテーマが無効化されました。"
 
-#: wp-admin/network/themes.php:170
+#: wp-admin/network/themes.php:156
 msgid "Are you sure you wish to delete this theme?"
 msgstr "本当にこのテーマを削除してもよろしいですか？"
 
-#: wp-admin/network/themes.php:158
+#: wp-admin/network/themes.php:140
 msgid "These themes may be active on other sites in the network."
 msgstr "これらのテーマはネットワークの他のサイトで有効かもしれません。"
 
-#: wp-admin/network/themes.php:159
+#: wp-admin/network/themes.php:141
 msgid "You are about to remove the following themes:"
 msgstr "以下のテーマを削除しようとしています:"
 
@@ -195,7 +449,7 @@ msgstr "以下のテーマを削除しようとしています:"
 msgid "Enable menus"
 msgstr "メニューを有効化"
 
-#: wp-admin/network/site-info.php:203
+#: wp-admin/network/site-info.php:208
 msgid "Set site attributes"
 msgstr "サイトの属性を設定"
 
@@ -210,6 +464,11 @@ msgstr "サイズ (KB)"
 #: wp-admin/network/settings.php:134
 msgid "New registrations settings"
 msgstr "新しい登録設定"
+
+#. translators: 1: a filename like .htaccess. 2: a file path.
+#: wp-admin/includes/network.php:523 wp-admin/includes/network.php:563
+msgid "Add the following to your %1$s file in %2$s, <strong>replacing</strong> other WordPress rules:"
+msgstr "次の内容を %2$s にある %1$s ファイルへ追加して、他の WordPress ルールを<strong>置き換えて</strong>ください:"
 
 #: wp-admin/network/index.php:54 wp-admin/network/site-info.php:35
 #: wp-admin/network/site-new.php:33 wp-admin/network/site-settings.php:33
@@ -301,7 +560,7 @@ msgid "WordPress has been updated! Before we send you on your way, we need to in
 msgstr "WordPress を更新しました。使い始める前にサイトネットワーク内の各サイトをアップグレードする必要があります。"
 
 #. translators: 1: user login, 2: site url, 3: site name/title
-#: wp-admin/network/site-new.php:123
+#: wp-admin/network/site-new.php:144
 msgid ""
 "New site created by %1$s\n"
 "\n"
@@ -316,6 +575,11 @@ msgstr ""
 #: wp-admin/network.php:62
 msgid "Add the designated lines of code to wp-config.php (just before <code>/*...stop editing...*/</code>) and <code>.htaccess</code> (replacing the existing WordPress rules)."
 msgstr "wp-config.php (<code>/*...編集が必要なのはここまでです...*/</code> の直前に) と <code>.htaccess</code> (既存の WordPress のルールを置き換えて) に、コードの所定の行を追加してください。"
+
+#: wp-admin/includes/network.php:219 wp-admin/includes/network.php:529
+#: wp-admin/includes/network.php:569
+msgid "Subdirectory networks may not be fully compatible with custom wp-content directories."
+msgstr "サブディレクトリ型のサイトネットワークは、カスタマイズした wp-content ディレクトリと完全に互換性がない場合があります。"
 
 #: wp-admin/network/site-users.php:249
 msgid "Enter the username and email."
@@ -333,7 +597,7 @@ msgstr "削除するユーザーを選択してください。"
 msgid "User created."
 msgstr "ユーザーを作成しました。"
 
-#: wp-admin/network/site-users.php:297 wp-admin/network/user-new.php:110
+#: wp-admin/network/site-users.php:297 wp-admin/network/user-new.php:132
 msgid "Add User"
 msgstr "ユーザーを追加"
 
@@ -349,7 +613,7 @@ msgstr "サイトを削除する権限がありません。"
 msgid "User is already a member of this site."
 msgstr "ユーザーは既にこのサイトのメンバーです。"
 
-#: wp-admin/network/site-info.php:125
+#: wp-admin/network/site-info.php:130
 msgid "Site info updated."
 msgstr "サイト情報を更新しました。"
 
@@ -357,36 +621,36 @@ msgstr "サイト情報を更新しました。"
 msgid "Enter the username of an existing user."
 msgstr "既存のユーザーのユーザー名を入力してください。"
 
-#: wp-admin/network/themes.php:303
+#: wp-admin/network/themes.php:281
 msgid "You cannot delete a theme while it is active on the main site."
 msgstr "メインのサイトで使用中のテーマは削除できません。"
 
-#: wp-admin/network/site-new.php:151 wp-admin/network/site-new.php:161
+#: wp-admin/network/site-new.php:177 wp-admin/network/site-new.php:187
 msgid "Add New Site"
 msgstr "サイトを追加"
 
-#: wp-admin/network/site-info.php:144 wp-admin/network/site-settings.php:101
+#: wp-admin/network/site-info.php:149 wp-admin/network/site-settings.php:101
 #: wp-admin/network/site-themes.php:155 wp-admin/network/site-users.php:210
 msgid "Info"
 msgstr "情報"
 
-#: wp-admin/network/themes.php:172
+#: wp-admin/network/themes.php:158
 msgid "Are you sure you wish to delete these themes?"
 msgstr "ほんとうにこれらのテーマを削除しますか ?"
 
-#: wp-admin/network/themes.php:185
+#: wp-admin/network/themes.php:171
 msgid "Yes, delete this theme"
 msgstr "はい、このテーマを削除します"
 
-#: wp-admin/network/themes.php:155
+#: wp-admin/network/themes.php:137
 msgid "You are about to remove the following theme:"
 msgstr "次のテーマを削除しようとしています:"
 
-#: wp-admin/network/themes.php:154
+#: wp-admin/network/themes.php:136
 msgid "This theme may be active on other sites in the network."
 msgstr "このテーマはネットワークのほかのサイトで使用中です。"
 
-#: wp-admin/network/themes.php:153
+#: wp-admin/network/themes.php:135
 msgid "Delete Theme"
 msgstr "テーマを削除"
 
@@ -410,7 +674,7 @@ msgstr "「ユーザーを追加」は、ネットワークにユーザーアカ
 msgid "You do not have sufficient permissions to delete themes for this site."
 msgstr "このサイトでテーマを削除する権限がありません。"
 
-#: wp-admin/network/site-themes.php:178 wp-admin/network/themes.php:287
+#: wp-admin/network/site-themes.php:178 wp-admin/network/themes.php:265
 msgid "Theme disabled."
 msgstr "%s 個のテーマを無効化しました。"
 
@@ -419,11 +683,11 @@ msgstr "%s 個のテーマを無効化しました。"
 msgid "Invalid site ID."
 msgstr "無効なサイト ID です。"
 
-#: wp-admin/network/site-themes.php:170 wp-admin/network/themes.php:279
+#: wp-admin/network/site-themes.php:170 wp-admin/network/themes.php:257
 msgid "Theme enabled."
 msgstr "%s 個のテーマを有効化しました。"
 
-#: wp-admin/network/site-themes.php:184 wp-admin/network/themes.php:301
+#: wp-admin/network/site-themes.php:184 wp-admin/network/themes.php:279
 msgid "No theme selected."
 msgstr "テーマが選択されていません。"
 
@@ -432,12 +696,12 @@ msgstr "テーマが選択されていません。"
 msgid "<strong>Themes</strong> &mdash; This area shows themes that are not already enabled across the network. Enabling a theme in this menu makes it accessible to this site. It does not activate the theme, but allows it to show in the site&#8217;s Appearance menu. To enable a theme for the entire network, see the <a href=\"%s\">Network Themes</a> screen."
 msgstr "<strong>テーマ</strong> - ここではまだネットワーク全体で有効化されていないテーマを表示します。このメニューでテーマを有効化するとサイトからアクセスできるようになります。テーマの利用を開始するわけではなく、サイトの「外観」メニューに表示されるだけです。ネットワーク全体でテーマを有効化するには、<a href=\"%s\">ネットワークテーマ</a>画面をご覧ください。"
 
-#: wp-admin/network/site-info.php:129 wp-admin/network/site-settings.php:86
+#: wp-admin/network/site-info.php:134 wp-admin/network/site-settings.php:86
 #: wp-admin/network/site-themes.php:142 wp-admin/network/site-users.php:182
 msgid "Edit Site: %s"
 msgstr "サイトを編集: %s"
 
-#: wp-admin/network/themes.php:195
+#: wp-admin/network/themes.php:181
 msgid "No, return me to the theme list"
 msgstr "いいえ、テーマ一覧に戻ります"
 
@@ -494,7 +758,7 @@ msgid "You do not have sufficient permissions to manage themes for this site."
 msgstr "このサイトのテーマを管理する権限がありません。"
 
 #. translators: 1: dashboard url, 2: network admin edit url
-#: wp-admin/network/site-new.php:145
+#: wp-admin/network/site-new.php:171
 msgid "Site added. <a href=\"%1$s\">Visit Dashboard</a> or <a href=\"%2$s\">Edit Site</a>"
 msgstr "サイトを追加しました。<a href=\"%1$s\">ダッシュボードを表示</a>するか、または<a href=\"%2$s\">サイトを編集</a>してください。"
 
@@ -502,7 +766,7 @@ msgstr "サイトを追加しました。<a href=\"%1$s\">ダッシュボード�
 msgid "Add New takes you to the Add New Site screen. You can search for a site by Name, ID number, or IP address. Screen Options allows you to choose how many sites to display on one page."
 msgstr "「新規追加」をクリックすると、「新規サイトを追加」画面へ移動します。サイト名、ID、IP アドレスのいずれかでサイトを検索できます。表示オプションを使って、1ページに表示されるサイト数を選択できます。"
 
-#: wp-admin/network/sites.php:236
+#: wp-admin/network/sites.php:240
 msgid "You do not have permission to delete that site."
 msgstr "サイトを削除する権限がありません。"
 
@@ -510,7 +774,7 @@ msgstr "サイトを削除する権限がありません。"
 msgid "You do not have sufficient permissions to add sites to this network."
 msgstr "このネットワークにサイトを追加する権限がありません。"
 
-#: wp-admin/network/menu.php:41 wp-admin/network/themes.php:270
+#: wp-admin/network/menu.php:41 wp-admin/network/themes.php:245
 msgctxt "theme"
 msgid "Add New"
 msgstr "新規追加"
@@ -523,7 +787,7 @@ msgstr "太字の見出しをクリックして、この表の並べ替えがで
 msgid "Delete which is a permanent action after the confirmation screens."
 msgstr "「削除」は確認画面の後に実行される、元に戻すことができない操作です。"
 
-#: wp-admin/network/themes.php:245
+#: wp-admin/network/themes.php:220
 msgid "Themes can be enabled on a site by site basis by the network admin on the Edit Site screen (which has a Themes tab); get there via the Edit action link on the All Sites screen. Only network admins are able to install or edit themes."
 msgstr "テーマは、サイト編集画面のテーマタブからサイトごとに有効化できます。この画面にはサイト一覧画面の「編集」操作リンクからアクセスできます。テーマのインストールや編集ができるのはネットワーク管理者のみです。"
 
@@ -543,6 +807,96 @@ msgstr "更新"
 msgid "Super admins can no longer be added on the Options screen. You must now go to the list of existing users on Network Admin > Users and click on Username or the Edit action link below that name. This goes to an Edit User page where you can check a box to grant super admin privileges."
 msgstr "設定画面から特権管理者を追加することはできません。「ネットワーク管理 > ユーザー」画面の既存ユーザー一覧で、ユーザー名またはその下の「編集」リンクをクリックしてください。次のユーザープロフィール編集画面で、特権管理者に昇格させるためのチェックボックスをオンにできます。"
 
+#. translators: 1: hostname
+#: wp-admin/includes/network.php:209
+msgctxt "subdirectory examples"
+msgid "like <code>%1$s/site1</code> and <code>%1$s/site2</code>"
+msgstr "例: <code>%1$s/site1</code>, <code>%1$s/site2</code> など"
+
+#: wp-admin/includes/network.php:224 wp-admin/includes/network.php:234
+#: wp-admin/includes/network.php:283
+msgid "Server Address"
+msgstr "サーバーアドレス"
+
+#: wp-admin/includes/network.php:260 wp-admin/includes/network.php:270
+#: wp-admin/includes/network.php:277
+msgid "The main site in a sub-directory install will need to use a modified permalink structure, potentially breaking existing links."
+msgstr "サブディレクトリ内にインストールされたメインサイトは、既存のパーマリンクを壊す可能性があるため、パーマリンクの修正が必要になります。"
+
+#: wp-admin/includes/network.php:267
+msgid "Because your install is in a directory, the sites in your WordPress network must use sub-directories."
+msgstr "ディレクトリ内にインストールされているため、WordPressのサイトネットワーク内のサイトはサブディレクトリを使用する必要があります。"
+
+#: wp-admin/includes/network.php:275
+msgid "Sub-domain Install"
+msgstr "サブドメインインストール"
+
+#: wp-admin/includes/network.php:276
+msgid "Because your install is not new, the sites in your WordPress network must use sub-domains."
+msgstr "新規インストールではないため、WordPressのサイトネットワーク内のサイトはサブドメインを使用する必要があります。"
+
+#: wp-admin/includes/network.php:294 wp-admin/network/settings.php:107
+msgid "Network Title"
+msgstr "サイトネットワーク名"
+
+#: wp-admin/includes/network.php:298
+msgid "What would you like to call your network?"
+msgstr "ネットワークを何と呼びますか ?"
+
+#: wp-admin/includes/network.php:307
+msgid "Your email address."
+msgstr "あなたのメールアドレス。"
+
+#: wp-admin/includes/network.php:358
+msgid "The original configuration steps are shown here for reference."
+msgstr "参考のため、元の設定手順をここに表示します。"
+
+#: wp-admin/includes/network.php:363
+msgid "An existing WordPress network was detected."
+msgstr "既存の WordPress サイトネットワークが検知されました。"
+
+#: wp-admin/includes/network.php:364
+msgid "Please complete the configuration steps. To create a new network, you will need to empty or remove the network database tables."
+msgstr "設定手順を完了してください。新しいサイトネットワークを作成するには、サイトネットワークのデータベーステーブルを空にするか削除する必要があります。"
+
+#: wp-admin/includes/network.php:375
+msgid "Enabling the Network"
+msgstr "サイトネットワークで使用中"
+
+#: wp-admin/includes/network.php:376
+msgid "Complete the following steps to enable the features for creating a network of sites."
+msgstr "サイトネットワーク作成機能を有効化するには、次の手順を実行します。"
+
+#: wp-admin/includes/network.php:151
+msgid "Fill in the information below and you&#8217;ll be on your way to creating a network of WordPress sites. We will create configuration files in the next step."
+msgstr "以下の情報を記入すれば WordPress サイトネットワークの作成を開始できます。次のステップで設定ファイルを作成します。"
+
+#: wp-admin/includes/network.php:122
+msgid "You cannot install a network of sites with your server address."
+msgstr "このサーバーアドレスにはサイトネットワークをインストールできません。"
+
+#: wp-admin/includes/network.php:194
+msgid "You will need a wildcard DNS record if you are going to use the virtual host (sub-domain) functionality."
+msgstr "バーチャルホスト (サブドメイン) 機能を使う場合は、ワイルドカード DNS レコードが必要です。"
+
+#: wp-admin/includes/network.php:147
+msgctxt "Default network name"
+msgid "%s Sites"
+msgstr "%s のサイト"
+
+#: wp-admin/includes/network.php:170 wp-admin/includes/network.php:219
+#: wp-admin/includes/network.php:260 wp-admin/includes/network.php:270
+msgid "Warning!"
+msgstr "警告！"
+
+#: wp-admin/includes/network.php:198
+msgid "Sub-domains"
+msgstr "サブドメイン"
+
+#: wp-admin/includes/network.php:459
+msgid "To make your installation more secure, you should also add:"
+msgstr "インストールをさらに安全にするため、次を追加するとよいでしょう。"
+
 #: wp-admin/network.php:60
 msgid "Choose subdomains or subdirectories; this can only be switched afterwards by reconfiguring your install. Fill out the network details, and click install. If this does not work, you may have to add a wildcard DNS record (for subdomains) or change to another setting in Permalinks (for subdirectories)."
 msgstr "サブドメインまたはサブディレクトリを選択してください。これは、インストール設定を変更しない限り後から切り替えることはできません。ネットワーク詳細を記入し、インストールボタンをクリックしてください。うまくいかなかった場合、ワイルドカード DNS レコードを追加する (サブドメインの場合) か、パーマリンクの設定を別のものに変更する (サブディレクトリの場合) する必要があるかもしれません。"
@@ -551,9 +905,37 @@ msgstr "サブドメインまたはサブディレクトリを選択してくだ
 msgid "The next screen for Network Setup will give you individually-generated lines of code to add to your wp-config.php and .htaccess files. Make sure the settings of your FTP client make files starting with a dot visible, so that you can find .htaccess; you may have to create this file if it really is not there. Make backup copies of those two files."
 msgstr "次の「ネットワークの設置の画面では wp-config.php および .htaccess に追加すべきコードが表示されます。.htaccess ファイルを見つけられるよう、FTP クライアントの設定で(ファイル名がドットで始まる)不可視ファイルを表示するようにしておいてください。まだこのファイルがない場合は作成する必要があるかもしれません。これら2つのファイルは、バックアップコピーをとっておいてください。"
 
+#: wp-admin/includes/network.php:578
+msgid "Once you complete these steps, your network is enabled and configured. You will have to log in again."
+msgstr "これらの手順を完了すると設定されたサイトネットワークを有効化します。あなたは再度ログインする必要があります。"
+
+#: wp-admin/includes/network.php:105
+msgid "The constant DO_NOT_UPGRADE_GLOBAL_TABLES cannot be defined when creating a network."
+msgstr "ネットワークを作成する際に定数 DO_NOT_UPGRADE_GLOBAL_TABLES を定義できませんでした。"
+
+#: wp-admin/includes/network.php:246
+msgid "Network Details"
+msgstr "サイトネットワークの詳細"
+
+#: wp-admin/includes/network.php:150
+msgid "Welcome to the Network installation process!"
+msgstr "サイトネットワークのインストールプロセスへようこそ。"
+
 #: wp-admin/network.php:64
 msgid "The choice of subdirectory sites is disabled if this setup is more than a month old because of permalink problems with &#8220;/blog/&#8221; from the main site. This disabling will be addressed in a future version."
 msgstr "この設定が1ヶ月以上前に行われた場合、メインサイトからの &#8220;blog&#8221; ディレクトリのパーマリンクに関連する問題のため、サブディレクトリサイトの選択肢が無効になっています。将来のバージョンでは対応する予定です。"
+
+#: wp-admin/includes/network.php:113
+msgid "Once the network is created, you may reactivate your plugins."
+msgstr "サイトネットワークを作成後、プラグインを再有効化できます。"
+
+#: wp-admin/includes/network.php:113
+msgid "Please <a href=\"%s\">deactivate your plugins</a> before enabling the Network feature."
+msgstr "サイトネットワーク機能を有効化する前に<a href=\"%s\">プラグインを無効化</a>してください。"
+
+#: wp-admin/includes/network.php:250 wp-admin/includes/network.php:265
+msgid "Sub-directory Install"
+msgstr "サブディレクトリインストール"
 
 #: wp-admin/network.php:59
 msgid "This screen allows you to configure a network as having subdomains (<code>site1.example.com</code>) or subdirectories (<code>example.com/site1</code>). Subdomains require wildcard subdomains to be enabled in Apache and DNS records, if your host allows it."
@@ -563,13 +945,40 @@ msgstr "この画面では、サブドメイン (<code>site1.example.com</code>)
 msgid "Create a Network of WordPress Sites"
 msgstr "WordPress サイトのネットワークの作成"
 
+#: wp-admin/includes/network.php:128
+msgid "Return to Dashboard"
+msgstr "ダッシュボードに戻る"
+
 #: wp-admin/network.php:29
 msgid "The Network creation panel is not for WordPress MU networks."
 msgstr "ネットワーク作成パネルは WordPress MU ネットワーク向けではありません。"
 
+#: wp-admin/includes/network.php:113 wp-admin/includes/network.php:363
+#: wp-admin/includes/network.php:529 wp-admin/includes/network.php:569
+msgid "Warning:"
+msgstr "警告:"
+
+#: wp-admin/includes/network.php:191
+msgid "Addresses of Sites in your Network"
+msgstr "サイトネットワーク内のサイトアドレス"
+
+#. translators: 1: hostname
+#: wp-admin/includes/network.php:201
+msgctxt "subdomain examples"
+msgid "like <code>site1.%1$s</code> and <code>site2.%1$s</code>"
+msgstr "例: <code>site1.%1$s</code>, <code>site2.%1$s</code> など"
+
 #: wp-admin/network.php:71
 msgid "Network"
 msgstr "ネットワーク"
+
+#: wp-admin/includes/network.php:206
+msgid "Sub-directories"
+msgstr "サブディレクトリ"
+
+#: wp-admin/includes/network.php:140
+msgid "ERROR: The network could not be created."
+msgstr "エラー: サイトネットワークが作成できませんでした。"
 
 #: wp-admin/network.php:63
 msgid "Once you add this code and refresh your browser, multisite should be enabled. This screen, now in the Network Admin navigation menu, will keep an archive of the added code. You can toggle between Network Admin and Site Admin by clicking on the Network Admin or an individual site name under the My Sites dropdown in the Toolbar."
@@ -617,18 +1026,18 @@ msgid "Upload settings control the size of the uploaded files and the amount of 
 msgstr "アップロード設定ではアップロードされるファイルのサイズと、それぞれのサイトで利用できるアップロード容量を調整できます。特定のサイトを編集するときに、そのサイトのデフォルト値を変更できます。許可されたファイルタイプをリストに入力します (スペースで区切ります)。"
 
 #: wp-admin/network/sites.php:38
-msgid "Visit to go to the frontend site live."
-msgstr "フロントエンドのサイトライブにアクセスします。"
+msgid "Visit to go to the front-end site live."
+msgstr "「表示」は稼働中のフロントエンドのサイトにアクセスします。"
 
 #: wp-admin/network/settings.php:34
 msgid "New site settings are defaults applied when a new site is created in the network. These include welcome email for when a new site or user account is registered, and what&#8127;s put in the first post, page, comment, comment author, and comment URL."
 msgstr "新規サイト設定は、新しいサイトがネットワークに作られるときに適用されるデフォルトの状態です。これには、新しいサイトやアカウントが登録された時のようこそメールや、最初の投稿、ページ、コメント、コメントの作成者、コメント URL も含まれます。"
 
-#: wp-admin/network/themes.php:243
+#: wp-admin/network/themes.php:218
 msgid "This screen enables and disables the inclusion of themes available to choose in the Appearance menu for each site. It does not activate or deactivate which theme a site is currently using."
 msgstr "この画面では、テーマを各サイトの「外観」パネルで選択できる、またはできないようにします。現在サイトが使用しているテーマの有効化または停止ではありません。"
 
-#: wp-admin/network/themes.php:244
+#: wp-admin/network/themes.php:219
 msgid "If the network admin disables a theme that is in use, it can still remain selected on that site. If another theme is chosen, the disabled theme will not appear in the site&#8217;s Appearance > Themes screen."
 msgstr "ネットワーク管理者が利用中のテーマを停止した場合、そのテーマをサイト上で使い続けることはできます。その後に他のテーマを選ぶと、停止されたテーマはサイトの「外観 > テーマ」画面に表示されなくなります。"
 
@@ -672,9 +1081,10 @@ msgstr "このテーブルでは、ネットワーク上のすべてのユーザ
 msgid "You can make an existing user an additional super admin by going to the Edit User profile page and checking the box to grant that privilege."
 msgstr "ユーザープロフィール編集画面にいき、チェックボックスにチェックして権限を昇格させることで、既存のユーザーを追加の特権管理者にすることができます。"
 
-#: wp-admin/network/site-new.php:52
-msgid "The following words are reserved for use by WordPress functions and cannot be used as blog names: <code>%s</code>"
-msgstr "以下の語句は WordPress の機能によって予約されており、ブログ名として使うことはできません: <code>%s</code>"
+#. translators: %s: reserved names list
+#: wp-admin/network/site-new.php:54
+msgid "The following words are reserved for use by WordPress functions and cannot be used as blog names: %s"
+msgstr "以下の語句は WordPress の機能によって予約されており、ブログ名として使うことはできません: %s"
 
 #: wp-admin/network/settings.php:188
 msgid "If you want to limit site registrations to certain domains. One domain per line."
@@ -692,15 +1102,15 @@ msgstr "空のサイトは作成できません。"
 msgid "If your browser doesn&#8217;t start loading the next page automatically, click this link:"
 msgstr "次のページに自動で移動しない場合は、リンクをクリックしてください: "
 
-#: wp-admin/network/sites.php:254
+#: wp-admin/network/sites.php:258
 msgid "Site marked as spam."
 msgstr "サイトをスパムとしてマークしました。"
 
-#: wp-admin/network/sites.php:227
+#: wp-admin/network/sites.php:231
 msgid "Sites marked as spam."
 msgstr "サイトをスパムとしてマークしました。"
 
-#: wp-admin/network/sites.php:224
+#: wp-admin/network/sites.php:228
 msgid "Sites removed from spam."
 msgstr "サイトのスパム判定を解除しました。"
 
@@ -708,15 +1118,15 @@ msgstr "サイトのスパム判定を解除しました。"
 msgid "Users removed from spam."
 msgstr "ユーザーのスパマー判定を解除しました。"
 
-#: wp-admin/network/sites.php:251
+#: wp-admin/network/sites.php:255
 msgid "Site removed from spam."
 msgstr "サイトのスパム判定を解除しました。"
 
-#: wp-admin/network/sites.php:230
+#: wp-admin/network/sites.php:234
 msgid "Sites deleted."
 msgstr "サイトを削除しました。"
 
-#: wp-admin/network/sites.php:233
+#: wp-admin/network/sites.php:237
 msgid "Site deleted."
 msgstr "サイトを削除しました。"
 
@@ -724,15 +1134,15 @@ msgstr "サイトを削除しました。"
 msgid "Users marked as spam."
 msgstr "ユーザーをスパマーとしてマークしました。"
 
-#: wp-admin/network/sites.php:248
+#: wp-admin/network/sites.php:252
 msgid "Site deactivated."
 msgstr "サイトを停止しました。"
 
-#: wp-admin/network/sites.php:245
+#: wp-admin/network/sites.php:249
 msgid "Site activated."
 msgstr "サイトを有効化しました。"
 
-#: wp-admin/network/sites.php:242
+#: wp-admin/network/sites.php:246
 msgid "Site unarchived."
 msgstr "サイトのアーカイブ化を解除しました。"
 
@@ -740,15 +1150,15 @@ msgstr "サイトのアーカイブ化を解除しました。"
 msgid "Users deleted."
 msgstr "ユーザーを削除しました。"
 
-#: wp-admin/network/sites.php:239
+#: wp-admin/network/sites.php:243
 msgid "Site archived."
 msgstr "サイトをアーカイブ化しました。"
 
-#: wp-admin/network/site-new.php:79
+#: wp-admin/network/site-new.php:84
 msgid "Invalid email address."
 msgstr "無効なメールアドレスです。"
 
-#: wp-admin/network/site-new.php:100
+#: wp-admin/network/site-new.php:114
 msgid "There was an error creating the user."
 msgstr "誤りがあったためユーザーを作成できませんでした。"
 
@@ -829,15 +1239,20 @@ msgstr "新規サイト設定"
 msgid "Registration Settings"
 msgstr "登録の設定"
 
-#: wp-admin/network/site-new.php:71
+#: wp-admin/network/site-new.php:76
 msgid "Missing or invalid site address."
 msgstr "サイトのアドレスがないか、または間違っています。"
 
-#: wp-admin/network/site-new.php:74
+#: wp-admin/network/site-new.php:79
 msgid "Missing email address."
 msgstr "メールアドレスがありません。"
 
-#: wp-admin/network/site-new.php:131
+#: wp-admin/includes/network.php:303 wp-admin/network/settings.php:114
+msgid "Network Admin Email"
+msgstr "サイトネットワーク管理者のメールアドレス"
+
+#. translators: %s: network name
+#: wp-admin/network/site-new.php:139
 msgid "[%s] New Site Created"
 msgstr "[%s] 新しいサイトを作成しました"
 
@@ -944,22 +1359,18 @@ msgstr "アップロードファイルの最大サイズ"
 msgid "Default Language"
 msgstr "初期設定言語:"
 
-#: wp-admin/network/site-new.php:223
+#: wp-admin/network/site-new.php:258
 msgid "Add Site"
 msgstr "サイトを追加"
 
-#: wp-admin/network/site-new.php:171
-msgid "Site Address"
-msgstr "サイトのアドレス"
-
-#: wp-admin/network/site-new.php:216
+#: wp-admin/network/site-new.php:242
 msgid "Admin Email"
 msgstr "管理者メールアドレス"
 
-#: wp-admin/network/site-new.php:220
+#: wp-admin/network/site-new.php:246
 msgid "A new user will be created if the above email address is not in the database."
 msgstr "上記メールアドレスがデータベースになければ新規ユーザーが作成されます。"
 
-#: wp-admin/network/site-new.php:220
+#: wp-admin/network/site-new.php:246
 msgid "The username and password will be mailed to this email address."
 msgstr "ユーザー名とパスワードがこのメールアドレスに送信されます。"

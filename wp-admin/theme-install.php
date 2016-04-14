@@ -73,10 +73,18 @@ if ( $tab ) {
 }
 
 $help_overview =
-	'<p>' . sprintf(__('You can find additional themes for your site by using the Theme Browser/Installer on this screen, which will display themes from the <a href="%s" target="_blank">WordPress.org Theme Directory</a>. These themes are designed and developed by third parties, are available free of charge, and are compatible with the license WordPress uses.'), 'https://wordpress.org/themes/') . '</p>' .
+	'<p>' . sprintf(
+			/* translators: %s: Theme Directory URL */
+			__( 'You can find additional themes for your site by using the Theme Browser/Installer on this screen, which will display themes from the <a href="%s" target="_blank">WordPress.org Theme Directory</a>. These themes are designed and developed by third parties, are available free of charge, and are compatible with the license WordPress uses.' ),
+			__( 'https://wordpress.org/themes/' )
+		) . '</p>' .
 	'<p>' . __( 'You can Search for themes by keyword, author, or tag, or can get more specific and search by criteria listed in the feature filter.' ) . ' <span id="live-search-desc">' . __( 'The search results will be updated as you type.' ) . '</span></p>' .
 	'<p>' . __( 'Alternately, you can browse the themes that are Featured, Popular, or Latest. When you find a theme you like, you can preview it or install it.' ) . '</p>' .
-	'<p>' . __('You can Upload a theme manually if you have already downloaded its ZIP archive onto your computer (make sure it is from a trusted and original source). You can also do it the old-fashioned way and copy a downloaded theme&#8217;s folder via FTP into your <code>/wp-content/themes</code> directory.') . '</p>';
+	'<p>' . sprintf(
+			/* translators: %s: /wp-content/themes */
+			__( 'You can Upload a theme manually if you have already downloaded its ZIP archive onto your computer (make sure it is from a trusted and original source). You can also do it the old-fashioned way and copy a downloaded theme&#8217;s folder via FTP into your %s directory.' ),
+			'<code>/wp-content/themes</code>'
+		) . '</p>';
 
 get_current_screen()->add_help_tab( array(
 	'id'      => 'overview',
@@ -148,13 +156,19 @@ include(ABSPATH . 'wp-admin/admin-header.php');
 
 		<div class="favorites-form">
 			<?php
-			$user = isset( $_GET['user'] ) ? wp_unslash( $_GET['user'] ) : get_user_option( 'wporg_favorites' );
-			update_user_meta( get_current_user_id(), 'wporg_favorites', $user );
+			$action = 'save_wporg_username_' . get_current_user_id();
+			if ( isset( $_GET['_wpnonce'] ) && wp_verify_nonce( wp_unslash( $_GET['_wpnonce'] ), $action ) ) {
+				$user = isset( $_GET['user'] ) ? wp_unslash( $_GET['user'] ) : get_user_option( 'wporg_favorites' );
+				update_user_meta( get_current_user_id(), 'wporg_favorites', $user );
+			} else {
+				$user = get_user_option( 'wporg_favorites' );
+			}
 			?>
 			<p class="install-help"><?php _e( 'If you have marked themes as favorites on WordPress.org, you can browse them here.' ); ?></p>
 
 			<p>
-				<label for="user"><?php _e( 'Your WordPress.org username:' ); ?></label>
+				<label for="wporg-username-input"><?php _e( 'Your WordPress.org username:' ); ?></label>
+				<input type="hidden" id="wporg-username-nonce" name="_wpnonce" value="<?php echo esc_attr( wp_create_nonce( $action ) ); ?>" />
 				<input type="search" id="wporg-username-input" value="<?php echo esc_attr( $user ); ?>" />
 				<input type="button" class="button button-secondary favorites-form-submit" value="<?php esc_attr_e( 'Get Favorites' ); ?>" />
 			</p>
@@ -195,7 +209,6 @@ include(ABSPATH . 'wp-admin/admin-header.php');
 	<p class="no-themes"><?php _e( 'No themes found. Try a different search.' ); ?></p>
 	<span class="spinner"></span>
 
-	<br class="clear" />
 <?php
 if ( $tab ) {
 	/**
@@ -259,7 +272,7 @@ if ( $tab ) {
 					<# if ( data.rating ) { #>
 						<div class="theme-rating">
 							{{{ data.stars }}}
-							<span class="num-ratings">({{ data.num_ratings }})</span>
+							<span class="num-ratings" aria-hidden="true">({{ data.num_ratings }})</span>
 						</div>
 					<# } else { #>
 						<span class="no-rating"><?php _e( 'This theme has not been rated yet.' ); ?></span>
@@ -270,6 +283,11 @@ if ( $tab ) {
 			</div>
 		</div>
 		<div class="wp-full-overlay-footer">
+			<div class="devices">
+				<button type="button" class="preview-desktop active" aria-pressed="true" data-device="desktop"><span class="screen-reader-text"><?php _e( 'Enter desktop preview mode' ); ?></span></button>
+				<button type="button" class="preview-tablet" aria-pressed="false" data-device="tablet"><span class="screen-reader-text"><?php _e( 'Enter tablet preview mode' ); ?></span></button>
+				<button type="button" class="preview-mobile" aria-pressed="false" data-device="mobile"><span class="screen-reader-text"><?php _e( 'Enter mobile preview mode' ); ?></span></button>
+			</div>
 			<button type="button" class="collapse-sidebar button-secondary" aria-expanded="true" aria-label="<?php esc_attr_e( 'Collapse Sidebar' ); ?>">
 				<span class="collapse-sidebar-arrow"></span>
 				<span class="collapse-sidebar-label"><?php _e( 'Collapse' ); ?></span>

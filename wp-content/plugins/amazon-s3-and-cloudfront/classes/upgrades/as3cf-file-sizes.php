@@ -49,7 +49,7 @@ class AS3CF_Upgrade_File_Sizes extends AS3CF_Upgrade {
 	function upgrade_attachment( $attachment ) {
 		$s3object = unserialize( $attachment->s3object );
 		if ( false === $s3object ) {
-			error_log( 'Failed to unserialize S3 meta for attachment ' . $attachment->ID . ': ' . $attachment->s3object );
+			AS3CF_Error::log( 'Failed to unserialize S3 meta for attachment ' . $attachment->ID . ': ' . $attachment->s3object );
 			$this->error_count++;
 
 			return false;
@@ -57,7 +57,7 @@ class AS3CF_Upgrade_File_Sizes extends AS3CF_Upgrade {
 
 		$region = $this->as3cf->get_s3object_region( $s3object );
 		if ( is_wp_error( $region ) ) {
-			error_log( 'Failed to get the region for the bucket of the attachment ' . $attachment->ID );
+			AS3CF_Error::log( 'Failed to get the region for the bucket of the attachment ' . $attachment->ID );
 			$this->error_count++;
 
 			return false;
@@ -81,7 +81,7 @@ class AS3CF_Upgrade_File_Sizes extends AS3CF_Upgrade {
 			// List objects for the attachment
 			$result = $s3client->ListObjects( $args );
 		} catch ( Exception $e ) {
-			error_log( 'Error listing objects of prefix ' . $search_prefix . ' for attachment ' . $attachment->ID . ' from S3: ' . $e->getMessage() );
+			AS3CF_Error::log( 'Error listing objects of prefix ' . $search_prefix . ' for attachment ' . $attachment->ID . ' from S3: ' . $e->getMessage() );
 			$this->error_count ++;
 
 			return false;
@@ -107,7 +107,7 @@ class AS3CF_Upgrade_File_Sizes extends AS3CF_Upgrade {
 		}
 
 		if ( 0 === $file_size_total ) {
-			error_log( 'Total file size for the attachment is 0: ' . $attachment->ID );
+			AS3CF_Error::log( 'Total file size for the attachment is 0: ' . $attachment->ID );
 			$this->error_count ++;
 
 			return false;

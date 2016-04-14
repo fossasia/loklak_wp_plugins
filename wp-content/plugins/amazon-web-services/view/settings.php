@@ -19,7 +19,7 @@
 			<?php _e( 'You have enabled the use of IAM roles for Amazon EC2 instances.', 'amazon-web-services' ); ?>
 		</p>
 
-	<?php elseif ( $this->are_key_constants_set() && ! $use_ec2_iam_roles ) : ?>
+	<?php elseif ( ! $use_ec2_iam_roles && ( $this->are_prefixed_key_constants_set() || $this->are_key_constants_set() ) ) : ?>
 
 		<p>
 			<?php _e( 'You&#8217;ve already defined your AWS access keys in your wp-config.php. If you&#8217;d prefer to manage them here and store them in the database (not recommended), simply remove the lines from your wp-config.', 'amazon-web-services' ); ?>
@@ -31,8 +31,8 @@
 			<?php _e( 'We recommend defining your Access Keys in wp-config.php so long as you don&#8217;t commit it to source control (you shouldn&#8217;t be). Simply copy the following snippet and replace the stars with the keys.', 'amazon-web-services' ); ?>
 		</p>
 
-		<pre>define( 'AWS_ACCESS_KEY_ID', '********************' );
-define( 'AWS_SECRET_ACCESS_KEY', '****************************************' );</pre>
+		<pre>define( 'DBI_AWS_ACCESS_KEY_ID', '********************' );
+define( 'DBI_AWS_SECRET_ACCESS_KEY', '****************************************' );</pre>
 
 		<p class="reveal-form">
 			<?php _e( 'If you&#8217;d rather store your Access Keys in the database, <a href="">click here to reveal a form.</a>', 'amazon-web-services' ); ?>

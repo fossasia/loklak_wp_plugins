@@ -116,27 +116,9 @@ if ( $action ) {
 				exit;
 			}
 
-			$files_to_delete = $theme_info = array();
-			$theme_translations = wp_get_installed_translations( 'themes' );
+			$theme_info = array();
 			foreach ( $themes as $key => $theme ) {
 				$theme_info[ $theme ] = wp_get_theme( $theme );
-
-				// Locate all the files in that folder.
-				$files = list_files( $theme_info[ $theme ]->get_stylesheet_directory() );
-				if ( $files ) {
-					$files_to_delete = array_merge( $files_to_delete, $files );
-				}
-
-				// Add translation files.
-				$theme_slug = $theme_info[ $theme ]->get_stylesheet();
-				if ( ! empty( $theme_translations[ $theme_slug ] ) ) {
-					$translations = $theme_translations[ $theme_slug ];
-
-					foreach ( $translations as $translation => $data ) {
-						$files_to_delete[] = $theme_slug . '-' . $translation . '.po';
-						$files_to_delete[] = $theme_slug . '-' . $translation . '.mo';
-					}
-				}
 			}
 
 			include(ABSPATH . 'wp-admin/update.php');
@@ -161,8 +143,12 @@ if ( $action ) {
 					<ul class="ul-disc">
 					<?php
 						foreach ( $theme_info as $theme ) {
-							/* translators: 1: theme name, 2: theme author */
-							echo '<li>', sprintf( __('<strong>%1$s</strong> by <em>%2$s</em>' ), $theme->display('Name'), $theme->display('Author') ), '</li>';
+							echo '<li>' . sprintf(
+								/* translators: 1: theme name, 2: theme author */
+								_x( '%1$s by %2$s', 'theme' ),
+								'<strong>' . $theme->display( 'Name' ) . '</strong>',
+								'<em>' . $theme->display( 'Author' ) . '</em>'
+							) . '</li>';
 						}
 					?>
 					</ul>
@@ -194,17 +180,6 @@ if ( $action ) {
 				<form method="post" action="<?php echo $referer ? esc_url( $referer ) : ''; ?>" style="display:inline;">
 					<?php submit_button( __( 'No, return me to the theme list' ), 'button', 'submit', false ); ?>
 				</form>
-
-				<p><a href="#" onclick="jQuery('#files-list').toggle(); return false;"><?php _e('Click to view entire list of files which will be deleted'); ?></a></p>
-				<div id="files-list" style="display:none;">
-					<ul class="code">
-					<?php
-						foreach ( (array) $files_to_delete as $file ) {
-							echo '<li>' . esc_html( str_replace( WP_CONTENT_DIR . '/themes', '', $file ) ) . '</li>';
-						}
-					?>
-					</ul>
-				</div>
 			</div>
 				<?php
 				require_once(ABSPATH . 'wp-admin/admin-footer.php');
@@ -268,8 +243,11 @@ require_once(ABSPATH . 'wp-admin/admin-header.php');
 
 <div class="wrap">
 <h1><?php echo esc_html( $title ); if ( current_user_can('install_themes') ) { ?> <a href="theme-install.php" class="page-title-action"><?php echo esc_html_x('Add New', 'theme'); ?></a><?php }
-if ( $s )
-	printf( '<span class="subtitle">' . __('Search results for &#8220;%s&#8221;') . '</span>', esc_html( $s ) ); ?>
+if ( isset( $_REQUEST['s'] ) && strlen( $_REQUEST['s'] ) ) {
+	/* translators: %s: search keywords */
+	printf( '<span class="subtitle">' . __( 'Search results for &#8220;%s&#8221;' ) . '</span>', esc_html( $s ) );
+}
+?>
 </h1>
 
 <?php
@@ -313,7 +291,7 @@ if ( isset( $_GET['enabled'] ) ) {
 $wp_list_table->views();
 
 if ( 'broken' == $status )
-	echo '<p class="clear">' . __('The following themes are installed but incomplete. Themes must have a stylesheet and a template.') . '</p>';
+	echo '<p class="clear">' . __( 'The following themes are installed but incomplete.' ) . '</p>';
 ?>
 
 <form method="post">

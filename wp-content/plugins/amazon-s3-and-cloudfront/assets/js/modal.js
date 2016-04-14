@@ -1,4 +1,4 @@
-var as3cfModal = (function ( $ ) {
+var as3cfModal = (function( $ ) {
 
 	var modal = {
 		prefix: 'as3cf',
@@ -19,13 +19,34 @@ var as3cfModal = (function ( $ ) {
 	}
 
 	/**
+	 * Check if modal exists in DOM or in Memory.
+	 *
+	 * @param {string} target
+	 *
+	 * @return {boolean}
+	 */
+	modal.exists = function( target ) {
+		var key = targetToKey( target );
+
+		if ( undefined !== modals[ key ] ) {
+			return true;
+		}
+
+		if ( $( target ).length ) {
+			return true;
+		}
+
+		return false;
+	};
+
+	/**
 	 * Open modal
 	 *
 	 * @param {string}   target
 	 * @param {function} callback
 	 * @param {string}   customClass
 	 */
-	modal.open = function ( target, callback, customClass ) {
+	modal.open = function( target, callback, customClass ) {
 		var key = targetToKey( target );
 
 		// Overlay
@@ -66,14 +87,14 @@ var as3cfModal = (function ( $ ) {
 	 *
 	 * @param {function} callback
 	 */
-	modal.close = function ( callback ) {
+	modal.close = function( callback ) {
 		if ( modal.loading ) {
 			return;
 		}
 
 		var target = $( '#as3cf-modal' ).data( 'as3cf-modal-target' );
 
-		$( '#as3cf-overlay' ).fadeOut( 150, function () {
+		$( '#as3cf-overlay' ).fadeOut( 150, function() {
 			if ( 'function' === typeof callback ) {
 				callback( target );
 			}
@@ -91,19 +112,19 @@ var as3cfModal = (function ( $ ) {
 	 *
 	 * @param {bool} state
 	 */
-	modal.setLoadingState = function ( state ) {
+	modal.setLoadingState = function( state ) {
 		modal.loading = state;
 	};
 
 	// Setup click handlers
-	$( document ).ready( function () {
+	$( document ).ready( function() {
 
-		$( 'body' ).on( 'click', '[data-as3cf-modal]', function ( e ) {
+		$( 'body' ).on( 'click', '[data-as3cf-modal]', function( e ) {
 			e.preventDefault();
 			modal.open( $( this ).data( 'as3cf-modal' ) + '.' + modal.prefix );
 		} );
 
-		$( 'body' ).on( 'click', '#as3cf-overlay, .close-as3cf-modal', function ( e ) {
+		$( 'body' ).on( 'click', '#as3cf-overlay, .close-as3cf-modal', function( e ) {
 			e.preventDefault();
 
 			// Don't allow children to bubble up click event

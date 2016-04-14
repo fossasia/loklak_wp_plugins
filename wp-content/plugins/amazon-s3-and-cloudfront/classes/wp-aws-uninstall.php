@@ -54,6 +54,11 @@ if ( ! class_exists( 'WP_AWS_Uninstall' ) ) {
 		protected $transients;
 
 		/**
+		 * @var array|string User meta to be deleted
+		 */
+		protected $usermeta;
+
+		/**
 		 * @var array Blog(s) in site
 		 */
 		protected $blog_ids;
@@ -65,17 +70,20 @@ if ( ! class_exists( 'WP_AWS_Uninstall' ) ) {
 		 * @param array|string $postmeta
 		 * @param array|string $crons
 		 * @param array|string $transients
+		 * @param array|string $usermeta
 		 */
 		public function __construct(
 			$options = array(),
 			$postmeta = array(),
 			$crons = array(),
-			$transients = array()
+			$transients = array(),
+			$usermeta = array()
 		) {
 			$this->options    = $this->maybe_convert_to_array( $options );
 			$this->postmeta   = $this->maybe_convert_to_array( $postmeta );
 			$this->crons      = $this->maybe_convert_to_array( $crons );
 			$this->transients = $this->maybe_convert_to_array( $transients );
+			$this->usermeta   = $this->maybe_convert_to_array( $usermeta );
 
 			$this->set_blog_ids();
 
@@ -83,6 +91,7 @@ if ( ! class_exists( 'WP_AWS_Uninstall' ) ) {
 			$this->delete_postmeta();
 			$this->clear_crons();
 			$this->delete_transients();
+			$this->delete_usermeta();
 		}
 
 		/**
@@ -201,17 +210,52 @@ if ( ! class_exists( 'WP_AWS_Uninstall' ) ) {
 				$subsite_transients = $this->maybe_convert_to_array( $this->transients['subsite'] );
 
 				foreach ( $this->blog_ids as $blog_id ) {
-					if ( is_multisite() && ! $this->is_current_blog( $blog_id ) ) {
+					if ( is_multisite() && $blog_id !== get_current_blog_id() ) {
 						switch_to_blog( $blog_id );
 					}
 
 					foreach ( $subsite_transients as $transient ) {
 						delete_transient( $transient );
 					}
-				}
 
-				if ( is_multisite() && ! $this->is_current_blog( $blog_id ) ) {
-					restore_current_blog();
+					if ( is_multisite() ) {
+						restore_current_blog();
+					}
+				}
+			}
+		}
+
+		/**
+		 * Delete user meta.
+		 */
+		public function delete_usermeta() {
+			global $wpdb;
+
+			if ( empty( $this->usermeta ) ) {
+				return;
+			}
+
+			// Loop through our user meta keys to create our WHERE clauses.
+			$where_array = array();
+			foreach ( $this->usermeta as $usermeta ) {
+				$where_array[] = $wpdb->prepare( "meta_key = '%s'", $usermeta );
+			}
+
+			// Merge all WHERE clauses into an OR comparison.
+			$where_sql = implode( ' OR ', $where_array );
+
+			// Get any user ids that have keys to be deleted.
+			$user_ids = $wpdb->get_col( "SELECT DISTINCT user_id FROM {$wpdb->usermeta} WHERE {$where_sql}" );
+
+			// Bail if no user has keys to be deleted.
+			if ( empty( $user_ids ) ) {
+				return;
+			}
+
+			// Loop through the list of users and delete our user meta.
+			foreach ( $user_ids as $user_id ) {
+				foreach ( $this->usermeta as $usermeta ) {
+					delete_user_meta( $user_id, $usermeta );
 				}
 			}
 		}

@@ -348,7 +348,7 @@ function category_description( $category = 0 ) {
  *                                           of the option elements. Accepts any valid term field: 'term_id', 'name',
  *                                           'slug', 'term_group', 'term_taxonomy_id', 'taxonomy', 'description',
  *                                           'parent', 'count'. Default 'term_id'.
- *     @type string       $taxonomy          Name of the category to retrieve. Default 'category'.
+ *     @type string|array $taxonomy          Name of the category or categories to retrieve. Default 'category'.
  *     @type bool         $hide_if_empty     True to skip generating markup if no categories are found.
  *                                           Default false (create select element even if no categories are found).
  * }
@@ -520,24 +520,34 @@ function wp_dropdown_categories( $args = '' ) {
  *                                               the list. Default false (title will always be shown).
  *     @type int          $depth                 Category depth. Used for tab indentation. Default 0.
  *     @type string       $taxonomy              Taxonomy name. Default 'category'.
+ *     @type string       $separator             Separator between links. Default '<br />'.
  * }
  * @return false|string HTML content only if 'echo' argument is 0.
  */
 function wp_list_categories( $args = '' ) {
 	$defaults = array(
-		'show_option_all' => '', 'show_option_none' => __('No categories'),
-		'orderby' => 'name', 'order' => 'ASC',
-		'style' => 'list',
-		'show_count' => 0, 'hide_empty' => 1,
-		'use_desc_for_title' => 1, 'child_of' => 0,
-		'feed' => '', 'feed_type' => '',
-		'feed_image' => '', 'exclude' => '',
-		'exclude_tree' => '', 'current_category' => 0,
-		'hierarchical' => true, 'title_li' => __( 'Categories' ),
+		'child_of'            => 0,
+		'current_category'    => 0,
+		'depth'               => 0,
+		'echo'                => 1,
+		'exclude'             => '',
+		'exclude_tree'        => '',
+		'feed'                => '',
+		'feed_image'          => '',
+		'feed_type'           => '',
+		'hide_empty'          => 1,
 		'hide_title_if_empty' => false,
-		'echo' => 1, 'depth' => 0,
-		'separator' => '<br />',
-		'taxonomy' => 'category'
+		'hierarchical'        => true,
+		'order'               => 'ASC',
+		'orderby'             => 'name',
+		'separator'           => '<br />',
+		'show_count'          => 0,
+		'show_option_all'     => '',
+		'show_option_none'    => __( 'No categories' ),
+		'style'               => 'list',
+		'taxonomy'            => 'category',
+		'title_li'            => __( 'Categories' ),
+		'use_desc_for_title'  => 1,
 	);
 
 	$r = wp_parse_args( $args, $defaults );
@@ -904,7 +914,8 @@ function wp_generate_tag_cloud( $tags, $args = '' ) {
 
 	// generate the output links array
 	foreach ( $tags_data as $key => $tag_data ) {
-		$a[] = "<a href='" . esc_url( $tag_data['url'] ) . "' class='" . esc_attr( $tag_data['class'] ) . "' title='" . esc_attr( $tag_data['title'] ) . "' style='font-size: " . esc_attr( str_replace( ',', '.', $tag_data['font_size'] ) . $args['unit'] ) . ";'>" . esc_html( $tag_data['name'] ) . "</a>";
+		$class = $tag_data['class'] . ' tag-link-position-' . ( $key + 1 );
+		$a[] = "<a href='" . esc_url( $tag_data['url'] ) . "' class='" . esc_attr( $class ) . "' title='" . esc_attr( $tag_data['title'] ) . "' style='font-size: " . esc_attr( str_replace( ',', '.', $tag_data['font_size'] ) . $args['unit'] ) . ";'>" . esc_html( $tag_data['name'] ) . "</a>";
 	}
 
 	switch ( $args['format'] ) {
@@ -946,22 +957,33 @@ function wp_generate_tag_cloud( $tags, $args = '' ) {
 }
 
 /**
- * Callback for comparing objects based on name
+ * Serves as a callback for comparing objects based on name.
+ *
+ * Used with `uasort()`.
  *
  * @since 3.1.0
  * @access private
- * @return int
+ *
+ * @param object $a The first object to compare.
+ * @param object $b The second object to compare.
+ * @return int Negative number if `$a->name` is less than `$b->name`, zero if they are equal,
+ *             or greater than zero if `$a->name` is greater than `$b->name`.
  */
 function _wp_object_name_sort_cb( $a, $b ) {
 	return strnatcasecmp( $a->name, $b->name );
 }
 
 /**
- * Callback for comparing objects based on count
+ * Serves as a callback for comparing objects based on count.
+ *
+ * Used with `uasort()`.
  *
  * @since 3.1.0
  * @access private
- * @return bool
+ *
+ * @param object $a The first object to compare.
+ * @param object $b The second object to compare.
+ * @return bool Whether the count value for `$a` is greater than the count value for `$b`.
  */
 function _wp_object_count_sort_cb( $a, $b ) {
 	return ( $a->count > $b->count );

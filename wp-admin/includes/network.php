@@ -56,7 +56,7 @@ function allow_subdirectory_install() {
          *
          * @since 3.0.0
          *
-         * @param bool true Whether to enable the subdirectory install feature in Multisite. Default is false.
+         * @param bool $allow Whether to enable the subdirectory install feature in Multisite. Default is false.
          */
 	if ( apply_filters( 'allow_subdirectory_install', false ) )
 		return true;
@@ -376,23 +376,26 @@ function network_step2( $errors = false ) {
 		<p><?php _e( 'Complete the following steps to enable the features for creating a network of sites.' ); ?></p>
 		<div class="updated inline"><p><?php
 			if ( file_exists( $home_path . '.htaccess' ) ) {
+				echo '<strong>' . __( 'Caution:' ) . '</strong> ';
 				printf(
 					/* translators: 1: wp-config.php 2: .htaccess */
-					__( '<strong>Caution:</strong> We recommend you back up your existing %1$s and %2$s files.' ),
+					__( 'We recommend you back up your existing %1$s and %2$s files.' ),
 					'<code>wp-config.php</code>',
 					'<code>.htaccess</code>'
 				);
 			} elseif ( file_exists( $home_path . 'web.config' ) ) {
+				echo '<strong>' . __( 'Caution:' ) . '</strong> ';
 				printf(
 					/* translators: 1: wp-config.php 2: web.config */
-					__( '<strong>Caution:</strong> We recommend you back up your existing %1$s and %2$s files.' ),
+					__( 'We recommend you back up your existing %1$s and %2$s files.' ),
 					'<code>wp-config.php</code>',
 					'<code>web.config</code>'
 				);
 			} else {
+				echo '<strong>' . __( 'Caution:' ) . '</strong> ';
 				printf(
 					/* translators: 1: wp-config.php */
-					__( '<strong>Caution:</strong> We recommend you back up your existing %s file.' ),
+					__( 'We recommend you back up your existing %s file.' ),
 					'<code>wp-config.php</code>'
 				);
 			}

@@ -48,7 +48,7 @@ class AS3CF_Upgrade_Region_Meta extends AS3CF_Upgrade {
 	function upgrade_attachment( $attachment ) {
 		$s3object = unserialize( $attachment->s3object );
 		if ( false === $s3object ) {
-			error_log( 'Failed to unserialize S3 meta for attachment ' . $attachment->ID . ': ' . $attachment->s3object );
+			AS3CF_Error::log( 'Failed to unserialize S3 meta for attachment ' . $attachment->ID . ': ' . $attachment->s3object );
 			$this->error_count++;
 
 			return false;
@@ -56,7 +56,7 @@ class AS3CF_Upgrade_Region_Meta extends AS3CF_Upgrade {
 		// retrieve region and update the attachment metadata
 		$region = $this->as3cf->get_s3object_region( $s3object, $attachment->ID );
 		if ( is_wp_error( $region ) ) {
-			error_log( 'Error updating region: ' . $region->get_error_message() );
+			AS3CF_Error::log( 'Error updating region: ' . $region->get_error_message() );
 			$this->error_count++;
 
 			return false;

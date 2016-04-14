@@ -96,8 +96,8 @@ function add_shortcode($tag, $func) {
 	}
 
 	if ( 0 !== preg_match( '@[<>&/\[\]\x00-\x20=]@', $tag ) ) {
-		/* translators: %s: shortcode name */
-		$message = sprintf( __( 'Invalid shortcode name: %s. Do not use spaces or reserved characters: & / < > [ ]' ), $tag );
+		/* translators: 1: shortcode name, 2: space separated list of reserved characters */
+		$message = sprintf( __( 'Invalid shortcode name: %1$s. Do not use spaces or reserved characters: %2$s' ), $tag, '& / < > [ ] =' );
 		_doing_it_wrong( __FUNCTION__, $message, '4.4.0' );
 		return;
 	}
@@ -597,9 +597,12 @@ function strip_shortcodes( $content ) {
 }
 
 /**
+ * Strips a shortcode tag based on RegEx matches against post content.
  *
- * @param array $m
- * @return string|false
+ * @since 3.3.0
+ *
+ * @param array $m RegEx matches against post content.
+ * @return string|false The content stripped of the tag, otherwise false.
  */
 function strip_shortcode_tag( $m ) {
 	// allow [[foo]] syntax for escaping a tag

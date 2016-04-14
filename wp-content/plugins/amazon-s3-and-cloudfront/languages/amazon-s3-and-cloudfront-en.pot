@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: amazon-s3-and-cloudfront\n"
 "Report-Msgid-Bugs-To: nom@deliciousbrains.com\n"
-"POT-Creation-Date: 2016-02-03 13:22+0000\n"
+"POT-Creation-Date: 2016-03-23 14:05+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,132 +17,139 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: classes/amazon-s3-and-cloudfront.php:100
-msgid "Offload S3"
+#: classes/amazon-s3-and-cloudfront.php:101
+msgid "Offload S3 Lite"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:101
+#: classes/amazon-s3-and-cloudfront.php:102
 msgid "S3 and CloudFront"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:574
+#: classes/amazon-s3-and-cloudfront.php:195
+#: view/bucket-setting.php:18
+msgid "defined in wp-config.php"
+msgstr ""
+
+#: classes/amazon-s3-and-cloudfront.php:769
 msgid "Upload aborted by filter 'as3cf_pre_upload_attachment'"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:585
+#: classes/amazon-s3-and-cloudfront.php:780
 #, php-format
 msgid "File %s does not exist"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:596
+#: classes/amazon-s3-and-cloudfront.php:791
 #, php-format
 msgid "Mime type %s is not allowed"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:686
+#: classes/amazon-s3-and-cloudfront.php:878
 #, php-format
 msgid "Error uploading %s to S3: %s"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:1669
+#: classes/amazon-s3-and-cloudfront.php:1866
 msgid "Cheatin&#8217; eh?"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:1673
+#: classes/amazon-s3-and-cloudfront.php:1870
 msgid "You do not have sufficient permissions to access this page."
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:1679
+#: classes/amazon-s3-and-cloudfront.php:1876
 msgid "No bucket name provided."
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:1964
+#: classes/amazon-s3-and-cloudfront.php:2161
 msgid "Error Getting Bucket Region"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:1965
+#: classes/amazon-s3-and-cloudfront.php:2162
 #, php-format
 msgid "There was an error attempting to get the region of the bucket %s: %s"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:2085
+#: classes/amazon-s3-and-cloudfront.php:2282
 msgid ""
 "This is a test file to check if the user has write permission to S3. Delete "
 "me if found."
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:2117
+#: classes/amazon-s3-and-cloudfront.php:2314
 #, php-format
 msgid ""
 "There was an error attempting to check the permissions of the bucket %s: %s"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:2174
+#: classes/amazon-s3-and-cloudfront.php:2371
 msgid "Error creating bucket"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:2175
+#: classes/amazon-s3-and-cloudfront.php:2372
 msgid "Bucket name too short."
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:2176
+#: classes/amazon-s3-and-cloudfront.php:2373
 msgid "Bucket name too long."
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:2177
+#: classes/amazon-s3-and-cloudfront.php:2374
 msgid ""
 "Invalid character. Bucket names can contain lowercase letters, numbers, "
 "periods and hyphens."
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:2178
+#: classes/amazon-s3-and-cloudfront.php:2375
 msgid "Error saving bucket"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:2179
+#: classes/amazon-s3-and-cloudfront.php:2376
 msgid "Error fetching buckets"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:2180
+#: classes/amazon-s3-and-cloudfront.php:2377
 msgid "Error getting URL preview: "
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:2181
+#: classes/amazon-s3-and-cloudfront.php:2378
 msgid "The changes you made will be lost if you navigate away from this page"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:2241
+#: classes/amazon-s3-and-cloudfront.php:2436
 msgid "Cheatin' eh?"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:2344
+#: classes/amazon-s3-and-cloudfront.php:2539
 msgctxt "Show the media library tab"
 msgid "Media Library"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:2345
+#: classes/amazon-s3-and-cloudfront.php:2540
 msgctxt "Show the support tab"
 msgid "Support"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:2497
+#: classes/amazon-s3-and-cloudfront.php:2744
 #, php-format
-msgid "The file %s has been given %s permissions on Amazon S3."
+msgid ""
+"<strong>WP Offload S3</strong> &mdash; The file %s has been given %s "
+"permissions on Amazon S3."
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:2509
+#: classes/amazon-s3-and-cloudfront.php:2763
 msgid ""
-"<strong>Image Manipulation Library Missing</strong> &mdash; Looks like you "
+"<strong>WP Offload S3 Requirement Missing</strong> &mdash; Looks like you "
 "don't have an image manipulation library installed on this server and "
 "configured with PHP. You may run into trouble if you try to edit images. "
 "Please setup GD or ImageMagick."
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:3039
+#: classes/amazon-s3-and-cloudfront.php:3388
 msgid "Quick Start Guide"
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:3041
+#: classes/amazon-s3-and-cloudfront.php:3390
 #, php-format
 msgid ""
 "Looks like we don't have write access to this bucket. It's likely that the "
@@ -151,7 +158,7 @@ msgid ""
 "correctly."
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:3043
+#: classes/amazon-s3-and-cloudfront.php:3392
 #, php-format
 msgid ""
 "Looks like we don't have access to the buckets. It's likely that the user "
@@ -159,15 +166,52 @@ msgid ""
 "Please see our %s for instructions on setting up permissions correctly."
 msgstr ""
 
-#: classes/amazon-s3-and-cloudfront.php:3219
+#: classes/amazon-s3-and-cloudfront.php:3543
+msgid "WP Offload S3 Activation"
+msgstr ""
+
+#: classes/amazon-s3-and-cloudfront.php:3544
+msgid ""
+"WP Offload S3 Lite and WP Offload S3 cannot both be active. We've "
+"automatically deactivated WP Offload S3 Lite."
+msgstr ""
+
+#: classes/amazon-s3-and-cloudfront.php:3546
+msgid "WP Offload S3 Lite Activation"
+msgstr ""
+
+#: classes/amazon-s3-and-cloudfront.php:3547
+msgid ""
+"WP Offload S3 Lite and WP Offload S3 cannot both be active. We've "
+"automatically deactivated WP Offload S3."
+msgstr ""
+
+#: classes/amazon-s3-and-cloudfront.php:3590
 msgid "More info"
 msgstr ""
 
-#: classes/as3cf-notices.php:398
+#: classes/amazon-s3-and-cloudfront.php:3680
+msgid "this doc"
+msgstr ""
+
+#: classes/amazon-s3-and-cloudfront.php:3682
+msgid "WP Offload S3 Feature Removed"
+msgstr ""
+
+#: classes/amazon-s3-and-cloudfront.php:3683
+#, php-format
+msgid ""
+"The \"Copy HiDPI (@2x) Images\" feature has been removed as of version 1.1 "
+"of WP Offload S3. It looks like you had this feature turned on. Please see "
+"%s for why we removed this feature and how you can continue copying @2x "
+"images to S3."
+msgstr ""
+
+#: classes/as3cf-notices.php:433
 msgid "Error dismissing notice."
 msgstr ""
 
-#: classes/as3cf-notices.php:413
+#: classes/as3cf-notices.php:448
 msgid "Invalid notice ID."
 msgstr ""
 
@@ -200,13 +244,19 @@ msgstr ""
 msgid "View Licenses"
 msgstr ""
 
-#: classes/as3cf-plugin-compatibility.php:673
+#: classes/as3cf-plugin-compatibility.php:667
+#, php-format
+msgid "The local directory %s does not exist and could not be created."
+msgstr ""
+
+#: classes/as3cf-plugin-compatibility.php:668
+#: classes/as3cf-plugin-compatibility.php:682
 #: classes/upgrades/as3cf-meta-wp-error.php:72
 #, php-format
 msgid "There was an error attempting to download the file %s from S3: %s"
 msgstr ""
 
-#: classes/as3cf-upgrade.php:279
+#: classes/as3cf-upgrade.php:283
 #, php-format
 msgid ""
 "<strong>Running %s Update</strong> &mdash; We&#8217;re going through all the "
@@ -216,22 +266,22 @@ msgid ""
 "performance."
 msgstr ""
 
-#: classes/as3cf-upgrade.php:280
+#: classes/as3cf-upgrade.php:284
 msgid "Pause Update"
 msgstr ""
 
-#: classes/as3cf-upgrade.php:284
+#: classes/as3cf-upgrade.php:288
 #, php-format
 msgid ""
 "<strong>%s Update Paused</strong> &mdash; Updating Media Library %s has been "
 "paused."
 msgstr ""
 
-#: classes/as3cf-upgrade.php:285
+#: classes/as3cf-upgrade.php:289
 msgid "Restart Update"
 msgstr ""
 
-#: classes/as3cf-upgrade.php:288
+#: classes/as3cf-upgrade.php:292
 #, php-format
 msgid ""
 "<strong>Error Updating %s</strong> &mdash; We ran into some errors "
@@ -239,11 +289,11 @@ msgid ""
 "uploaded to S3. Please check your error log for details. (#%d)"
 msgstr ""
 
-#: classes/as3cf-upgrade.php:289
+#: classes/as3cf-upgrade.php:293
 msgid "Try Run It Again"
 msgstr ""
 
-#: classes/as3cf-upgrade.php:391
+#: classes/as3cf-upgrade.php:408
 #, php-format
 msgid "Every %d Minutes"
 msgstr ""
@@ -267,79 +317,79 @@ msgid ""
 "style=\"white-space:nowrap;\">(e.g. s3-us-west-2.amazonaws.com)</span>."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:310
+#: classes/wp-aws-compatibility-check.php:323
 msgid "deactivate"
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:311
+#: classes/wp-aws-compatibility-check.php:324
 #, php-format
 msgid "You can %s the %s plugin to get rid of this notice."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:314
+#: classes/wp-aws-compatibility-check.php:327
 #, php-format
 msgid "%s has been disabled as it requires the %s plugin."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:318
+#: classes/wp-aws-compatibility-check.php:331
 msgid "which is currently disabled."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:320
+#: classes/wp-aws-compatibility-check.php:333
 msgid "It appears to be installed already."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:322
+#: classes/wp-aws-compatibility-check.php:335
 msgctxt "Activate plugin"
 msgid "Activate it now."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:329
+#: classes/wp-aws-compatibility-check.php:342
 #, php-format
 msgid "<a href=\"%s\">Install</a> and activate it."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:340
+#: classes/wp-aws-compatibility-check.php:353
 #, php-format
 msgid ""
 "%s has been disabled as it requires version %s or later of the %s plugin."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:343
+#: classes/wp-aws-compatibility-check.php:356
 #, php-format
 msgid "You currently have version %s installed."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:350
-#: classes/wp-aws-compatibility-check.php:388
+#: classes/wp-aws-compatibility-check.php:363
+#: classes/wp-aws-compatibility-check.php:401
 #, php-format
 msgid "A valid license for %s is required to update."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:358
+#: classes/wp-aws-compatibility-check.php:371
 msgid "Update to the latest version"
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:370
+#: classes/wp-aws-compatibility-check.php:383
 #, php-format
 msgid ""
 "%1$s has been disabled because it is not a supported addon of the %2$s "
 "plugin."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:379
+#: classes/wp-aws-compatibility-check.php:392
 #, php-format
 msgid ""
 "%1$s has been disabled because it will not work with the version of the %2$s "
 "plugin installed. %1$s %3$s or later is required."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:382
+#: classes/wp-aws-compatibility-check.php:395
 #, php-format
 msgid "Update %s to the latest version"
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:451
+#: classes/wp-aws-compatibility-check.php:464
 #, php-format
 msgid "The %s plugin has been deactivated."
 msgstr ""
@@ -436,8 +486,9 @@ msgstr ""
 msgid "Change"
 msgstr ""
 
-#: view/bucket-setting.php:18
-msgid "(defined in wp-config.php)"
+#: view/cloudfront-setting.php:4
+#: view/deprecated-domain-setting.php:49
+msgid "Invalid character. Letters, numbers, periods and hyphens are allowed."
 msgstr ""
 
 #: view/debug-info.php:2
@@ -449,39 +500,45 @@ msgctxt "Download to your computer"
 msgid "Download"
 msgstr ""
 
-#: view/domain-setting.php:5
+#: view/deprecated-domain-setting.php:5
 msgid "Domain:"
 msgstr ""
 
-#: view/domain-setting.php:23
+#: view/deprecated-domain-setting.php:30
 msgid "Bucket name as subdomain"
 msgstr ""
 
-#: view/domain-setting.php:28
+#: view/deprecated-domain-setting.php:35
 msgid "Bucket name in path"
 msgstr ""
 
-#: view/domain-setting.php:33
+#: view/deprecated-domain-setting.php:40
 msgid "Bucket name as domain"
 msgstr ""
 
-#: view/domain-setting.php:38
+#: view/deprecated-domain-setting.php:45
 msgid "CloudFront or custom domain"
 msgstr ""
 
-#: view/domain-setting.php:42
-msgid "Invalid character. Letters, numbers, periods and hyphens are allowed."
+#: view/domain-setting.php:19
+msgid "CloudFront or Custom Domain"
+msgstr ""
+
+#: view/domain-setting.php:21
+msgid ""
+"Replace the default S3 domain and path with your CloudFront domain or any "
+"domain."
 msgstr ""
 
 #: view/error-access.php:4
 msgid "Access Denied to Bucket"
 msgstr ""
 
-#: view/notice.php:17
+#: view/notice.php:18
 msgid "Hide"
 msgstr ""
 
-#: view/notice.php:17
+#: view/notice.php:18
 msgid "Show"
 msgstr ""
 
@@ -489,143 +546,124 @@ msgstr ""
 msgid "Settings saved."
 msgstr ""
 
-#: view/settings.php:46
+#: view/settings.php:48
 msgid "Enable/Disable the Plugin"
 msgstr ""
 
-#: view/settings.php:53
+#: view/settings.php:56
 msgid "Copy Files to S3"
 msgstr ""
 
-#: view/settings.php:54
+#: view/settings.php:58
 msgid ""
 "When a file is uploaded to the Media Library, copy it to S3. Existing files "
 "are <em>not</em> copied to S3."
 msgstr ""
 
-#: view/settings.php:62
+#: view/settings.php:71
 msgid "Rewrite File URLs"
 msgstr ""
 
-#: view/settings.php:63
+#: view/settings.php:73
 msgid ""
 "For Media Library files that have been copied to S3, rewrite the URLs so "
 "that they are served from S3/CloudFront instead of your server."
 msgstr ""
 
-#: view/settings.php:67
+#: view/settings.php:80
 msgid "Configure File URLs"
 msgstr ""
 
-#: view/settings.php:85
+#: view/settings.php:101
 msgid "Path"
 msgstr ""
 
-#: view/settings.php:87
-msgid "By default the path is the same as your local WordPress files:"
+#: view/settings.php:103
+msgid "By default the path is the same as your local WordPress files."
 msgstr ""
 
-#: view/settings.php:100
+#: view/settings.php:127
 msgid "Year/Month"
 msgstr ""
 
-#: view/settings.php:102
+#: view/settings.php:129
 msgid "Add the Year/Month in the URL."
 msgstr ""
 
-#: view/settings.php:108
-msgid "SSL:"
+#: view/settings.php:138
+msgid "SSL"
 msgstr ""
 
-#: view/settings.php:116
+#: view/settings.php:142
+msgid "Controls the protocol of the S3 URLs."
+msgstr ""
+
+#: view/settings.php:152
 msgid "Same as request"
 msgstr ""
 
-#: view/settings.php:117
+#: view/settings.php:153
 msgid "When the request is https://, use https:// for the file URL as well."
 msgstr ""
 
-#: view/settings.php:121
+#: view/settings.php:157
 msgid "Always SSL"
 msgstr ""
 
-#: view/settings.php:122
+#: view/settings.php:158
 msgid "Forces https:// to be used."
 msgstr ""
 
-#: view/settings.php:123
+#: view/settings.php:160
 msgid ""
 "You cannot use the \"Bucket as a subdomain\" domain option when using SSL."
 msgstr ""
 
-#: view/settings.php:127
+#: view/settings.php:165
 msgid "Always non-SSL"
 msgstr ""
 
-#: view/settings.php:128
+#: view/settings.php:166
 msgid "Forces http:// to be used."
 msgstr ""
 
-#: view/settings.php:134
+#: view/settings.php:172
 msgid "Advanced Options"
 msgstr ""
 
-#: view/settings.php:141
+#: view/settings.php:181
 msgid "Remove Files From Server"
 msgstr ""
 
-#: view/settings.php:142
+#: view/settings.php:182
 msgid "Once a file has been copied to S3, remove it from the local server."
 msgstr ""
 
-#: view/settings.php:144
+#: view/settings.php:186
 msgid ""
 "<strong>Broken URLs</strong> &mdash; There will be broken URLs for files "
 "that don't exist locally. You can fix this by enabling <strong>Rewrite File "
 "URLs</strong> to use the S3 URLs."
 msgstr ""
 
-#: view/settings.php:155
+#: view/settings.php:197
 #, php-format
 msgid ""
 "<strong>Warning</strong> &mdash; Some plugins depend on the file being "
 "present on the local server and may not work when the file is removed. %s"
 msgstr ""
 
-#: view/settings.php:171
+#: view/settings.php:215
 msgid "Object Versioning"
 msgstr ""
 
-#: view/settings.php:173
+#: view/settings.php:217
 msgid ""
 "Append a timestamp to the S3 file path. Recommended when using CloudFront so "
 "you don't have to worry about cache invalidation."
 msgstr ""
 
-#: view/settings.php:183
-msgid "Far Future Expiration Header"
-msgstr ""
-
-#: view/settings.php:185
-msgid ""
-"Implements a \"Never Expire\" caching policy for browsers by setting an "
-"Expires header for 10 years in the future. Should be used in conjunction "
-"with object versioning above."
-msgstr ""
-
-#: view/settings.php:195
-msgid "Copy HiDPI (@2x) Images"
-msgstr ""
-
-#: view/settings.php:196
-#, php-format
-msgid ""
-"When uploading a file to S3, checks if there's a file of the same name with "
-"an @2x suffix and copies it to S3 as well. Works with the <a href=\"%s\">WP "
-"Retina 2x</a> plugin."
-msgstr ""
-
-#: view/settings.php:202
+#: view/settings.php:224
 msgid "Save Changes"
 msgstr ""
 

@@ -4,7 +4,7 @@ Theme URI: https://wordpress.org/themes/twentysixteen/
 Author: the WordPress team
 Author URI: https://wordpress.org/
 Description: Twenty Sixteen is a modernized take on an ever-popular WordPress layout — the horizontal masthead with an optional right sidebar that works perfectly for blogs and websites. It has custom color options with beautiful default color schemes, a harmonious fluid grid using a mobile-first approach, and impeccable polish in every detail. Twenty Sixteen will make your WordPress look beautiful everywhere.
-Version: 1.1
+Version: 1.2
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: black, blue, gray, red, white, yellow, dark, light, one-column, two-columns, right-sidebar, fixed-layout, responsive-layout, accessibility-ready, custom-background, custom-colors, custom-header, custom-menu, editor-style, featured-images, flexible-header, microformats, post-formats, rtl-language-support, sticky-post, threaded-comments, translation-ready
@@ -230,6 +230,7 @@ input[type="search"]::-webkit-search-decoration {
 fieldset {
 	border: 1px solid #d1d1d1;
 	margin: 0 0 1.75em;
+	min-width: inherit;
 	padding: 0.875em;
 }
 
@@ -1554,6 +1555,18 @@ blockquote:after,
 
 .site-branding {
 	margin: 0.875em auto 0.875em 0;
+	/* Avoid overflowing wide custom logo in small screens in Firefox and IEs */
+	max-width: 100%;
+	min-width: 0;
+	overflow: hidden;
+}
+
+.custom-logo-link {
+	display: block;
+}
+
+.custom-logo {
+	max-width: 180px;
 }
 
 .site-title {
@@ -1572,6 +1585,10 @@ blockquote:after,
 .site-branding .site-title a:hover,
 .site-branding .site-title a:focus {
 	color: #007acc;
+}
+
+.wp-custom-logo .site-title {
+	margin-top: 0.608695652em;
 }
 
 .site-description {
@@ -1634,7 +1651,6 @@ blockquote:after,
 .header-image a:focus img {
 	opacity: 0.85;
 }
-
 
 /**
  * 11.2 - Posts and pages
@@ -2731,10 +2747,18 @@ p > video {
 		margin-bottom: 1.3125em;
 	}
 
+	.custom-logo {
+		max-width: 210px;
+	}
+
 	.site-title {
 		font-size: 28px;
 		font-size: 1.75rem;
 		line-height: 1.25;
+	}
+
+	.wp-custom-logo .site-title {
+		margin-top: 0.5em;
 	}
 
 	.site-description {
@@ -2924,6 +2948,12 @@ p > video {
 		-webkit-align-items: flex-start;
 		-ms-flex-align: start;
 		align-items: flex-start;
+	}
+
+	.wp-custom-logo .site-header-main {
+		-webkit-align-items: center;
+		-ms-flex-align: center;
+		align-items: center;
 	}
 
 	.site-header-menu {
@@ -3354,6 +3384,10 @@ p > video {
 	.header-image {
 		margin-top: 1.75em;
 		margin-bottom: 1.75em;
+	}
+
+	.custom-logo {
+		max-width: 240px;
 	}
 
 	.image-navigation {

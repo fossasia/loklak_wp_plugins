@@ -59,7 +59,7 @@ if ( get_option('db_upgraded') ) {
 	 *
 	 * @since 3.0.0
 	 *
-	 * @param bool true Whether to perform the Multisite upgrade routine. Default true.
+	 * @param bool $do_mu_upgrade Whether to perform the Multisite upgrade routine. Default true.
 	 */
 	} elseif ( apply_filters( 'do_mu_upgrade', true ) ) {
 		$c = get_blog_count();
@@ -89,8 +89,8 @@ if ( ! wp_next_scheduled( 'wp_scheduled_delete' ) && ! wp_installing() )
 
 set_screen_options();
 
-$date_format = get_option('date_format');
-$time_format = get_option('time_format');
+$date_format = __( 'F j, Y' );
+$time_format = __( 'g:i a' );
 
 wp_enqueue_script( 'common' );
 
@@ -146,7 +146,7 @@ if ( current_user_can( 'manage_options' ) ) {
 	 * handled separately.
 	 *
 	 * The WP_MAX_MEMORY_LIMIT constant specifically defines the maximum memory limit available
-	 * when in the administration back-end. The default is 256M, or 256 megabytes of memory.
+	 * when in the administration back end. The default is 256M, or 256 megabytes of memory.
 	 *
 	 * @since 3.0.0
 	 *
@@ -161,7 +161,7 @@ if ( current_user_can( 'manage_options' ) ) {
  * Note, this does not just run on user-facing admin screens.
  * It runs on admin-ajax.php and admin-post.php as well.
  *
- * This is roughly analgous to the more general 'init' hook, which fires earlier.
+ * This is roughly analogous to the more general 'init' hook, which fires earlier.
  *
  * @since 2.5.0
  */
@@ -312,7 +312,7 @@ if ( isset($plugin_page) ) {
 	 *
 	 * @since 3.1.0
 	 *
-	 * @param bool false Whether to force data to be filtered through kses. Default false.
+	 * @param bool $force Whether to force data to be filtered through kses. Default false.
 	 */
 	if ( apply_filters( 'force_filtered_html_on_import', false ) ) {
 		kses_init_filters();  // Always filter imported data with kses on multisite.
@@ -355,6 +355,8 @@ if ( isset($plugin_page) ) {
 			do_action( 'load-categories.php' );
 		elseif ( $taxnow == 'link_category' )
 			do_action( 'load-edit-link-categories.php' );
+	} elseif( 'term.php' === $pagenow ) {
+		do_action( 'load-edit-tags.php' );
 	}
 }
 

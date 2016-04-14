@@ -112,7 +112,7 @@ function wp_cache_flush() {
  * @param string      $group  Optional. Where the cache contents are grouped. Default empty.
  * @param bool        $force  Optional. Whether to force an update of the local cache from the persistent
  *                            cache. Default false.
- * @param bool        &$found Optional. Whether the key was found in the cache. Disambiguates a return of false,
+ * @param bool        $found  Optional. Whether the key was found in the cache. Disambiguates a return of false,
  *                            a storable value. Passed by reference. Default null.
  * @return bool|mixed False on failure to retrieve contents or the cache
  *		              contents on success
@@ -209,7 +209,7 @@ function wp_cache_set( $key, $data, $group = '', $expire = 0 ) {
  * @see WP_Object_Cache::switch_to_blog()
  * @global WP_Object_Cache $wp_object_cache Object cache global instance.
  *
- * @param int $blog_id Blog ID.
+ * @param int $blog_id Site ID.
  */
 function wp_cache_switch_to_blog( $blog_id ) {
 	global $wp_object_cache;
@@ -247,8 +247,8 @@ function wp_cache_add_non_persistent_groups( $groups ) {
 /**
  * Reset internal cache keys and structures.
  *
- * If the cache backend uses global blog or site IDs as part of its cache keys,
- * this function instructs the backend to reset those keys and perform any cleanup
+ * If the cache back end uses global blog or site IDs as part of its cache keys,
+ * this function instructs the back end to reset those keys and perform any cleanup
  * since blog or site IDs have changed since cache init.
  *
  * This function is deprecated. Use wp_cache_switch_to_blog() instead of this
@@ -534,7 +534,7 @@ class WP_Object_Cache {
 	 * @param string     $group  Optional. Where the cache contents are grouped. Default 'default'.
 	 * @param string     $force  Optional. Unused. Whether to force a refetch rather than relying on the local
 	 *                           cache. Default false.
-	 * @param bool       &$found Optional. Whether the key was found in the cache. Disambiguates a return of
+	 * @param bool       $found  Optional. Whether the key was found in the cache. Disambiguates a return of
 	 *                           false, a storable value. Passed by reference. Default null.
 	 * @return false|mixed False on failure to retrieve contents or the cache contents on success.
 	 */

@@ -120,11 +120,11 @@ class AS3CF_Plugin_Compatibility {
 		global $amazon_web_services;
 
 		$all_addons = $amazon_web_services->get_addons( true );
-		if ( ! isset( $all_addons['amazon-s3-and-cloudfront']['addons']['amazon-s3-and-cloudfront-pro']['addons'] ) ) {
+		if ( ! isset( $all_addons['amazon-s3-and-cloudfront-pro']['addons'] ) ) {
 			return array();
 		}
 
-		$addons = $all_addons['amazon-s3-and-cloudfront']['addons']['amazon-s3-and-cloudfront-pro']['addons'];
+		$addons = $all_addons['amazon-s3-and-cloudfront-pro']['addons'];
 
 		return $addons;
 	}
@@ -365,10 +365,10 @@ class AS3CF_Plugin_Compatibility {
 		$var_type = 'GET';
 
 		if ( isset( $_GET['action'] ) ) {
-			$action = $_GET['action'];
+			$action = $this->as3cf->filter_input( 'action' );
 		} else if ( isset( $_POST['action'] ) ) {
 			$var_type = 'POST';
-			$action   = $_POST['action'];
+			$action   = $this->as3cf->filter_input( 'action', INPUT_POST );
 		} else {
 			return false;
 		}
@@ -376,7 +376,7 @@ class AS3CF_Plugin_Compatibility {
 		$context_check = true;
 		if ( ! is_null( $context_key ) ) {
 			$global        = constant( 'INPUT_' . $var_type );
-			$context       = filter_input( $global, 'context' );
+			$context       = $this->as3cf->filter_input( 'context', $global );
 			$context_check = ( $context_key === $context );
 		}
 
@@ -660,7 +660,16 @@ class AS3CF_Plugin_Compatibility {
 	 *
 	 * @return string|bool File if downloaded, false on failure
 	 */
-	protected function copy_s3_file_to_server( $s3_object, $file ) {
+	public function copy_s3_file_to_server( $s3_object, $file ) {
+		// Make sure the directory exists
+		$dir = dirname( $file );
+		if ( ! wp_mkdir_p( $dir ) ) {
+			$error_message = sprintf( __( 'The local directory %s does not exist and could not be created.', 'amazon-s3-and-cloudfront' ), $dir );
+			AS3CF_Error::log( sprintf( __( 'There was an error attempting to download the file %s from S3: %s', 'amazon-s3-and-cloudfront' ), $s3_object['key'], $error_message ) );
+
+			return false;
+		}
+
 		try {
 			$this->as3cf->get_s3client( $s3_object['region'], true )->getObject(
 				array(
@@ -670,7 +679,7 @@ class AS3CF_Plugin_Compatibility {
 				)
 			);
 		} catch ( Exception $e ) {
-			error_log( sprintf( __( 'There was an error attempting to download the file %s from S3: %s', 'amazon-s3-and-cloudfront' ), $s3_object['key'], $e->getMessage() ) );
+			AS3CF_Error::log( sprintf( __( 'There was an error attempting to download the file %s from S3: %s', 'amazon-s3-and-cloudfront' ), $s3_object['key'], $e->getMessage() ) );
 
 			return false;
 		}
@@ -782,7 +791,7 @@ class AS3CF_Plugin_Compatibility {
 		}
 
 		foreach ( $selected_images as $image => $attachment_id ) {
-			if ( ! ( $s3object = $this->as3cf->get_attachment_s3_info( $attachment_id ) ) ) {
+			if ( ! ( $s3object = $this->as3cf->is_attachment_served_by_s3( $attachment_id ) ) ) {
 				// Attachment not uploaded to S3, abort
 				continue;
 			}
@@ -891,12 +900,17 @@ class AS3CF_Plugin_Compatibility {
 	 * @return array
 	 */
 	public function wp_calculate_image_srcset_meta( $image_meta, $size_array, $image_src, $attachment_id ) {
+		if ( empty( $image_meta['file'] ) ) {
+			// Corrupt `_wp_attachment_metadata`
+			return $image_meta;
+		}
+
 		if ( false !== strpos( $image_src, $image_meta['file']  ) ) {
 			// Path matches URL, no need to change
 			return $image_meta;
 		}
 
-		if ( ! ( $s3object = $this->as3cf->get_attachment_s3_info( $attachment_id ) ) ) {
+		if ( ! ( $s3object = $this->as3cf->is_attachment_served_by_s3( $attachment_id ) ) ) {
 			// Attachment not uploaded to S3, abort
 			return $image_meta;
 		}
@@ -927,7 +941,12 @@ class AS3CF_Plugin_Compatibility {
 	 * @return array
 	 */
 	public function wp_calculate_image_srcset( $sources, $size_array, $image_src, $image_meta, $attachment_id ) {
-		if ( ! ( $s3object = $this->as3cf->get_attachment_s3_info( $attachment_id ) ) ) {
+		if ( ! is_array( $sources ) ) {
+			// Sources corrupt
+			return $sources;
+		}
+
+		if ( ! ( $s3object = $this->as3cf->is_attachment_served_by_s3( $attachment_id ) ) ) {
 			// Attachment not uploaded to S3, abort
 			return $sources;
 		}

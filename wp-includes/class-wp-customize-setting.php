@@ -207,7 +207,20 @@ class WP_Customize_Setting {
 	}
 
 	/**
-	 * The ID for the current blog when the preview() method was called.
+	 * Reset `$aggregated_multidimensionals` static variable.
+	 *
+	 * This is intended only for use by unit tests.
+	 *
+	 * @since 4.5.0
+	 * @access public
+	 * @ignore
+	 */
+	static public function reset_aggregated_multidimensionals() {
+		self::$aggregated_multidimensionals = array();
+	}
+
+	/**
+	 * The ID for the current site when the preview() method was called.
 	 *
 	 * @since 4.2.0
 	 * @access protected
@@ -216,7 +229,7 @@ class WP_Customize_Setting {
 	protected $_previewed_blog_id;
 
 	/**
-	 * Return true if the current blog is not the same as the previewed blog.
+	 * Return true if the current site is not the same as the previewed site.
 	 *
 	 * @since 4.2.0
 	 * @access public
@@ -358,7 +371,7 @@ class WP_Customize_Setting {
 	 * Clear out the previewed-applied flag for a multidimensional-aggregated value whenever its post value is updated.
 	 *
 	 * This ensures that the new value will get sanitized and used the next time
-	 * that <code>WP_Customize_Setting::_multidimensional_preview_filter()</code>
+	 * that `WP_Customize_Setting::_multidimensional_preview_filter()`
 	 * is called for this setting.
 	 *
 	 * @since 4.4.0
@@ -374,7 +387,7 @@ class WP_Customize_Setting {
 	 * Callback function to filter non-multidimensional theme mods and options.
 	 *
 	 * If switch_to_blog() was called after the preview() method, and the current
-	 * blog is now not the same blog, then this method does a no-op and returns
+	 * site is now not the same site, then this method does a no-op and returns
 	 * the original value.
 	 *
 	 * @since 3.4.0
@@ -496,7 +509,6 @@ class WP_Customize_Setting {
 	 * @return string|array|null Null if an input isn't valid, otherwise the sanitized value.
 	 */
 	public function sanitize( $value ) {
-		$value = wp_unslash( $value );
 
 		/**
 		 * Filter a Customize setting value in un-slashed form.

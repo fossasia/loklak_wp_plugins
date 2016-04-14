@@ -18,7 +18,7 @@ $pagenum = $wp_list_table->get_pagenum();
 $action = $wp_list_table->current_action();
 
 $plugin = isset($_REQUEST['plugin']) ? $_REQUEST['plugin'] : '';
-$s = isset($_REQUEST['s']) ? urlencode($_REQUEST['s']) : '';
+$s = isset($_REQUEST['s']) ? urlencode( wp_unslash( $_REQUEST['s'] ) ) : '';
 
 // Clean up request URI from temporary args for screen options/paging uri's to work as expected.
 $_SERVER['REQUEST_URI'] = remove_query_arg(array('error', 'deleted', 'activate', 'activate-multi', 'deactivate', 'deactivate-multi', '_error_nonce'), $_SERVER['REQUEST_URI']);
@@ -256,14 +256,12 @@ if ( $action ) {
 				?>
 			<div class="wrap">
 				<?php
-					$files_to_delete = $plugin_info = array();
+					$plugin_info = array();
 					$have_non_network_plugins = false;
-					$plugin_translations = wp_get_installed_translations( 'plugins' );
 					foreach ( (array) $plugins as $plugin ) {
 						$plugin_slug = dirname( $plugin );
 
 						if ( '.' == $plugin_slug ) {
-							$files_to_delete[] = WP_PLUGIN_DIR . '/' . $plugin;
 							if ( $data = get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin ) ) {
 								$plugin_info[ $plugin ] = $data;
 								$plugin_info[ $plugin ]['is_uninstallable'] = is_uninstallable_plugin( $plugin );
@@ -272,12 +270,6 @@ if ( $action ) {
 								}
 							}
 						} else {
-							// Locate all the files in that folder.
-							$files = list_files( WP_PLUGIN_DIR . '/' . $plugin_slug );
-							if ( $files ) {
-								$files_to_delete = array_merge( $files_to_delete, $files );
-							}
-
 							// Get plugins list from that folder.
 							if ( $folder_plugins = get_plugins( '/' . $plugin_slug ) ) {
 								foreach ( $folder_plugins as $plugin_file => $data ) {
@@ -286,16 +278,6 @@ if ( $action ) {
 									if ( ! $plugin_info[ $plugin_file ]['Network'] ) {
 										$have_non_network_plugins = true;
 									}
-								}
-							}
-
-							// Add translation files.
-							if ( ! empty( $plugin_translations[ $plugin_slug ] ) ) {
-								$translations = $plugin_translations[ $plugin_slug ];
-
-								foreach ( $translations as $translation => $data ) {
-									$files_to_delete[] = $plugin_slug . '-' . $translation . '.po';
-									$files_to_delete[] = $plugin_slug . '-' . $translation . '.mo';
 								}
 							}
 						}
@@ -321,11 +303,11 @@ if ( $action ) {
 						foreach ( $plugin_info as $plugin ) {
 							if ( $plugin['is_uninstallable'] ) {
 								/* translators: 1: plugin name, 2: plugin author */
-								echo '<li>', sprintf( __( '<strong>%1$s</strong> by <em>%2$s</em> (will also <strong>delete its data</strong>)' ), $plugin['Name'], $plugin['AuthorName'] ), '</li>';
+								echo '<li>', sprintf( __( '%1$s by %2$s (will also <strong>delete its data</strong>)' ), '<strong>' . $plugin['Name'] . '</strong>', '<em>' . $plugin['AuthorName'] . '</em>' ), '</li>';
 								$data_to_delete = true;
 							} else {
 								/* translators: 1: plugin name, 2: plugin author */
-								echo '<li>', sprintf( __('<strong>%1$s</strong> by <em>%2$s</em>' ), $plugin['Name'], $plugin['AuthorName'] ), '</li>';
+								echo '<li>', sprintf( _x('%1$s by %2$s', 'plugin' ), '<strong>' . $plugin['Name'] . '</strong>', '<em>' . $plugin['AuthorName'] ) . '</em>', '</li>';
 							}
 						}
 						?>
@@ -353,17 +335,6 @@ if ( $action ) {
 				<form method="post" action="<?php echo $referer ? esc_url( $referer ) : ''; ?>" style="display:inline;">
 					<?php submit_button( __( 'No, return me to the plugin list' ), 'button', 'submit', false ); ?>
 				</form>
-
-				<p><a href="#" onclick="jQuery('#files-list').toggle(); return false;"><?php _e('Click to view entire list of files which will be deleted'); ?></a></p>
-				<div id="files-list" style="display:none;">
-					<ul class="code">
-					<?php
-						foreach ( (array) $files_to_delete as $file ) {
-							echo '<li>' . esc_html( str_replace( WP_PLUGIN_DIR, '', $file ) ) . '</li>';
-						}
-					?>
-					</ul>
-				</div>
 			</div>
 				<?php
 				require_once(ABSPATH . 'wp-admin/admin-footer.php');
@@ -510,9 +481,14 @@ if ( ! empty( $invalid ) ) {
 <h1><?php echo esc_html( $title );
 if ( ( ! is_multisite() || is_network_admin() ) && current_user_can('install_plugins') ) { ?>
  <a href="<?php echo self_admin_url( 'plugin-install.php' ); ?>" class="page-title-action"><?php echo esc_html_x('Add New', 'plugin'); ?></a>
-<?php }
-if ( $s )
-	printf( '<span class="subtitle">' . __('Search results for &#8220;%s&#8221;') . '</span>', esc_html( $s ) ); ?>
+<?php
+}
+
+if ( strlen( $s ) ) {
+	/* translators: %s: search keywords */
+	printf( '<span class="subtitle">' . __( 'Search results for &#8220;%s&#8221;' ) . '</span>', esc_html( urldecode( $s ) ) );
+}
+?>
 </h1>
 
 <?php

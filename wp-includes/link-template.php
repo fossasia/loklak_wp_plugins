@@ -28,12 +28,12 @@ function the_permalink( $post = 0 ) {
 }
 
 /**
- * Retrieve trailing slash string, if blog set for adding trailing slashes.
+ * Retrieve trailing slash string, if site is set for adding trailing slashes.
  *
  * Conditionally adds a trailing slash if the permalink structure has a trailing
  * slash, strips the trailing slash if not. The string is passed through the
  * 'user_trailingslashit' filter. Will remove trailing slash from string, if
- * blog is not set to have them.
+ * site is not set to have them.
  *
  * @since 2.2.0
  * @global WP_Rewrite $wp_rewrite
@@ -685,7 +685,7 @@ function get_post_comments_feed_link($post_id = 0, $feed = '') {
  * @param string $link_text Descriptive text.
  * @param int    $post_id   Optional post ID. Default to current post.
  * @param string $feed      Optional. Feed format.
-*/
+ */
 function post_comments_feed_link( $link_text = '', $post_id = '', $feed = '' ) {
 	$url = get_post_comments_feed_link( $post_id, $feed );
 	if ( empty( $link_text ) ) {
@@ -716,7 +716,7 @@ function post_comments_feed_link( $link_text = '', $post_id = '', $feed = '' ) {
  * @param int    $author_id ID of an author.
  * @param string $feed      Optional. Feed type.
  * @return string Link to the feed for the author specified by $author_id.
-*/
+ */
 function get_author_feed_link( $author_id, $feed = '' ) {
 	$author_id = (int) $author_id;
 	$permalink_structure = get_option('permalink_structure');
@@ -760,7 +760,7 @@ function get_author_feed_link( $author_id, $feed = '' ) {
  * @param int    $cat_id ID of a category.
  * @param string $feed   Optional. Feed type.
  * @return string Link to the feed for the category specified by $cat_id.
-*/
+ */
 function get_category_feed_link( $cat_id, $feed = '' ) {
 	return get_term_feed_link( $cat_id, 'category', $feed );
 }
@@ -777,7 +777,7 @@ function get_category_feed_link( $cat_id, $feed = '' ) {
  * @param string $taxonomy Optional. Taxonomy of $term_id
  * @param string $feed     Optional. Feed type.
  * @return string|false Link to the feed for the term specified by $term_id and $taxonomy.
-*/
+ */
 function get_term_feed_link( $term_id, $taxonomy = 'category', $feed = '' ) {
 	$term_id = ( int ) $term_id;
 
@@ -904,31 +904,31 @@ function edit_tag_link( $link = '', $before = '', $after = '', $tag = null ) {
 }
 
 /**
- * Retrieve edit term url.
+ * Retrieves the URL for editing a given term.
  *
  * @since 3.1.0
+ * @since 4.5.0 The `$taxonomy` argument was made optional.
  *
  * @param int    $term_id     Term ID.
- * @param string $taxonomy    Taxonomy.
- * @param string $object_type The object type. Used to highlight the proper post type menu on the linked page.
+ * @param string $taxonomy    Optional. Taxonomy. Defaults to the taxonomy of the term identified by `$term_id`.
+ * @param string $object_type Optional. The object type. Used to highlight the proper post type menu on the linked page.
  *                            Defaults to the first object_type associated with the taxonomy.
  * @return string|null The edit term link URL for the given term, or null on failure.
  */
-function get_edit_term_link( $term_id, $taxonomy, $object_type = '' ) {
-	$tax = get_taxonomy( $taxonomy );
-	if ( ! $tax || ! current_user_can( $tax->cap->edit_terms ) ) {
-		return;
-	}
-
+function get_edit_term_link( $term_id, $taxonomy = '', $object_type = '' ) {
 	$term = get_term( $term_id, $taxonomy );
 	if ( ! $term || is_wp_error( $term ) ) {
 		return;
 	}
 
+	$tax = get_taxonomy( $term->taxonomy );
+	if ( ! $tax || ! current_user_can( $tax->cap->edit_terms ) ) {
+		return;
+	}
+
 	$args = array(
-		'action' => 'edit',
 		'taxonomy' => $taxonomy,
-		'tag_ID' => $term->term_id,
+		'tag_ID'   => $term->term_id,
 	);
 
 	if ( $object_type ) {
@@ -938,7 +938,7 @@ function get_edit_term_link( $term_id, $taxonomy, $object_type = '' ) {
 	}
 
 	if ( $tax->show_ui ) {
-		$location = add_query_arg( $args, admin_url( 'edit-tags.php' ) );
+		$location = add_query_arg( $args, admin_url( 'term.php' ) );
 	} else {
 		$location = '';
 	}
@@ -1110,19 +1110,33 @@ function get_search_comments_feed_link($search_query = '', $feed = '') {
 }
 
 /**
- * Retrieve the permalink for a post type archive.
+ * Retrieves the permalink for a post type archive.
  *
  * @since 3.1.0
+ * @since 4.5.0 Support for posts was added.
  *
  * @global WP_Rewrite $wp_rewrite
  *
- * @param string $post_type Post type
+ * @param string $post_type Post type.
  * @return string|false The post type archive permalink.
  */
 function get_post_type_archive_link( $post_type ) {
 	global $wp_rewrite;
 	if ( ! $post_type_obj = get_post_type_object( $post_type ) )
 		return false;
+
+	if ( 'post' === $post_type ) {
+		$show_on_front = get_option( 'show_on_front' );
+		$page_for_posts  = get_option( 'page_for_posts' );
+
+		if ( 'page' == $show_on_front && $page_for_posts ) {
+			$link = get_permalink( $page_for_posts );
+		} else {
+			$link = get_home_url();
+		}
+		/** This filter is documented in wp-includes/link-template.php */
+		return apply_filters( 'post_type_archive_link', $link, $post_type );
+	}
 
 	if ( ! $post_type_obj->has_archive )
 		return false;
@@ -1208,7 +1222,7 @@ function get_preview_post_link( $post = null, $query_args = array(), $preview_li
 	$post_type_object = get_post_type_object( $post->post_type );
 	if ( is_post_type_viewable( $post_type_object ) ) {
 		if ( ! $preview_link ) {
-			$preview_link = get_permalink( $post );
+			$preview_link = set_url_scheme( get_permalink( $post ) );
 		}
 
 		$query_args['preview'] = 'true';
@@ -1419,7 +1433,7 @@ function edit_comment_link( $text = null, $before = '', $after = '' ) {
 }
 
 /**
- * Display edit bookmark (literally a URL external to blog) link.
+ * Display edit bookmark link.
  *
  * @since 2.7.0
  *
@@ -1435,7 +1449,7 @@ function get_edit_bookmark_link( $link = 0 ) {
 	$location = admin_url('link.php?action=edit&amp;link_id=') . $link->link_id;
 
 	/**
-	 * Filter the bookmark (link) edit link.
+	 * Filter the bookmark edit link.
 	 *
 	 * @since 2.7.0
 	 *
@@ -1446,7 +1460,7 @@ function get_edit_bookmark_link( $link = 0 ) {
 }
 
 /**
- * Display edit bookmark (literally a URL external to blog) link anchor content.
+ * Display edit bookmark link anchor content.
  *
  * @since 2.7.0
  *
@@ -1568,6 +1582,7 @@ function get_adjacent_post( $in_same_term = false, $excluded_terms = '', $previo
 
 	$join = '';
 	$where = '';
+	$adjacent = $previous ? 'previous' : 'next';
 
 	if ( $in_same_term || ! empty( $excluded_terms ) ) {
 		if ( ! empty( $excluded_terms ) && ! is_array( $excluded_terms ) ) {
@@ -1600,8 +1615,20 @@ function get_adjacent_post( $in_same_term = false, $excluded_terms = '', $previo
 			$where .= " AND tt.term_id IN (" . implode( ',', $term_array ) . ")";
 		}
 
+		/**
+		 * Filter the IDs of terms excluded from adjacent post queries.
+		 *
+		 * The dynamic portion of the hook name, `$adjacent`, refers to the type
+		 * of adjacency, 'next' or 'previous'.
+		 *
+		 * @since 4.4.0
+		 *
+		 * @param string $excluded_terms Array of excluded term IDs.
+		 */
+		$excluded_terms = apply_filters( "get_{$adjacent}_post_excluded_terms", $excluded_terms );
+
 		if ( ! empty( $excluded_terms ) ) {
-			$where .= " AND p.ID NOT IN ( SELECT tr.object_id FROM $wpdb->term_relationships tr LEFT JOIN $wpdb->term_taxonomy tt ON (tr.term_taxonomy_id = tt.term_taxonomy_id) WHERE tt.term_id IN (" . implode( $excluded_terms, ',' ) . ') )';
+			$where .= " AND p.ID NOT IN ( SELECT tr.object_id FROM $wpdb->term_relationships tr LEFT JOIN $wpdb->term_taxonomy tt ON (tr.term_taxonomy_id = tt.term_taxonomy_id) WHERE tt.term_id IN (" . implode( ',', array_map( 'intval', $excluded_terms ) ) . ') )';
 		}
 	}
 
@@ -1635,21 +1662,8 @@ function get_adjacent_post( $in_same_term = false, $excluded_terms = '', $previo
 		$where .= " AND p.post_status = 'publish'";
 	}
 
-	$adjacent = $previous ? 'previous' : 'next';
 	$op = $previous ? '<' : '>';
 	$order = $previous ? 'DESC' : 'ASC';
-
-	/**
-	 * Filter the excluded term ids
-	 *
-	 * The dynamic portion of the hook name, `$adjacent`, refers to the type
-	 * of adjacency, 'next' or 'previous'.
-	 *
-	 * @since 4.4.0
-	 *
-	 * @param string $excluded_terms Array of excluded term IDs.
-	 */
-	$excluded_terms = apply_filters( "get_{$adjacent}_post_excluded_terms", $excluded_terms );
 
 	/**
 	 * Filter the JOIN clause in the SQL for an adjacent post query.
@@ -1887,7 +1901,7 @@ function get_boundary_post( $in_same_term = false, $excluded_terms = '', $start 
 	return get_posts( $query_args );
 }
 
-/*
+/**
  * Get previous post link that is adjacent to the current post.
  *
  * @since 3.7.0
@@ -2719,7 +2733,7 @@ function previous_comments_link( $label = '' ) {
  *
  * @param string|array $args Optional args. See paginate_links().
  * @return string|void Markup for pagination links.
-*/
+ */
 function paginate_comments_links($args = array()) {
 	global $wp_rewrite;
 
@@ -2912,7 +2926,7 @@ function get_shortcut_link() {
 }
 
 /**
- * Retrieve the home url for the current site.
+ * Retrieve the URL for the current site where the front end is accessible.
  *
  * Returns the 'home' option with the appropriate protocol, 'https' if
  * {@see is_ssl()} and 'http' otherwise. If `$scheme` is 'http' or 'https',
@@ -2924,13 +2938,13 @@ function get_shortcut_link() {
  * @param  string|null $scheme Optional. Scheme to give the home url context. Accepts
  *                             'http', 'https', 'relative', 'rest', or null. Default null.
  * @return string Home url link with optional path appended.
-*/
+ */
 function home_url( $path = '', $scheme = null ) {
 	return get_home_url( null, $path, $scheme );
 }
 
 /**
- * Retrieve the home url for a given site.
+ * Retrieve the URL for a given site where the front end is accessible.
  *
  * Returns the 'home' option with the appropriate protocol, 'https' if
  * {@see is_ssl()} and 'http' otherwise. If `$scheme` is 'http' or 'https',
@@ -2941,12 +2955,12 @@ function home_url( $path = '', $scheme = null ) {
  *
  * @global string $pagenow
  *
- * @param  int         $blog_id     Optional. Blog ID. Default null (current blog).
- * @param  string      $path        Optional. Path relative to the home URL. Default empty.
- * @param  string|null $orig_scheme Optional. Scheme to give the home URL context. Accepts
- *                                  'http', 'https', 'relative', 'rest', or null. Default null.
+ * @param  int         $blog_id Optional. Site ID. Default null (current site).
+ * @param  string      $path    Optional. Path relative to the home URL. Default empty.
+ * @param  string|null $scheme  Optional. Scheme to give the home URL context. Accepts
+ *                              'http', 'https', 'relative', 'rest', or null. Default null.
  * @return string Home URL link with optional path appended.
-*/
+ */
 function get_home_url( $blog_id = null, $path = '', $scheme = null ) {
 	global $pagenow;
 
@@ -2981,13 +2995,14 @@ function get_home_url( $blog_id = null, $path = '', $scheme = null ) {
 	 * @param string      $path        Path relative to the home URL. Blank string if no path is specified.
 	 * @param string|null $orig_scheme Scheme to give the home URL context. Accepts 'http', 'https',
 	 *                                 'relative', 'rest', or null.
-	 * @param int|null    $blog_id     Blog ID, or null for the current blog.
+	 * @param int|null    $blog_id     Site ID, or null for the current site.
 	 */
 	return apply_filters( 'home_url', $url, $path, $orig_scheme, $blog_id );
 }
 
 /**
- * Retrieve the site url for the current site.
+ * Retrieve the URL for the current site where WordPress application files
+ * (e.g. wp-blog-header.php or the wp-admin/ folder) are accessible.
  *
  * Returns the 'site_url' option with the appropriate protocol, 'https' if
  * is_ssl() and 'http' otherwise. If $scheme is 'http' or 'https', is_ssl() is
@@ -2998,13 +3013,14 @@ function get_home_url( $blog_id = null, $path = '', $scheme = null ) {
  * @param string $path   Optional. Path relative to the site url.
  * @param string $scheme Optional. Scheme to give the site url context. See set_url_scheme().
  * @return string Site url link with optional path appended.
-*/
+ */
 function site_url( $path = '', $scheme = null ) {
 	return get_site_url( null, $path, $scheme );
 }
 
 /**
- * Retrieve the site url for a given site.
+ * Retrieve the URL for a given site where WordPress application files
+ * (e.g. wp-blog-header.php or the wp-admin/ folder) are accessible.
  *
  * Returns the 'site_url' option with the appropriate protocol, 'https' if
  * {@see is_ssl()} and 'http' otherwise. If `$scheme` is 'http' or 'https',
@@ -3012,13 +3028,13 @@ function site_url( $path = '', $scheme = null ) {
  *
  * @since 3.0.0
  *
- * @param int    $blog_id Optional. Blog ID. Default null (current site).
+ * @param int    $blog_id Optional. Site ID. Default null (current site).
  * @param string $path    Optional. Path relative to the site url. Default empty.
  * @param string $scheme  Optional. Scheme to give the site url context. Accepts
  *                        'http', 'https', 'login', 'login_post', 'admin', or
  *                        'relative'. Default null.
  * @return string Site url link with optional path appended.
-*/
+ */
 function get_site_url( $blog_id = null, $path = '', $scheme = null ) {
 	if ( empty( $blog_id ) || !is_multisite() ) {
 		$url = get_option( 'siteurl' );
@@ -3042,7 +3058,7 @@ function get_site_url( $blog_id = null, $path = '', $scheme = null ) {
 	 * @param string      $path    Path relative to the site URL. Blank string if no path is specified.
 	 * @param string|null $scheme  Scheme to give the site URL context. Accepts 'http', 'https', 'login',
 	 *                             'login_post', 'admin', 'relative' or null.
-	 * @param int|null    $blog_id Blog ID, or null for the current blog.
+	 * @param int|null    $blog_id Site ID, or null for the current site.
 	 */
 	return apply_filters( 'site_url', $url, $path, $scheme, $blog_id );
 }
@@ -3055,7 +3071,7 @@ function get_site_url( $blog_id = null, $path = '', $scheme = null ) {
  * @param string $path   Optional path relative to the admin url.
  * @param string $scheme The scheme to use. Default is 'admin', which obeys force_ssl_admin() and is_ssl(). 'http' or 'https' can be passed to force those schemes.
  * @return string Admin url link with optional path appended.
-*/
+ */
 function admin_url( $path = '', $scheme = 'admin' ) {
 	return get_admin_url( null, $path, $scheme );
 }
@@ -3065,13 +3081,13 @@ function admin_url( $path = '', $scheme = 'admin' ) {
  *
  * @since 3.0.0
  *
- * @param int    $blog_id Optional. Blog ID. Default null (current site).
+ * @param int    $blog_id Optional. Site ID. Default null (current site).
  * @param string $path    Optional. Path relative to the admin url. Default empty.
  * @param string $scheme  Optional. The scheme to use. Accepts 'http' or 'https',
  *                        to force those schemes. Default 'admin', which obeys
  *                        {@see force_ssl_admin()} and {@see is_ssl()}.
  * @return string Admin url link with optional path appended.
-*/
+ */
 function get_admin_url( $blog_id = null, $path = '', $scheme = 'admin' ) {
 	$url = get_site_url($blog_id, 'wp-admin/', $scheme);
 
@@ -3085,7 +3101,7 @@ function get_admin_url( $blog_id = null, $path = '', $scheme = 'admin' ) {
 	 *
 	 * @param string   $url     The complete admin area URL including scheme and path.
 	 * @param string   $path    Path relative to the admin area URL. Blank string if no path is specified.
-	 * @param int|null $blog_id Blog ID, or null for the current blog.
+	 * @param int|null $blog_id Site ID, or null for the current site.
 	 */
 	return apply_filters( 'admin_url', $url, $path, $blog_id );
 }
@@ -3098,7 +3114,7 @@ function get_admin_url( $blog_id = null, $path = '', $scheme = 'admin' ) {
  * @param string $path   Optional. Path relative to the includes url.
  * @param string $scheme Optional. Scheme to give the includes url context.
  * @return string Includes url link with optional path appended.
-*/
+ */
 function includes_url( $path = '', $scheme = null ) {
 	$url = site_url( '/' . WPINC . '/', $scheme );
 
@@ -3124,7 +3140,7 @@ function includes_url( $path = '', $scheme = null ) {
  *
  * @param string $path Optional. Path relative to the content url.
  * @return string Content url link with optional path appended.
-*/
+ */
 function content_url($path = '') {
 	$url = set_url_scheme( WP_CONTENT_URL );
 
@@ -3156,7 +3172,7 @@ function content_url($path = '') {
  *                        The URL will be relative to its directory. Default empty.
  *                        Typically this is done by passing `__FILE__` as the argument.
  * @return string Plugins URL link with optional paths appended.
-*/
+ */
 function plugins_url( $path = '', $plugin = '' ) {
 
 	$path = wp_normalize_path( $path );
@@ -3206,7 +3222,7 @@ function plugins_url( $path = '', $plugin = '' ) {
  * @param string $path   Optional. Path relative to the site url.
  * @param string $scheme Optional. Scheme to give the site url context. See set_url_scheme().
  * @return string Site url link with optional path appended.
-*/
+ */
 function network_site_url( $path = '', $scheme = null ) {
 	if ( ! is_multisite() )
 		return site_url($path, $scheme);
@@ -3248,7 +3264,7 @@ function network_site_url( $path = '', $scheme = null ) {
  * @param  string $scheme Optional. Scheme to give the home url context. Accepts
  *                        'http', 'https', or 'relative'. Default null.
  * @return string Home url link with optional path appended.
-*/
+ */
 function network_home_url( $path = '', $scheme = null ) {
 	if ( ! is_multisite() )
 		return home_url($path, $scheme);
@@ -3289,7 +3305,7 @@ function network_home_url( $path = '', $scheme = null ) {
  * @param string $path   Optional path relative to the admin url.
  * @param string $scheme The scheme to use. Default is 'admin', which obeys force_ssl_admin() and is_ssl(). 'http' or 'https' can be passed to force those schemes.
  * @return string Admin url link with optional path appended.
-*/
+ */
 function network_admin_url( $path = '', $scheme = 'admin' ) {
 	if ( ! is_multisite() )
 		return admin_url( $path, $scheme );
@@ -3319,7 +3335,7 @@ function network_admin_url( $path = '', $scheme = 'admin' ) {
  * @param string $path   Optional path relative to the admin url.
  * @param string $scheme The scheme to use. Default is 'admin', which obeys force_ssl_admin() and is_ssl(). 'http' or 'https' can be passed to force those schemes.
  * @return string Admin url link with optional path appended.
-*/
+ */
 function user_admin_url( $path = '', $scheme = 'admin' ) {
 	$url = network_site_url('wp-admin/user/', $scheme);
 
@@ -3339,14 +3355,14 @@ function user_admin_url( $path = '', $scheme = 'admin' ) {
 }
 
 /**
- * Retrieve the url to the admin area for either the current blog or the network depending on context.
+ * Retrieve the url to the admin area for either the current site or the network depending on context.
  *
  * @since 3.1.0
  *
  * @param string $path   Optional path relative to the admin url.
  * @param string $scheme The scheme to use. Default is 'admin', which obeys force_ssl_admin() and is_ssl(). 'http' or 'https' can be passed to force those schemes.
  * @return string Admin url link with optional path appended.
-*/
+ */
 function self_admin_url($path = '', $scheme = 'admin') {
 	if ( is_network_admin() )
 		return network_admin_url($path, $scheme);
@@ -3408,12 +3424,12 @@ function set_url_scheme( $url, $scheme = null ) {
  *
  * If a user does not belong to any site, the global user dashboard is used. If the user belongs to the current site,
  * the dashboard for the current site is returned. If the user cannot edit the current site, the dashboard to the user's
- * primary blog is returned.
+ * primary site is returned.
  *
  * @since 3.1.0
  *
  * @param int    $user_id Optional. User ID. Defaults to current user.
- * @param string $path    Optional path relative to the dashboard. Use only paths known to both blog and user admins.
+ * @param string $path    Optional path relative to the dashboard. Use only paths known to both site and user admins.
  * @param string $scheme  The scheme to use. Default is 'admin', which obeys force_ssl_admin() and is_ssl(). 'http' or 'https' can be passed to force those schemes.
  * @return string Dashboard url link with optional path appended.
  */
@@ -3489,7 +3505,7 @@ function get_edit_profile_url( $user_id = 0, $scheme = 'admin' ) {
  * Output rel=canonical for singular queries.
  *
  * @since 2.9.0
-*/
+ */
 function rel_canonical() {
 	if ( ! is_singular() ) {
 		return;
@@ -3518,7 +3534,7 @@ function rel_canonical() {
 }
 
 /**
- * Return a shortlink for a post, page, attachment, or blog.
+ * Return a shortlink for a post, page, attachment, or a site.
  *
  * This function exists to provide a shortlink tag that all themes and plugins can target. A plugin must hook in to
  * provide the actual shortlinks. Default shortlink support is limited to providing ?p= style links for posts.
@@ -3527,8 +3543,8 @@ function rel_canonical() {
  *
  * @since 3.0.0.
  *
- * @param int    $id          A post or blog id. Default is 0, which means the current post or blog.
- * @param string $context     Whether the id is a 'blog' id, 'post' id, or 'media' id.
+ * @param int    $id          A post or site id. Default is 0, which means the current post or site.
+ * @param string $context     Whether the id is a 'site' id, 'post' id, or 'media' id.
  *                            If 'post', the post_type of the post is consulted.
  *                            If 'query', the current query is consulted to determine the id and context.
  *                            Default is 'post'.

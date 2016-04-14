@@ -190,20 +190,9 @@ if ( 0 != $post->ID ) {
 	$date = date_i18n( $datef, strtotime( current_time('mysql') ) );
 }
 
-if ( ! empty( $args['args']['revisions_count'] ) ) :
-	$revisions_to_keep = wp_revisions_to_keep( $post );
-?>
+if ( ! empty( $args['args']['revisions_count'] ) ) : ?>
 <div class="misc-pub-section misc-pub-revisions">
-<?php
-	if ( $revisions_to_keep > 0 && $revisions_to_keep <= $args['args']['revisions_count'] ) {
-		echo '<span title="' . esc_attr( sprintf( __( 'Your site is configured to keep only the last %s revisions.' ),
-			number_format_i18n( $revisions_to_keep ) ) ) . '">';
-		printf( __( 'Revisions: %s' ), '<b>' . number_format_i18n( $args['args']['revisions_count'] ) . '+</b>' );
-		echo '</span>';
-	} else {
-		printf( __( 'Revisions: %s' ), '<b>' . number_format_i18n( $args['args']['revisions_count'] ) . '</b>' );
-	}
-?>
+	<?php printf( __( 'Revisions: %s' ), '<b>' . number_format_i18n( $args['args']['revisions_count'] ) . '</b>' ); ?>
 	<a class="hide-if-no-js" href="<?php echo esc_url( get_edit_post_link( $args['args']['revision_id'] ) ); ?>"><span aria-hidden="true"><?php _ex( 'Browse', 'revisions' ); ?></span> <span class="screen-reader-text"><?php _e( 'Browse revisions' ); ?></span></a>
 </div>
 <?php endif;
@@ -334,7 +323,7 @@ function attachment_submit_meta_box( $post ) {
 	<?php
 	if ( current_user_can( 'delete_post', $post->ID ) )
 		if ( EMPTY_TRASH_DAYS && MEDIA_TRASH ) {
-			echo "<a class='submitdelete deletion' href='" . get_delete_post_link( $post->ID ) . "'>" . __( 'Trash' ) . "</a>";
+			echo "<a class='submitdelete deletion' href='" . get_delete_post_link( $post->ID ) . "'>" . _x( 'Trash', 'verb' ) . "</a>";
 		} else {
 			$delete_ays = ! MEDIA_TRASH ? " onclick='return showNotice.warn();'" : '';
 			echo  "<a class='submitdelete deletion'$delete_ays href='" . get_delete_post_link( $post->ID, null, true ) . "'>" . __( 'Delete Permanently' ) . "</a>";
@@ -580,7 +569,13 @@ function post_categories_meta_box( $post, $box ) {
 function post_excerpt_meta_box($post) {
 ?>
 <label class="screen-reader-text" for="excerpt"><?php _e('Excerpt') ?></label><textarea rows="1" cols="40" name="excerpt" id="excerpt"><?php echo $post->post_excerpt; // textarea_escaped ?></textarea>
-<p><?php _e('Excerpts are optional hand-crafted summaries of your content that can be used in your theme. <a href="https://codex.wordpress.org/Excerpt" target="_blank">Learn more about manual excerpts.</a>'); ?></p>
+<p><?php
+	printf(
+		/* translators: %s: Codex URL */
+		__( 'Excerpts are optional hand-crafted summaries of your content that can be used in your theme. <a href="%s">Learn more about manual excerpts</a>.' ),
+		__( 'https://codex.wordpress.org/Excerpt' )
+	);
+?></p>
 <?php
 }
 
@@ -592,7 +587,8 @@ function post_excerpt_meta_box($post) {
  * @param object $post
  */
 function post_trackback_meta_box($post) {
-	$form_trackback = '<input type="text" name="trackback_url" id="trackback_url" class="code" value="'. esc_attr( str_replace("\n", ' ', $post->to_ping) ) .'" />';
+	$form_trackback = '<input type="text" name="trackback_url" id="trackback_url" class="code" value="' .
+		esc_attr( str_replace( "\n", ' ', $post->to_ping ) ) . '" aria-describedby="trackback-url-desc" />';
 	if ('' != $post->pinged) {
 		$pings = '<p>'. __('Already pinged:') . '</p><ul>';
 		$already_pinged = explode("\n", trim($post->pinged));
@@ -603,8 +599,18 @@ function post_trackback_meta_box($post) {
 	}
 
 ?>
-<p><label for="trackback_url"><?php _e('Send trackbacks to:'); ?></label> <?php echo $form_trackback; ?><br /> (<?php _e('Separate multiple URLs with spaces'); ?>)</p>
-<p><?php _e('Trackbacks are a way to notify legacy blog systems that you&#8217;ve linked to them. If you link other WordPress sites, they&#8217;ll be notified automatically using <a href="https://codex.wordpress.org/Introduction_to_Blogging#Managing_Comments" target="_blank">pingbacks</a>, no other action necessary.'); ?></p>
+<p>
+	<label for="trackback_url"><?php _e( 'Send trackbacks to:' ); ?></label>
+	<?php echo $form_trackback; ?>
+</p>
+<p id="trackback-url-desc" class="howto"><?php _e( 'Separate multiple URLs with spaces' ); ?></p>
+<p><?php
+	printf(
+		/* translators: %s: Codex URL */
+		__( 'Trackbacks are a way to notify legacy blog systems that you&#8217;ve linked to them. If you link other WordPress sites, they&#8217;ll be notified automatically using <a href="%s">pingbacks</a>, no other action necessary.' ),
+		__( 'https://codex.wordpress.org/Introduction_to_Blogging#Managing_Comments' )
+	);
+?></p>
 <?php
 if ( ! empty($pings) )
 	echo $pings;
@@ -630,7 +636,13 @@ foreach ( $metadata as $key => $value ) {
 list_meta( $metadata );
 meta_form( $post ); ?>
 </div>
-<p><?php _e('Custom fields can be used to add extra metadata to a post that you can <a href="https://codex.wordpress.org/Using_Custom_Fields" target="_blank">use in your theme</a>.'); ?></p>
+<p><?php
+	printf(
+		/* translators: %s: Codex URL */
+		__( 'Custom fields can be used to add extra metadata to a post that you can <a href="%s">use in your theme</a>.' ),
+		__( 'https://codex.wordpress.org/Using_Custom_Fields' )
+	);
+?></p>
 <?php
 }
 
@@ -646,7 +658,12 @@ function post_comment_status_meta_box($post) {
 <input name="advanced_view" type="hidden" value="1" />
 <p class="meta-options">
 	<label for="comment_status" class="selectit"><input name="comment_status" type="checkbox" id="comment_status" value="open" <?php checked($post->comment_status, 'open'); ?> /> <?php _e( 'Allow comments.' ) ?></label><br />
-	<label for="ping_status" class="selectit"><input name="ping_status" type="checkbox" id="ping_status" value="open" <?php checked($post->ping_status, 'open'); ?> /> <?php printf( __( 'Allow <a href="%s" target="_blank">trackbacks and pingbacks</a> on this page.' ), __( 'https://codex.wordpress.org/Introduction_to_Blogging#Managing_Comments' ) ); ?></label>
+	<label for="ping_status" class="selectit"><input name="ping_status" type="checkbox" id="ping_status" value="open" <?php checked($post->ping_status, 'open'); ?> /> <?php
+		printf(
+			/* translators: %s: Codex URL */
+			__( 'Allow <a href="%s">trackbacks and pingbacks</a> on this page.' ),
+			__( 'https://codex.wordpress.org/Introduction_to_Blogging#Managing_Comments' ) );
+		?></label>
 	<?php
 	/**
 	 * Fires at the end of the Discussion meta box on the post editing screen.
@@ -742,7 +759,8 @@ function post_author_meta_box($post) {
 		'who' => 'authors',
 		'name' => 'post_author_override',
 		'selected' => empty($post->ID) ? $user_ID : $post->post_author,
-		'include_selected' => true
+		'include_selected' => true,
+		'show' => 'display_name_with_login',
 	) );
 }
 
@@ -1173,6 +1191,8 @@ function link_advanced_meta_box($link) {
  * Display post thumbnail meta box.
  *
  * @since 2.9.0
+ *
+ * @param WP_Post $post A post object.
  */
 function post_thumbnail_meta_box( $post ) {
 	$thumbnail_id = get_post_meta( $post->ID, '_thumbnail_id', true );
@@ -1184,7 +1204,7 @@ function post_thumbnail_meta_box( $post ) {
  *
  * @since 3.9.0
  *
- * @param WP_Post $post
+ * @param WP_Post $post A post object.
  */
 function attachment_id3_data_meta_box( $post ) {
 	$meta = array();

@@ -2,8 +2,8 @@
 Contributors: matt, ryan, andy, mdawaffe, tellyworth, josephscott, lessbloat, eoigal, cfinke, automattic, jgs
 Tags: akismet, comments, spam, antispam, anti-spam, anti spam, comment moderation, comment spam, contact form spam, spam comments
 Requires at least: 3.2
-Tested up to: 4.4.1
-Stable tag: 3.1.7
+Tested up to: 4.5
+Stable tag: 3.1.10
 License: GPLv2 or later
 
 Akismet checks your comments against the Akismet Web service to see if they look like spam or not.
@@ -29,6 +29,27 @@ Upload the Akismet plugin to your blog, Activate it, then enter your [Akismet.co
 1, 2, 3: You're done!
 
 == Changelog ==
+
+= 3.1.10 =
+*Release Date - 1 April 2016*
+
+* Fixed a bug that could cause comments caught as spam to be placed in the Pending queue.
+* Fixed a bug that could have resulted in comments that were caught by the core WordPress comment blacklist not to have a corresponding History entry.
+* Fixed a bug that could have caused avoidable PHP warnings in the error log.
+
+= 3.1.9 =
+*Release Date - 28 March 2016*
+
+* Add compatibility with Jetpack so that Jetpack can automatically configure Akismet settings when appropriate.
+* Fixed a bug preventing some comment data from being sent to Akismet.
+
+= 3.1.8 =
+*Release Date - 4 March 2016*
+
+* Fixed a bug preventing Akismet from being used with some plugins that rewrite admin URLs.
+* Reduced the amount of bandwidth used on Akismet API calls
+* Reduced the amount of space Akismet uses in the database
+* Fixed a bug that could cause comments caught as spam to be placed in the Pending queue.
 
 = 3.1.7 =
 *Release Date - 4 January 2016*

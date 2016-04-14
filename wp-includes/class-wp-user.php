@@ -113,7 +113,7 @@ class WP_User {
 	 *
 	 * @param int|string|stdClass|WP_User $id User's ID, a WP_User object, or a user object from the DB.
 	 * @param string $name Optional. User's username
-	 * @param int $blog_id Optional Blog ID, defaults to current blog.
+	 * @param int $blog_id Optional Site ID, defaults to current site.
 	 */
 	public function __construct( $id = 0, $name = '', $blog_id = '' ) {
 		if ( ! isset( self::$back_compat_keys ) ) {
@@ -157,8 +157,8 @@ class WP_User {
 	/**
 	 * Sets up object properties, including capabilities.
 	 *
-	 * @param object $data User DB row object
-	 * @param int $blog_id Optional. The blog id to initialize for
+	 * @param object $data    User DB row object.
+	 * @param int    $blog_id Optional. The site ID to initialize for.
 	 */
 	public function init( $data, $blog_id = '' ) {
 		$this->data = $data;
@@ -701,12 +701,12 @@ class WP_User {
 	 *
 	 * @see map_meta_cap()
 	 *
-	 * @param string $cap       Capability name.
-	 * @param int    $object_id Optional. ID of the specific object to check against if `$cap` is a "meta" cap.
-	 *                          "Meta" capabilities, e.g. 'edit_post', 'edit_user', etc., are capabilities used
-	 *                          by map_meta_cap() to map to other "primitive" capabilities, e.g. 'edit_posts',
-	 *                          'edit_others_posts', etc. The parameter is accessed via func_get_args() and passed
-	 *                          to map_meta_cap().
+	 * @param string $cap           Capability name.
+	 * @param int    $object_id,... Optional. ID of the specific object to check against if `$cap` is a "meta" cap.
+	 *                              "Meta" capabilities, e.g. 'edit_post', 'edit_user', etc., are capabilities used
+	 *                              by map_meta_cap() to map to other "primitive" capabilities, e.g. 'edit_posts',
+	 *                              'edit_others_posts', etc. The parameter is accessed via func_get_args() and passed
+	 *                              to map_meta_cap().
 	 * @return bool Whether the current user has the given capability. If `$cap` is a meta cap and `$object_id` is
 	 *              passed, whether the current user has the given meta capability for the given object.
 	 */
@@ -768,13 +768,13 @@ class WP_User {
 	}
 
 	/**
-	 * Set the blog to operate on. Defaults to the current blog.
+	 * Set the site to operate on. Defaults to the current site.
 	 *
 	 * @since 3.0.0
 	 *
 	 * @global wpdb $wpdb WordPress database abstraction object.
 	 *
-	 * @param int $blog_id Optional Blog ID, defaults to current blog.
+	 * @param int $blog_id Optional. Site ID, defaults to current site.
 	 */
 	public function for_blog( $blog_id = '' ) {
 		global $wpdb;

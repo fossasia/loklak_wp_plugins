@@ -13,6 +13,9 @@
 /** WP_Network class */
 require_once( ABSPATH . WPINC . '/class-wp-network.php' );
 
+/** WP_Site class */
+require_once( ABSPATH . WPINC . '/class-wp-site.php' );
+
 /** Multisite loader */
 require_once( ABSPATH . WPINC . '/ms-load.php' );
 
@@ -135,10 +138,11 @@ if ( !isset( $current_site ) || !isset( $current_blog ) ) {
 		ms_not_installed( $domain, $path );
 	}
 
-	// @todo Investigate when exactly this can occur.
+	// During activation of a new subdomain, the requested site does not yet exist.
 	if ( empty( $current_blog ) && wp_installing() ) {
 		$current_blog = new stdClass;
 		$current_blog->blog_id = $blog_id = 1;
+		$current_blog->public = 1;
 	}
 
 	// No site has been found, bail.
@@ -219,6 +223,10 @@ wp_start_object_cache();
 
 if ( ! $current_site instanceof WP_Network ) {
 	$current_site = new WP_Network( $current_site );
+}
+
+if ( ! $current_blog instanceof WP_Site ) {
+	$current_blog = new WP_Site( $current_blog );
 }
 
 // Define upload directory constants

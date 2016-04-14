@@ -7,6 +7,7 @@ $style          = ( isset( $style ) ) ? $style : '';
 $auto_p         = ( isset( $auto_p ) ) ? $auto_p : 'true';
 $class          = ( isset( $class ) ) ? $class : '';
 $show_callback  = ( isset( $show_callback ) && false !== $show_callback ) ? array( $GLOBALS[ $show_callback[0] ], $show_callback[1] ) : false;
+$callback_args  = ( isset( $callback_args ) ) ? $callback_args : array();
 ?>
 <div <?php echo $id; ?> class="notice <?php echo $type; ?><?php echo ( $dismissible ) ? ' is-dismissible' : ''; ?> as3cf-notice <?php echo ( $inline ) ? ' inline' : ''; ?> <?php echo ( '' !== $class ) ? ' ' . $class : ''; ?>" style="<?php echo $style; ?>">
 <?php if ( $auto_p ) : ?>
@@ -21,7 +22,7 @@ $show_callback  = ( isset( $show_callback ) && false !== $show_callback ) ? arra
 <?php endif; ?>
 <?php if ( false !== $show_callback && is_callable( $show_callback ) ) : ?>
 	<div class="as3cf-notice-toggle-content" style="display: none;">
-		<?php call_user_func( $show_callback ); ?>
+		<?php call_user_func_array( $show_callback, $callback_args ); ?>
 	</div>
 <?php endif; ?>
 </div>

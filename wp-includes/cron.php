@@ -232,9 +232,11 @@ function wp_next_scheduled( $hook, $args = array() ) {
 }
 
 /**
- * Send request to run cron through HTTP request that doesn't halt page loading.
+ * Sends a request to run cron through HTTP request that doesn't halt page loading.
  *
  * @since 2.1.0
+ *
+ * @param int $gmt_time Optional. Unix timestamp. Default 0 (current time is used).
  */
 function spawn_cron( $gmt_time = 0 ) {
 	if ( ! $gmt_time )
@@ -296,6 +298,7 @@ function spawn_cron( $gmt_time = 0 ) {
 	 * Filter the cron request arguments.
 	 *
 	 * @since 3.5.0
+	 * @since 4.5.0 The `$doing_wp_cron` parameter was added.
 	 *
 	 * @param array $cron_request_array {
 	 *     An array of cron request URL arguments.
@@ -310,6 +313,7 @@ function spawn_cron( $gmt_time = 0 ) {
 	 *         @type bool $sslverify Whether SSL should be verified for the request. Default false.
 	 *     }
 	 * }
+	 * @param string $doing_wp_cron The unix timestamp of the cron lock.
 	 */
 	$cron_request = apply_filters( 'cron_request', array(
 		'url'  => add_query_arg( 'doing_wp_cron', $doing_wp_cron, site_url( 'wp-cron.php' ) ),
@@ -320,7 +324,7 @@ function spawn_cron( $gmt_time = 0 ) {
 			/** This filter is documented in wp-includes/class-wp-http-streams.php */
 			'sslverify' => apply_filters( 'https_local_ssl_verify', false )
 		)
-	) );
+	), $doing_wp_cron );
 
 	wp_remote_post( $cron_request['url'], $cron_request['args'] );
 }

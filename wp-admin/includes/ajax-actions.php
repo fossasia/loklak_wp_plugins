@@ -197,8 +197,10 @@ function wp_ajax_wp_compression_test() {
 			echo $out;
 			wp_die();
 		} elseif ( 'no' == $_GET['test'] ) {
+			check_ajax_referer( 'update_can_compress_scripts' );
 			update_site_option('can_compress_scripts', 0);
 		} elseif ( 'yes' == $_GET['test'] ) {
+			check_ajax_referer( 'update_can_compress_scripts' );
 			update_site_option('can_compress_scripts', 1);
 		}
 	}
@@ -289,7 +291,7 @@ function wp_ajax_autocomplete_user() {
 	foreach ( $users as $user ) {
 		$return[] = array(
 			/* translators: 1: user_login, 2: user_email */
-			'label' => sprintf( __( '%1$s (%2$s)' ), $user->user_login, $user->user_email ),
+			'label' => sprintf( _x( '%1$s (%2$s)', 'user autocomplete result' ), $user->user_login, $user->user_email ),
 			'value' => $user->$field,
 		);
 	}
@@ -336,6 +338,7 @@ function wp_ajax_logged_in() {
  *
  * Contrary to normal success AJAX response ("1"), die with time() on success.
  *
+ * @access private
  * @since 2.7.0
  *
  * @param int $comment_id
@@ -430,6 +433,7 @@ function _wp_ajax_delete_comment_response( $comment_id, $delta = -1 ) {
 /**
  * Ajax handler for adding a hierarchical term.
  *
+ * @access private
  * @since 3.1.0
  */
 function _wp_ajax_add_hierarchical_term() {
@@ -1237,7 +1241,7 @@ function wp_ajax_add_meta() {
 			$post_data['post_type'] = $post->post_type;
 			$post_data['post_status'] = 'draft';
 			$now = current_time('timestamp', 1);
-			$post_data['post_title'] = sprintf( __( 'Draft created on %1$s at %2$s' ), date( get_option( 'date_format' ), $now ), date( get_option( 'time_format' ), $now ) );
+			$post_data['post_title'] = sprintf( __( 'Draft created on %1$s at %2$s' ), date( __( 'F j, Y' ), $now ), date( __( 'g:i a' ), $now ) );
 
 			$pid = edit_post( $post_data );
 			if ( $pid ) {
@@ -1477,8 +1481,14 @@ function wp_ajax_wp_link_ajax() {
 
 	$args = array();
 
-	if ( isset( $_POST['search'] ) )
+	if ( isset( $_POST['search'] ) ) {
 		$args['s'] = wp_unslash( $_POST['search'] );
+	}
+
+	if ( isset( $_POST['term'] ) ) {
+		$args['s'] = wp_unslash( $_POST['term'] );
+	}
+
 	$args['pagenum'] = ! empty( $_POST['page'] ) ? absint( $_POST['page'] ) : 1;
 
 	require(ABSPATH . WPINC . '/class-wp-editor.php');
@@ -2227,11 +2237,11 @@ function wp_ajax_wp_fullscreen_save_post() {
 	}
 
 	if ( $post ) {
-		$last_date = mysql2date( get_option('date_format'), $post->post_modified );
-		$last_time = mysql2date( get_option('time_format'), $post->post_modified );
+		$last_date = mysql2date( __( 'F j, Y' ), $post->post_modified );
+		$last_time = mysql2date( __( 'g:i a' ), $post->post_modified );
 	} else {
-		$last_date = date_i18n( get_option('date_format') );
-		$last_time = date_i18n( get_option('time_format') );
+		$last_date = date_i18n( __( 'F j, Y' ) );
+		$last_time = date_i18n( __( 'g:i a' ) );
 	}
 
 	if ( $last_id = get_post_meta( $post_id, '_edit_last', true ) ) {
@@ -2567,11 +2577,8 @@ function wp_ajax_send_attachment_to_editor() {
 		}
 	}
 
-	$rel = '';
 	$url = empty( $attachment['url'] ) ? '' : $attachment['url'];
-	if ( strpos( $url, 'attachment_id') || get_attachment_link( $id ) == $url ) {
-		$rel = 'attachment wp-att-' . $id;
-	}
+	$rel = ( strpos( $url, 'attachment_id') || get_attachment_link( $id ) == $url );
 
 	remove_filter( 'media_send_to_editor', 'image_media_send_to_editor' );
 
@@ -2592,8 +2599,10 @@ function wp_ajax_send_attachment_to_editor() {
 		$html = stripslashes_deep( $_POST['html'] );
 	} else {
 		$html = isset( $attachment['post_title'] ) ? $attachment['post_title'] : '';
+		$rel = $rel ? ' rel="attachment wp-att-' . $id . '"' : ''; // Hard-coded string, $id is already sanitized
+
 		if ( ! empty( $url ) ) {
-			$html = '<a href="' . esc_url( $url ) . '"' . 'rel="' . esc_attr( $rel ) . '">' . $html . '</a>';
+			$html = '<a href="' . esc_url( $url ) . '"' . $rel . '">' . $html . '</a>';
 		}
 	}
 
@@ -2706,9 +2715,9 @@ function wp_ajax_heartbeat() {
 		 *
 		 * @since 3.6.0
 		 *
-		 * @param array|object $response  The Heartbeat response object or array.
-		 * @param array        $data      The $_POST data sent.
-		 * @param string       $screen_id The screen id.
+		 * @param array  $response  The Heartbeat response.
+		 * @param array  $data      The $_POST data sent.
+		 * @param string $screen_id The screen id.
 		 */
 		$response = apply_filters( 'heartbeat_received', $response, $data, $screen_id );
 	}
@@ -2718,8 +2727,8 @@ function wp_ajax_heartbeat() {
 	 *
 	 * @since 3.6.0
 	 *
-	 * @param array|object $response  The Heartbeat response object or array.
-	 * @param string       $screen_id The screen id.
+	 * @param array  $response  The Heartbeat response.
+	 * @param string $screen_id The screen id.
 	 */
 	$response = apply_filters( 'heartbeat_send', $response, $screen_id );
 
@@ -2730,8 +2739,8 @@ function wp_ajax_heartbeat() {
 	 *
 	 * @since 3.6.0
 	 *
-	 * @param array|object $response  The Heartbeat response object or array.
-	 * @param string       $screen_id The screen id.
+	 * @param array  $response  The Heartbeat response.
+	 * @param string $screen_id The screen id.
 	 */
 	do_action( 'heartbeat_tick', $response, $screen_id );
 
@@ -3307,6 +3316,8 @@ function wp_ajax_save_wporg_username() {
 	if ( ! current_user_can( 'install_themes' ) && ! current_user_can( 'install_plugins' ) ) {
 		wp_send_json_error();
 	}
+
+	check_ajax_referer( 'save_wporg_username_' . get_current_user_id() );
 
 	$username = isset( $_REQUEST['username'] ) ? wp_unslash( $_REQUEST['username'] ) : false;
 

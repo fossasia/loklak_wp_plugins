@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: amazon-web-services\n"
 "Report-Msgid-Bugs-To: nom@deliciousbrains.com\n"
-"POT-Creation-Date: 2015-11-02 14:25+0000\n"
+"POT-Creation-Date: 2016-03-08 12:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,105 +17,113 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: classes/amazon-web-services.php:50
-#: classes/amazon-web-services.php:196
+#: classes/amazon-web-services.php:51
+#: classes/amazon-web-services.php:195
 msgid "Amazon Web Services"
 msgstr ""
 
-#: classes/amazon-web-services.php:51
+#: classes/amazon-web-services.php:52
 msgid "AWS"
 msgstr ""
 
-#: classes/amazon-web-services.php:74
+#: classes/amazon-web-services.php:75
 msgid "Addons"
 msgstr ""
 
-#: classes/amazon-web-services.php:82
-#: classes/amazon-web-services.php:337
+#: classes/amazon-web-services.php:83
+#: classes/amazon-web-services.php:349
 #: view/settings.php:14
 msgid "Access Keys"
 msgstr ""
 
-#: classes/amazon-web-services.php:154
+#: classes/amazon-web-services.php:153
 msgid "Cheatin' eh?"
 msgstr ""
 
-#: classes/amazon-web-services.php:205
+#: classes/amazon-web-services.php:204
 msgid "Amazon Web Services: Addons"
 msgstr ""
 
-#: classes/amazon-web-services.php:285
+#: classes/amazon-web-services.php:297
 #, php-format
 msgid ""
 "You must first <a href=\"%s\">set your AWS access keys</a> to use this addon."
 msgstr ""
 
-#: classes/amazon-web-services.php:350
+#: classes/amazon-web-services.php:362
+msgid "WP Offload S3 Lite"
+msgstr ""
+
+#: classes/amazon-web-services.php:367
 msgid "WP Offload S3"
 msgstr ""
 
-#: classes/amazon-web-services.php:355
-msgid "Pro Upgrade"
-msgstr ""
-
-#: classes/amazon-web-services.php:359
+#: classes/amazon-web-services.php:371
 msgid "Assets"
 msgstr ""
 
-#: classes/amazon-web-services.php:361
-#: classes/amazon-web-services.php:366
-#: classes/amazon-web-services.php:372
-#: classes/amazon-web-services.php:378
-#: classes/amazon-web-services.php:384
-#: classes/amazon-web-services.php:390
-msgid "Addon"
+#: classes/amazon-web-services.php:373
+msgid "Feature"
 msgstr ""
 
-#: classes/amazon-web-services.php:364
+#: classes/amazon-web-services.php:377
 msgid "WooCommerce"
 msgstr ""
 
-#: classes/amazon-web-services.php:370
+#: classes/amazon-web-services.php:379
+#: classes/amazon-web-services.php:386
+#: classes/amazon-web-services.php:393
+#: classes/amazon-web-services.php:400
+#: classes/amazon-web-services.php:407
+#: classes/amazon-web-services.php:414
+msgid "Integration"
+msgstr ""
+
+#: classes/amazon-web-services.php:384
 msgid "Easy Digital Downloads"
 msgstr ""
 
-#: classes/amazon-web-services.php:376
+#: classes/amazon-web-services.php:391
 msgid "WPML"
 msgstr ""
 
-#: classes/amazon-web-services.php:382
+#: classes/amazon-web-services.php:398
 msgid "Meta Slider"
 msgstr ""
 
-#: classes/amazon-web-services.php:388
+#: classes/amazon-web-services.php:405
 msgid "Enable Media Replace"
 msgstr ""
 
-#: classes/amazon-web-services.php:434
+#: classes/amazon-web-services.php:412
+msgid "ACF Image Crop"
+msgstr ""
+
+#: classes/amazon-web-services.php:461
 msgctxt "Plugin already installed and activated"
 msgid "Installed & Activated"
 msgstr ""
 
-#: classes/amazon-web-services.php:436
+#: classes/amazon-web-services.php:463
 msgctxt "Plugin already installed"
 msgid "Installed"
 msgstr ""
 
-#: classes/amazon-web-services.php:437
+#: classes/amazon-web-services.php:464
 msgctxt "Activate plugin now"
 msgid "Activate Now"
 msgstr ""
 
-#: classes/amazon-web-services.php:440
+#: classes/amazon-web-services.php:467
 msgctxt "Install plugin now"
 msgid "Install Now"
 msgstr ""
 
-#: classes/amazon-web-services.php:463
+#: classes/amazon-web-services.php:503
 msgid "Visit Site"
 msgstr ""
 
-#: classes/amazon-web-services.php:466
+#: classes/amazon-web-services.php:506
 msgctxt "View plugin details"
 msgid "View Details"
 msgstr ""
@@ -142,83 +150,83 @@ msgid ""
 "7.16.2+ compiled with OpenSSL and zlib. Your server currently has"
 msgstr ""
 
-#: classes/aws-plugin-base.php:166
+#: classes/aws-plugin-base.php:279
 msgid "Settings"
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:310
+#: classes/wp-aws-compatibility-check.php:323
 msgid "deactivate"
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:311
+#: classes/wp-aws-compatibility-check.php:324
 #, php-format
 msgid "You can %s the %s plugin to get rid of this notice."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:314
+#: classes/wp-aws-compatibility-check.php:327
 #, php-format
 msgid "%s has been disabled as it requires the %s plugin."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:318
+#: classes/wp-aws-compatibility-check.php:331
 msgid "which is currently disabled."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:320
+#: classes/wp-aws-compatibility-check.php:333
 msgid "It appears to be installed already."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:322
+#: classes/wp-aws-compatibility-check.php:335
 msgctxt "Activate plugin"
 msgid "Activate it now."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:329
+#: classes/wp-aws-compatibility-check.php:342
 #, php-format
 msgid "<a href=\"%s\">Install</a> and activate it."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:340
+#: classes/wp-aws-compatibility-check.php:353
 #, php-format
 msgid ""
 "%s has been disabled as it requires version %s or later of the %s plugin."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:343
+#: classes/wp-aws-compatibility-check.php:356
 #, php-format
 msgid "You currently have version %s installed."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:350
-#: classes/wp-aws-compatibility-check.php:388
+#: classes/wp-aws-compatibility-check.php:363
+#: classes/wp-aws-compatibility-check.php:401
 #, php-format
 msgid "A valid license for %s is required to update."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:358
+#: classes/wp-aws-compatibility-check.php:371
 msgid "Update to the latest version"
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:370
+#: classes/wp-aws-compatibility-check.php:383
 #, php-format
 msgid ""
 "%1$s has been disabled because it is not a supported addon of the %2$s "
 "plugin."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:379
+#: classes/wp-aws-compatibility-check.php:392
 #, php-format
 msgid ""
 "%1$s has been disabled because it will not work with the version of the %2$s "
 "plugin installed. %1$s %3$s or later is required."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:382
+#: classes/wp-aws-compatibility-check.php:395
 #, php-format
 msgid "Update %s to the latest version"
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:451
+#: classes/wp-aws-compatibility-check.php:464
 #, php-format
 msgid "The %s plugin has been deactivated."
 msgstr ""

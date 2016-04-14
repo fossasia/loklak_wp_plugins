@@ -124,19 +124,21 @@ abstract class AS3CF_Upgrade {
 		}
 
 		// If the upgrade status is already set, then we've already initialized the upgrade
-		if ( $this->get_upgrade_status() ) {
+		if ( $upgrade_status = $this->get_upgrade_status() ) {
+			if ( self::STATUS_RUNNING === $upgrade_status ) {
+				// Make sure cron job is persisted in case it has dropped
+				$this->schedule();
+			}
 			return false;
 		}
 
 		// Have we completed the upgrade?
-		if ( $this->as3cf->get_setting( $this->settings_key, 0 ) >= $this->upgrade_id ) {
+		if ( $this->get_saved_upgrade_id() >= $this->upgrade_id ) {
 			return false;
 		}
 
 		// Has the previous upgrade completed yet?
-		$previous_id = $this->upgrade_id - 1;
-		if ( 0 !== $previous_id && (int) $this->as3cf->get_setting( $this->settings_key, 0 ) < $previous_id ) {
-			// Previous still running, abort
+		if ( ! $this->has_previous_upgrade_completed() ) {
 			return false;
 		}
 
@@ -177,7 +179,7 @@ abstract class AS3CF_Upgrade {
 		// Initialize the upgrade
 		$this->save_session( array( 'status' => self::STATUS_RUNNING ) );
 
-		$this->as3cf->schedule_event( $this->cron_hook, $this->cron_schedule_key );
+		$this->schedule();
 	}
 
 	/**
@@ -185,8 +187,8 @@ abstract class AS3CF_Upgrade {
 	 */
 	function do_upgrade() {
 		// Check if the cron should even be running
-		if ( $this->as3cf->get_setting( $this->settings_key, 0 ) >= $this->upgrade_id || $this->get_upgrade_status() !== self::STATUS_RUNNING ) {
-			$this->as3cf->clear_scheduled_event( $this->cron_hook );
+		if ( $this->get_saved_upgrade_id() >= $this->upgrade_id || $this->get_upgrade_status() !== self::STATUS_RUNNING ) {
+			$this->unschedule();
 
 			return;
 		}
@@ -254,12 +256,14 @@ abstract class AS3CF_Upgrade {
 
 				if ( time() >= $finish || $this->as3cf->memory_exceeded( 'as3cf_update_' . $this->upgrade_name . '_memory_exceeded' ) ) {
 					// Batch limits reached
+					$this->as3cf->restore_current_blog();
+
 					break 2;
 				}
 			}
-		}
 
-		$this->as3cf->restore_current_blog( $blog_id );
+			$this->as3cf->restore_current_blog();
+		}
 
 		$session['processed_blog_ids'] = $processed_blog_ids;
 		$session['error_count']        = $this->error_count;
@@ -307,7 +311,15 @@ abstract class AS3CF_Upgrade {
 	 * Handler for the running upgrade actions
 	 */
 	function maybe_handle_action() {
-		if ( ! isset( $_GET['page'] ) || sanitize_key( $_GET['page'] ) !== $this->as3cf->get_plugin_slug() || ! isset( $_GET['action'] ) ) { // input var okay
+		if ( ! isset( $_GET['page'] ) || sanitize_key( $_GET['page'] ) !== $this->as3cf->get_plugin_slug() ) { // input var okay
+			return;
+		}
+
+		if ( ! isset( $_GET['action'] ) ) {
+			return;
+		}
+
+		if ( ! isset( $_GET['update'] ) || sanitize_key( $_GET['update'] ) !== $this->upgrade_name ) { // input var okay
 			return;
 		}
 
@@ -325,7 +337,7 @@ abstract class AS3CF_Upgrade {
 	function upgrade_error( $session ) {
 		$session['status'] = self::STATUS_ERROR;
 		$this->save_session( $session );
-		$this->as3cf->clear_scheduled_event( $this->cron_hook );
+		$this->unschedule();
 	}
 
 	/**
@@ -333,20 +345,15 @@ abstract class AS3CF_Upgrade {
 	 */
 	function upgrade_finished() {
 		$this->clear_session();
-		$this->as3cf->set_setting( $this->settings_key, $this->upgrade_id );
-		$this->as3cf->save_settings();
-		$this->as3cf->clear_scheduled_event( $this->cron_hook );
+		$this->update_saved_upgrade_id();
+		$this->unschedule();
 	}
 
 	/**
 	 * Restart upgrade
 	 */
 	function action_restart_update() {
-		if ( ! isset( $_GET['update'] ) || $this->upgrade_name !== sanitize_key( $_GET['update'] ) ) {
-			return;
-		}
-
-		$this->as3cf->schedule_event( $this->cron_hook, $this->cron_schedule_key );
+		$this->schedule();
 		$this->change_status_request( self::STATUS_RUNNING );
 	}
 
@@ -354,11 +361,7 @@ abstract class AS3CF_Upgrade {
 	 * Pause upgrade
 	 */
 	function action_pause_update() {
-		if ( ! isset( $_GET['update'] ) || $this->upgrade_name !== sanitize_key( $_GET['update'] ) ) {
-			return;
-		}
-
-		$this->as3cf->clear_scheduled_event( $this->cron_hook );
+		$this->unschedule();
 		$this->change_status_request( self::STATUS_PAUSED );
 	}
 
@@ -375,6 +378,20 @@ abstract class AS3CF_Upgrade {
 		$url = $this->as3cf->get_plugin_page_url( array(), 'self' );
 		wp_redirect( $url );
 		exit;
+	}
+
+	/**
+	 * Schedule the cron
+	 */
+	function schedule() {
+		$this->as3cf->schedule_event( $this->cron_hook, $this->cron_schedule_key );
+	}
+
+	/**
+	 * Remove the cron schedule
+	 */
+	function unschedule() {
+		$this->as3cf->clear_scheduled_event( $this->cron_hook );
 	}
 
 	/**
@@ -432,5 +449,38 @@ abstract class AS3CF_Upgrade {
 	 */
 	function clear_session() {
 		delete_site_option( 'update_' . $this->upgrade_name . '_session' );
+	}
+
+	/**
+	 * Get the saved upgrade ID
+	 *
+	 * @return int|mixed|string|WP_Error
+	 */
+	function get_saved_upgrade_id() {
+		return $this->as3cf->get_setting( $this->settings_key, 0 );
+	}
+
+	/**
+	 * Update the saved upgrade ID
+	 */
+	function update_saved_upgrade_id() {
+		$this->as3cf->set_setting( $this->settings_key, $this->upgrade_id );
+		$this->as3cf->save_settings();
+	}
+
+	/**
+	 * Has previous upgrade completed
+	 *
+	 * @return bool
+	 */
+	function has_previous_upgrade_completed() {
+		// Has the previous upgrade completed yet?
+		$previous_id = $this->upgrade_id - 1;
+		if ( 0 !== $previous_id && (int) $this->get_saved_upgrade_id() < $previous_id ) {
+			// Previous still running, abort
+			return false;
+		}
+
+		return true;
 	}
 }

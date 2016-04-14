@@ -150,7 +150,7 @@ window.wp = window.wp || {};
 			$card = $( '.plugin-card-' + slug );
 
 		if ( 'plugins' === pagenow || 'plugins-network' === pagenow ) {
-			$message = $( '[data-slug="' + slug + '"]' ).next().find( '.update-message' );
+			$message = $( '[data-plugin="' + plugin + '"]' ).next().find( '.update-message' );
 		} else if ( 'plugin-install' === pagenow ) {
 			$message = $card.find( '.update-now' );
 			name = $message.data( 'name' );
@@ -207,7 +207,7 @@ window.wp = window.wp || {};
 	wp.updates.updateSuccess = function( response ) {
 		var $updateMessage, name, $pluginRow, newText;
 		if ( 'plugins' === pagenow || 'plugins-network' === pagenow ) {
-			$pluginRow = $( '[data-slug="' + response.slug + '"]' ).first();
+			$pluginRow = $( '[data-plugin="' + response.plugin + '"]' ).first();
 			$updateMessage = $pluginRow.next().find( '.update-message' );
 			$pluginRow.addClass( 'updated' ).removeClass( 'update' );
 
@@ -268,7 +268,7 @@ window.wp = window.wp || {};
 		error_message = wp.updates.l10n.updateFailed.replace( '%s', response.error );
 
 		if ( 'plugins' === pagenow || 'plugins-network' === pagenow ) {
-			$message = $( '[data-slug="' + response.slug + '"]' ).next().find( '.update-message' );
+			$message = $( '[data-plugin="' + response.plugin + '"]' ).next().find( '.update-message' );
 			$message.html( error_message ).removeClass( 'updating-message' );
 		} else if ( 'plugin-install' === pagenow ) {
 			$button = $card.find( '.update-now' );
@@ -431,13 +431,13 @@ window.wp = window.wp || {};
 	 */
 	wp.updates.requestForCredentialsModalCancel = function() {
 		// no updateLock and no updateQueue means we already have cleared things up
-		var slug, $message;
+		var data, $message;
 
 		if( wp.updates.updateLock === false && wp.updates.updateQueue.length === 0 ){
 			return;
 		}
 
-		slug = wp.updates.updateQueue[0].data.slug,
+		data = wp.updates.updateQueue[0].data;
 
 		// remove the lock, and clear the queue
 		wp.updates.updateLock = false;
@@ -445,9 +445,9 @@ window.wp = window.wp || {};
 
 		wp.updates.requestForCredentialsModalClose();
 		if ( 'plugins' === pagenow || 'plugins-network' === pagenow ) {
-			$message = $( '[data-slug="' + slug + '"]' ).next().find( '.update-message' );
+			$message = $( '[data-plugin="' + data.plugin + '"]' ).next().find( '.update-message' );
 		} else if ( 'plugin-install' === pagenow ) {
-			$message = $( '.plugin-card-' + slug ).find( '.update-now' );
+			$message = $( '.plugin-card-' + data.slug ).find( '.update-now' );
 		}
 
 		$message.removeClass( 'updating-message' );
@@ -516,13 +516,18 @@ window.wp = window.wp || {};
 			}
 			var updateRow = $( e.target ).parents( '.plugin-update-tr' );
 			// Return the user to the input box of the plugin's table row after closing the modal.
-			wp.updates.$elToReturnFocusToFromCredentialsModal = $( '#' + updateRow.data( 'slug' ) ).find( '.check-column input' );
+			wp.updates.$elToReturnFocusToFromCredentialsModal = updateRow.prev().find( '.check-column input' );
 			wp.updates.updatePlugin( updateRow.data( 'plugin' ), updateRow.data( 'slug' ) );
 		} );
 
 		$( '.plugin-card' ).on( 'click', '.update-now', function( e ) {
 			e.preventDefault();
 			var $button = $( e.target );
+
+			// Do nothing while updating and when the button is disabled.
+			if ( $button.hasClass( 'updating-message' ) || $button.hasClass( 'button-disabled' ) ) {
+				return;
+			}
 
 			if ( wp.updates.shouldRequestFilesystemCredentials && ! wp.updates.updateLock ) {
 				wp.updates.requestFilesystemCredentials( e );
@@ -532,7 +537,7 @@ window.wp = window.wp || {};
 		} );
 
 		$( '#plugin_update_from_iframe' ).on( 'click' , function( e ) {
-			var target,	data;
+			var target, job;
 
 			target = window.parent == window ? null : window.parent,
 			$.support.postMessage = !! window.postMessage;
@@ -542,12 +547,16 @@ window.wp = window.wp || {};
 
 			e.preventDefault();
 
-			data = {
-				'action' : 'updatePlugin',
-				'slug'	 : $(this).data('slug')
+			job = {
+				action: 'updatePlugin',
+				type: 'update-plugin',
+				data: {
+					plugin: $( this ).data( 'plugin' ),
+					slug: $( this ).data( 'slug' )
+				}
 			};
 
-			target.postMessage( JSON.stringify( data ), window.location.origin );
+			target.postMessage( JSON.stringify( job ), window.location.origin );
 		});
 
 	} );
@@ -574,15 +583,9 @@ window.wp = window.wp || {};
 				break;
 			case 'updatePlugin' :
 				tb_remove();
-				if ( 'plugins' === pagenow || 'plugins-network' === pagenow ) {
-					// Return the user to the input box of the plugin's table row after closing the modal.
-					$( '#' + message.slug ).find( '.check-column input' ).focus();
-					// trigger the update
-					$( '.plugin-update-tr[data-slug="' + message.slug + '"]' ).find( '.update-link' ).trigger( 'click' );
-				} else if ( 'plugin-install' === pagenow ) {
-					$( '.plugin-card-' + message.slug ).find( '.column-name a' ).focus();
-					$( '.plugin-card-' + message.slug ).find( '[data-slug="' + message.slug + '"]' ).trigger( 'click' );
-				}
+
+				wp.updates.updateQueue.push( message );
+				wp.updates.queueChecker();
 				break;
 		}
 

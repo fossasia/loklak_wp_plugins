@@ -36,6 +36,10 @@
 		}
 	}
 
+	.more-info {
+		white-space: nowrap;
+	}
+
   .error {
 	pre {
 	  background: #eaeaea;
@@ -142,12 +146,13 @@
 		}
 	}
 
-  .as3cf-ssl {
-	p.info {
-	  margin-top: 10px;
-	  padding: 0;
+	.as3cf-ssl {
+		margin-top: 10px;
+		p.info {
+			margin-top: 10px;
+			padding: 0;
+		}
 	}
-  }
 
   .as3cf-radio-group {
 	label {
@@ -267,6 +272,10 @@
 				.as3cf-notice:last-child {
 					margin-bottom: 0;
 				}
+
+				& > p:first-child {
+					margin-top: 0;
+				}
 			}
 
 			&:first-of-type {
@@ -275,6 +284,11 @@
 				}
 			}
 		}
+
+		tr.as3cf-bucket-setting .as3cf-defined-in-config {
+			float: none;
+		}
+		
 		h3 {
 			padding: 0;
 			margin: 0;
@@ -294,6 +308,9 @@
 		margin-right: 10px;
 		&:hover, &:active {
 			color: #00a0d2;
+		}
+		&:focus {
+			box-shadow: none;
 		}
 		.dashicons-external {
 			margin-top: -2px;
@@ -360,6 +377,34 @@
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
 	filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
 	opacity: 1;
+  }
+
+  .as3cf-defined-in-config {
+	background: #ccc;
+	color: #fff;
+	padding: 2px 5px;
+	margin: 0 0 5px 5px;
+	float: right;
+  }
+
+  .as3cf-defined-setting {
+  	color: #bbb;
+
+	label {
+		cursor: default;
+	}
+
+	p .more-info a {
+		color: #bbb;
+	}
+
+	.as3cf-radio-group p {
+		color: #bbb;
+	}
+
+	.as3cf-notice {
+		display: none !important;
+	}
   }
 }
 
