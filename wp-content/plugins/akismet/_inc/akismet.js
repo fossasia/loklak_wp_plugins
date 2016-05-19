@@ -181,7 +181,8 @@ jQuery( function ( $ ) {
 					window.location.reload();
 				}
 				else {
-					akismet_check_for_spam(offset + limit, limit);
+					// Account for comments that were caught as spam and moved out of the queue.
+					akismet_check_for_spam(offset + limit - result.counts.spam, limit);
 				}
 			}
 		);

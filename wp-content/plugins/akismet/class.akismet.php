@@ -505,8 +505,9 @@ class Akismet {
 			 ( isset( $_POST['spam'] )   && (int) $_POST['spam'] == 1 ) ||
 			 ( isset( $_POST['unspam'] ) && (int) $_POST['unspam'] == 1 ) ||
 			 ( isset( $_POST['comment_status'] )  && in_array( $_POST['comment_status'], array( 'spam', 'unspam' ) ) ) ||
-			 ( isset( $_GET['action'] )  && in_array( $_GET['action'], array( 'spam', 'unspam' ) ) ) ||
-			 ( isset( $_POST['action'] ) && in_array( $_POST['action'], array( 'editedcomment' ) ) )
+			 ( isset( $_GET['action'] )  && in_array( $_GET['action'], array( 'spam', 'unspam', 'spamcomment', 'unspamcomment', ) ) ) ||
+			 ( isset( $_POST['action'] ) && in_array( $_POST['action'], array( 'editedcomment' ) ) ) ||
+			 ( isset( $_GET['for'] ) && ( 'jetpack' == $_GET['for'] ) ) // Moderation via WP.com notifications/WP app/etc.
 		 ) {
 			if ( $new_status == 'spam' && ( $old_status == 'approved' || $old_status == 'unapproved' || !$old_status ) ) {
 				return self::submit_spam_comment( $comment->comment_ID );
@@ -824,8 +825,13 @@ class Akismet {
 
 	// filter handler used to return a spam result to pre_comment_approved
 	public static function last_comment_status( $approved, $comment ) {
+		if ( is_null( self::$last_comment_result ) ) {
+			// We didn't have reason to store the result of the last check.
+			return $approved;
+		}
+
 		// Only do this if it's the correct comment
-		if ( is_null(self::$last_comment_result) || ! self::matches_last_comment( $comment ) ) {
+		if ( ! self::matches_last_comment( $comment ) ) {
 			self::log( "comment_is_spam mismatched comment, returning unaltered $approved" );
 			return $approved;
 		}
@@ -1087,7 +1093,7 @@ p {
 		if ( version_compare( $GLOBALS['wp_version'], AKISMET__MINIMUM_WP_VERSION, '<' ) ) {
 			load_plugin_textdomain( 'akismet' );
 			
-			$message = '<strong>'.sprintf(esc_html__( 'Akismet %s requires WordPress %s or higher.' , 'akismet'), AKISMET_VERSION, AKISMET__MINIMUM_WP_VERSION ).'</strong> '.sprintf(__('Please <a href="%1$s">upgrade WordPress</a> to a current version, or <a href="%2$s">downgrade to version 2.4 of the Akismet plugin</a>.', 'akismet'), 'https://codex.wordpress.org/Upgrading_WordPress', 'http://wordpress.org/extend/plugins/akismet/download/');
+			$message = '<strong>'.sprintf(esc_html__( 'Akismet %s requires WordPress %s or higher.' , 'akismet'), AKISMET_VERSION, AKISMET__MINIMUM_WP_VERSION ).'</strong> '.sprintf(__('Please <a href="%1$s">upgrade WordPress</a> to a current version, or <a href="%2$s">downgrade to version 2.4 of the Akismet plugin</a>.', 'akismet'), 'https://codex.wordpress.org/Upgrading_WordPress', 'https://wordpress.org/extend/plugins/akismet/download/');
 
 			Akismet::bail_on_activation( $message );
 		}
@@ -1114,12 +1120,14 @@ p {
 	/**
 	 * Log debugging info to the error log.
 	 *
-	 * Enabled when WP_DEBUG_LOG is enabled, but can be disabled via the akismet_debug_log filter.
+	 * Enabled when WP_DEBUG_LOG is enabled (and WP_DEBUG, since according to
+	 * core, "WP_DEBUG_DISPLAY and WP_DEBUG_LOG perform no function unless
+	 * WP_DEBUG is true), but can be disabled via the akismet_debug_log filter.
 	 *
 	 * @param mixed $akismet_debug The data to log.
 	 */
 	public static function log( $akismet_debug ) {
-		if ( apply_filters( 'akismet_debug_log', defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG ) ) {
+		if ( apply_filters( 'akismet_debug_log', defined( 'WP_DEBUG' ) && WP_DEBUG && defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG ) ) {
 			error_log( print_r( compact( 'akismet_debug' ), true ) );
 		}
 	}

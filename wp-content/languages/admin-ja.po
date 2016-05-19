@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Administration package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2016-04-13 05:20:57+0000\n"
+"PO-Revision-Date: 2016-04-27 00:36:15+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -26,7 +26,7 @@ msgid "0"
 msgstr "Asia/Tokyo"
 
 #. translators: %s: wp_add_inline_script()
-#: wp-admin/about.php:155
+#: wp-admin/about.php:166
 msgid "Better support has been added for script header/footer dependencies. New %s enables adding extra code to registered scripts."
 msgstr "スクリプトヘッダーおよびフッター依存への対応改善を追加しました。新しい %s は、登録されたスクリプトにコードを追加できるようにします。"
 
@@ -39,98 +39,98 @@ msgid "Release Deputy"
 msgstr "リリース補佐"
 
 #. translators: %s: URL to customizer
-#: wp-admin/about.php:75
+#: wp-admin/about.php:86
 msgid "Preview mobile, tablet, and desktop views directly in the <a href=\"%s\" class=\"load-customize\">customizer</a>."
 msgstr "<a href=\"%s\" class=\"load-customize\">カスタマイザー</a>内から直接、モバイル・タブレット・デスクトップ表示をプレビュー。"
 
-#: wp-admin/about.php:79
+#: wp-admin/about.php:90
 msgid "Preview mobile, tablet, and desktop views directly in the customizer."
 msgstr "カスタマイザー内から直接、モバイル・タブレット・デスクトップ表示をプレビュー。"
 
-#: wp-admin/about.php:69
+#: wp-admin/about.php:80
 msgid "Make sure your site looks great on all screens!"
 msgstr "サイトがどんな画面でもきれいに表示されるよう、確認しましょう。"
 
 #. translators: %s: URL to the development post of the new feature
-#: wp-admin/about.php:165
+#: wp-admin/about.php:176
 msgid "Embed templates have been split into parts and can be <a href=\"%s\">directly overridden by themes</a> via the template hierarchy."
 msgstr "埋め込みテンプレートを複数のパーツに分割し、テンプレート階層に従って<a href=\"%s\">テーマが直接上書き</a>できるようになりました。"
 
-#: wp-admin/about.php:161
+#: wp-admin/about.php:172
 msgid "Better Embed Templates"
 msgstr "埋め込みテンプレートの改善"
 
 #. translators: 1: URL to Menus section of the customizer, 2: URL to Widgets
 #. section of the customizer
-#: wp-admin/about.php:125
+#: wp-admin/about.php:136
 msgid "See it in action with <a href=\"%1$s\" class=\"load-customize\">Menus</a> or <a href=\"%2$s\" class=\"load-customize\">Widgets</a>."
 msgstr "<a href=\"%1$s\" class=\"load-customize\">メニュー</a>または<a href=\"%2$s\" class=\"load-customize\">ウィジェット</a>画面で実際の動作をお試しください。"
 
-#: wp-admin/about.php:144
+#: wp-admin/about.php:155
 msgid "JavaScript Library Updates"
 msgstr "JavaScript ライブラリの更新"
 
-#: wp-admin/about.php:145
+#: wp-admin/about.php:156
 msgid "jQuery 1.12.3, jQuery Migrate 1.4.0, Backbone 1.2.3, and Underscore 1.8.3 are bundled."
 msgstr "jQuery 1.12.3と jQuery Migrate 1.4.0、Backbone 1.2.3、Underscore 1.8.3が同梱されています。"
 
-#: wp-admin/about.php:151
+#: wp-admin/about.php:162
 msgid "Script Loader Improvements"
 msgstr "スクリプトローダーの改善"
 
 #. translators: %s: URL to the development post of the new feature
-#: wp-admin/about.php:112
+#: wp-admin/about.php:123
 msgid "The customizer now supports a <a href=\"%s\">comprehensive framework</a> for rendering parts of the preview without rewriting your PHP code in JavaScript."
 msgstr "カスタマイザーが<a href=\"%s\">包括フレームワーク</a>に対応し、JavaScript 内の PHP コードをリライトすることなくプレビューの一部をレンダリングできるようになりました。"
 
 #. translators: %s: URL to Menus section of the customizer
-#: wp-admin/about.php:119
+#: wp-admin/about.php:130
 msgid "See it in action with <a href=\"%s\" class=\"load-customize\">Menus</a>."
 msgstr "<a href=\"%s\" class=\"load-customize\">メニュー</a>画面で実際の動作をお試しください。"
 
-#: wp-admin/about.php:95
+#: wp-admin/about.php:106
 msgid "The Twenty Fifteen and Twenty Sixteen themes have been updated to support custom logos, which can be found in the Site Identity section of the customizer."
 msgstr "Twenty Fifteen および Twenty Sixteen テーマをカスタムロゴ対応のため更新しました。この機能は、カスタマイザーの「サイト基本情報」セクションで利用できます。"
 
-#: wp-admin/about.php:134
+#: wp-admin/about.php:145
 msgid "Smart Image Resizing"
 msgstr "高性能な画像リサイズ"
 
 #. translators: %s: URL to the development post of the new feature
-#: wp-admin/about.php:138
+#: wp-admin/about.php:149
 msgid "Generated images now load up to 50&#37; faster with no noticeable quality loss. <a href=\"%s\">It&#8217;s really cool</a>."
 msgstr "生成された画像が、目に見える品質の劣化なく最大50倍のスピードで読み込まれるようになりました。<a href=\"%s\">すごい</a> !"
 
-#: wp-admin/about.php:108
+#: wp-admin/about.php:119
 msgid "Selective Refresh"
 msgstr "選択的更新"
 
 #. translators: %s: URL to Site Identity section of the customizer
-#: wp-admin/about.php:91
+#: wp-admin/about.php:102
 msgid "Your theme supports custom logos! Try it out right now in the <a href=\"%s\" class=\"load-customize\">Site Identity</a> section of the customizer."
 msgstr "お使いのテーマはカスタムロゴに対応しています。カスタマイザーの<a href=\"%s\" class=\"load-customize\">サイト基本情報</a>セクションで今すぐお試しください。"
 
-#: wp-admin/about.php:85
+#: wp-admin/about.php:96
 msgid "Custom Logos"
 msgstr "カスタムロゴ"
 
-#: wp-admin/about.php:86
+#: wp-admin/about.php:97
 msgid "Themes can now support logos for your business or brand."
 msgstr "テーマが企業やブランドのロゴ追加に対応できるようになりました。"
 
-#: wp-admin/about.php:58
+#: wp-admin/about.php:69
 msgid "Do you enjoy using formatting shortcuts for lists and headings? Now they&#8217;re even more useful, with horizontal lines and <code>&lt;code&gt;</code>."
 msgstr "リストや見出しに書式ショートカットを活用していますか ? 水平線と <code>&lt;code&gt;</code> が追加され、さらに便利になりました。"
 
-#: wp-admin/about.php:65
+#: wp-admin/about.php:76
 msgid "Customization Improvements"
 msgstr "カスタマイズの改善"
 
-#: wp-admin/about.php:68
+#: wp-admin/about.php:79
 msgid "Live Responsive Previews"
 msgstr "ライブレスポンシブプレビュー"
 
-#: wp-admin/about.php:53
+#: wp-admin/about.php:64
 msgid "Stay focused on your writing with a less distracting interface that keeps you in place and allows you to easily link to your content."
 msgstr "さらに無駄を排除したインターフェースで、移動することなく簡単にコンテンツにリンクできるようになりました。執筆に集中できます。"
 
@@ -138,11 +138,11 @@ msgstr "さらに無駄を排除したインターフェースで、移動する
 msgid "Thank you for updating! WordPress %s streamlines your workflow, whether you&#8217;re writing or building your site."
 msgstr "更新ありがとうございます。WordPress %s は執筆中にもサイト構築中にも、ワークフローの無駄をなくします。"
 
-#: wp-admin/about.php:49
+#: wp-admin/about.php:60
 msgid "Editing Improvements"
 msgstr "編集の改善"
 
-#: wp-admin/about.php:52
+#: wp-admin/about.php:63
 msgid "Inline Linking"
 msgstr "インラインでのリンク"
 
@@ -629,7 +629,7 @@ msgid "(Currently set to: %s)"
 msgstr "(現在の設定: %s)"
 
 #. translators: %s: WordPress version number
-#: wp-admin/about.php:200
+#: wp-admin/about.php:211
 msgid "<strong>Version %s</strong> addressed one security issue."
 msgstr "<strong>バージョン %s</strong> ではセキュリティ問題1件に対応しました。"
 
@@ -651,15 +651,15 @@ msgstr "https://ja.gravatar.com/"
 msgid "Profile Picture"
 msgstr "プロフィール写真"
 
-#: wp-admin/about.php:191
+#: wp-admin/about.php:202
 msgid "Maintenance Releases"
 msgstr "メンテナンスリリース"
 
-#: wp-admin/about.php:194
+#: wp-admin/about.php:205
 msgid "Security Releases"
 msgstr "セキュリティリリース"
 
-#: wp-admin/about.php:197
+#: wp-admin/about.php:42 wp-admin/about.php:208
 msgid "Maintenance and Security Releases"
 msgstr "メンテナンスとセキュリティのリリース"
 
@@ -1241,7 +1241,7 @@ msgstr "%s への返信"
 msgid "The current theme does not support uploading a custom header image."
 msgstr "現在のテーマは、カスタムヘッダー画像のアップロードをサポートしていません。"
 
-#: wp-admin/about.php:57
+#: wp-admin/about.php:68
 msgid "Formatting Shortcuts"
 msgstr "書式ショートカット"
 
@@ -4312,7 +4312,7 @@ msgstr "この画面はテーマのヘッダー部分のカスタマイズに使
 
 #: wp-admin/custom-header.php:103
 msgid "You can choose from the theme&#8217;s default header images, or use one of your own. You can also customize how your Site Title and Tagline are displayed."
-msgstr "テーマのデフォルトヘッダー画像、もしくはご自分の画像を選択できます。また、サイトタイトルやキャッチフレーズの表示もカスタマイズ可能です。"
+msgstr "テーマのデフォルトヘッダー画像から選択するか、または独自の画像を使用できます。また、サイトのタイトルやキャッチフレーズの表示もカスタマイズ可能です。"
 
 #: wp-admin/custom-header.php:111
 msgid "Some themes come with additional header images bundled. If you see multiple images displayed, select the one you&#8217;d like and click the &#8220;Save Changes&#8221; button."
@@ -4324,7 +4324,7 @@ msgstr "お使いのテーマに2個以上の画像が同梱されていたり�
 
 #: wp-admin/custom-header.php:120
 msgid "For most themes, the header text is your Site Title and Tagline, as defined in the <a href=\"%1$s\">General Settings</a> section."
-msgstr "たいていのテーマでは、「サイトタイトル」と「キャッチフレーズ」がヘッダーテキストととして表示されます。これは <a href=\"%1$s\">一般設定</a> で設定できます。"
+msgstr "ほとんどのテーマでは<a href=\"%1$s\">一般設定</a>セクションで定義した「サイトのタイトル」と「キャッチフレーズ」がヘッダーテキストとなります。"
 
 #: wp-admin/install.php:250 wp-admin/install.php:263
 msgid "Configuration Error"
@@ -4983,25 +4983,25 @@ msgstr "サイトを見るときにツールバーを表示する"
 
 #. translators: 1: WordPress version number, 2: plural number of bugs. Singular
 #. security issue.
-#: wp-admin/about.php:209
+#: wp-admin/about.php:220
 msgid "<strong>Version %1$s</strong> addressed a security issue and fixed %2$s bug."
 msgid_plural "<strong>Version %1$s</strong> addressed a security issue and fixed %2$s bugs."
 msgstr[0] "<strong>バージョン %1$s</strong> はセキュリティ問題に対応し、%2$s個のバグを修正しました。"
 
 #. translators: %s: Codex URL
-#: wp-admin/about.php:217
+#: wp-admin/about.php:44 wp-admin/about.php:48 wp-admin/about.php:228
 msgid "For more information, see <a href=\"%s\">the release notes</a>."
 msgstr "詳しくは<a href=\"%s\">リリースノート</a>をご覧ください。"
 
 #. translators: 1: WordPress version number, 2: plural number of bugs. More
 #. than one security issue.
-#: wp-admin/about.php:213
+#: wp-admin/about.php:224
 msgid "<strong>Version %1$s</strong> addressed some security issues and fixed %2$s bug."
 msgid_plural "<strong>Version %1$s</strong> addressed some security issues and fixed %2$s bugs."
 msgstr[0] "<strong>バージョン %1$s</strong> はいくつかのセキュリティ問題に対応し、%2$s個のバグを修正しました。"
 
 #. translators: 1: WordPress version number, 2: plural number of bugs.
-#: wp-admin/about.php:205
+#: wp-admin/about.php:46 wp-admin/about.php:216
 msgid "<strong>Version %1$s</strong> addressed %2$s bug."
 msgid_plural "<strong>Version %1$s</strong> addressed %2$s bugs."
 msgstr[0] "<strong>バージョン %1$s</strong> では%2$s個のバグを修正しました。"
@@ -5010,7 +5010,7 @@ msgstr[0] "<strong>バージョン %1$s</strong> では%2$s個のバグを修正
 msgid "Welcome to your WordPress Dashboard! This is the screen you will see when you log in to your site, and gives you access to all the site management features of WordPress. You can get help for any screen by clicking the Help tab in the upper corner."
 msgstr "WordPress のダッシュボードへようこそ ! これはサイトにログインすると表示される画面で、ここから WordPress のすべてのサイト管理機能へアクセスできます。どの画面にいても右上のヘルプタブをクリックすればヘルプ情報を得られます。"
 
-#: wp-admin/about.php:196
+#: wp-admin/about.php:207
 msgid "Maintenance and Security Release"
 msgstr "メンテナンスとセキュリティのリリース"
 
@@ -5018,16 +5018,16 @@ msgstr "メンテナンスとセキュリティのリリース"
 msgid "What&#8217;s New"
 msgstr "新着情報"
 
-#: wp-admin/about.php:193
+#: wp-admin/about.php:204
 msgid "Security Release"
 msgstr "セキュリティリリース"
 
-#: wp-admin/about.php:190
+#: wp-admin/about.php:201
 msgid "Maintenance Release"
 msgstr "メンテナンスリリース"
 
 #. translators: %s: WordPress version number
-#: wp-admin/about.php:202
+#: wp-admin/about.php:43 wp-admin/about.php:213
 msgid "<strong>Version %s</strong> addressed some security issues."
 msgstr "<strong>バージョン %s</strong> では複数のセキュリティ問題に対応しました。"
 
@@ -5035,7 +5035,7 @@ msgstr "<strong>バージョン %s</strong> では複数のセキュリティ問
 msgid "This screen allows you to choose your permalink structure. You can choose from common settings or create custom URL structures."
 msgstr "この画面ではパーマリンク構造を選択できます。共通設定から選ぶか、独自の URL 構造を作成できます。"
 
-#: wp-admin/about.php:175
+#: wp-admin/about.php:186
 msgid "Return to Updates"
 msgstr "更新ページへ戻る"
 
@@ -5327,11 +5327,11 @@ msgstr "add_meta_box() を使用するために wp-admin/includes/template.php �
 msgid "Welcome to WordPress %s"
 msgstr "WordPress %s へようこそ"
 
-#: wp-admin/about.php:178
+#: wp-admin/about.php:189
 msgid "Go to Dashboard &rarr; Home"
 msgstr "ダッシュボード &rarr; ホームへ移動"
 
-#: wp-admin/about.php:175
+#: wp-admin/about.php:186
 msgid "Return to Dashboard &rarr; Updates"
 msgstr "ダッシュボード &rarr; 更新へ戻る"
 
@@ -5339,7 +5339,7 @@ msgstr "ダッシュボード &rarr; 更新へ戻る"
 msgid "WordPress is created by a worldwide team of passionate individuals."
 msgstr "WordPress は、世界中の熱心な人々によって作られています。"
 
-#: wp-admin/about.php:104
+#: wp-admin/about.php:115
 msgid "Under the Hood"
 msgstr "開発者向けの変更"
 
@@ -7343,7 +7343,7 @@ msgid "Must-Use <span class=\"count\">(%s)</span>"
 msgid_plural "Must-Use <span class=\"count\">(%s)</span>"
 msgstr[0] "必須 <span class=\"count\">(%s)</span>"
 
-#: wp-admin/about.php:178
+#: wp-admin/about.php:189
 msgid "Go to Dashboard"
 msgstr "ダッシュボードへ移動"
 

@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Twenty Fourteen package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2015-07-29 18:20:21+0000\n"
+"PO-Revision-Date: 2016-05-06 23:08:55+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -84,7 +84,7 @@ msgstr "見つかりません"
 
 #: inc/customizer.php:40
 msgid "Display Site Title &amp; Tagline"
-msgstr "サイト名とタグラインを表示"
+msgstr "サイトのタイトルとキャッチフレーズを表示"
 
 #: inc/customizer.php:147
 msgid "For an in-depth tutorial, and more tips and tricks, visit the <a href=\"%s\">Twenty Fourteen documentation</a>."
@@ -102,7 +102,7 @@ msgstr "Y年"
 
 #: inc/customizer.php:37
 msgid "Site Title Color"
-msgstr "サイト名の色"
+msgstr "サイトのタイトル色"
 
 #: inc/featured-content.php:426
 msgid "Tag Name"

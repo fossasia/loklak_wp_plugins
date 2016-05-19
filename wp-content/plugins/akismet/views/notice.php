@@ -44,12 +44,12 @@
 <?php elseif ( $type == 'missing-functions' ) :?>
 <div class="wrap alert critical">
 	<h3 class="key-status failed"><?php esc_html_e('Network functions are disabled.', 'akismet'); ?></h3>
-	<p class="description"><?php printf( __('Your web host or server administrator has disabled PHP&#8217;s <code>gethostbynamel</code> function.  <strong>Akismet cannot work correctly until this is fixed.</strong>  Please contact your web host or firewall administrator and give them <a href="%s" target="_blank">this information about Akismet&#8217;s system requirements</a>.', 'akismet'), 'http://blog.akismet.com/akismet-hosting-faq/'); ?></p>
+	<p class="description"><?php printf( __('Your web host or server administrator has disabled PHP&#8217;s <code>gethostbynamel</code> function.  <strong>Akismet cannot work correctly until this is fixed.</strong>  Please contact your web host or firewall administrator and give them <a href="%s" target="_blank">this information about Akismet&#8217;s system requirements</a>.', 'akismet'), 'https://blog.akismet.com/akismet-hosting-faq/'); ?></p>
 </div>
 <?php elseif ( $type == 'servers-be-down' ) :?>
 <div class="wrap alert critical">
 	<h3 class="key-status failed"><?php esc_html_e("Akismet can&#8217;t connect to your site.", 'akismet'); ?></h3>
-	<p class="description"><?php printf( __('Your firewall may be blocking Akismet. Please contact your host and refer to <a href="%s" target="_blank">our guide about firewalls</a>.', 'akismet'), 'http://blog.akismet.com/akismet-hosting-faq/'); ?></p>
+	<p class="description"><?php printf( __('Your firewall may be blocking Akismet. Please contact your host and refer to <a href="%s" target="_blank">our guide about firewalls</a>.', 'akismet'), 'https://blog.akismet.com/akismet-hosting-faq/'); ?></p>
 </div>
 <?php elseif ( $type == 'active-dunning' ) :?>
 <div class="wrap alert critical">
@@ -100,14 +100,14 @@
 <?php elseif ( $type == 'new-key-failed' ) :?>
 <div class="wrap alert critical">
 	<h3 class="key-status"><?php esc_html_e( 'The API key you entered could not be verified.' , 'akismet'); ?></h3>
-	<p class="description"><?php printf( __('The connection to akismet.com could not be established. Please refer to <a href="%s" target="_blank">our guide about firewalls</a> and check your server configuration.', 'akismet'), 'http://blog.akismet.com/akismet-hosting-faq/'); ?></p>
+	<p class="description"><?php printf( __('The connection to akismet.com could not be established. Please refer to <a href="%s" target="_blank">our guide about firewalls</a> and check your server configuration.', 'akismet'), 'https://blog.akismet.com/akismet-hosting-faq/'); ?></p>
 </div>
 <?php elseif ( $type == 'limit-reached' && in_array( $level, array( 'yellow', 'red' ) ) ) :?>
 <div class="wrap alert critical">
 	<?php if ( $level == 'yellow' ): ?>
 	<h3 class="key-status failed"><?php esc_html_e( 'You&#8217;re using your Akismet key on more sites than your Pro subscription allows.', 'akismet' ); ?></h3>
 	<p class="description">
-		<?php printf( __( 'Your Pro subscription allows the use of Akismet on only one site. Please <a href="%s" target="_blank">purchase additional Pro subscriptions</a> or upgrade to an Enterprise subscription that allows the use of Akismet on unlimited sites.', 'akismet' ), 'http://docs.akismet.com/billing/add-more-sites/' ); ?>
+		<?php printf( __( 'Your Pro subscription allows the use of Akismet on only one site. Please <a href="%s" target="_blank">purchase additional Pro subscriptions</a> or upgrade to an Enterprise subscription that allows the use of Akismet on unlimited sites.', 'akismet' ), 'https://docs.akismet.com/billing/add-more-sites/' ); ?>
 		<br /><br />
 		<?php printf( __( 'Please <a href="%s" target="_blank">contact our support team</a> with any questions.', 'akismet' ), 'https://akismet.com/contact/'); ?>
 	</p>
