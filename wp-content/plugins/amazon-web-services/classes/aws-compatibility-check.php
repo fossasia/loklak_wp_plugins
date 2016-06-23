@@ -51,6 +51,10 @@ class AWS_Compatibility_Check extends WP_AWS_Compatibility_Check {
 			}
 		}
 
+		if ( ! function_exists( 'curl_multi_exec' ) ) {
+			$errors[] = __( 'the function curl_multi_exec disabled', 'amazon-web-services' );
+		}
+
 		return $errors;
 	}
 

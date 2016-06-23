@@ -1,9 +1,9 @@
 # WP Offload S3 Lite #
 **Contributors:** bradt, deliciousbrains  
 **Tags:** uploads, amazon, s3, amazon s3, mirror, admin, media, cdn, cloudfront  
-**Requires at least:** 3.7  
-**Tested up to:** 4.4  
-**Stable tag:** 1.0.3  
+**Requires at least:** 4.4  
+**Tested up to:** 4.5.2  
+**Stable tag:** 1.0.4  
 **License:** GPLv3  
 
 Copies files to Amazon S3 as they are uploaded to the Media Library. Optionally configure Amazon CloudFront for faster delivery.
@@ -72,6 +72,17 @@ This version requires PHP 5.3.3+ and the Amazon Web Services plugin
 This version requires PHP 5.3.3+ and the Amazon Web Services plugin
 
 ## Changelog ##
+
+### WP Offload S3 Lite 1.0.4 - 2016-05-30 ###
+* New: Now using simpler Force HTTPS setting, removed redundant Always Use HTTP setting.
+* New: `as3cf_cloudfront_path_parts` filter allows changing served CloudFront path (useful when distribution pulls subdirectory).
+* Improvement: Better compatibility with non-standard notices from other plugins and themes.
+* Improvement: Added basic auth and proxy info to diagnostic info.
+* Improvement: Added `allow_url_fopen` status to diagnostic info.
+* Improvement: Added memory usage to diagnostic info.
+* Improvement: Ensure notice text is 800px or less in width.
+* Improvement: Reduced database queries on settings screen.
+* Bug fix: Properly handle _wp_attachment_data metadata when it is a serialized WP_Error.
 
 ### WP Offload S3 Lite 1.0.3 - 2016-03-23 ###
 * Bug fix: Don't replace srcset URLs when Rewrite File URLs option disabled

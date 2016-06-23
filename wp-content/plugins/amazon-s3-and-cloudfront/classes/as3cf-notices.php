@@ -82,6 +82,7 @@ class AS3CF_Notices {
 			'class'                 => '', // Extra classes for the notice
 			'show_callback'         => false, // Callback to display extra info on notices. Passing a callback automatically handles show/hide toggle.
 			'callback_args'         => array(), // Arguments to pass to the callback.
+			'lock_key'              => '', // If lock key set, do not show message until lock released.
 		);
 
 		$notice                 = array_intersect_key( array_merge( $defaults, $args ), $defaults );
@@ -92,7 +93,7 @@ class AS3CF_Notices {
 		if ( $notice['custom_id'] ) {
 			$notice['id'] = $notice['custom_id'];
 		} else {
-			$notice['id'] = apply_filters( 'as3cf_notice_id_prefix', 'as3cf-notice-' ) . sha1( $notice['message'] );
+			$notice['id'] = apply_filters( 'as3cf_notice_id_prefix', 'as3cf-notice-' ) . sha1( trim( $notice['message'] ) . trim( $notice['lock_key'] ) );
 		}
 
 		if ( isset( $notice['only_show_on_tab'] ) && false !== $notice['only_show_on_tab'] ) {
@@ -377,6 +378,10 @@ class AS3CF_Notices {
 			return;
 		}
 
+		if ( ! empty( $notice['lock_key'] ) && class_exists( 'AS3CF_Tool' ) && AS3CF_Tool::lock_key_exists( $notice['lock_key'] ) ) {
+			return;
+		}
+
 		if ( 'info' === $notice['type'] ) {
 			$notice['type'] = 'notice-info';
 		}
@@ -424,7 +429,10 @@ class AS3CF_Notices {
 		$version = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? time() : $GLOBALS['aws_meta']['amazon-s3-and-cloudfront']['version'];
 		$suffix  = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
-		// Enqueue notice.js globally as notices can be dismissed on any admin page
+		// Enqueue notice.css & notice.js globally as some notices can be shown & dismissed on any admin page.
+		$src = plugins_url( 'assets/css/notice.css', $this->plugin_file_path );
+		wp_enqueue_style( 'as3cf-notice', $src, array(), $version );
+
 		$src = plugins_url( 'assets/js/notice' . $suffix . '.js', $this->plugin_file_path );
 		wp_enqueue_script( 'as3cf-notice', $src, array( 'jquery' ), $version, true );
 

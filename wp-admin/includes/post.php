@@ -165,6 +165,13 @@ function _wp_translate_postdata( $update = false, $post_data = null ) {
 		$post_data['post_date_gmt'] = get_gmt_from_date( $post_data['post_date'] );
 	}
 
+	if ( isset( $post_data['post_category'] ) ) {
+		$category_object = get_taxonomy( 'category' );
+		if ( ! current_user_can( $category_object->cap->assign_terms ) ) {
+			unset( $post_data['post_category'] );
+		}
+	}
+
 	return $post_data;
 }
 
@@ -1312,7 +1319,7 @@ function get_sample_permalink_html( $id, $new_title = null, $new_slug = null ) {
 
 		if ( false !== $view_link ) {
 			$display_link = urldecode( $view_link );
-			$return .= '<a id="sample-permalink" href="' . esc_url( $view_link ) . '"' . $preview_target . '>' . $display_link . "</a>\n";
+			$return .= '<a id="sample-permalink" href="' . esc_url( $view_link ) . '"' . $preview_target . '>' . esc_html( $display_link ) . "</a>\n";
 		} else {
 			$return .= '<span id="sample-permalink">' . $permalink . "</span>\n";
 		}
@@ -1336,14 +1343,14 @@ function get_sample_permalink_html( $id, $new_title = null, $new_slug = null ) {
 			}
 		}
 
-		$post_name_html = '<span id="editable-post-name">' . $post_name_abridged . '</span>';
-		$display_link = str_replace( array( '%pagename%', '%postname%' ), $post_name_html, urldecode( $permalink ) );
+		$post_name_html = '<span id="editable-post-name">' . esc_html( $post_name_abridged ) . '</span>';
+		$display_link = str_replace( array( '%pagename%', '%postname%' ), $post_name_html, esc_html( urldecode( $permalink ) ) );
 
 		$return = '<strong>' . __( 'Permalink:' ) . "</strong>\n";
 		$return .= '<span id="sample-permalink"><a href="' . esc_url( $view_link ) . '"' . $preview_target . '>' . $display_link . "</a></span>\n";
 		$return .= '&lrm;'; // Fix bi-directional text display defect in RTL languages.
 		$return .= '<span id="edit-slug-buttons"><button type="button" class="edit-slug button button-small hide-if-no-js" aria-label="' . __( 'Edit permalink' ) . '">' . __( 'Edit' ) . "</button></span>\n";
-		$return .= '<span id="editable-post-name-full">' . $post_name . "</span>\n";
+		$return .= '<span id="editable-post-name-full">' . esc_html( $post_name ) . "</span>\n";
 	}
 
 	/**

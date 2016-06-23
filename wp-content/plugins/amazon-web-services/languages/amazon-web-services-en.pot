@@ -1,6 +1,6 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# This file is distributed under the same license as the amazon-web-services package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: amazon-web-services\n"
 "Report-Msgid-Bugs-To: nom@deliciousbrains.com\n"
-"POT-Creation-Date: 2016-03-08 12:09+0000\n"
+"POT-Creation-Date: 2016-05-30 12:44+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,267 +17,271 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: classes/amazon-web-services.php:51
-#: classes/amazon-web-services.php:195
+#: builds/amazon-web-services/classes/amazon-web-services.php:51
+#: builds/amazon-web-services/classes/amazon-web-services.php:195
 msgid "Amazon Web Services"
 msgstr ""
 
-#: classes/amazon-web-services.php:52
+#: builds/amazon-web-services/classes/amazon-web-services.php:52
 msgid "AWS"
 msgstr ""
 
-#: classes/amazon-web-services.php:75
+#: builds/amazon-web-services/classes/amazon-web-services.php:75
 msgid "Addons"
 msgstr ""
 
-#: classes/amazon-web-services.php:83
-#: classes/amazon-web-services.php:349
-#: view/settings.php:14
+#: builds/amazon-web-services/classes/amazon-web-services.php:83
+#: builds/amazon-web-services/classes/amazon-web-services.php:349
+#: builds/amazon-web-services/view/settings.php:14
 msgid "Access Keys"
 msgstr ""
 
-#: classes/amazon-web-services.php:153
+#: builds/amazon-web-services/classes/amazon-web-services.php:153
 msgid "Cheatin' eh?"
 msgstr ""
 
-#: classes/amazon-web-services.php:204
+#: builds/amazon-web-services/classes/amazon-web-services.php:204
 msgid "Amazon Web Services: Addons"
 msgstr ""
 
-#: classes/amazon-web-services.php:297
+#: builds/amazon-web-services/classes/amazon-web-services.php:297
 #, php-format
 msgid ""
 "You must first <a href=\"%s\">set your AWS access keys</a> to use this addon."
 msgstr ""
 
-#: classes/amazon-web-services.php:362
+#: builds/amazon-web-services/classes/amazon-web-services.php:362
 msgid "WP Offload S3 Lite"
 msgstr ""
 
-#: classes/amazon-web-services.php:367
+#: builds/amazon-web-services/classes/amazon-web-services.php:367
 msgid "WP Offload S3"
 msgstr ""
 
-#: classes/amazon-web-services.php:371
+#: builds/amazon-web-services/classes/amazon-web-services.php:371
 msgid "Assets"
 msgstr ""
 
-#: classes/amazon-web-services.php:373
+#: builds/amazon-web-services/classes/amazon-web-services.php:373
 msgid "Feature"
 msgstr ""
 
-#: classes/amazon-web-services.php:377
+#: builds/amazon-web-services/classes/amazon-web-services.php:377
 msgid "WooCommerce"
 msgstr ""
 
-#: classes/amazon-web-services.php:379
-#: classes/amazon-web-services.php:386
-#: classes/amazon-web-services.php:393
-#: classes/amazon-web-services.php:400
-#: classes/amazon-web-services.php:407
-#: classes/amazon-web-services.php:414
+#: builds/amazon-web-services/classes/amazon-web-services.php:379
+#: builds/amazon-web-services/classes/amazon-web-services.php:386
+#: builds/amazon-web-services/classes/amazon-web-services.php:393
+#: builds/amazon-web-services/classes/amazon-web-services.php:400
+#: builds/amazon-web-services/classes/amazon-web-services.php:407
+#: builds/amazon-web-services/classes/amazon-web-services.php:414
 msgid "Integration"
 msgstr ""
 
-#: classes/amazon-web-services.php:384
+#: builds/amazon-web-services/classes/amazon-web-services.php:384
 msgid "Easy Digital Downloads"
 msgstr ""
 
-#: classes/amazon-web-services.php:391
+#: builds/amazon-web-services/classes/amazon-web-services.php:391
 msgid "WPML"
 msgstr ""
 
-#: classes/amazon-web-services.php:398
+#: builds/amazon-web-services/classes/amazon-web-services.php:398
 msgid "Meta Slider"
 msgstr ""
 
-#: classes/amazon-web-services.php:405
+#: builds/amazon-web-services/classes/amazon-web-services.php:405
 msgid "Enable Media Replace"
 msgstr ""
 
-#: classes/amazon-web-services.php:412
+#: builds/amazon-web-services/classes/amazon-web-services.php:412
 msgid "ACF Image Crop"
 msgstr ""
 
-#: classes/amazon-web-services.php:461
+#: builds/amazon-web-services/classes/amazon-web-services.php:461
 msgctxt "Plugin already installed and activated"
 msgid "Installed & Activated"
 msgstr ""
 
-#: classes/amazon-web-services.php:463
+#: builds/amazon-web-services/classes/amazon-web-services.php:463
 msgctxt "Plugin already installed"
 msgid "Installed"
 msgstr ""
 
-#: classes/amazon-web-services.php:464
+#: builds/amazon-web-services/classes/amazon-web-services.php:464
 msgctxt "Activate plugin now"
 msgid "Activate Now"
 msgstr ""
 
-#: classes/amazon-web-services.php:467
+#: builds/amazon-web-services/classes/amazon-web-services.php:467
 msgctxt "Install plugin now"
 msgid "Install Now"
 msgstr ""
 
-#: classes/amazon-web-services.php:503
+#: builds/amazon-web-services/classes/amazon-web-services.php:503
 msgid "Visit Site"
 msgstr ""
 
-#: classes/amazon-web-services.php:506
+#: builds/amazon-web-services/classes/amazon-web-services.php:506
 msgctxt "View plugin details"
 msgid "View Details"
 msgstr ""
 
-#: classes/aws-compatibility-check.php:25
+#: builds/amazon-web-services/classes/aws-compatibility-check.php:25
 msgid "a PHP version less than 5.3.3"
 msgstr ""
 
-#: classes/aws-compatibility-check.php:29
+#: builds/amazon-web-services/classes/aws-compatibility-check.php:29
 msgid "no PHP cURL library activated"
 msgstr ""
 
-#: classes/aws-compatibility-check.php:35
+#: builds/amazon-web-services/classes/aws-compatibility-check.php:35
 msgid "a cURL version less than 7.16.2"
 msgstr ""
 
-#: classes/aws-compatibility-check.php:50
+#: builds/amazon-web-services/classes/aws-compatibility-check.php:50
 msgid "cURL compiled without"
 msgstr ""
 
-#: classes/aws-compatibility-check.php:69
+#: builds/amazon-web-services/classes/aws-compatibility-check.php:55
+msgid "the function curl_multi_exec disabled"
+msgstr ""
+
+#: builds/amazon-web-services/classes/aws-compatibility-check.php:73
 msgid ""
 "The official Amazon&nbsp;Web&nbsp;Services SDK requires PHP 5.3.3+ and cURL "
 "7.16.2+ compiled with OpenSSL and zlib. Your server currently has"
 msgstr ""
 
-#: classes/aws-plugin-base.php:279
+#: builds/amazon-web-services/classes/aws-plugin-base.php:279
 msgid "Settings"
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:323
+#: builds/amazon-web-services/classes/wp-aws-compatibility-check.php:323
 msgid "deactivate"
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:324
+#: builds/amazon-web-services/classes/wp-aws-compatibility-check.php:324
 #, php-format
 msgid "You can %s the %s plugin to get rid of this notice."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:327
+#: builds/amazon-web-services/classes/wp-aws-compatibility-check.php:327
 #, php-format
 msgid "%s has been disabled as it requires the %s plugin."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:331
+#: builds/amazon-web-services/classes/wp-aws-compatibility-check.php:331
 msgid "which is currently disabled."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:333
+#: builds/amazon-web-services/classes/wp-aws-compatibility-check.php:333
 msgid "It appears to be installed already."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:335
+#: builds/amazon-web-services/classes/wp-aws-compatibility-check.php:335
 msgctxt "Activate plugin"
 msgid "Activate it now."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:342
+#: builds/amazon-web-services/classes/wp-aws-compatibility-check.php:342
 #, php-format
 msgid "<a href=\"%s\">Install</a> and activate it."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:353
+#: builds/amazon-web-services/classes/wp-aws-compatibility-check.php:353
 #, php-format
 msgid ""
 "%s has been disabled as it requires version %s or later of the %s plugin."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:356
+#: builds/amazon-web-services/classes/wp-aws-compatibility-check.php:356
 #, php-format
 msgid "You currently have version %s installed."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:363
-#: classes/wp-aws-compatibility-check.php:401
+#: builds/amazon-web-services/classes/wp-aws-compatibility-check.php:363
+#: builds/amazon-web-services/classes/wp-aws-compatibility-check.php:401
 #, php-format
 msgid "A valid license for %s is required to update."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:371
+#: builds/amazon-web-services/classes/wp-aws-compatibility-check.php:371
 msgid "Update to the latest version"
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:383
+#: builds/amazon-web-services/classes/wp-aws-compatibility-check.php:383
 #, php-format
 msgid ""
 "%1$s has been disabled because it is not a supported addon of the %2$s "
 "plugin."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:392
+#: builds/amazon-web-services/classes/wp-aws-compatibility-check.php:392
 #, php-format
 msgid ""
 "%1$s has been disabled because it will not work with the version of the %2$s "
 "plugin installed. %1$s %3$s or later is required."
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:395
+#: builds/amazon-web-services/classes/wp-aws-compatibility-check.php:395
 #, php-format
 msgid "Update %s to the latest version"
 msgstr ""
 
-#: classes/wp-aws-compatibility-check.php:464
+#: builds/amazon-web-services/classes/wp-aws-compatibility-check.php:464
 #, php-format
 msgid "The %s plugin has been deactivated."
 msgstr ""
 
-#: view/activation-error.php:5
+#: builds/amazon-web-services/view/activation-error.php:5
 msgid "Activation Error"
 msgstr ""
 
-#: view/settings.php:9
+#: builds/amazon-web-services/view/settings.php:9
 #, php-format
 msgid ""
 "Need help getting your Access Keys? <a href=\"%s\">Check out the Quick Start "
 "Guide &rarr;</a>"
 msgstr ""
 
-#: view/settings.php:19
+#: builds/amazon-web-services/view/settings.php:19
 msgid "You have enabled the use of IAM roles for Amazon EC2 instances."
 msgstr ""
 
-#: view/settings.php:25
+#: builds/amazon-web-services/view/settings.php:25
 msgid ""
 "You&#8217;ve already defined your AWS access keys in your wp-config.php. If "
 "you&#8217;d prefer to manage them here and store them in the database (not "
 "recommended), simply remove the lines from your wp-config."
 msgstr ""
 
-#: view/settings.php:31
+#: builds/amazon-web-services/view/settings.php:31
 msgid ""
 "We recommend defining your Access Keys in wp-config.php so long as you "
 "don&#8217;t commit it to source control (you shouldn&#8217;t be). Simply "
 "copy the following snippet and replace the stars with the keys."
 msgstr ""
 
-#: view/settings.php:38
+#: builds/amazon-web-services/view/settings.php:38
 msgid ""
 "If you&#8217;d rather store your Access Keys in the database, <a href="
 "\"\">click here to reveal a form.</a>"
 msgstr ""
 
-#: view/settings.php:54
+#: builds/amazon-web-services/view/settings.php:54
 msgid "Access Key ID:"
 msgstr ""
 
-#: view/settings.php:60
+#: builds/amazon-web-services/view/settings.php:60
 msgid "Secret Access Key:"
 msgstr ""
 
-#: view/settings.php:67
+#: builds/amazon-web-services/view/settings.php:67
 msgid "Save Changes"
 msgstr ""
 
-#: view/settings.php:70
+#: builds/amazon-web-services/view/settings.php:70
 msgid "Remove Keys"
 msgstr ""

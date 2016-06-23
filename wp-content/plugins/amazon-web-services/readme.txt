@@ -1,8 +1,8 @@
 === Amazon Web Services ===
 Contributors: bradt, deliciousbrains
 Tags: amazon, amazon web services
-Requires at least: 3.7
-Tested up to: 4.5
+Requires at least: 4.4
+Tested up to: 4.5.2
 Stable tag: trunk
 License: GPLv3
 
@@ -10,15 +10,17 @@ Houses the Amazon Web Services (AWS) PHP libraries and manages access keys. Requ
 
 == Description ==
 
-This plugin is required by other plugins, which uses its libraries and its settings to connect to AWS services. Currently, there is only one plugin that requires this plugin:
+This plugin is required by other plugins, which use its libraries and its settings to connect to AWS services. Currently, there are only two plugins that require this plugin:
 
-* [WP Offload S3](http://wordpress.org/plugins/amazon-s3-and-cloudfront/)
+* [WP Offload S3 Lite](http://wordpress.org/plugins/amazon-s3-and-cloudfront/)
+* [WP Offload S3](https://deliciousbrains.com/wp-offload-s3/)
 
 = Requirements =
 
 * PHP version 5.3.3 or greater
 * PHP cURL library 7.16.2 or greater
 * cURL compiled with OpenSSL and zlib
+* curl_multi_exec enabled
 
 == Installation ==
 
@@ -30,6 +32,9 @@ This plugin is required by other plugins, which uses its libraries and its setti
 1. Settings screen
 
 == Changelog ==
+
+= 0.3.6 - 2016-05-30 =
+* Improvement: Now checks that the `curl_multi_exec` function is available.
 
 = 0.3.5 - 2016-03-07 =
 * Improvement: Support for `DBI_` prefixed constants to avoid conflicts with other plugins
