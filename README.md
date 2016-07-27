@@ -1,140 +1,379 @@
-# WordPress 4.5.2-ja + pg4wp2 Heroku
+# Plugin List
 
-This project is a template for installing and running [WordPress](http://wordpress.org/) on [Heroku](http://www.heroku.com/). The repository comes bundled with:
-* [PostgreSQL for WordPress](http://wordpress.org/extend/plugins/postgresql-for-wordpress/)
-* [Amazon S3 and Cloudfront](https://wordpress.org/plugins/amazon-s3-and-cloudfront/)
-* [WP Sendgrid](https://wordpress.org/plugins/wp-sendgrid/)
-* [Wordpress HTTPS](https://wordpress.org/plugins/wordpress-https/)
+## Latest Tweets Widget
+**Maintainer:** Timwhitlock
 
-## Installation
+**Contact:** https://profiles.wordpress.org/timwhitlock/
 
-Use the Deploy to Heroku button, or use the old fashioned way described below.
+**Import Date:** May 29th, 2016
 
-<a href="https://heroku.com/deploy?template=https://github.com/macminiosx/wordpress-ja-pg4wp2-heroku/tree/master">
-  <img src="https://www.herokucdn.com/deploy/button.png" alt="Deploy">
-</a>
+**Version:** 1.1.3 (Latest)
 
-Clone the repository from Github
+**Description:** Connect your Twitter account to this plugin and the widget will display your latest tweets on your site.
 
-    $ git clone git@github.com:macminiosx/wordpress-ja-pg4wp2-heroku.git
+**Tags:** Tweet Feed
 
-With the [Heroku gem](http://devcenter.heroku.com/articles/heroku-command), create your app
+**Loklak Repo:** https://github.com/loklak/wp-twitter-widget
 
-    $ cd wordpress-heroku
-    $ heroku create --ssh-git --stack cedar-14
-    Creating strange-turtle-1234... done, stack is cedar
-    http://strange-turtle-1234.herokuapp.com/ | git@heroku.com:strange-turtle-1234.git
-    Git remote heroku added
+**Wordpress Plugin Page:** https://wordpress.org/plugins/latest-tweets-widget/
 
-Add a database to your app
+**Original Plugin Repo (Git/SVN):** https://github.com/timwhitlock/wp-twitter-widget
 
-    $ heroku addons:create heroku-postgresql:hobby-dev
-    Adding heroku-postgresql:dev to strange-turtle-1234... done, v2 (free)
-    Attached as HEROKU_POSTGRESQL_COLOR
-    Database has been created and is available
-    Use `heroku addons:docs heroku-postgresql:dev` to view documentation
+**Loklak Integration Details:** 
 
-Promote the database (replace COLOR with the color name from the above output)
+- Loklak API has been integrated
+- **Tested (Y/N):** Y 
+- **Blockers:** None
 
-    $ heroku pg:promote HEROKU_POSTGRESQL_COLOR
-    Promoting HEROKU_POSTGRESQL_COLOR to DATABASE_URL... done
+**Merge Status:** Discussed with developer. He does not want to merge loklak integration with his plugin. 
 
-Add the ability to send email (i.e. Password Resets etc)
+## Recent Tweets Widget
+**Maintainer:** noahkagan
 
-    $ heroku addons:add sendgrid:starter
-    Adding sendgrid:starter on your-app... done, v14 (free)
-    Use `heroku addons:docs sendgrid` to view documentation.
+**Contact:** https://profiles.wordpress.org/noahkagan/
 
-Create a new branch for any configuration/setup changes needed
+**Import Date:** Jun 4th, 2016
 
-    $ git checkout -b production
+**Version:** 1.6.5 (Latest)
 
-Store unique keys and salts in Heroku environment variables. Wordpress can provide random values [here](https://api.wordpress.org/secret-key/1.1/salt/).
+**Description:** A basic tweet feed with Cache support
 
-    heroku config:set AUTH_KEY='put your unique phrase here' \
-      SECURE_AUTH_KEY='put your unique phrase here' \
-      LOGGED_IN_KEY='put your unique phrase here' \
-      NONCE_KEY='put your unique phrase here' \
-      AUTH_SALT='put your unique phrase here' \
-      SECURE_AUTH_SALT='put your unique phrase here' \
-      LOGGED_IN_SALT='put your unique phrase here' \
-      NONCE_SALT='put your unique phrase here'
+**Tags:** Tweet Feed
 
-Create .htpasswd
+**Loklak Repo:** https://github.com/loklak/wp-recent-tweets-plugin
 
-    $ echo "USERNAME:CRYPT PASSWOER" > .htpasswd
+**Wordpress Plugin Page:** https://wordpress.org/plugins/recent-tweets-widget/
 
-Deploy to Heroku
+**Original Plugin Repo (Git/SVN):** https://plugins.svn.wordpress.org/recent-tweets-widget/
 
-    $ git push heroku production:master
-    -----> Deleting 0 files matching .slugignore patterns.
-    -----> PHP app detected
+**Loklak Integration Details:** 
 
-     !     WARNING: No composer.json found.
-           Using index.php to declare PHP applications is considered legacy
-           functionality and may lead to unexpected behavior.
+- Loklak API has been integrated
+- **Tested (Y/N):** Y 
+- **Blockers:** None
 
-    -----> No runtime requirements in composer.json, defaulting to PHP 5.6.2.
-    -----> Installing system packages...
-           - PHP 5.6.2
-           - Apache 2.4.10
-           - Nginx 1.6.0
-    -----> Installing PHP extensions...
-           - zend-opcache (automatic; bundled, using 'ext-zend-opcache.ini')
-    -----> Installing dependencies...
-           Composer version 1.0-dev (ffffab37a294f3383c812d0329623f0a4ba45387) 2014-11-05 06:04:18
-           Loading composer repositories with package information
-           Installing dependencies
-           Nothing to install or update
-           Generating optimized autoload files
-    -----> Preparing runtime environment...
-           NOTICE: No Procfile, defaulting to 'web: vendor/bin/heroku-php-apache2'
-    -----> Discovering process types
-           Procfile declares types -> web
+**Merge Status:** Communicated with Developer on Wordpress Slack. He showed iterest. No reply after that.
 
-    -----> Compressing... done, 78.5MB
-    -----> Launcing... done, v5
-           http://strange-turtle-1234.herokuapp.com deployed to Heroku
+## Twitter Widget Pro
+**Maintainer:** Aaron D. Campbell
 
-    To git@heroku:strange-turtle-1234.git
-      * [new branch]    production -> master
+**Contact:** https://profiles.wordpress.org/aaroncampbell/
 
-After deployment WordPress has a few more steps to setup and thats it!
+**Import Date:** Jun 8th, 2016
 
-## Usage
+**Version:** 2.8.0 (Latest)
 
-Because a file cannot be written to Heroku's file system, updating and installing plugins or themes should be done locally and then pushed to Heroku.
+**Description:** A basic tweet feed with Cache and tweet rendering format edit support.
 
-## Updating
+**Tags:** Tweet Feed
 
-Updating your WordPress version is just a matter of merging the updates into
-the branch created from the installation.
+**Loklak Repo:** https://github.com/loklak/wp-twitter-widget-pro
 
-    $ git pull # Get the latest
+**Wordpress Plugin Page:** https://wordpress.org/plugins/twitter-widget-pro/
 
-Using the same branch name from our installation:
+**Original Plugin Repo (Git/SVN):** https://plugins.svn.wordpress.org/twitter-widget-pro/
 
-    $ git checkout production
-    $ git merge master # Merge latest
-    $ git push heroku production:master
+**Loklak Integration Details:** 
 
-WordPress needs to update the database. After push, navigate to:
+- Loklak API has been integrated
+- **Tested (Y/N):** Y 
+- **Blockers:** None
 
-    http://your-app-url.herokuapp.com/wp-admin
+**Merge Status:** Communicated with Developer on Wordpress Slack. No replies from him.
 
-WordPress will prompt for updating the database. After that you'll be good
-to go.
+## Easy Twitter plugin
+**Maintainer:** DesignOrbital
 
-## Deployment optimisation
+**Contact:** https://profiles.wordpress.org/designorbital/
 
-If you have files that you want tracked in your repo, but do not need deploying (for example, *.md, *.pdf, *.zip). Then add path or linux file match to the `.slugignore` file & these will not be deployed.
+**Import Date:** Jun 11th, 2016
 
-Examples:
-```
-path/to/ignore/
-bin/
-*.md
-*.pdf
-*.zip
-```
+**Version:** 0.5 (Latest)
 
+**Description:** A twitter Widget based tweet feed with Cache support.
+
+**Tags:** Tweet Feed, Twitter Widget
+
+**Loklak Repo:** https://github.com/loklak/wp-easy-twitter-plugin
+
+**Wordpress Plugin Page:** https://wordpress.org/plugins/easy-twitter-feed-widget/
+
+**Original Plugin Repo (Git/SVN):** https://plugins.svn.wordpress.org/easy-twitter-feed-widget/
+
+**Loklak Integration Details:** 
+
+- Loklak API has NOT been integrated
+- **Tested (Y/N):** N
+- **Blockers:** Since the plugin uses twitter widget Auth system, therefore loklak API can't be integrated
+
+**Merge Status:** None
+
+## Rotating Tweets
+**Maintainer:** Martin Tod
+
+**Contact:** https://profiles.wordpress.org/mpntod/
+
+**Import Date:** Jun 16th, 2016
+
+**Version:** 1.8.4 (Latest)
+
+**Description:** A customizable rotating tweet feed with Cache support.
+
+**Tags:** Tweet Feed
+
+**Loklak Repo:** https://github.com/loklak/wp-rotatingtweets
+
+**Wordpress Plugin Page:** https://wordpress.org/plugins/rotatingtweets/
+
+**Original Plugin Repo (Git/SVN):** https://plugins.svn.wordpress.org/rotatingtweets/
+
+**Loklak Integration Details:** 
+
+- Loklak API has been integrated but some functionalities still left.
+- **Tested (Y/N):** N
+- **Blockers:** Uses Twitter APIs like "favorites/list" & "lists/statuses" which are not directly implementable in Loklak
+
+**Merge Status:** None
+
+## Accesspress Twitter Feed
+**Maintainer:** Access Keys
+
+**Contact:** https://profiles.wordpress.org/access-keys/
+
+**Import Date:** Jun 16th, 2016
+
+**Version:** 1.4.6 (Latest)
+
+**Description:** A customizable rotating tweet feed with Cache support.
+
+**Tags:** Tweet Feed
+
+**Loklak Repo:** https://github.com/loklak/wp-accesspress-twitter-feed
+
+**Wordpress Plugin Page:** https://wordpress.org/plugins/accesspress-twitter-feed/
+
+**Original Plugin Repo (Git/SVN):** https://plugins.svn.wordpress.org/accesspress-twitter-feed/
+
+**Loklak Integration Details:** 
+
+- Loklak API has been integrated.
+- **Tested (Y/N):** Y
+- **Blockers:** None
+
+**Merge Status:** Communicated with developers on WP support [thread](https://wordpress.org/support/topic/loklak-api-support-for-the-plugin). Seemed interested but no reply afterwards.
+
+## WP Twitter Feeds
+**Maintainer:** Team Vivacity, Planet Interactive 
+
+**Contact:** https://profiles.wordpress.org/vivacityinfotechjaipur/, https://profiles.wordpress.org/planet-interactive/
+
+**Import Date:** Jun 20th, 2016
+
+**Version:** 1.4.9 (Latest)
+
+**Description:** A customizable tweet feed with Cache support.
+
+**Tags:** Tweet Feed
+
+**Loklak Repo:** https://github.com/loklak/wp-twitter-feeds
+
+**Wordpress Plugin Page:** https://wordpress.org/support/plugin/wp-twitter-feeds
+
+**Original Plugin Repo (Git/SVN):** https://plugins.svn.wordpress.org/wp-twitter-feeds/
+
+**Loklak Integration Details:** 
+
+- Loklak API has been integrated.
+- **Tested (Y/N):** Y
+- **Blockers:** None
+
+**Merge Status:** Need to follow up with the developers.
+
+## AI Twitter Feed
+**Maintainer:** August Infotech 
+
+**Contact:** https://profiles.wordpress.org/augustinfotech/
+
+**Import Date:** Jun 29th, 2016
+
+**Version:** 2.3 (Latest)
+
+**Description:** A customizable tweet feed with render format editng support.
+
+**Tags:** Tweet Feed
+
+**Loklak Repo:** https://github.com/loklak/wp-ai-twitter-feeds
+
+**Wordpress Plugin Page:** https://wordpress.org/plugins/ai-twitter-feeds/
+
+**Original Plugin Repo (Git/SVN):** https://plugins.svn.wordpress.org/ai-twitter-feeds/
+
+**Loklak Integration Details:** 
+
+- Loklak API has been integrated.
+- **Tested (Y/N):** Y
+- **Blockers:** None
+
+**Merge Status:** Need to follow up with the developers.
+
+## Tweeple
+**Maintainer:** Jason (Theme Blvd) 
+
+**Contact:** https://profiles.wordpress.org/augustinfotech/
+
+**Import Date:** Jul 1st, 2016
+
+**Version:** 0.9.4 (Latest)
+
+**Description:** Multiple tweet feed, timelines, lists, fav tweets etc.
+
+**Tags:** Tweet Feed, Twitter Timeline
+
+**Loklak Repo:** https://github.com/loklak/wp-tweeple
+
+**Wordpress Plugin Page:** https://wordpress.org/plugins/tweeple/
+
+**Original Plugin Repo (Git/SVN):** https://plugins.svn.wordpress.org/tweeple/
+
+**Loklak Integration Details:** 
+
+- Loklak API has been integrated but some functionalities still left.
+- **Tested (Y/N):** N
+- **Blockers:** Uses Twitter APIs like "favorites/list" & "lists/statuses" which are not directly implementable in Loklak
+
+**Merge Status:** None
+
+## Simple Twitter Feeds
+**Maintainer:** Planet Interactive
+
+**Contact:** https://profiles.wordpress.org/planet-interactive/
+
+**Import Date:** Jun 25th, 2016
+
+**Version:** 4.4 (Latest)
+
+**Description:** A basic tweet feed with Cache support.
+
+**Tags:** Tweet Feed
+
+**Loklak Repo:** https://github.com/loklak/wp-simple-twitter-feeds
+
+**Wordpress Plugin Page:** https://wordpress.org/plugins/simple-twitter-tweets/
+
+**Original Plugin Repo (Git/SVN):** https://plugins.svn.wordpress.org/simple-twitter-tweets/
+
+**Loklak Integration Details:** 
+
+- Loklak API has been integrated.
+- **Tested (Y/N):** Y
+- **Blockers:** None
+
+**Merge Status:** Need to follow up with the developers.
+
+## Tweet-scroll Widget
+**Maintainer:** Pixel Industry, Vladimir Mrkela
+
+**Contact:** https://profiles.wordpress.org/pixel-industry/, https://profiles.wordpress.org/vmrkela/
+
+**Import Date:** Jun 27th, 2016
+
+**Version:** 1.3.7 (Latest)
+
+**Description:** A basic tweet feed with Cache and scrolling support.
+
+**Tags:** Tweet Feed
+
+**Loklak Repo:** https://github.com/loklak/wp-tweetscroll-widget
+
+**Wordpress Plugin Page:** https://wordpress.org/plugins/tweetscroll-widget/
+
+**Original Plugin Repo (Git/SVN):** https://plugins.svn.wordpress.org/tweetscroll-widget/
+
+**Loklak Integration Details:** 
+
+- Loklak API has been integrated.
+- **Tested (Y/N):** Y
+- **Blockers:** None
+
+**Merge Status:** Need to follow up with the developers.
+
+## Twidget
+**Maintainer:** Boštjan Cigan
+
+**Contact:** https://profiles.wordpress.org/zerocool51/
+
+**Import Date:** Jul 6th, 2016
+
+**Version:** 3.3.8 (Latest)
+
+**Description:** A basic tweet feed with Cache support.
+
+**Tags:** Tweet Feed
+
+**Loklak Repo:** https://github.com/loklak/wp-twidget
+
+**Wordpress Plugin Page:** https://wordpress.org/plugins/twitget/
+
+**Original Plugin Repo (Git/SVN):** https://plugins.svn.wordpress.org/twitget/
+
+**Loklak Integration Details:** 
+
+- Loklak API has been integrated.
+- **Tested (Y/N):** Partially
+- **Blockers:** None
+
+**Merge Status:** Need to follow up with the developers.
+
+## Juiz Last Tweet Widget
+**Maintainer:** Geoffrey Crofte
+
+**Contact:** https://profiles.wordpress.org/creativejuiz/
+
+**Import Date:** Jul 6th, 2016
+
+**Version:** 1.3.6 (Latest)
+
+**Description:** A customizable tweet feed with Cache and user-defined style support.
+
+**Tags:** Tweet Feed
+
+**Loklak Repo:** https://github.com/loklak/wp-juiz-last-tweet-widget
+
+**Wordpress Plugin Page:** https://wordpress.org/plugins/juiz-last-tweet-widget/
+
+**Original Plugin Repo (Git/SVN):** https://plugins.svn.wordpress.org/juiz-last-tweet-widget/
+
+**Loklak Integration Details:** 
+
+- Loklak API has been integrated.
+- **Tested (Y/N):** Partially
+- **Blockers:** None
+
+**Merge Status:** Need to follow up with the developers.
+
+## Dev-buddy Twitter Feed
+**Maintainer:** EjiOsigwe 
+
+**Contact:** https://profiles.wordpress.org/ejiosigwe/
+
+**Import Date:** Jul 11th, 2016
+
+**Version:** 4.0.0 (Latest)
+
+**Description:** Multiple tweet feed, timelines, lists etc.
+
+**Tags:** Tweet Feed, Twitter Timeline
+
+**Loklak Repo:** https://github.com/loklak/wp-dev-buddy
+
+**Wordpress Plugin Page:** https://wordpress.org/plugins/devbuddy-twitter-feed/
+
+**Original Plugin Repo (Git/SVN):** https://plugins.svn.wordpress.org/devbuddy-twitter-feed/
+
+**Loklak Integration Details:** 
+
+- Loklak API has not been integrated.
+- **Tested (Y/N):** N
+- **Blockers:** Uses Twitter APIs like "favorites/list" & "lists/statuses" which are not directly implementable in Loklak
+
+**Merge Status:** None
