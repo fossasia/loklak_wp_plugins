@@ -1,0 +1,13 @@
+/* Rename this file to rotatingtweets.css and upload it to /wp-content/uploads/rotatingtweets.css and it will automatically be included in the rotatingtweets CSS by the plug in */
+/* It shouldn't be overwritten when the plug-in is upgraded! */
+/* This particular CSS makes a bird appear to the left of your tweets - you can find more birds at https://dev.twitter.com/docs/image-resources */
+div.rotatingtweets_format_0 p.rtw_main {
+	background-image: url('../plugins/rotatingtweets/images/bird_blue_32.png');
+	background-repeat:no-repeat;
+	background-position:0 7px;
+	padding-left: 38px;
+	min-height: 36px;
+}
+div.rotatingtweets_format_0 p.rtw_meta {
+	padding-left: 38px;
+}

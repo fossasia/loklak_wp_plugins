@@ -1,0 +1,34 @@
+#dbtf p.description	 {
+	display:inline;
+	margin-left:5px;
+}
+
+#dbtf .input_feed_type[disabled="disabled"] {
+	background-color:#f7f7f7;
+	color:#c9c9c9;
+}
+#dbtf .input_feed_type[disabled="disabled"] ~ p.description {
+	color:#dadada;
+}
+
+#dbtf .dbtf_radio_item {
+	display:inline;
+	margin-left:25px;
+}
+#dbtf .dbtf_radio_item:first-child {
+	margin-left:0;
+}
+
+#dbtf .dbtf_radio_item label {
+	margin-right:5px;
+}
+
+#dbtf .dbtf_cache_management_section p.submit {
+	display:inline;
+	margin-left:5px;
+}
+
+#dbtf .settings_item {
+	padding-top:15px;
+	padding-bottom:15px;
+}

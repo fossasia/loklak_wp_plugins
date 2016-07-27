@@ -1,0 +1,168 @@
+/*
+	This stylesheet includes all classes rendered by the feed
+	as well as most useful element/child–element/pseudo–element
+	relationships
+*/
+
+
+/*	Holds the entire list */
+.tweets {
+	position:relative;
+	max-width:100%;
+}
+	/* All links in the feed */
+	.tweets a {
+	}
+	.tweets a:hover {
+		text-decoration:underline;
+	}
+
+/*	Outer tweet wrapper */
+.tweet {
+	border-top:1px solid #ededed;
+	padding:16px 5px 8px;
+}
+.tweet:first-child {
+	border-top:none;
+}
+.tweet:nth-child(even) {
+}
+
+/*	Inner tweet wrapper */
+.tweet_content {
+	padding-left:55px;
+}
+	/*	The profile pic
+		Default size of said pic is 48px by 48px */
+	.tweet_profile_img {
+		position:absolute;
+		margin:0 0 0 -55px;
+	}
+		.tweet_profile_img a {
+	
+		}
+			.tweet_profile_img a img {
+				border:1px solid #dbdbdb;
+			}
+
+	/*	Display name/@screen name */
+	.tweet_header,
+	.tweet_primary_meta {
+		font-weight:bold;
+	}
+		.tweet_user {
+			
+		}
+		.tweet_screen_name {
+			opacity:0.6;
+		}
+
+	/* The tweet text */
+	.tweet_text {
+		margin:3px 0 7px;
+	}
+
+	/* Tweet footer */
+	.tweet_footer,
+	.tweet_secondary_meta {
+		font-size:79%;
+	}
+		/* Tweet meta info */
+		.tweet_footer a,
+		.tweet_seondary_meta a {
+			
+		}
+		.tweet_date {
+			display:inline-block;
+			color:#a0a0a0;
+		}
+		.tweet_retweet {
+			display:block;
+			color:#a0a0a0;
+		}
+			.tweet_retweet a {
+				
+			}
+			.tweet_retweet .tweet_icon_retweet {
+				background-position:-80px -3px;
+			}
+
+		/* Tweet actions */
+		.tweet_intents {
+			height:auto;
+		}
+			.tweet_intents .tweet_intent {
+				display:inline-block;
+				margin-left:10px;
+			}
+			.tweet_intents .tweet_intent:first-child {
+				margin-left:0;
+			}
+				.tweet_intents .tweet_intent b {
+					font-weight:normal;
+				}
+			.tweet_intent_reply .tweet_icon_reply {
+				background-position:-1px -1px;
+			}
+			.tweet_intent_reply:hover .tweet_icon_reply {
+				background-position:-17px -1px;
+			}
+			.tweet_intent_retweet .tweet_icon_retweet {
+				background-position:-80px -3px;
+			}
+			.tweet_intent_retweet:hover .tweet_icon_retweet {
+				background-position:-96px -3px;
+			}
+			.tweet_intent_retweet:active .tweet_icon_retweet {
+				background-position:-112px -3px;
+			}
+			.tweet_intent_favourite .tweet_icon_favourite {
+				background-position:-33px -1px;
+			}
+			.tweet_intent_favourite:hover .tweet_icon_favourite {
+				background-position:-49px -1px;
+			}
+			.tweet_intent_favourite:active .tweet_icon_favourite {
+				background-position:-65px -1px;
+			}
+
+/* Icon styling */
+.tweet_icon {
+	margin-right:3px;
+}
+
+.tweet_icon_reply,
+.tweet_icon_retweet,
+.tweet_icon_favourite {
+	display:inline-block;
+	background-image:url('intent-icon-sprite.png');
+	background-repeat:no-repeat;
+}
+.tweet_icon_reply {
+	position:relative;
+	width:13px;
+	height:13px;
+	top:1px;
+}
+.tweet_icon_retweet {
+	width:16px;
+	height:10px;
+}
+.tweet_icon_favourite {
+	position:relative;
+	width:15px;
+	height:15px;
+	top:3px;
+}
+
+@media screen and (max-width:400px) {
+	.tweet_intents .tweet_intent {
+		padding:2px 12px;
+	}
+	.tweet_icon {
+		margin:0;
+	}
+	.tweet_intent_txt {
+		display:none;
+	}
+}
