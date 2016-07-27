@@ -1,0 +1,26 @@
+{
+  "name": "loklak_api_php",
+  "version": "0.0.1",
+  "description": "Loklak PHP Dependencies",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/loklak/loklak_api_php.git"
+  },
+  "keywords": [
+    "loklak",
+    "php"
+  ],
+  "author": "Sudheesh Singanamalla <sudheesh95@gmail.com> (http://www.sudheesh.info/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/loklak/loklak_api_php/issues"
+  },
+  "homepage": "https://github.com/loklak/loklak_api_php",
+  "dependencies": {
+    "phplint": "^1.7.1"
+  }
+}
