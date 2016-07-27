@@ -1,0 +1,284 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Mar 6, 2015, 2:37:38 PM
+    Author     : sagar
+    */
+    .aptf-single-tweet-wrapper{
+    	/*background: #FFF;*/
+    	clear: both;
+    	float: left;
+    	margin-bottom: 20px;
+    	width: 100%;
+    }
+    .aptf-tweet-content a{
+    	border-bottom: none !important;
+    	color: #00B0ED !important;
+    	-webkit-transition: all 1s ease;/* Safari 3.2+, Chrome */
+    	-moz-transition: all 1s ease;/* Firefox 4-15 */
+    	-o-transition: all 1s ease;/* Opera 10.5-12.00 */
+    	transition: all 1s ease;/* Firefox 16+, Opera 12.50+ */
+    }
+    .aptf-tweet-date{
+    	float: left;
+    }
+    .aptf-tweet-date p{
+    	margin-bottom: 0;
+    }
+    .aptf-tweet-actions-wrapper{
+    	float: right;
+    }
+    .aptf-tweet-content .aptf-tweet-name{
+    	border-bottom: none !important;
+    	color: #333;
+    	font-weight: bold;
+        text-decoration: none !important;
+    }
+    .aptf-tweet-username{
+    	font-size: 80%;
+    	color: #999;
+    }
+    .aptf-tweet-actions {
+    	font-family: 'WebSymbols-Regular';
+    	color: #333;
+    }
+    .aptf-tweet-actions a {
+    	border-bottom: none !important;
+    	color: #999;
+    	text-decoration: none !important;
+    }
+    .aptf-timestamp{
+        margin-bottom: 0 !important;
+    }
+    .aptf-timestamp a{
+    	border-bottom: none !important;
+        text-decoration: none !important;
+    }
+    .aptf-template-1 .aptf-tweet-content{
+    	background: #EEE; 
+    	position: relative;
+    	border: 1px solid #CCC;
+    	border-radius: 5px;
+    	padding: 15px;
+    }
+    .aptf-template-1 .aptf-tweet-content:after{
+    	content: ' ';
+    	border-left: 10px solid transparent;
+    	border-right: 10px solid transparent;
+    	border-top: 10px solid #EEE;
+    	bottom: -10px;
+    	height: 0; 
+    	position: absolute;
+    	width: 0;
+    }
+    .aptf-template-1 .aptf-tweet-content:after, .aptf-template-1 .aptf-tweet-content:before{ 
+    	top: 100%; 
+    	left: 30px; 
+    	border: solid transparent; 
+    	content: " "; 
+    	height: 0; 
+    	width: 0; 
+    	position: absolute; 
+    	pointer-events: none; 
+    }
+    .aptf-template-1 .aptf-tweet-content:after{
+    	border-color: rgba(238, 238, 238, 0); 
+    	border-top-color: #EEE; 
+    	border-width: 10px; 
+    	margin-left: -10px;
+    }
+    .aptf-template-1 .aptf-tweet-content:before{ 
+    	border-color: rgba(204, 204, 204, 0);
+    	border-top-color: #CCC;
+    	border-width: 11px;
+    	margin-left: -11px;
+    }
+    .aptf-template-1 .aptf-tweet-actions{
+    	background: none repeat scroll 0 0 #fff;
+    	border-radius: 20px;
+    	display: none;
+    	padding: 2px 10px;
+    	position: absolute;
+    	right: 15px;
+    	top: 10px;
+    }
+    .aptf-template-1 .aptf-tweet-content:hover .aptf-tweet-actions{
+    	display: block;
+    }
+    .aptf-template-1 .aptf-tweet-name, .aptf-slider-template-3 .aptf-tweet-name{
+    	border-bottom: medium none !important;
+    	display: inline-block;
+    	font-weight: bold;
+    	padding-top: 10px;
+        text-decoration: none;
+    }
+    .aptf-template-1 .aptf-tweet-date, .aptf-slider-template-3 .aptf-tweet-date{
+    	display: inline-block;
+    	float: none;
+    }
+
+    .aptf-template-3 .aptf-single-tweet-wrapper{
+      border: 1px solid #b2dbe9;
+      border-radius: 10px;
+      clear: both;
+      color: #333;
+      float: left;
+      margin-bottom: 20px;
+      padding: 10px;
+      width: 100%;
+
+      -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=90, Color=#b8b8b8)";/*IE 8*/
+      -moz-box-shadow: 0px 0px 4px #b8b8b8;/*FF 3.5+*/
+      -webkit-box-shadow: 0px 0px 4px #b8b8b8;/*Saf3-4, Chrome, iOS 4.0.2-4.2, Android 2.3+*/
+      box-shadow: 0px 0px 4px #b8b8b8;/* FF3.5+, Opera 9+, Saf1+, Chrome, IE10 */
+      filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=90, Color=#b8b8b8); /*IE 5.5-7*/
+  }
+
+  .aptf-template-3 .aptf-timestamp{
+     margin-bottom: 0;
+     font-size: 80%;
+     color: #999;
+     display: inline-block;
+ }
+ .aptf-template-3 .aptf-tweet-actions-wrapper{
+     float: none;
+     padding: 10px 0 5px;
+     font-size: 80%;
+ }
+ .aptf-template-3 .aptf-tweet-actions-wrapper a{
+     margin-right: 5px;
+ }
+
+ .aptf-tweets-slider-wrapper .aptf-timestamp{
+    margin-bottom: 0;
+    font-size: 80%;
+    color: #999;
+    display: inline-block;
+}
+.aptf-tweets-slider-wrapper .aptf-timestamp p{
+    margin-bottom: 0;
+}
+.aptf-slider-template-2 .aptf-single-tweet-slide{
+    border: 1px solid #b2dbe9;
+    border-radius: 10px;
+    color: #333;
+    padding: 10px;
+}
+
+.aptf-slider-template-3 .aptf-single-tweet-wrapper{
+    clear: none;
+}
+
+.aptf-slider-template-3 .aptf-tweet-content{
+    background: #EEE; 
+    position: relative;
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    padding: 15px;
+}
+.aptf-slider-template-3 .aptf-tweet-content:after{
+    content: ' ';
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #EEE;
+    bottom: -10px;
+    height: 0; 
+    position: absolute;
+    width: 0;
+}
+.aptf-template-3 .aptf-tweet-content:after, .aptf-slider-template-3 .aptf-tweet-content:before { 
+    top: 100%; 
+    left: 0;
+    border: solid transparent; 
+    content: " "; 
+    height: 0; 
+    width: 0; 
+    position: absolute; 
+    pointer-events: none; 
+}
+.aptf-slider-template-3 .aptf-tweet-content:after{
+    border-color: rgba(238, 238, 238, 0); 
+    border-top-color: #EEE; 
+    border-width: 10px; 
+    margin-left: -3px;
+}
+.aptf-slider-template-3 .aptf-tweet-content:before{ 
+    border-color: rgba(204, 204, 204, 0);
+    border-top-color: #CCC;
+    border-width: 11px;
+    margin-left: 11px;
+}
+.aptf-slider-template-3 .aptf-tweet-actions{
+    background: none repeat scroll 0 0 #fff;
+    border-radius: 20px;
+    display: none;
+    padding: 2px 10px;
+    position: absolute;
+    right: 15px;
+    top: 10px;
+}
+.aptf-slider-template-3 .aptf-tweet-content:hover .aptf-tweet-actions{
+    display: block;
+}
+.aptf-slider-template-3 .aptf-tweet-name{
+    border-bottom: medium none !important;
+    display: inline-block;
+    font-weight: bold;
+    padding-top: 10px;
+}
+.aptf-slider-template-3 .aptf-tweet-date{
+    display: inline-block;
+    float: none;
+}
+.aptf-tweet-box {
+    color: #333;
+}
+.aptf-follow-btn{
+    background-color: #eee;
+    background-image: linear-gradient(#fff, #dedede);
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+    color: #333;
+    cursor: pointer;
+    display: inline-block;
+    font: bold 13px/37px "Helvetica Neue",Arial,sans-serif;
+    height: 40px;
+    overflow: hidden;
+    position: relative;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    max-width: 100%;
+}
+a.aptf-follow-link{
+    border-bottom: none !important;
+    text-decoration: none !important;
+}
+.aptf-follow-btn i {
+    background: url("data:image/png;base64,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") no-repeat scroll 0 0 transparent;
+    height: 13px;
+    left: 6px;
+    margin-top: -5px;
+    position: absolute;
+    top: 50%;
+    width: 16px;
+}
+.aptf-follow-btn .label {
+    padding: 0 10px 0 25px;
+    white-space: nowrap;
+}
+.aptf-center-align {
+    text-align: center;
+}
+.aptf-seperator{
+    padding: 8px;
+}
+a.aptf-follow-link:focus{
+    outline:none !important;
+}

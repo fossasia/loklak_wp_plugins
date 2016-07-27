@@ -1,0 +1,255 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: AccessPress Twitter Feed\n"
+"POT-Creation-Date: 2015-05-11 11:34+0545\n"
+"PO-Revision-Date: 2015-05-11 11:34+0545\n"
+"Last-Translator: \n"
+"Language-Team: Access Keys <support@accesspressthemes.com>\n"
+"Language: English\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../accesspress-twitter-feed.php:93 ../inc/backend/header.php:25
+msgid "AccessPress Twitter Feed"
+msgstr ""
+
+#: ../accesspress-twitter-feed.php:165
+msgid "Default Settings Restored Successfully."
+msgstr ""
+
+#: ../accesspress-twitter-feed.php:199
+msgid "Cache Deleted Successfully."
+msgstr ""
+
+#: ../accesspress-twitter-feed.php:236 ../accesspress-twitter-feed.php:240
+msgid " year ago"
+msgstr ""
+
+#: ../accesspress-twitter-feed.php:245
+msgid " day ago"
+msgstr ""
+
+#: ../accesspress-twitter-feed.php:249
+msgid " days ago"
+msgstr ""
+
+#: ../accesspress-twitter-feed.php:254
+msgid " hour ago"
+msgstr ""
+
+#: ../accesspress-twitter-feed.php:258
+msgid " hours ago"
+msgstr ""
+
+#: ../accesspress-twitter-feed.php:262
+msgid " minutes ago"
+msgstr ""
+
+#: ../accesspress-twitter-feed.php:266
+msgid "1 minute ago"
+msgstr ""
+
+#: ../inc/backend/header.php:7
+msgid "Follow us for new updates"
+msgstr ""
+
+#: ../inc/backend/save-settings.php:38
+msgid "Settings Saved Successfully"
+msgstr ""
+
+#: ../inc/backend/settings.php:10 ../inc/backend/boards/main-settings.php:2
+msgid "Settings"
+msgstr ""
+
+#: ../inc/backend/settings.php:11
+msgid "How To Use"
+msgstr ""
+
+#: ../inc/backend/settings.php:12 ../inc/backend/boards/about.php:2
+msgid "About"
+msgstr ""
+
+#: ../inc/backend/settings.php:45
+msgid "Save Settings"
+msgstr ""
+
+#: ../inc/backend/settings.php:46
+msgid "Are you sure you want to restore default settings?"
+msgstr ""
+
+#: ../inc/backend/settings.php:46
+msgid "Restore Default Settings"
+msgstr ""
+
+#: ../inc/backend/settings.php:47
+msgid "Are you sure you want to delete cache?"
+msgstr ""
+
+#: ../inc/backend/settings.php:47
+msgid "Delete Cache"
+msgstr ""
+
+#: ../inc/backend/slider-widget.php:14
+msgid "AccessPress Tweets Slider"
+msgstr ""
+
+#: ../inc/backend/slider-widget.php:15
+msgid "AccessPress Tweets Slider Widget"
+msgstr ""
+
+#: ../inc/backend/slider-widget.php:59 ../inc/backend/widget.php:57
+msgid "Title:"
+msgstr ""
+
+#: ../inc/backend/slider-widget.php:63
+msgid "Slider Controls:"
+msgstr ""
+
+#: ../inc/backend/slider-widget.php:67
+msgid "Slide Duration:"
+msgstr ""
+
+#: ../inc/backend/slider-widget.php:71
+msgid "Auto Slide:"
+msgstr ""
+
+#: ../inc/backend/slider-widget.php:75 ../inc/backend/widget.php:61
+msgid "Template:"
+msgstr ""
+
+#: ../inc/backend/slider-widget.php:85 ../inc/backend/widget.php:72
+msgid "Display Follow Button:"
+msgstr ""
+
+#: ../inc/backend/widget.php:14
+msgid "AccessPress Twitter Feeds"
+msgstr ""
+
+#: ../inc/backend/widget.php:15
+msgid "AccessPress Twitter Feed Widget"
+msgstr ""
+
+#: ../inc/backend/boards/how-to-use.php:2
+msgid "How to use"
+msgstr ""
+
+#: ../inc/backend/boards/main-settings.php:7
+#: ../inc/backend/boards/main-settings.php:14
+#: ../inc/backend/boards/main-settings.php:21
+#: ../inc/backend/boards/main-settings.php:28
+msgid "Please create an app on Twitter through this link:"
+msgstr ""
+
+#: ../inc/backend/boards/main-settings.php:7
+#: ../inc/backend/boards/main-settings.php:14
+#: ../inc/backend/boards/main-settings.php:21
+#: ../inc/backend/boards/main-settings.php:28
+msgid " and get this information."
+msgstr ""
+
+#: ../inc/backend/boards/main-settings.php:32
+msgid "Twitter Username"
+msgstr ""
+
+#: ../inc/backend/boards/main-settings.php:35
+msgid ""
+"Please enter the username of twitter account from which the feeds need to be "
+"fetched.For example:@apthemes"
+msgstr ""
+
+#: ../inc/backend/boards/main-settings.php:39
+msgid "Twitter Account Name"
+msgstr ""
+
+#: ../inc/backend/boards/main-settings.php:42
+msgid ""
+"Please enter the account name to be displayed.For example:AccessPress Themes"
+msgstr ""
+
+#: ../inc/backend/boards/main-settings.php:49
+msgid ""
+"Please enter the time period in minutes in which the feeds should be fetched."
+"Default is 60 Minutes"
+msgstr ""
+
+#: ../inc/backend/boards/main-settings.php:53
+msgid "Total Number of Feed"
+msgstr ""
+
+#: ../inc/backend/boards/main-settings.php:56
+msgid ""
+"Please enter the number of feeds to be fetched.Default number of feeds is 5."
+msgstr ""
+
+#: ../inc/backend/boards/main-settings.php:60
+msgid "Feeds Template"
+msgstr ""
+
+#: ../inc/backend/boards/main-settings.php:72
+msgid "Time Format"
+msgstr ""
+
+#: ../inc/backend/boards/main-settings.php:74
+msgid "Full Date and Time: <span>e.g March 10, 2001, 5:16 pm</span>"
+msgstr ""
+
+#: ../inc/backend/boards/main-settings.php:75
+msgid "Date only: <span>e.g March 10, 2001</span>"
+msgstr ""
+
+#: ../inc/backend/boards/main-settings.php:76
+msgid "Elapsed Time: <span>e.g 12 hours ago</span>"
+msgstr ""
+
+#: ../inc/backend/boards/main-settings.php:80
+msgid "Display Username"
+msgstr ""
+
+#: ../inc/backend/boards/main-settings.php:83
+msgid "Check if you want to show your username in each tweet"
+msgstr ""
+
+#: ../inc/backend/boards/main-settings.php:87
+msgid "Display Twitter Actions(Reply, Retweet, Favorite)"
+msgstr ""
+
+#: ../inc/backend/boards/main-settings.php:90
+msgid "Check if you want to display twitter actions"
+msgstr ""
+
+#: ../inc/backend/boards/main-settings.php:94
+msgid "Fallback Unavailable Message"
+msgstr ""
+
+#: ../inc/backend/boards/main-settings.php:97
+msgid ""
+"Please enter the message to display if the twitter is unavailable sometime."
+msgstr ""
+
+#: ../inc/backend/boards/main-settings.php:101
+msgid "Display Twitter Follow Button"
+msgstr ""
+
+#: ../inc/backend/boards/main-settings.php:104
+msgid ""
+"Check if you want to display twitter follow button at the end of the feeds"
+msgstr ""
+
+#: ../inc/frontend/shortcode.php:22 ../inc/frontend/slider-shortcode.php:20
+msgid "Something went wrong with the twitter."
+msgstr ""
+
+#: ../inc/frontend/templates/default/template-1.php:64
+#: ../inc/frontend/templates/default/template-2.php:57
+#: ../inc/frontend/templates/default/template-3.php:57
+#: ../inc/frontend/templates/slider/template-1.php:67
+#: ../inc/frontend/templates/slider/template-2.php:66
+#: ../inc/frontend/templates/slider/template-3.php:75
+msgid "Click here to read "
+msgstr ""

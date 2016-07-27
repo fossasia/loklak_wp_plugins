@@ -1,0 +1,258 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Twitter API plugin\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-07-29 10:55+0100\n"
+"PO-Revision-Date: 2015-03-15 17:42+0000\n"
+"Last-Translator: Tim Whitlock\n"
+"Language-Team: Wordpress\n"
+"Language: Russian\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
+"4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Loco https://localise.biz\n"
+"X-Loco-Source-Locale: en_GB\n"
+"X-Loco-Target-Locale: ru_RU\n"
+"X-Loco-Project-Id: 284\n"
+"X-Loco-Tagged: Error codes\n"
+"X-Loco-Api-Version: 1.0.9"
+
+#: ../../../api/lang/extra-strings.php:18 loco:5505af7214d72572078b4586
+msgid "Accepted"
+msgstr "Принято"
+
+#: ../../../api/lang/extra-strings.php:42 loco:5505af7214d72572078b459a
+msgid "Conflict"
+msgstr "Конфликт"
+
+#: ../../../api/lang/extra-strings.php:13 loco:5505af7214d72572078b4582
+msgid "Continue"
+msgstr "Продолжить"
+
+#: ../../../api/lang/extra-strings.php:17 loco:5505af7214d72572078b4585
+msgid "Created"
+msgstr "Создано"
+
+#: ../../../api/lang/extra-strings.php:36 loco:5505af7214d72572078b4595
+msgid "Forbidden"
+msgstr "Запрещено"
+
+#: ../../../api/lang/extra-strings.php:27 loco:5505af7214d72572078b458d
+msgid "Found"
+msgstr "Найдено"
+
+#: ../../../api/lang/extra-strings.php:43 loco:5505af7214d72572078b459b
+msgid "Gone"
+msgstr "Отправляется"
+
+#: ../../../api/lang/extra-strings.php:53 loco:5505af7214d72572078b456c
+msgid "Locked"
+msgstr ""
+
+#: ../../../api/lang/extra-strings.php:23 loco:5505af7214d72572078b4568
+msgid "Multi-Status"
+msgstr ""
+
+#: ../../../api/lang/extra-strings.php:16 loco:5505af7214d72572078b4584
+msgid "OK"
+msgstr "OK"
+
+#: ../../../api/lang/extra-strings.php:15 loco:5505af7214d72572078b4567
+msgid "Processing"
+msgstr ""
+
+#: ../../../api/lang/extra-strings.php:31 loco:5505af7214d72572078b456a
+msgid "Reserved"
+msgstr ""
+
+#: ../../../api/lang/extra-strings.php:34 loco:5505af7214d72572078b4593
+msgid "Unauthorized"
+msgstr "Требуется Авторизация"
+
+#: ../../../api/lang/extra-strings.php:61 loco:5505af7214d72572078b456e
+msgid "Bad Gateway"
+msgstr ""
+
+#: ../../../api/lang/extra-strings.php:33 loco:5505af7214d72572078b4592
+msgid "Bad Request"
+msgstr "Плохой Запрос"
+
+#: ../../../api/lang/extra-strings.php:50 loco:5505af7214d72572078b45a0
+msgid "Expectation Failed"
+msgstr "Ожидание не удалось"
+
+#: ../../../api/lang/extra-strings.php:54 loco:5505af7214d72572078b456d
+msgid "Failed Dependency"
+msgstr ""
+
+#: ../../../api/lang/extra-strings.php:63 loco:5505af7214d72572078b457b
+msgid "Gateway Timeout"
+msgstr "Шлюз Time-out"
+
+#: ../../../api/lang/extra-strings.php:64 loco:5505af7214d72572078b457c
+msgid "HTTP Version Not Supported"
+msgstr "Не поддерживаемая Версия HTTP"
+
+#: ../../../api/lang/extra-strings.php:24 loco:5505af7214d72572078b4569
+msgid "IM Used"
+msgstr ""
+
+#: ../../../api/lang/extra-strings.php:66 loco:5505af7214d72572078b4571
+msgid "Insufficient Storage"
+msgstr ""
+
+#: ../../../api/lang/extra-strings.php:59 loco:5505af7214d72572078b457a
+msgid "Internal Server Error"
+msgstr "Ошибка сервера на стороне Твиттера"
+
+#: ../../../api/lang/extra-strings.php:44 loco:5505af7214d72572078b459c
+msgid "Length Required"
+msgstr "Требуемая Длина"
+
+#: ../../../api/lang/extra-strings.php:38 loco:5505af7214d72572078b4597
+msgid "Method Not Allowed"
+msgstr "Запрещенный метод"
+
+#: ../../../api/lang/extra-strings.php:26 loco:5505af7214d72572078b458c
+msgid "Moved Permanently"
+msgstr "Перемещено на постоянно"
+
+#: ../../../api/lang/extra-strings.php:25 loco:5505af7214d72572078b458b
+msgid "Multiple Choices"
+msgstr "Множественный выбор"
+
+#: ../../../api/lang/extra-strings.php:68 loco:5505af7214d72572078b457d
+msgid "Network Authentication Required"
+msgstr "Требуется Идентификация Proxy"
+
+#: ../../../api/lang/extra-strings.php:20 loco:5505af7214d72572078b4588
+msgid "No Content"
+msgstr "Нет подключения"
+
+#: ../../../api/lang/extra-strings.php:19 loco:5505af7214d72572078b4587
+msgid "Non-Authoritative Information"
+msgstr "Не авторитетная Информация"
+
+#: ../../../api/lang/extra-strings.php:39 loco:5505af7214d72572078b4598
+msgid "Not Acceptable"
+msgstr "Не Приемлемый"
+
+#: ../../../api/lang/extra-strings.php:67 loco:5505af7214d72572078b4572
+msgid "Not Extended"
+msgstr ""
+
+#: ../../../api/lang/extra-strings.php:37 loco:5505af7214d72572078b4596
+msgid "Not Found"
+msgstr "Не Найдено"
+
+#: ../../../api/lang/extra-strings.php:60 loco:5505af7214d72572078b45a1
+msgid "Not Implemented"
+msgstr "Не выполнено"
+
+#: ../../../api/lang/extra-strings.php:29 loco:5505af7214d72572078b458f
+msgid "Not Modified"
+msgstr "Не Изменяется"
+
+#: ../../../api/lang/extra-strings.php:22 loco:5505af7214d72572078b458a
+msgid "Partial Content"
+msgstr "Частичное Содержимое"
+
+#: ../../../api/lang/extra-strings.php:35 loco:5505af7214d72572078b4594
+msgid "Payment Required"
+msgstr "Требуется Оплата"
+
+#: ../../../api/lang/extra-strings.php:45 loco:5505af7214d72572078b459d
+msgid "Precondition Failed"
+msgstr "Предварительное условие потерпело неудачу"
+
+#: ../../../api/lang/extra-strings.php:56 loco:5505af7214d72572078b4577
+msgid "Precondition Required"
+msgstr "Предварительное условие потерпело неудачу"
+
+#: ../../../api/lang/extra-strings.php:40 loco:5505af7214d72572078b4599
+msgid "Proxy Authentication Required"
+msgstr "Требуется Идентификация Proxy"
+
+#: ../../../api/lang/extra-strings.php:46 loco:5505af7214d72572078b459e
+msgid "Request Entity Too Large"
+msgstr "Запаршиваемый объект слишком большой"
+
+#: ../../../api/lang/extra-strings.php:58 loco:5505af7214d72572078b4579
+msgid "Request Header Fields Too Large"
+msgstr "Запаршиваемый объект слишком большой"
+
+#: ../../../api/lang/extra-strings.php:41 loco:5505af7214d72572078b4573
+msgid "Request Timeout"
+msgstr "Запрос Time-out"
+
+#: ../../../api/lang/extra-strings.php:47 loco:5505af7214d72572078b4574
+#, fuzzy
+msgid "Request-URI Too Long"
+msgstr "Запаршиваемый URI слишком большой"
+
+#: ../../../api/lang/extra-strings.php:49 loco:5505af7214d72572078b4575
+msgid "Requested Range Not Satisfiable"
+msgstr "Запрошен не выполнимый ряд"
+
+#: ../../../api/lang/extra-strings.php:21 loco:5505af7214d72572078b4589
+msgid "Reset Content"
+msgstr "Повторите подключение"
+
+#: ../../../api/lang/extra-strings.php:28 loco:5505af7214d72572078b458e
+msgid "See Other"
+msgstr "Посмотрите Другой"
+
+#: ../../../api/lang/extra-strings.php:62 loco:5505af7214d72572078b456f
+msgid "Service Unavailable"
+msgstr ""
+
+#: ../../../api/lang/extra-strings.php:14 loco:5505af7214d72572078b4583
+msgid "Switching Protocols"
+msgstr "Переключающиеся Протоколы"
+
+#: ../../../api/lang/extra-strings.php:32 loco:5505af7214d72572078b4591
+msgid "Temporary Redirect"
+msgstr "Временное перенаправление"
+
+#: ../../../api/lang/extra-strings.php:57 loco:5505af7214d72572078b4578
+msgid "Too Many Requests"
+msgstr "Плохой Запрос"
+
+#: ../../../api/lang/extra-strings.php:7 loco:5505af7214d72572078b457e
+msgid "Twitter API rate limit exceeded"
+msgstr "API Твиттера превышает норму"
+
+#: ../../../api/lang/extra-strings.php:9 loco:5505af7214d72572078b4580
+msgid "Twitter is not responding"
+msgstr "Твиттер не отвечает"
+
+#: ../../../api/lang/extra-strings.php:10 loco:5505af7214d72572078b4581
+msgid "Twitter is too busy to respond"
+msgstr "Твиттер слишком перегружен, чтобы ответить"
+
+#: ../../../api/lang/extra-strings.php:8 loco:5505af7214d72572078b457f
+msgid "Twitter server error"
+msgstr "Ошибка сервера на стороне Твиттера"
+
+#: ../../../api/lang/extra-strings.php:52 loco:5505af7214d72572078b456b
+msgid "Unprocessable Entity"
+msgstr ""
+
+#: ../../../api/lang/extra-strings.php:48 loco:5505af7214d72572078b459f
+msgid "Unsupported Media Type"
+msgstr "Тип Медиа не поддерживается"
+
+#: ../../../api/lang/extra-strings.php:55 loco:5505af7214d72572078b4576
+msgid "Upgrade Required"
+msgstr "Требуется Оплата"
+
+#: ../../../api/lang/extra-strings.php:30 loco:5505af7214d72572078b4590
+msgid "Use Proxy"
+msgstr "Используйте Proxy"
+
+#: ../../../api/lang/extra-strings.php:65 loco:5505af7214d72572078b4570
+msgid "Variant Also Negotiates"
+msgstr ""

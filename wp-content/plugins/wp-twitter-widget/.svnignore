@@ -1,0 +1,5 @@
+.git*
+.DS*
+.svnignore
+.gitignore
+README.md

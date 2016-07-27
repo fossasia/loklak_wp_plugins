@@ -1,0 +1,189 @@
+    .aptf-panel{
+    	background: #55ACEE;
+      border-radius: 15px 15px 0 0;
+      float: left;
+      width: 810px;
+    }
+    .aptf-header-wrapper {
+    	background: none repeat scroll 0 0 #55ACEE;
+    	border-bottom: 5px solid #20627b;
+    	border-radius: 15px 15px 0 0;
+    	color: #fff;
+    	height: 65px;
+    	position: relative;
+    }
+    .apsc-logo {
+    	float: left;
+    	padding: 15px 0 0 20px;
+    	width: auto;
+    }
+    .apsc-socials {
+    	left: 50%;
+    	margin-left: -100px;
+    	position: absolute;
+    	text-align: center;
+    	top: 5px;
+    	width: 200px;
+    }
+    .apsc-socials p {
+    	margin: 5px 0;
+    }
+    .aptf-header-wrapper .apsc-title {
+    	color: #fff;
+    	float: right;
+    	font-size: 20px;
+    	line-height: 65px;
+    	padding: 0 20px 0 0;
+    }
+    .aptf-nav{
+      border-left: 1px solid #55ACEE;
+      float: left;
+      margin-bottom: 52px;
+      position: relative;
+      width: 199px;
+    }
+    .aptf-nav ul{
+    	margin: 0; 
+    }
+    .aptf-nav li{
+      margin-bottom: 0;            
+    }
+    .aptf-nav li a{
+     background-color: #55ACEE;
+     border-bottom: 1px solid #CCC;
+     color: white;
+     display: block;
+     font-family: "Ubuntu",sans-serif;
+     font-size: 13px;
+     font-weight: bold;
+     margin: 0;
+     outline: 0 none;
+     padding: 12px 23px;
+     text-decoration: none;
+     text-transform: uppercase;
+   }
+   .aptf-nav li a:hover, 
+   .aptf-nav li a.aptf-active-trigger{
+    background: #FFF;
+    color: #55ACEE;
+  }
+  .aptf-board-wrapper{
+   background: none repeat scroll 0 0 #fff;
+   border-bottom: 1px solid #55ACEE;
+   border-right: 1px solid #55ACEE;
+   float: left;
+   min-height: 515px;
+   padding: 10px 25px !important;
+   width: 559px;
+ }
+ .aptf-single-board-wrapper h3{
+   font-size: 23px;
+   font-weight: 400;
+   line-height: 29px;
+   margin: 0;
+   padding: 0 15px 9px 0;
+ }
+ .aptf-option-wrapper{
+   border-bottom: 1px solid #ddd;
+   margin-bottom: 10px;
+   padding-bottom: 10px;
+ }
+ .aptf-option-wrapper label{
+   display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 1.6;
+    padding: 5px 5px 5px 0;
+    vertical-align: top;
+    width: 195px;
+ }
+ .aptf-option-field, 
+ .aptf-fields-configurations {
+   display: inline-block;
+   width: calc(100% - 205px);
+ }
+ .aptf-option-field label{
+   width: 100%;
+ }
+ .aptf-option-field label span{
+   color: #666666;
+   display: inline-block;
+   font-size: 12px;
+   font-style: italic;
+   margin-left: 2px;
+ }
+ .aptf-option-note {
+   color: #666666;
+    display: inline-block;
+    font-style: italic;
+    line-height: 1.6;
+    margin-left: 2px;
+    padding-top: 5px;
+    width: calc( 100% - 12px );
+    background-color: aliceblue;
+    padding: 5px;
+    margin-top: 10px;
+    box-shadow: 0 0 2px;
+ }
+ .aptf-option-note a{
+   padding: 0 3px;
+ }
+
+ .aptf-message{
+  background-color: #EEE;
+  border-left: 4px solid #55ACEE;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
+  display: block;
+  font-size: 14px;
+  line-height: 19px;
+  margin-bottom: 10px;
+  padding: 11px 15px;
+  text-align: left;
+}
+.aptf-option-field > input[type="text"],
+.aptf-option-field > input[type="number"] {
+  width: 100%;
+}
+.aptf-option-field > input[type="checkbox"] {
+    margin-top: 8px;
+    vertical-align: top;
+}
+.social-icon li{
+  display: inline-block;
+}
+.aptf-board-wrapper .button-primary{
+  background: #55acee !important;
+  border-color: #2B99EA !important;
+}
+.seperator{
+  padding-bottom: 10px;
+}
+.dottedline{
+  border-bottom: 1px dotted #CCC;
+}
+#aptf-about-board h3{
+  padding-bottom: 0;
+}
+.aptf-promo {
+  float: left;
+  width: 27%;
+  margin-left: 20px;
+}
+input.aptf-demo-btn {
+  background: #FFFFFF;
+  width: 147px;
+  height: 43px;
+  border-radius: 5px;
+}
+input.aptf-upgrade-btn {
+  background: #0EB2E7;
+  width: 147px;
+  height: 43px;
+  border-radius: 5px;
+  color:white;
+}
+.aptf-promo-actions {
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+.aptf-promo-actions input[type="button"]:hover{cursor: pointer;}

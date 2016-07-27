@@ -1,0 +1,7 @@
+[submodule "api"]
+	path = api
+	url = git@github.com:timwhitlock/wp-twitter-api.git
+
+[submodule "loklak_php_api"]
+	path = loklak_php_api
+	url = git@github.com:loklak/loklak_php_api.git

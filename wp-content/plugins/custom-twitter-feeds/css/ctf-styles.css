@@ -1,0 +1,663 @@
+
+/* General */
+#ctf{
+    overflow-y: auto;
+    -ms-overflow-y: auto;
+}
+#ctf .ctf-item{
+    padding: 15px 5px;
+    border-top: 1px solid #ddd;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+#ctf .ctf-item:first-child{
+    border-top: none;
+}
+
+/* Header */
+#ctf .ctf-header{
+    float: left;
+    clear: both;
+    margin: 0;
+    padding: 5px 5px 15px 5px;
+    line-height: 1.2;
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+#ctf .ctf-header a{
+    float: left;
+    display: block;
+    min-width: 100%\9;
+}
+/* Header avatar */
+#ctf .ctf-header-img{
+    float: left;
+    position: relative;
+    width: 48px;
+    margin: 0 0 0 -100% !important;
+    overflow: hidden;
+
+    -moz-border-radius: 40px;
+    -webkit-border-radius: 40px;
+    border-radius: 40px;
+}
+#ctf .ctf-header-img img{
+    display: block;
+    float: left;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+
+    -moz-border-radius: 40px;
+    -webkit-border-radius: 40px;
+    border-radius: 40px;
+}
+/* Header avatar hover */
+#ctf .ctf-header-img-hover,
+#ctf .ctf-header-generic-icon{
+    display: none;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+    color: #fff;
+    background: #1b95e0;
+    background: rgba(27,149,224,0.85);
+
+    -moz-border-radius: 40px;
+    -webkit-border-radius: 40px;
+    border-radius: 40px;
+}
+#ctf .ctf-header-img-hover .fa,
+#ctf .ctf-header-generic-icon .fa{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -10px;
+    margin-left: -8px;
+    font-size: 20px;
+}
+/* Header text */
+#ctf .ctf-header-text{
+    float: left;
+    width: 100%;
+    padding-top: 5px;
+}
+#ctf .ctf-no-bio .ctf-header-text{
+    padding-top: 13px;
+}
+#ctf .ctf-header a{
+    text-decoration: none;
+}
+#ctf .ctf-header-text .ctf-header-user,
+#ctf .ctf-header-text p{
+    float: left;
+    clear: both;
+    width: auto;
+    margin: 0 0 0 60px !important;
+    padding: 0 !important;
+}
+#ctf .ctf-header-name{
+    font-weight: bold;
+    margin-right: 6px;
+}
+#ctf .ctf-header-text .ctf-header-bio{
+    padding: 0 !important;
+}
+#ctf .ctf-header-text .ctf-verified{
+    margin-right: 5px;
+}
+/* Follow */
+#ctf .ctf-header .ctf-header-follow{
+    display: inline-block;
+    padding: 3px 6px;
+    margin: 0 0 0 2px;
+    position: relative;
+    top: -2px;
+    background: #1b95e0;
+    color: #fff;
+    font-size: 11px;
+
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+
+    -moz-transition: background 0.6s ease-in-out;
+    -webkit-transition: background 0.6s ease-in-out;
+    -o-transition: background 0.6s ease-in-out;
+    transition: background 0.6s ease-in-out;
+}
+#ctf .ctf-header .ctf-header-follow .fa{
+    margin-right: 3px;
+    font-size: 12px;
+}
+#ctf .ctf-header a:hover .ctf-header-follow{
+    background: #0c7abf;
+
+    -moz-transition: background 0.2s ease-in-out;
+    -webkit-transition: background 0.2s ease-in-out;
+    -o-transition: background 0.2s ease-in-out;
+    transition: background 0.2s ease-in-out;
+}
+/* Generic header version */
+#ctf .ctf-header-type-generic .ctf-header-img{
+    color: #fff;
+    width: 48px;
+    height: 48px;
+    position: relative;
+}
+#ctf .ctf-header-type-generic .ctf-header-link:hover .ctf-header-generic-icon{
+    background: #0c7abf;
+}
+#ctf .ctf-header-type-generic .ctf-header-no-bio{
+    padding-top: 9px !important;
+    font-size: 16px;
+    font-weight: bold;
+}
+#ctf .ctf-header-type-generic .ctf-header-generic-icon{
+    display: block;
+    color: #fff;
+    background: #1b95e0;
+
+    -moz-transition: background 0.2s ease-in-out;
+    -webkit-transition: background 0.2s ease-in-out;
+    -o-transition: background 0.2s ease-in-out;
+    transition: background 0.2s ease-in-out;
+}
+#ctf .ctf-header-type-generic:hover .ctf-header-generic-icon{
+    display: block;
+    opacity: 1;
+}
+#ctf .ctf-header .ctf-header-user{
+    font-size: 16px;
+    line-height: 1.3;
+    -ms-word-wrap: break-word;
+    word-break: break-word;
+}
+#ctf .ctf-header p,
+#ctf .ctf-header .ctf-header-screenname{
+    font-size: 13px;
+    line-height: 1.3;
+}
+/* No bio */
+#ctf .ctf-header-text.sbi-no-info .ctf-header-user{
+    padding-top: 9px !important;
+}
+#ctf .ctf-header-text.sbi-no-bio .ctf-header-counts{
+    clear: both;
+}
+
+/* Context */
+#ctf .ctf-context {
+    float: left;
+    width: 100%;
+    margin-left: 57px;
+    margin-bottom: 2px;
+}
+#ctf .ctf-retweet-icon{
+    display: inline-block;
+    font-size: inherit;
+    background: #19cf86;
+    color: #fff !important;
+    padding: 1px 3px 3px 3px;
+    line-height: 1;
+    margin: 0 5px 0 0;
+
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}
+
+/* Author */
+#ctf .ctf-author-box{
+    margin-left: 56px;
+}
+#ctf .ctf-author-avatar{
+    width: 48px;
+    height: 48px;
+    margin: 3px 6px 0 -56px;
+    float: left;
+    overflow: hidden;
+    border: none;
+
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+#ctf .ctf-author-avatar img{
+    margin: 0 !important;
+    padding: 0;
+}
+#ctf .ctf-author-name,
+#ctf .ctf-author-screenname,
+#ctf .ctf-verified,
+#ctf .ctf-tweet-meta{
+    margin-left: 4px;
+    margin-right: 4px;
+    display: inline-block;
+}
+#ctf .ctf-screename-sep{
+    margin: 0 2px;
+    display: inline-block;
+}
+#ctf .ctf-author-name{
+    font-weight: bold !important;
+    margin-top: 4px;
+}
+#ctf .ctf-author-box-link{
+    color: black;
+    text-decoration: none;
+    display: inline;
+    line-height: 1.5 !important;
+}
+#ctf .ctf-verified,
+#ctf .ctf-quoted-verified {
+    color: #77c7f7;
+    margin-left: 0;
+}
+#ctf .ctf-quoted-verified {
+    margin-right: 4px;
+}
+#ctf .ctf-tweet-meta{
+    display: inline-block;
+}
+#ctf .ctf-replied-to-text a {
+    font-size: inherit;
+    color: inherit;
+    font-weight: inherit;
+}
+#ctf p.ctf-tweet-text{
+    padding: 0 !important;
+    margin: 0 !important;
+}
+#ctf .ctf-tweet-content,
+#ctf .ctf-tweet-actions{
+    margin-left: 58px;
+}
+/* No avatar */
+#ctf .ctf-hide-avatar .ctf-context,
+#ctf .ctf-hide-avatar .ctf-tweet-content,
+#ctf .ctf-hide-avatar .ctf-tweet-actions,
+#ctf .ctf-hide-avatar .ctf-quoted-tweet,
+#ctf .ctf-hide-avatar .ctf-author-box,
+#ctf.ctf-narrow .ctf-hide-avatar .ctf-context,
+#ctf.ctf-narrow .ctf-hide-avatar .ctf-tweet-content,
+#ctf.ctf-narrow .ctf-hide-avatar .ctf-tweet-actions,
+#ctf.ctf-narrow .ctf-hide-avatar .ctf-quoted-tweet,
+#ctf.ctf-narrow .ctf-hide-avatar .ctf-author-box,
+#ctf.ctf-super-narrow .ctf-hide-avatar .ctf-context,
+#ctf.ctf-super-narrow .ctf-hide-avatar .ctf-tweet-content,
+#ctf.ctf-super-narrow .ctf-hide-avatar .ctf-tweet-actions,
+#ctf.ctf-super-narrow .ctf-hide-avatar .ctf-quoted-tweet,
+#ctf.ctf-super-narrow .ctf-hide-avatar .ctf-author-box{
+    margin-left: 0;
+}
+
+/*Quoted tweets*/
+#ctf .ctf-quoted-tweet{
+    display: block;
+    /*float: left;*/
+    clear: both;
+    margin: 7px 0 5px 58px;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border: 1px solid rgba(0,0,0,0.1);
+    text-decoration: none;
+
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+
+    -moz-transition: background 0.1s ease-in-out;
+    -webkit-transition: background 0.1s ease-in-out;
+    -o-transition: background 0.1s ease-in-out;
+    transition: background 0.1s ease-in-out;
+}
+#ctf .ctf-quoted-tweet:hover,
+#ctf .ctf-quoted-tweet:focus{
+    background: #eee;
+    background: rgba(0,0,0,0.05);
+    border: 1px solid #ddd;
+    border: 1px solid rgba(0,0,0,0.05);
+
+    -moz-transition: background 0.1s ease-in-out;
+    -webkit-transition: background 0.1s ease-in-out;
+    -o-transition: background 0.1s ease-in-out;
+    transition: background 0.1s ease-in-out;
+}
+#ctf .ctf-quoted-author-name{
+    font-weight: bold;
+    margin-right: 4px;
+}
+#ctf .ctf-quoted-tweet p{
+    margin: 2px 0;
+}
+
+/* Actions */
+#ctf .ctf-tweet-actions a{
+    padding: 2px 10px 2px 5px;
+    float: left;
+}
+#ctf .ctf-tweet-actions a.ctf-reply,
+#ctf .ctf-tweet-actions a.ctf-retweet,
+#ctf .ctf-tweet-actions a.ctf-like{
+    color: #bbb;
+    color: rgba(0,0,0,0.30);
+    text-decoration: none;
+    border: none;
+    -moz-transition: color 0.1s ease-in-out;
+    -webkit-transition: color 0.1s ease-in-out;
+    -o-transition: color 0.1s ease-in-out;
+    transition: color 0.1s ease-in-out;
+}
+#ctf .ctf-tweet-actions .ctf-reply{
+    margin-left: -5px;
+}
+#ctf .ctf-tweet-actions a:hover,
+#ctf .ctf-tweet-actions a:focus{
+    -moz-transition: color 0.1s ease-in-out;
+    -webkit-transition: color 0.1s ease-in-out;
+    -o-transition: color 0.1s ease-in-out;
+    transition: color 0.1s ease-in-out;
+}
+#ctf .ctf-tweet-actions .ctf-reply:hover,
+#ctf .ctf-tweet-actions .ctf-reply:focus{
+    color: #E34F0E !important;
+}
+#ctf .ctf-tweet-actions .ctf-retweet:hover,
+#ctf .ctf-tweet-actions .ctf-retweet:focus{
+    color: #19cf86 !important;
+}
+#ctf .ctf-tweet-actions .ctf-like:hover,
+#ctf .ctf-tweet-actions .ctf-like:focus{
+    color: #e81c4f !important;
+}
+#ctf .ctf-action-count {
+    display: none;
+    float: right;
+    padding-left: 3px;
+    font-weight: bold;
+    font-size: 11px;
+    line-height: 14px;
+}
+
+/* Load more */
+#ctf #ctf-more{
+    display: block;
+    border: none;
+    background: #eee;
+    background: rgba(0,0,0,0.05);
+    width: 100%;
+    min-height: 30px;
+    padding: 5px 0;
+    margin: 0;
+    position: relative;
+    text-align: center;
+    box-sizing: border-box;
+    outline: none;
+    text-decoration: none;
+
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+
+    -moz-transition: background 0.1s ease-in-out;
+    -webkit-transition: background 0.1s ease-in-out;
+    -o-transition: background 0.1s ease-in-out;
+    transition: background 0.1s ease-in-out;
+}
+#ctf #ctf-more:hover{
+    background: #ddd;
+    background: rgba(0,0,0,0.1);
+    -moz-transition: background 0.1s ease-in-out;
+    -webkit-transition: background 0.1s ease-in-out;
+    -o-transition: background 0.1s ease-in-out;
+    transition: background 0.1s ease-in-out;
+}
+#ctf #ctf-more.ctf-loading span{ 
+    -moz-transition: opacity 0.5s ease-in-out;
+    -webkit-transition: opacity 0.5s ease-in-out;
+    -o-transition: opacity 0.5s ease-in-out;
+    transition: opacity 0.5s ease-in-out;
+}
+#ctf #ctf-more.ctf-loading span{
+    filter: alpha(opacity=0);
+    opacity: 0;
+}
+#ctf .ctf-loader {
+    width: 20px;
+    height: 20px;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -10px 0 0 -10px;
+    background-color: none;
+    background-color: rgba(0,0,0,0.5);
+
+    border-radius: 100%;  
+    -webkit-animation: ctf-sk-scaleout 1.0s infinite ease-in-out;
+    animation: ctf-sk-scaleout 1.0s infinite ease-in-out;
+}
+@-webkit-keyframes ctf-sk-scaleout {
+    0% { -webkit-transform: scale(0) }
+    100% {
+        -webkit-transform: scale(1.0);
+        opacity: 0;
+    }
+}
+@keyframes ctf-sk-scaleout {
+    0% { 
+        -webkit-transform: scale(0);
+        transform: scale(0);
+    } 100% {
+        -webkit-transform: scale(1.0);
+        transform: scale(1.0);
+        opacity: 0;
+    }
+}
+
+/* Credit link */
+.ctf-credit-link{
+    width: 100%;
+    clear: both;
+    padding: 5px 0;
+    margin-top: 5px;
+    text-align: center;
+    font-size: 12px;
+}
+.ctf-credit-link .fa{
+    margin-right: 4px;
+}
+
+/* Default styles */
+#ctf.ctf-styles .ctf-author-screenname,
+#ctf.ctf-styles .ctf-context,
+#ctf.ctf-styles .ctf-twitterlink,
+#ctf.ctf-styles .ctf-tweet-meta{
+    font-size: 12px;
+}
+
+/* Errors */
+#ctf .ctf-error{
+    width: 100%;
+    text-align: center;
+}
+#ctf .ctf-error p,
+#ctf .ctf-error iframe,
+#ctf .ctf-error code{
+    padding: 0;
+    margin: 0 2px;
+}
+#ctf .ctf-error-user p{
+    padding-bottom: 5px;
+}
+#ctf .ctf-error-user{
+    width: 100%;
+}
+#ctf .ctf-error-admin{
+    margin-top: 15px;
+    display: inline-block;
+}
+#ctf .ctf-error code{
+    display: block;
+    padding: 4px;
+}
+
+/* Out of tweets */
+#ctf .ctf-out-of-tweets{
+    width: 100%;
+}
+#ctf .ctf-out-of-tweets{
+    display: block;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: none;
+    background: none;
+    width: 100%;
+    min-height: 30px;
+    padding: 5px 0;
+    margin: 0;
+    position: relative;
+    text-align: center;
+    box-sizing: border-box;
+
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+#ctf .ctf-out-of-tweets p,
+#ctf .ctf-out-of-tweets iframe{
+    margin: 0 2px;
+    padding: 0;
+}
+#ctf .ctf-out-of-tweets p{
+    padding: 3px;
+    display: none;
+}
+
+/* Mobile / Narrow */
+#ctf.ctf-narrow .ctf-author-avatar,
+#ctf.ctf-narrow .ctf-author-avatar img{
+    width: 38px;
+    height: 38px;
+}
+#ctf.ctf-narrow .ctf-tweet-content,
+#ctf.ctf-narrow .ctf-tweet-actions,
+#ctf.ctf-narrow .ctf-quoted-tweet{
+    margin-left: 48px;
+}
+#ctf.ctf-narrow .ctf-context {
+    margin-left: 49px;
+}
+#ctf.ctf-narrow .ctf-author-box{
+    margin-left: 46px;
+}
+#ctf.ctf-narrow .ctf-author-avatar {
+    margin-left: -46px;
+}
+#ctf.ctf-narrow .ctf-tweet-content{
+    padding: 3px 0 5px 0;
+}
+#ctf.ctf-narrow .ctf-tweet-actions {
+    float: left;
+    clear: both;
+}
+
+/* Super narrow */
+#ctf.ctf-super-narrow .ctf-context,
+#ctf.ctf-super-narrow .ctf-tweet-content,
+#ctf.ctf-super-narrow .ctf-tweet-actions,
+#ctf.ctf-super-narrow .ctf-quoted-tweet {
+    margin-left: 0;
+}
+#ctf.ctf-super-narrow .ctf-author-box{
+    min-height: 32px;
+    margin-bottom: 2px;
+}
+#ctf.ctf-super-narrow .ctf-author-avatar,
+#ctf.ctf-super-narrow .ctf-author-avatar img{
+    width: 32px;
+    height: 32px;
+}
+#ctf.ctf-super-narrow .ctf-author-box{
+    margin-left: 38px;
+    float: left;
+    clear: both;
+}
+#ctf.ctf-super-narrow .ctf-author-avatar {
+    margin-left: -38px;
+    margin-top: 0;
+}
+#ctf.ctf-super-narrow .ctf-author-screenname,
+#ctf.ctf-super-narrow .ctf-screename-sep {
+    display: none;
+}
+#ctf.ctf-super-narrow .ctf-context {
+    padding-bottom: 5px;
+}
+#ctf.ctf-super-narrow .ctf-author-name{
+    display: inline-block;
+}
+#ctf.ctf-super-narrow .ctf-tweet-content{
+    float: left;
+    clear: both;
+}
+#ctf.ctf-super-narrow .ctf-credit-link{
+    font-size: 10px;
+}
+#ctf.ctf-super-narrow .ctf-header-bio{
+    margin: 0 !important;
+    padding-top: 5px;
+}
+#ctf.ctf-super-narrow .ctf-header-user{
+    min-height: 48px;
+}
+#ctf.ctf-super-narrow .ctf-header-text{
+    padding-top: 10px;
+}
+#ctf.ctf-super-narrow .ctf-header-follow{
+    margin-top: 5px;
+}
+#ctf.ctf-super-narrow .ctf-more span{
+    display: block;
+    margin-top: 3px;
+}
+
+/* Icons */
+@font-face{
+    font-family:'FontAwesome';
+    src:url('../fonts/fontawesome-webfont.eot?v=4.6.1');
+    src:url('../fonts/fontawesome-webfont.eot?#iefix&v=4.6.1') format('embedded-opentype'),
+    url('../fonts/fontawesome-webfont.woff?v=4.6.1') format('woff'),
+    url('../fonts/fontawesome-webfont.ttf?v=4.6.1') format('truetype'),
+    url('../fonts/fontawesome-webfont.svg?v=4.6.1#fontawesomeregular') format('svg');
+    font-weight:normal;
+    font-style:normal
+}
+#ctf .fa{
+    display:inline-block;
+    font:normal normal normal 14px/1 FontAwesome;
+    font-size:inherit;
+    text-rendering:auto;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale
+}
+#ctf .fa-retweet:before{content:"\f079"}
+#ctf .fa-reply:before{content:"\f112"}
+#ctf .fa-heart:before{content:"\f004"}
+#ctf .fa-check-circle:before{content:"\f058"}
+#ctf .fa-twitter:before{content:"\f099"}
+
+/* On mobile make the min-width 100% */
+@media all and (max-width: 640px){
+    #ctf.ctf-width-resp{
+        width: 100% !important;
+    }
+}

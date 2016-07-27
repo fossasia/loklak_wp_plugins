@@ -1,0 +1,13 @@
+{
+    "name": "loklak/loklak-php",
+    "description": "This is the PHP client library to access the loklak API",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sudheesh Singanamalla",
+            "email": "sudheesh95@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}

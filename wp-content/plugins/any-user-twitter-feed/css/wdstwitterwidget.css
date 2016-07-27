@@ -1,0 +1,92 @@
+#wds-container {
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	font-size: 12px;
+}
+
+#wds a {
+	background: none;
+	text-decoration: none;
+}
+
+#wds a:hover {
+	text-decoration: underline;
+}
+
+.wds-copyright {
+	border-top: 1px #ccc solid;
+	text-align: center;
+}
+
+.wds-copyright a {
+	color: #999;
+	font-size: 9px;
+	text-decoration: none;
+}
+
+#wds-header {
+	border-bottom: 1px #ccc solid;
+	padding: 5px;
+}
+
+#wds-header a {
+	background: none;
+	color: #333;
+}
+
+#wds-header a:hover {
+	text-decoration: none;
+}
+
+a .wds-display-name {
+	font-weight: bold;
+	color: #333;
+}
+
+a:hover .wds-display-name {
+	text-decoration: underline;
+}
+
+a .wds-screen-name {
+	color: #999;
+	text-decoration: none;
+}
+
+a:hover .wds-screen-name {
+	color: #666;
+}
+
+.wds-avatar {
+	border: 0px;
+	float: left;
+	margin-right: 5px;
+}
+
+#wds-tweets a {
+	color: #0084B4;
+	text-decoration: none;
+}
+
+.wds-tweet-container {
+	border-bottom: 1px #ccc solid;
+	padding: 8px;
+}
+
+.wds-last {
+	border: none;
+}
+
+.wds-tweet-data {
+	font-size: 10px;
+	text-align: center;	
+}
+
+#wds-twitter-icon a {
+	background: url('../images/twitter-icon.png') no-repeat;
+	display: block;
+	float: right;
+	height: 20px;
+	width: 20px;
+	text-indent: -9999px;
+}
