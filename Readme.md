@@ -1,3 +1,5 @@
+![Heroku](https://heroku-badge.herokuapp.com/?app=loklak-wordpress)
+
 # WordPress 4.5.2 + pg4wp2 Heroku ([Original Repository](https://github.com/macminiosx/wordpress-ja-pg4wp2-heroku))
 
 This is a Wordpress site repo which can be deployed on Heroku to test the plugins with Loklak support. 
@@ -19,6 +21,7 @@ Clone the repository from Github
 With the [Heroku gem](http://devcenter.heroku.com/articles/heroku-command), create your app
 
     $ cd loklak_wordpress_plugins
+    $ git remote add upstream git@github.com:macminiosx/wordpress-ja-pg4wp2-heroku.git
     $ heroku create --ssh-git --stack cedar-14
     Creating strange-turtle-1234... done, stack is cedar
     http://strange-turtle-1234.herokuapp.com/ | git@heroku.com:strange-turtle-1234.git
@@ -108,7 +111,7 @@ Because a file cannot be written to Heroku's file system, updating and installin
 Updating your WordPress version is just a matter of merging the updates into
 the branch created from the installation.
 
-    $ git pull # Get the latest
+    $ git pull upstream # Get the latest
 
 Using the same branch name from our installation:
 
