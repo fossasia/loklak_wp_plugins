@@ -1,10 +1,8 @@
-# WordPress 4.5.2-ja + pg4wp2 Heroku
+# WordPress 4.5.2 + pg4wp2 Heroku ([Original Repository](https://github.com/macminiosx/wordpress-ja-pg4wp2-heroku))
 
-This project is a template for installing and running [WordPress](http://wordpress.org/) on [Heroku](http://www.heroku.com/). The repository comes bundled with:
-* [PostgreSQL for WordPress](http://wordpress.org/extend/plugins/postgresql-for-wordpress/)
-* [Amazon S3 and Cloudfront](https://wordpress.org/plugins/amazon-s3-and-cloudfront/)
-* [WP Sendgrid](https://wordpress.org/plugins/wp-sendgrid/)
-* [Wordpress HTTPS](https://wordpress.org/plugins/wordpress-https/)
+This is a Wordpress site repo which can be deployed on Heroku to test the plugins with Loklak support. 
+
+https://loklak-wordpress.herokuapp.com is a sample Wordpress installation with all plugins present in `wp-content/plugins`
 
 ## Installation
 
@@ -16,11 +14,11 @@ Use the Deploy to Heroku button, or use the old fashioned way described below.
 
 Clone the repository from Github
 
-    $ git clone git@github.com:macminiosx/wordpress-ja-pg4wp2-heroku.git
+    $ git clone git@github.com:loklak/loklak_wordpress_plugins.git
 
 With the [Heroku gem](http://devcenter.heroku.com/articles/heroku-command), create your app
 
-    $ cd wordpress-heroku
+    $ cd loklak_wordpress_plugins
     $ heroku create --ssh-git --stack cedar-14
     Creating strange-turtle-1234... done, stack is cedar
     http://strange-turtle-1234.herokuapp.com/ | git@heroku.com:strange-turtle-1234.git
