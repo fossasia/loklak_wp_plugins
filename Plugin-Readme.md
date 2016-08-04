@@ -24,6 +24,7 @@
 - Loklak API has been integrated
 - **Tested (Y/N):** Y 
 - **Blockers:** None
+- **Loklak Search API Source:** Twitter
 
 **Merge Status:** Discussed with developer. He does not want to merge loklak integration with his plugin. 
 
@@ -51,6 +52,7 @@
 - Loklak API has been integrated
 - **Tested (Y/N):** Y 
 - **Blockers:** None
+- **Loklak Search API Source:** Twitter
 
 **Merge Status:** Communicated with Developer on Wordpress Slack. He showed iterest. No reply after that.
 
@@ -78,6 +80,7 @@
 - Loklak API has been integrated
 - **Tested (Y/N):** Y 
 - **Blockers:** None
+- **Loklak Search API Source:** Twitter
 
 **Merge Status:** Communicated with Developer on Wordpress Slack. No replies from him.
 
@@ -105,6 +108,7 @@
 - Loklak API has NOT been integrated
 - **Tested (Y/N):** N
 - **Blockers:** Since the plugin uses twitter widget Auth system, therefore loklak API can't be integrated
+- **Loklak Search API Source:** Twitter
 
 **Merge Status:** None
 
@@ -132,6 +136,7 @@
 - Loklak API has been integrated but some functionalities still left.
 - **Tested (Y/N):** N
 - **Blockers:** Uses Twitter APIs like "favorites/list" & "lists/statuses" which are not directly implementable in Loklak
+- **Loklak Search API Source:** Twitter
 
 **Merge Status:** None
 
@@ -159,6 +164,7 @@
 - Loklak API has been integrated.
 - **Tested (Y/N):** Y
 - **Blockers:** None
+- **Loklak Search API Source:** Twitter
 
 **Merge Status:** Communicated with developers on WP support [thread](https://wordpress.org/support/topic/loklak-api-support-for-the-plugin). Seemed interested but no reply afterwards.
 
@@ -186,6 +192,7 @@
 - Loklak API has been integrated.
 - **Tested (Y/N):** Y
 - **Blockers:** None
+- **Loklak Search API Source:** Twitter
 
 **Merge Status:** Need to follow up with the developers.
 
@@ -213,6 +220,7 @@
 - Loklak API has been integrated.
 - **Tested (Y/N):** Y
 - **Blockers:** None
+- **Loklak Search API Source:** Twitter
 
 **Merge Status:** Need to follow up with the developers.
 
@@ -240,6 +248,7 @@
 - Loklak API has been integrated but some functionalities still left.
 - **Tested (Y/N):** N
 - **Blockers:** Uses Twitter APIs like "favorites/list" & "lists/statuses" which are not directly implementable in Loklak
+- **Loklak Search API Source:** Twitter
 
 **Merge Status:** None
 
@@ -267,6 +276,7 @@
 - Loklak API has been integrated.
 - **Tested (Y/N):** Y
 - **Blockers:** None
+- **Loklak Search API Source:** Twitter
 
 **Merge Status:** Need to follow up with the developers.
 
@@ -294,6 +304,7 @@
 - Loklak API has been integrated.
 - **Tested (Y/N):** Y
 - **Blockers:** None
+- **Loklak Search API Source:** Twitter
 
 **Merge Status:** Need to follow up with the developers.
 
@@ -321,6 +332,7 @@
 - Loklak API has been integrated.
 - **Tested (Y/N):** Partially
 - **Blockers:** None
+- **Loklak Search API Source:** Twitter
 
 **Merge Status:** Need to follow up with the developers.
 
@@ -348,6 +360,7 @@
 - Loklak API has been integrated.
 - **Tested (Y/N):** Partially
 - **Blockers:** None
+- **Loklak Search API Source:** Twitter
 
 **Merge Status:** Need to follow up with the developers.
 
@@ -375,5 +388,6 @@
 - Loklak API has not been integrated.
 - **Tested (Y/N):** N
 - **Blockers:** Uses Twitter APIs like "favorites/list" & "lists/statuses" which are not directly implementable in Loklak
+- **Loklak Search API Source:** Twitter
 
 **Merge Status:** None
