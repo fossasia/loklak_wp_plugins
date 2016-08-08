@@ -239,13 +239,13 @@ function get_loklak_connect($ai_twitteruser_gt,$ai_notweets_gt){
     return $ai_tweets_all;
 }
 
-function getConnectionWithAccessToken($cons_key, $cons_secret, $oauth_token, $oauth_token_secret){
+function ai_getConnectionWithAccessToken($cons_key, $cons_secret, $oauth_token, $oauth_token_secret){
 	$ai_connection = new TwitterOAuth($cons_key, $cons_secret, $oauth_token, $oauth_token_secret);
 	return $ai_connection;
 }
 
 function get_connect($ai_consumerkey_gt, $ai_consumersecret_gt, $ai_accesstoken_gt, $ai_accesstokensecret_gt,$ai_twitteruser_gt,$ai_notweets_gt){
-	$ai_connection = getConnectionWithAccessToken($ai_consumerkey_gt, $ai_consumersecret_gt, $ai_accesstoken_gt, $ai_accesstokensecret_gt);
+	$ai_connection = ai_getConnectionWithAccessToken($ai_consumerkey_gt, $ai_consumersecret_gt, $ai_accesstoken_gt, $ai_accesstokensecret_gt);
 	$ai_tweets_all = $ai_connection->get("https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=".$ai_twitteruser_gt."&count=".$ai_notweets_gt);
 	return $ai_tweets_all;
 }
