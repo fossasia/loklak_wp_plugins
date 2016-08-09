@@ -31,7 +31,7 @@ pull from the remote origin
 
     $ git pull origin master
 
-Clone the repository from Github
+## Clone the repository from Github
 
     $ git clone git@github.com:macminiosx/wordpress-ja-pg4wp2-heroku.git
 
