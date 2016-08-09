@@ -228,7 +228,8 @@ function ai_twitter_formatter($ai_date){
 if(!class_exists('Loklak'))
 	require_once("loklak_php_api/loklak.php"); //Path to Loklak API library
 
-require_once("twitteroauth/twitteroauth.php"); //Path to twitteroauth library
+if(!class_exists('TwitterOAuth'))
+	require_once("twitteroauth/twitteroauth.php"); //Path to twitteroauth library
 
 function get_loklak_connect($ai_twitteruser_gt,$ai_notweets_gt){
 	$ai_connection = new loklak();
