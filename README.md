@@ -14,6 +14,23 @@ Use the Deploy to Heroku button, or use the old fashioned way described below.
   <img src="https://www.herokucdn.com/deploy/button.png" alt="Deploy">
 </a>
 
+### Use the Deploy to Heroku button Issue
+
+You've deployed an application to Heroku and when you attempt to clone the project you receive the error 'You appear to have cloned an empty repository'
+
+Clone the repo with heroku
+
+    $ heroku git:clone -a <YOUR-APP-NAME>
+    it will be reported as empty - that's ok
+
+cd into the project and add a git remote pointing at the original source,
+
+    $ git remote add origin https://github.com/macminiosx/wordpress-ja-pg4wp2-heroku/
+
+pull from the remote origin
+
+    $ git pull origin master
+
 Clone the repository from Github
 
     $ git clone git@github.com:macminiosx/wordpress-ja-pg4wp2-heroku.git
