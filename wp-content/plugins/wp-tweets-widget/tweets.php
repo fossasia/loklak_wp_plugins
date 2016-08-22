@@ -1,12 +1,11 @@
 <?php
 /*
-Plugin Name: Latest Tweets Widget
-Plugin URI: http://wordpress.org/extend/plugins/latest-tweets-widget/
+Plugin Name: Tweets Widget
+Plugin URI: http://wordpress.org/extend/plugins/tweets-widget/
 Description: Provides a sidebar widget showing latest tweets - compatible with the new Twitter API 1.1
-Author: Tim Whitlock
-Version: 1.1.3
-Author URI: http://timwhitlock.info/
-Text Domain: twitter-api
+Author: fossasia
+Version: 1.0
+Author URI: http://fossasia.org/
 Domain Path: /api/lang/
 */
 
@@ -20,7 +19,7 @@ Domain Path: /api/lang/
  * @param bool whether to show at replies
  * @return array blocks of html expected by the widget
  */
-function latest_tweets_render( $screen_name, $count, $rts, $ats, $pop = 0){
+function tweets_render( $screen_name, $count, $rts, $ats, $pop = 0){
     try {
         $loklak_api = get_option('loklak-settings[loklak_api]');
         if( $loklak_api ){
@@ -37,10 +36,10 @@ function latest_tweets_render( $screen_name, $count, $rts, $ats, $pop = 0){
                 $favorite_count = 'favorite_count';
                 // caching full data set, not just twitter api caching
                 // caching is disabled by default in debug mode, but still filtered.
-                $cachettl = (int) apply_filters('latest_tweets_cache_seconds', WP_DEBUG ? 0 : 300 );
+                $cachettl = (int) apply_filters('fa_tweets_cache_seconds', WP_DEBUG ? 0 : 300 );
                 if( $cachettl ){
                     $arguments = func_get_args();
-                    $cachekey = 'latest_tweets_'.implode('_', $arguments );
+                    $cachekey = 'tweets_'.implode('_', $arguments );
                     if( ! function_exists('_twitter_api_cache_get') ){
                         twitter_api_include('core');
                     }
@@ -114,7 +113,7 @@ function latest_tweets_render( $screen_name, $count, $rts, $ats, $pop = 0){
             date_default_timezone_set( $wp_timezone );
         }
         // Let theme disable or override emoji rendering
-        $emoji_callback = apply_filters('latest_tweets_emoji_callback', 'twitter_api_replace_emoji_callback' );
+        $emoji_callback = apply_filters('tweets_emoji_callback', 'twitter_api_replace_emoji_callback' );
         // render each tweet as a block of html for the widget list items
         $rendered = array();
         foreach( $tweets as $tweet ){
@@ -122,7 +121,7 @@ function latest_tweets_render( $screen_name, $count, $rts, $ats, $pop = 0){
             $handle = $user['screen_name'] or $handle = $screen_name;
             $link = esc_html( 'http://twitter.com/'.$handle.'/status/'.$id_str);
             // render nice datetime, unless theme overrides with filter
-            $date = apply_filters( 'latest_tweets_render_date', $created_at );
+            $date = apply_filters( 'tweets_render_date', $created_at );
             if( $date === $created_at ){
                 function_exists('twitter_api_relative_date') or twitter_api_include('utils');
                 $time = strtotime( $created_at );
@@ -135,7 +134,7 @@ function latest_tweets_render( $screen_name, $count, $rts, $ats, $pop = 0){
                 unset($retweeted_status);
             }
             // render and linkify tweet, unless theme overrides with filter
-            $html = apply_filters('latest_tweets_render_text', $text );
+            $html = apply_filters('tweets_render_text', $text );
             if( $html === $text ){
                 if( ! function_exists('twitter_api_html') ){
                     twitter_api_include('utils');
@@ -160,7 +159,7 @@ function latest_tweets_render( $screen_name, $count, $rts, $ats, $pop = 0){
                 
             }
             // piece together the whole tweet, allowing override
-            $final = apply_filters('latest_tweets_render_tweet', $html, $date, $link, $tweet );
+            $final = apply_filters('tweets_render_tweet', $html, $date, $link, $tweet );
             if( $final === $html ){
                 $final = '<p class="tweet-text">'.$html.'</p>'.
                          '<p class="tweet-details"><a href="'.$link.'" target="_blank">'.$date.'</a></p>';
@@ -192,26 +191,26 @@ function latest_tweets_render( $screen_name, $count, $rts, $ats, $pop = 0){
  * @param bool $ats Whether to show 'at' replies, defaults to true
  * @return string HTML <div> element containing a list
  */
-function latest_tweets_render_html( $screen_name = '', $num = 5, $rts = true, $ats = true, $pop = 0 ){
-    $items = latest_tweets_render( $screen_name, $num, $rts, $ats, $pop );
-    $list  = apply_filters('latest_tweets_render_list', $items, $screen_name );
+function tweets_render_html( $screen_name = '', $num = 5, $rts = true, $ats = true, $pop = 0 ){
+    $items = tweets_render( $screen_name, $num, $rts, $ats, $pop );
+    $list  = apply_filters('tweets_render_list', $items, $screen_name );
     if( is_array($list) ){
         $list = '<ul><li>'.implode('</li><li>',$items).'</li></ul>';
     }
     return 
-        '<div class="latest-tweets">'. 
-            apply_filters( 'latest_tweets_render_before', '' ).
+        '<div class="tweets">'. 
+            apply_filters( 'tweets_render_before', '' ).
             $list.
-            apply_filters( 'latest_tweets_render_after', '' ).
+            apply_filters( 'tweets_render_after', '' ).
         '</div>';
 }
 
  
   
 /**
- * latest tweets widget class
+ * tweets widget class
  */
-class Latest_Tweets_Widget extends WP_Widget {
+class Tweets_Widget extends WP_Widget {
     
     /** @see WP_Widget::__construct */
     public function __construct( $id_base = false, $name = '', $widget_options = array(), $control_options = array() ){
@@ -262,7 +261,7 @@ class Latest_Tweets_Widget extends WP_Widget {
                 'type'  => 'bool'
             ),*/
         );
-        $name or $name = __('Latest Tweets','twitter-api');
+        $name or $name = __('Tweets','twitter-api');
         parent::__construct( $id_base, $name, $widget_options, $control_options );  
     }    
     
@@ -272,7 +271,7 @@ class Latest_Tweets_Widget extends WP_Widget {
             $instance = array();
         }
         $instance += array (
-            'title' => __('Latest Tweets','twitter-api'),
+            'title' => __('Tweets','twitter-api'),
             'screen_name' => '',
             'num' => 5,
             'pop' => 0,
@@ -308,8 +307,8 @@ class Latest_Tweets_Widget extends WP_Widget {
         // title is themed via Wordpress widget theming techniques
         $title = $args['before_title'] . apply_filters('widget_title', $title, $instance, $this->id_base ) . $args['after_title'];
         // by default tweets are rendered as an unordered list
-        $items = latest_tweets_render( $screen_name, $num, $rts, $ats, $pop);
-        $list  = apply_filters('latest_tweets_render_list', $items, $screen_name );
+        $items = tweets_render( $screen_name, $num, $rts, $ats, $pop);
+        $list  = apply_filters('tweets_render_list', $items, $screen_name );
         if( is_array($list) ){
             $list = '<ul><li>'.implode('</li><li>',$items).'</li></ul>';
         }
@@ -317,10 +316,10 @@ class Latest_Tweets_Widget extends WP_Widget {
         echo 
         $args['before_widget'], 
             $title,
-            '<div class="latest-tweets">', 
-                apply_filters( 'latest_tweets_render_before', '' ),
+            '<div class="tweets">', 
+                apply_filters( 'tweets_render_before', '' ),
                 $list,
-                apply_filters( 'latest_tweets_render_after', '' ),
+                apply_filters( 'tweets_render_after', '' ),
             '</div>',
         $args['after_widget'];
     }
@@ -329,21 +328,21 @@ class Latest_Tweets_Widget extends WP_Widget {
  
 
 
-function latest_tweets_register_widget(){
-    return register_widget('Latest_Tweets_Widget');
+function tweets_register_widget(){
+    return register_widget('Tweets_Widget');
 }
 
-add_action( 'widgets_init', 'latest_tweets_register_widget' );
+add_action( 'widgets_init', 'tweets_register_widget' );
 
 
 
-function lastest_tweets_shortcode( $atts ){
+function tweets_shortcode( $atts ){
     $screen_name = isset($atts['user']) ? trim($atts['user'],' @') : '';
     $num = isset($atts['max']) ? (int) $atts['max'] : 5;
-    return latest_tweets_render_html( $screen_name, $num, true, false );
+    return tweets_render_html( $screen_name, $num, true, false );
 }
 
-add_shortcode( 'tweets', 'lastest_tweets_shortcode' );
+add_shortcode( 'tweets', 'tweets_shortcode' );
 
 
 
@@ -355,12 +354,12 @@ if( is_admin() ){
         require_once dirname(__FILE__).'/api/wp-twitter-api/twitter-api.php';
     }
     // extra visibility of API settings link
-    function latest_tweets_plugin_row_meta( $links, $file ){
-        if( false !== strpos($file,'/latest-tweets.php') ){
+    function tweets_plugin_row_meta( $links, $file ){
+        if( false !== strpos($file,'/tweets.php') ){
             $links[] = '<a href="options-general.php?page=twitter-api-admin"><strong>'.esc_attr__('Connect to Twitter','twitter-api').'</strong></a>';
         } 
         return $links;
     }
-    add_action('plugin_row_meta', 'latest_tweets_plugin_row_meta', 10, 2 );
+    add_action('plugin_row_meta', 'tweets_plugin_row_meta', 10, 2 );
 }
 
