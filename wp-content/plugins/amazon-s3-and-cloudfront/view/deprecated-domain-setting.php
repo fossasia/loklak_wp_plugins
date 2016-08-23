@@ -9,7 +9,7 @@ $tr_class = ( isset( $tr_class ) ) ? $tr_class : ''; ?>
 		$domain             = $this->get_setting( 'domain' );
 		$subdomain_disabled = '';
 		$subdomain_class    = '';
-		if ( 'https' == $this->get_setting( 'ssl' ) ) {
+		if ( $this->get_setting( 'force-https' ) ) {
 			if ( 'subdomain' == $domain ) {
 				$domain = 'path';
 			}

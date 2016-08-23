@@ -61,6 +61,8 @@
 		 * @param bool   persist_updated_notice
 		 */
 		toggle: function( hash, persist_updated_notice ) {
+			hash = as3cf.tabs.sanitizeHash( hash );
+
 			$tabs.hide();
 			$activeTab = $( '#tab-' + hash );
 			$activeTab.show();
@@ -73,6 +75,59 @@
 			if ( ! persist_updated_notice ) {
 				$( '.as3cf-updated' ).removeClass( 'show' );
 			}
+
+			if ( 'support' === hash ) {
+				as3cf.tabs.getDiagnosticInfo();
+			}
+		},
+
+		/**
+		 * Update display of diagnostic info.
+		 */
+		getDiagnosticInfo: function() {
+			var $debugLog = $( '.debug-log-textarea' );
+
+			$debugLog.html( as3cf.strings.get_diagnostic_info );
+
+			var data = {
+				action: 'as3cf-get-diagnostic-info',
+				_nonce: as3cf.nonces.get_diagnostic_info
+			};
+
+			$.ajax( {
+				url: ajaxurl,
+				type: 'POST',
+				dataType: 'JSON',
+				data: data,
+				error: function( jqXHR, textStatus, errorThrown ) {
+					$debugLog.html( errorThrown );
+				},
+				success: function( data, textStatus, jqXHR ) {
+					if ( 'undefined' !== typeof data[ 'success' ] ) {
+						$debugLog.html( data[ 'diagnostic_info' ] );
+					} else {
+						$debugLog.html( as3cf.strings.get_diagnostic_info_error );
+						$debugLog.append( data[ 'error' ] );
+					}
+				}
+			} );
+		},
+
+		/**
+		 * Sanitize hash to ensure it references a real tab.
+		 *
+		 * @param string hash
+		 *
+		 * @return string
+		 */
+		sanitizeHash: function( hash ) {
+			var $newTab = $( '#tab-' + hash );
+
+			if ( 0 === $newTab.length ) {
+				hash = as3cf.tabs.defaultTab;
+			}
+
+			return hash;
 		}
 	};
 
@@ -630,7 +685,7 @@
 
 				// As it's the default remove the hash
 				window.location.hash = '';
-				if ( 'function' === typeof window.history.replaceState  && '#' === window.location.href.slice( -1 ) ) {
+				if ( 'function' === typeof window.history.replaceState && '#' === window.location.href.slice( -1 ) ) {
 
 					// Strip the # if still on the end of the URL
 					history.replaceState( {}, '', window.location.href.slice( 0, -1 ) );
@@ -687,25 +742,6 @@
 			var $cloudfront = $( this ).parents( '.as3cf-domain' ).find( '.as3cf-setting.cloudfront' );
 			var cloudfrontSelected = ( 'cloudfront' === domain );
 			$cloudfront.toggleClass( 'hide', ! cloudfrontSelected );
-		} );
-
-		$( '.as3cf-ssl' ).on( 'change', 'input[type="radio"]', function( e ) {
-			if ( ! $( '#' + $activeTab.attr( 'id' ) + ' .deprecated-domain' ).length ) {
-				return;
-			}
-
-			var ssl = $( 'input:radio[name="ssl"]:checked' ).val();
-			if ( 'https' === ssl ) {
-				var domain = $( 'input:radio[name="domain"]:checked' ).val();
-				if ( 'subdomain' === domain ) {
-					$( 'input[name="domain"][value="path"]' ).attr( 'checked', true );
-				}
-				$( '.subdomain-wrap input' ).attr( 'disabled', true );
-				$( '.subdomain-wrap' ).addClass( 'disabled' );
-			} else {
-				$( '.subdomain-wrap input' ).removeAttr( 'disabled' );
-				$( '.subdomain-wrap' ).removeClass( 'disabled' );
-			}
 		} );
 
 		$( '.url-preview' ).on( 'change', 'input', function( e ) {

@@ -126,48 +126,27 @@ $selected_bucket_prefix = $this->get_object_prefix(); ?>
 						<?php echo $args['setting_msg']; ?>
 						<h4><?php _e( 'Year/Month', 'amazon-s3-and-cloudfront' ) ?></h4>
 						<p>
-							<?php _e( 'Add the Year/Month in the URL.' ); ?>
+							<?php _e( 'Add the Year/Month in the URL.', 'amazon-s3-and-cloudfront' ); ?>
 							<?php echo $this->settings_more_info_link( 'use-yearmonth-folders' ); ?>
 						</p>
 					</td>
 				</tr>
 
-				<?php $args = $this->get_setting_args( 'ssl' ); ?>
+				<?php $args = $this->get_setting_args( 'force-https' ); ?>
 				<tr class="configure-url as3cf-border-bottom url-preview <?php echo $args['tr_class']; ?>">
 					<td>
-						<h4><?php _e( 'SSL', 'amazon-s3-and-cloudfront' ); ?></h4>
+						<?php $this->render_view( 'checkbox', $args ); ?>
 					</td>
 					<td>
+						<?php echo $args['setting_msg']; ?>
+						<h4><?php _e( 'Force HTTPS', 'amazon-s3-and-cloudfront' ) ?></h4>
 						<p>
-							<?php _e( 'Controls the protocol of the S3 URLs.' ); ?>
-							<?php echo $this->settings_more_info_link( 'ssl' ); ?>
+							<?php _e( 'By default we use HTTPS when the request is HTTPS and regular HTTP when the request is HTTP, but you may want to force the use of HTTPS always, regardless of the request.', 'amazon-s3-and-cloudfront' ); ?>
+							<?php echo $this->settings_more_info_link( 'force-https' ); ?>
 						</p>
-						<?php
-						$ssl = $this->get_setting( 'ssl' );
-						echo $args['setting_msg'];
-						?>
-						<div class="as3cf-ssl as3cf-radio-group">
-							<label>
-								<input type="radio" name="ssl" value="request" <?php checked( $ssl, 'request' ); ?> <?php echo $args['disabled_attr']; ?>>
-								<?php _e( 'Same as request', 'amazon-s3-and-cloudfront' ); ?>
-								<p><?php _e( 'When the request is https://, use https:// for the file URL as well.', 'amazon-s3-and-cloudfront' ); ?></p>
-							</label>
-							<label>
-								<input type="radio" name="ssl" value="https" <?php checked( $ssl, 'https' ); ?> <?php echo $args['disabled_attr']; ?>>
-								<?php _e( 'Always SSL', 'amazon-s3-and-cloudfront' ); ?>
-								<p><?php _e( 'Forces https:// to be used.', 'amazon-s3-and-cloudfront' ); ?></p>
-								<?php if ( $this->show_deprecated_domain_setting() ) : ?>
-									<p><?php _e( 'You cannot use the "Bucket as a subdomain" domain option when using SSL.', 'amazon-s3-and-cloudfront' ); ?></p>
-								<?php endif; ?>
-								</label>
-							<label>
-								<input type="radio" name="ssl" value="http" <?php checked( $ssl, 'http' ); ?> <?php echo $args['disabled_attr']; ?>>
-								<?php _e( 'Always non-SSL', 'amazon-s3-and-cloudfront' ); ?>
-								<p><?php _e( 'Forces http:// to be used.', 'amazon-s3-and-cloudfront' ); ?></p>
-							</label>
-						</div>
 					</td>
 				</tr>
+
 				<tr class="advanced-options as3cf-setting-title">
 					<td colspan="2"><h3><?php _e( 'Advanced Options', 'amazon-s3-and-cloudfront' ); ?></h3></td>
 				</tr>
@@ -214,7 +193,7 @@ $selected_bucket_prefix = $this->get_object_prefix(); ?>
 						<?php echo $args['setting_msg']; ?>
 						<h4><?php _e( 'Object Versioning', 'amazon-s3-and-cloudfront' ) ?></h4>
 						<p>
-							<?php _e( 'Append a timestamp to the S3 file path. Recommended when using CloudFront so you don\'t have to worry about cache invalidation.' ); ?>
+							<?php _e( 'Append a timestamp to the S3 file path. Recommended when using CloudFront so you don\'t have to worry about cache invalidation.', 'amazon-s3-and-cloudfront' ); ?>
 							<?php echo $this->settings_more_info_link( 'object-versioning' ); ?>
 						</p>
 					</td>
@@ -229,7 +208,12 @@ $selected_bucket_prefix = $this->get_object_prefix(); ?>
 	<?php $this->render_view( 'bucket-select', array( 'prefix' => $prefix, 'selected_bucket' => $selected_bucket ) ); ?>
 </div>
 
-<?php $this->render_view( 'support' ); ?>
+<?php
+$tabs = $this->get_settings_tabs();
+if ( ! empty( $tabs['support'] ) ) {
+	$this->render_view( 'support' );
+}
+?>
 
 <?php do_action( 'as3cf_after_settings' ); ?>
 

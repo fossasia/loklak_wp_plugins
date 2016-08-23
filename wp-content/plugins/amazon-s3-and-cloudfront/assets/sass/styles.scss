@@ -3,6 +3,8 @@
  * AWS wrap
  */
 .aws-main.wrap {
+	position: relative;
+
 	& > h1 {
 		float: left;
 	}
@@ -143,14 +145,6 @@
 			color: #aaa;
 			text-transform: uppercase;
 			font-weight: bold;
-		}
-	}
-
-	.as3cf-ssl {
-		margin-top: 10px;
-		p.info {
-			margin-top: 10px;
-			padding: 0;
 		}
 	}
 
@@ -574,7 +568,7 @@
  */
 .as3cf-sidebar {
   position: absolute;
-	top: 25px;
+	top: 9px;
 	left: 670px;
   width: 292px;
 
@@ -714,7 +708,7 @@
  * Misc
  */
 .as3cf-banner {
-	margin-top: 28px;
+	margin-top: 35px;
 	width: 292px;
 	height: 156px;
 	display: block;
@@ -791,7 +785,7 @@
 	.as3cf-notice-toggle-list {
 		margin-top: 0;
 		margin-left: 0;
-		padding-left: 26px;
+		padding-left: 40px;
 		color: #dc3232;
 	}
 }

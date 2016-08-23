@@ -1,6 +1,6 @@
 ![Heroku](https://heroku-badge.herokuapp.com/?app=loklak-wordpress)
 
-# WordPress 4.5.2 + pg4wp2 Heroku ([Original Repository](https://github.com/macminiosx/wordpress-ja-pg4wp2-heroku))
+# WordPress 4.5.3-ja + pg4wp2 Heroku ([Original Repository](https://github.com/macminiosx/wordpress-ja-pg4wp2-heroku))
 
 This is a Wordpress site repo which can be deployed on Heroku to test the plugins with Loklak support. 
 
@@ -14,7 +14,24 @@ Use the Deploy to Heroku button, or use the old fashioned way described below.
   <img src="https://www.herokucdn.com/deploy/button.png" alt="Deploy">
 </a>
 
-Clone the repository from Github
+### Use the Deploy to Heroku button Issue
+
+You've deployed an application to Heroku and when you attempt to clone the project you receive the error 'You appear to have cloned an empty repository'
+
+Clone the repo with heroku
+
+    $ heroku git:clone -a <YOUR-APP-NAME>
+    it will be reported as empty - that's ok
+
+cd into the project and add a git remote pointing at the original source,
+
+    $ git remote add origin https://github.com/macminiosx/wordpress-ja-pg4wp2-heroku/
+
+pull from the remote origin
+
+    $ git pull origin master
+
+## Clone the repository from Github
 
     $ git clone git@github.com:loklak/loklak_wordpress_plugins.git
 

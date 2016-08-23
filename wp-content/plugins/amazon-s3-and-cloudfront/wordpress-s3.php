@@ -4,7 +4,7 @@ Plugin Name: WP Offload S3 Lite
 Plugin URI: http://wordpress.org/extend/plugins/amazon-s3-and-cloudfront/
 Description: Automatically copies media uploads to Amazon S3 for storage and delivery. Optionally configure Amazon CloudFront for even faster delivery.
 Author: Delicious Brains
-Version: 1.0.3
+Version: 1.0.4
 Author URI: http://deliciousbrains.com/
 Network: True
 Text Domain: amazon-s3-and-cloudfront
@@ -26,9 +26,9 @@ Domain Path: /languages/
 // Then completely rewritten.
 */
 
-$GLOBALS['aws_meta']['amazon-s3-and-cloudfront']['version'] = '1.0.3';
+$GLOBALS['aws_meta']['amazon-s3-and-cloudfront']['version'] = '1.0.4';
 
-$aws_plugin_version_required = '0.3.5';
+$aws_plugin_version_required = '0.3.6';
 
 require_once dirname( __FILE__ ) . '/classes/wp-aws-compatibility-check.php';
 require_once dirname( __FILE__ ) . '/classes/as3cf-utils.php';

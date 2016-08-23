@@ -4,10 +4,10 @@ Theme URI: https://wordpress.org/themes/twentysixteen/
 Author: the WordPress team
 Author URI: https://wordpress.org/
 Description: Twenty Sixteen is a modernized take on an ever-popular WordPress layout — the horizontal masthead with an optional right sidebar that works perfectly for blogs and websites. It has custom color options with beautiful default color schemes, a harmonious fluid grid using a mobile-first approach, and impeccable polish in every detail. Twenty Sixteen will make your WordPress look beautiful everywhere.
-Version: 1.2
+Version: 1.3
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Tags: black, blue, gray, red, white, yellow, dark, light, one-column, two-columns, right-sidebar, fixed-layout, responsive-layout, accessibility-ready, custom-background, custom-colors, custom-header, custom-menu, editor-style, featured-images, flexible-header, microformats, post-formats, rtl-language-support, sticky-post, threaded-comments, translation-ready
+Tags: one-column, two-columns, right-sidebar, accessibility-ready, custom-background, custom-colors, custom-header, custom-menu, editor-style, featured-images, flexible-header, microformats, post-formats, rtl-language-support, sticky-post, threaded-comments, translation-ready, blog
 Text Domain: twentysixteen
 
 This theme, like WordPress, is licensed under the GPL.
@@ -213,6 +213,16 @@ input[type="radio"] {
 	padding: 0;
 }
 
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-outer-spin-button,
+input[type="time"]::-webkit-inner-spin-button,
+input[type="time"]::-webkit-outer-spin-button,
+input[type="datetime-local"]::-webkit-inner-spin-button,
+input[type="datetime-local"]::-webkit-outer-spin-button,
+input[type="week"]::-webkit-inner-spin-button,
+input[type="week"]::-webkit-outer-spin-button,
+input[type="month"]::-webkit-inner-spin-button,
+input[type="month"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
 	height: auto;
@@ -332,6 +342,7 @@ blockquote {
 	font-style: italic;
 	line-height: 1.4736842105;
 	margin: 0 0 1.4736842105em;
+	overflow: hidden;
 	padding: 0 0 0 1.263157895em;
 }
 
@@ -619,6 +630,11 @@ input[type="submit"]:focus {
 	outline-offset: -4px;
 }
 
+input[type="date"],
+input[type="time"],
+input[type="datetime-local"],
+input[type="week"],
+input[type="month"],
 input[type="text"],
 input[type="email"],
 input[type="url"],
@@ -636,6 +652,11 @@ textarea {
 	width: 100%;
 }
 
+input[type="date"]:focus,
+input[type="time"]:focus,
+input[type="datetime-local"]:focus,
+input[type="week"]:focus,
+input[type="month"]:focus,
 input[type="text"]:focus,
 input[type="email"]:focus,
 input[type="url"]:focus,
@@ -3193,6 +3214,11 @@ p > video {
 		padding: 0.846153846em;
 	}
 
+	.widget input[type="date"],
+	.widget input[type="time"],
+	.widget input[type="datetime-local"],
+	.widget input[type="week"],
+	.widget input[type="month"],
 	.widget input[type="text"],
 	.widget input[type="email"],
 	.widget input[type="url"],

@@ -3,7 +3,7 @@
  * WP Multibyte Patch Japanese Locale Extension
  *
  * @package WP_Multibyte_Patch
- * @version 2.6
+ * @version 2.7
  * @author Seisuke Kuraishi <210pura@gmail.com>
  * @copyright Copyright (c) 2016 Seisuke Kuraishi, Tinybit Inc.
  * @license http://opensource.org/licenses/gpl-2.0.php GPLv2
@@ -18,7 +18,7 @@
 if ( class_exists( 'multibyte_patch' ) ) :
 	class multibyte_patch_ext extends multibyte_patch {
 
-	function get_jis_name() {
+	public function get_jis_name() {
 		if ( function_exists( 'mb_list_encodings' ) ) {
 			$list = "\t" . implode( "\t", mb_list_encodings() ) . "\t";
 			return ( preg_match( "/\tISO-2022-JP-MS\t/i", $list ) ) ? 'ISO-2022-JP-MS' : 'ISO-2022-JP';
@@ -27,22 +27,22 @@ if ( class_exists( 'multibyte_patch' ) ) :
 			return 'ISO-2022-JP';
 	}
 
-	function UTF8toJIS( $string ) {
+	public function UTF8toJIS( $string ) {
 		return $this->convenc( $string, $this->get_jis_name(), 'UTF-8' );
 	}
 
-	function JIStoUTF8( $string ) {
+	public function JIStoUTF8( $string ) {
 		return $this->convenc( $string, 'UTF-8', $this->get_jis_name() );
 	}
 
-	function encode_mimeheader_b_uncut( $string = '', $charset = 'UTF-8' ) {
+	public function encode_mimeheader_b_uncut( $string = '', $charset = 'UTF-8' ) {
 		if ( 0 == strlen( $string ) || strlen( $string ) == mb_strlen( $string, $charset ) )
 			return $string;
 
 		return "=?$charset?B?" . base64_encode( $string ) . '?=';
 	}
 
-	function get_phpmailer_properties( $phpmailer ) {
+	public function get_phpmailer_properties( $phpmailer ) {
 		$array = (array) $phpmailer;
 		$new = array();
 		foreach ( $array as $key => $value ) {
@@ -52,7 +52,7 @@ if ( class_exists( 'multibyte_patch' ) ) :
 		return $new;
 	}
 
-	function wp_mail( $phpmailer ) {
+	public function wp_mail( $phpmailer ) {
 		$blog_encoding = $this->blog_encoding;
 
 		$phpmailer->FromName = preg_replace( "/[\r\n]/", "", trim( $phpmailer->FromName ) );
@@ -73,7 +73,24 @@ if ( class_exists( 'multibyte_patch' ) ) :
 		}
 
 		$phpmailer_props = $this->get_phpmailer_properties( $phpmailer );
-		$recipient_methods = array( 'to' => array( 'add' => 'AddAddress', 'clear' => 'ClearAddresses' ), 'cc' => array( 'add' => 'AddCC', 'clear' => 'ClearCCs' ), 'bcc' => array( 'add' => 'AddBCC', 'clear' => 'ClearBCCs' ) );
+		$recipient_methods = array(
+			'to' => array(
+				'add' => 'addAddress',
+				'clear' => 'clearAddresses',
+			),
+			'cc' => array(
+				'add' => 'addCC',
+				'clear' => 'clearCCs',
+			),
+			'bcc' => array(
+				'add' => 'addBCC',
+				'clear' => 'clearBCCs',
+			),
+			'ReplyTo' => array(
+				'add' => 'addReplyTo',
+				'clear' => 'clearReplyTos',
+			),
+		);
 
 		if ( 'UTF-8' == $mode ) {
 			$phpmailer->CharSet = 'UTF-8';
@@ -83,10 +100,14 @@ if ( class_exists( 'multibyte_patch' ) ) :
 			$phpmailer->Subject = $this->encode_mimeheader_b_uncut( $phpmailer->Subject, 'UTF-8' );
 
 			foreach ( $recipient_methods as $name => $method ) {
-				if ( isset( $phpmailer_props[$name][0] ) ) {
+				if ( isset( $phpmailer_props[$name] ) && is_array( $phpmailer_props[$name] ) ) {
 					$phpmailer->{$method['clear']}();
+
 					foreach ( $phpmailer_props[$name] as $recipient ) {
-						$recipient[1] = $this->encode_mimeheader_b_uncut( $recipient[1], 'UTF-8' );
+						if ( ! empty( $recipient[1] ) ) {
+							$recipient[1] = $this->encode_mimeheader_b_uncut( $recipient[1], 'UTF-8' );
+						}
+
 						$phpmailer->{$method['add']}( $recipient[0], $recipient[1] );
 					}
 				}
@@ -102,11 +123,15 @@ if ( class_exists( 'multibyte_patch' ) ) :
 			$phpmailer->Body = $this->UTF8toJIS( $phpmailer->Body );
 
 			foreach ( $recipient_methods as $name => $method ) {
-				if ( isset( $phpmailer_props[$name][0] ) ) {
+				if ( isset( $phpmailer_props[$name] ) && is_array( $phpmailer_props[$name] ) ) {
 					$phpmailer->{$method['clear']}();
+
 					foreach ( $phpmailer_props[$name] as $recipient ) {
-						$recipient[1] = $this->UTF8toJIS( $recipient[1] );
-						$recipient[1] = $this->encode_mimeheader_b_uncut( $recipient[1], 'ISO-2022-JP' );
+						if ( ! empty( $recipient[1] ) ) {
+							$recipient[1] = $this->UTF8toJIS( $recipient[1] );
+							$recipient[1] = $this->encode_mimeheader_b_uncut( $recipient[1], 'ISO-2022-JP' );
+						}
+
 						$phpmailer->{$method['add']}( $recipient[0], $recipient[1] );
 					}
 				}
@@ -114,7 +139,7 @@ if ( class_exists( 'multibyte_patch' ) ) :
 		}
 	}
 
-	function process_search_terms() {
+	public function process_search_terms() {
 		$blog_encoding = $this->blog_encoding;
 
 		if ( isset( $_GET['s'] ) ) {
@@ -125,7 +150,7 @@ if ( class_exists( 'multibyte_patch' ) ) :
 		}
 	}
 
-	function guess_encoding( $string, $encoding = '' ) {
+	public function guess_encoding( $string, $encoding = '' ) {
 		$guess_list = 'UTF-8, eucJP-win, SJIS-win';
 
 		if ( preg_match( "/^utf-8$/i", $encoding ) )
@@ -140,7 +165,7 @@ if ( class_exists( 'multibyte_patch' ) ) :
 			return $encoding;
 	}
 
-	function admin_custom_css() {
+	public function admin_custom_css() {
 		if ( empty( $this->conf['admin_custom_css_url'] ) )
 			$url = plugin_dir_url( __FILE__ ) . 'admin.css';
 		else
@@ -149,7 +174,7 @@ if ( class_exists( 'multibyte_patch' ) ) :
 		wp_enqueue_style( 'wpmp-admin-custom', $url, array(), '20131223' );
 	}
 
-	function wp_trim_words( $text = '', $num_words = 110, $more = '', $original_text = '' ) {
+	public function wp_trim_words( $text = '', $num_words = 110, $more = '', $original_text = '' ) {
 		if ( 0 !== strpos( _x( 'words', 'Word count type. Do not translate!' ), 'characters' ) )
 			return $text;
 
@@ -167,7 +192,7 @@ if ( class_exists( 'multibyte_patch' ) ) :
 		return $text;
 	}
 
-	function __construct() {
+	public function __construct() {
 		// mbstring functions are always required for ja.
 		$this->mbfunctions_required = true;
 

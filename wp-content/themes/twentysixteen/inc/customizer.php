@@ -421,7 +421,7 @@ add_action( 'wp_enqueue_scripts', 'twentysixteen_color_scheme_css' );
  * @since Twenty Sixteen 1.0
  */
 function twentysixteen_customize_control_js() {
-	wp_enqueue_script( 'color-scheme-control', get_template_directory_uri() . '/js/color-scheme-control.js', array( 'customize-controls', 'iris', 'underscore', 'wp-util' ), '20160412', true );
+	wp_enqueue_script( 'color-scheme-control', get_template_directory_uri() . '/js/color-scheme-control.js', array( 'customize-controls', 'iris', 'underscore', 'wp-util' ), '20160816', true );
 	wp_localize_script( 'color-scheme-control', 'colorScheme', twentysixteen_get_color_schemes() );
 }
 add_action( 'customize_controls_enqueue_scripts', 'twentysixteen_customize_control_js' );
@@ -432,7 +432,7 @@ add_action( 'customize_controls_enqueue_scripts', 'twentysixteen_customize_contr
  * @since Twenty Sixteen 1.0
  */
 function twentysixteen_customize_preview_js() {
-	wp_enqueue_script( 'twentysixteen-customize-preview', get_template_directory_uri() . '/js/customize-preview.js', array( 'customize-preview' ), '20160412', true );
+	wp_enqueue_script( 'twentysixteen-customize-preview', get_template_directory_uri() . '/js/customize-preview.js', array( 'customize-preview' ), '20160816', true );
 }
 add_action( 'customize_preview_init', 'twentysixteen_customize_preview_js' );
 
@@ -554,11 +554,18 @@ function twentysixteen_get_color_scheme_css( $colors ) {
 		background-color: {$colors['link_color']};
 	}
 
+	input[type="date"]:focus,
+	input[type="time"]:focus,
+	input[type="datetime-local"]:focus,
+	input[type="week"]:focus,
+	input[type="month"]:focus,
 	input[type="text"]:focus,
 	input[type="email"]:focus,
 	input[type="url"]:focus,
 	input[type="password"]:focus,
 	input[type="search"]:focus,
+	input[type="tel"]:focus,
+	input[type="number"]:focus,
 	textarea:focus,
 	.tagcloud a:hover,
 	.tagcloud a:focus,
@@ -685,11 +692,18 @@ function twentysixteen_get_color_scheme_css( $colors ) {
 	table,
 	th,
 	td,
+	input[type="date"],
+	input[type="time"],
+	input[type="datetime-local"],
+	input[type="week"],
+	input[type="month"],
 	input[type="text"],
 	input[type="email"],
 	input[type="url"],
 	input[type="password"],
 	input[type="search"],
+	input[type="tel"],
+	input[type="number"],
 	textarea,
 	.main-navigation li,
 	.main-navigation .primary-menu,
@@ -918,11 +932,18 @@ function twentysixteen_link_color_css() {
 			background-color: %1$s;
 		}
 
+		input[type="date"]:focus,
+		input[type="time"]:focus,
+		input[type="datetime-local"]:focus,
+		input[type="week"]:focus,
+		input[type="month"]:focus,
 		input[type="text"]:focus,
 		input[type="email"]:focus,
 		input[type="url"]:focus,
 		input[type="password"]:focus,
 		input[type="search"]:focus,
+		input[type="tel"]:focus,
+		input[type="number"]:focus,
 		textarea:focus,
 		.tagcloud a:hover,
 		.tagcloud a:focus,
@@ -1039,11 +1060,18 @@ function twentysixteen_main_text_color_css() {
 		table,
 		th,
 		td,
+		input[type="date"],
+		input[type="time"],
+		input[type="datetime-local"],
+		input[type="week"],
+		input[type="month"],
 		input[type="text"],
 		input[type="email"],
 		input[type="url"],
 		input[type="password"],
 		input[type="search"],
+		input[type="tel"],
+		input[type="number"],
 		textarea,
 		.main-navigation li,
 		.main-navigation .primary-menu,
