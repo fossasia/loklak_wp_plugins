@@ -1,0 +1,87 @@
+## Clone the repository from Github
+
+    $ git clone git@github.com:loklak/loklak_wordpress_plugins.git
+
+With the [Heroku gem](http://devcenter.heroku.com/articles/heroku-command), create your app
+
+    $ cd loklak_wordpress_plugins
+    $ git remote add upstream git@github.com:macminiosx/wordpress-ja-pg4wp2-heroku.git
+    $ heroku create --ssh-git --stack cedar-14
+    Creating strange-turtle-1234... done, stack is cedar
+    http://strange-turtle-1234.herokuapp.com/ | git@heroku.com:strange-turtle-1234.git
+    Git remote heroku added
+
+Add a database to your app
+
+    $ heroku addons:create heroku-postgresql:hobby-dev
+    Adding heroku-postgresql:dev to strange-turtle-1234... done, v2 (free)
+    Attached as HEROKU_POSTGRESQL_COLOR
+    Database has been created and is available
+    Use `heroku addons:docs heroku-postgresql:dev` to view documentation
+
+Promote the database (replace COLOR with the color name from the above output)
+
+    $ heroku pg:promote HEROKU_POSTGRESQL_COLOR
+    Promoting HEROKU_POSTGRESQL_COLOR to DATABASE_URL... done
+
+Add the ability to send email (i.e. Password Resets etc)
+
+    $ heroku addons:add sendgrid:starter
+    Adding sendgrid:starter on your-app... done, v14 (free)
+    Use `heroku addons:docs sendgrid` to view documentation.
+
+Create a new branch for any configuration/setup changes needed
+
+    $ git checkout -b production
+
+Store unique keys and salts in Heroku environment variables. Wordpress can provide random values [here](https://api.wordpress.org/secret-key/1.1/salt/).
+
+    heroku config:set AUTH_KEY='put your unique phrase here' \
+      SECURE_AUTH_KEY='put your unique phrase here' \
+      LOGGED_IN_KEY='put your unique phrase here' \
+      NONCE_KEY='put your unique phrase here' \
+      AUTH_SALT='put your unique phrase here' \
+      SECURE_AUTH_SALT='put your unique phrase here' \
+      LOGGED_IN_SALT='put your unique phrase here' \
+      NONCE_SALT='put your unique phrase here'
+
+Create .htpasswd
+
+    $ echo "USERNAME:CRYPT PASSWOER" > .htpasswd
+
+Deploy to Heroku
+
+    $ git push heroku production:master
+    -----> Deleting 0 files matching .slugignore patterns.
+    -----> PHP app detected
+
+     !     WARNING: No composer.json found.
+           Using index.php to declare PHP applications is considered legacy
+           functionality and may lead to unexpected behavior.
+
+    -----> No runtime requirements in composer.json, defaulting to PHP 5.6.2.
+    -----> Installing system packages...
+           - PHP 5.6.2
+           - Apache 2.4.10
+           - Nginx 1.6.0
+    -----> Installing PHP extensions...
+           - zend-opcache (automatic; bundled, using 'ext-zend-opcache.ini')
+    -----> Installing dependencies...
+           Composer version 1.0-dev (ffffab37a294f3383c812d0329623f0a4ba45387) 2014-11-05 06:04:18
+           Loading composer repositories with package information
+           Installing dependencies
+           Nothing to install or update
+           Generating optimized autoload files
+    -----> Preparing runtime environment...
+           NOTICE: No Procfile, defaulting to 'web: vendor/bin/heroku-php-apache2'
+    -----> Discovering process types
+           Procfile declares types -> web
+
+    -----> Compressing... done, 78.5MB
+    -----> Launcing... done, v5
+           http://strange-turtle-1234.herokuapp.com deployed to Heroku
+
+    To git@heroku:strange-turtle-1234.git
+      * [new branch]    production -> master
+
+After deployment WordPress has a few more steps to setup and thats it!

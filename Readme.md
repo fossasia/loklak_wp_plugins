@@ -8,116 +8,41 @@ https://loklak-wordpress.herokuapp.com is a sample Wordpress installation with a
 
 ## Installation
 
-Use the Deploy to Heroku button, or use the old fashioned way described below.
+###Deploy from Github directly:
 
-<a href="https://heroku.com/deploy?template=https://github.com/macminiosx/wordpress-ja-pg4wp2-heroku/tree/master">
-  <img src="https://www.herokucdn.com/deploy/button.png" alt="Deploy">
-</a>
+1. Click on 'Deploy to Heroku' to install a wordpress instance on Heroku.
+  
+  <p align="center">
+    <a href="https://heroku.com/deploy?template=https://github.com/macminiosx/wordpress-ja-pg4wp2-heroku/tree/master">
+      <img src="https://www.herokucdn.com/deploy/button.png" alt="Deploy">
+    </a>
+  </p>
 
-### Use the Deploy to Heroku button Issue
+2. Give your website a name and input your time-zone and add authentication information for .htpasswd to access wp-admin page (admin privileges). See the screenshot below. 
 
-You've deployed an application to Heroku and when you attempt to clone the project you receive the error 'You appear to have cloned an empty repository'
+  <p align="center">
+    <img src ="./docs/screenshots/ss-1.png" alt="Time-zone and Auth">
+  </p>
 
-Clone the repo with heroku
 
-    $ heroku git:clone -a <YOUR-APP-NAME>
-    it will be reported as empty - that's ok
+3. Click on Deploy for Free. Once the app is deployed, Click on ‘Manage App’. Go to ‘Deploy’ tab and choose ‘Deployment method’ as Github
 
-cd into the project and add a git remote pointing at the original source,
+4. Connect your forked loklak_wordpress_plugins repo to Heroku. 
 
-    $ git remote add origin https://github.com/macminiosx/wordpress-ja-pg4wp2-heroku/
+  <p align="center">
+    <img src ="./docs/screenshots/ss-2.png" alt="Connect repo">
+  </p>
 
-pull from the remote origin
+5. To automate the deployment process when the github repo is updated, enable automatic deploys. Now deploy the master branch of your repo and you are good to go.
 
-    $ git pull origin master
+  <p align="center">
+    <img src ="./docs/screenshots/ss-3.png" alt="Automate Deployment">
+  </p>
 
-## Clone the repository from Github
+### Clone github repository and deploy using Wordpress-Heroku toolbelt
+To deploy using Heroku toolbelt, please refer to [Heroku-toolbelt installation doc](./docs/INSTALLATION_heroku_toolbelt.md)
 
-    $ git clone git@github.com:loklak/loklak_wordpress_plugins.git
-
-With the [Heroku gem](http://devcenter.heroku.com/articles/heroku-command), create your app
-
-    $ cd loklak_wordpress_plugins
-    $ git remote add upstream git@github.com:macminiosx/wordpress-ja-pg4wp2-heroku.git
-    $ heroku create --ssh-git --stack cedar-14
-    Creating strange-turtle-1234... done, stack is cedar
-    http://strange-turtle-1234.herokuapp.com/ | git@heroku.com:strange-turtle-1234.git
-    Git remote heroku added
-
-Add a database to your app
-
-    $ heroku addons:create heroku-postgresql:hobby-dev
-    Adding heroku-postgresql:dev to strange-turtle-1234... done, v2 (free)
-    Attached as HEROKU_POSTGRESQL_COLOR
-    Database has been created and is available
-    Use `heroku addons:docs heroku-postgresql:dev` to view documentation
-
-Promote the database (replace COLOR with the color name from the above output)
-
-    $ heroku pg:promote HEROKU_POSTGRESQL_COLOR
-    Promoting HEROKU_POSTGRESQL_COLOR to DATABASE_URL... done
-
-Add the ability to send email (i.e. Password Resets etc)
-
-    $ heroku addons:add sendgrid:starter
-    Adding sendgrid:starter on your-app... done, v14 (free)
-    Use `heroku addons:docs sendgrid` to view documentation.
-
-Create a new branch for any configuration/setup changes needed
-
-    $ git checkout -b production
-
-Store unique keys and salts in Heroku environment variables. Wordpress can provide random values [here](https://api.wordpress.org/secret-key/1.1/salt/).
-
-    heroku config:set AUTH_KEY='put your unique phrase here' \
-      SECURE_AUTH_KEY='put your unique phrase here' \
-      LOGGED_IN_KEY='put your unique phrase here' \
-      NONCE_KEY='put your unique phrase here' \
-      AUTH_SALT='put your unique phrase here' \
-      SECURE_AUTH_SALT='put your unique phrase here' \
-      LOGGED_IN_SALT='put your unique phrase here' \
-      NONCE_SALT='put your unique phrase here'
-
-Create .htpasswd
-
-    $ echo "USERNAME:CRYPT PASSWOER" > .htpasswd
-
-Deploy to Heroku
-
-    $ git push heroku production:master
-    -----> Deleting 0 files matching .slugignore patterns.
-    -----> PHP app detected
-
-     !     WARNING: No composer.json found.
-           Using index.php to declare PHP applications is considered legacy
-           functionality and may lead to unexpected behavior.
-
-    -----> No runtime requirements in composer.json, defaulting to PHP 5.6.2.
-    -----> Installing system packages...
-           - PHP 5.6.2
-           - Apache 2.4.10
-           - Nginx 1.6.0
-    -----> Installing PHP extensions...
-           - zend-opcache (automatic; bundled, using 'ext-zend-opcache.ini')
-    -----> Installing dependencies...
-           Composer version 1.0-dev (ffffab37a294f3383c812d0329623f0a4ba45387) 2014-11-05 06:04:18
-           Loading composer repositories with package information
-           Installing dependencies
-           Nothing to install or update
-           Generating optimized autoload files
-    -----> Preparing runtime environment...
-           NOTICE: No Procfile, defaulting to 'web: vendor/bin/heroku-php-apache2'
-    -----> Discovering process types
-           Procfile declares types -> web
-
-    -----> Compressing... done, 78.5MB
-    -----> Launcing... done, v5
-           http://strange-turtle-1234.herokuapp.com deployed to Heroku
-
-    To git@heroku:strange-turtle-1234.git
-      * [new branch]    production -> master
-
-After deployment WordPress has a few more steps to setup and thats it!
+For detailed information, refer to [this](http://blog.loklak.net/using-heroku-wordpress-buildpack-to-test-loklak-integration-in-wordpress-plugins/) blog. 
 
 ## Usage
 
@@ -125,23 +50,7 @@ Because a file cannot be written to Heroku's file system, updating and installin
 
 ## Updating
 
-Updating your WordPress version is just a matter of merging the updates into
-the branch created from the installation.
-
-    $ git pull upstream # Get the latest
-
-Using the same branch name from our installation:
-
-    $ git checkout production
-    $ git merge master # Merge latest
-    $ git push heroku production:master
-
-WordPress needs to update the database. After push, navigate to:
-
-    http://your-app-url.herokuapp.com/wp-admin
-
-WordPress will prompt for updating the database. After that you'll be good
-to go.
+Refer to [Wordpress updation doc](./docs/UPDATE_wordpress.md)
 
 ## Deployment optimisation
 
