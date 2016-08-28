@@ -16,7 +16,7 @@ add_action('admin_menu', 'twitter_api_admin_menu');
 function twitter_api_admin_render_header( $subheader, $css = '' ){
     ?>
      <div>    
-        <h1><?php echo esc_html__('API Authentication Settings','twitter-api')?></h1><hr/>
+        <h1><?php echo esc_html__('Tweets Widget Settings','twitter-api')?></h1><hr/>
         <form action="<?php echo twitter_api_admin_base_uri()?>" method="post">
         <?php
             settings_fields( 'loklak-settings' );
@@ -126,7 +126,7 @@ function twitter_api_admin_render_page(){
         // check whether we have any OAuth params
         extract( $conf );
         if( ! $consumer_key || ! $consumer_secret ){
-            throw new Exception( __('Twitter application not fully configured','twitter-api') );
+            throw new Exception( __('Twitter API not configured. Details are available in your <a href="https://dev.twitter.com/apps">Twitter dashboard</a>. The plugin is still functional if you use the loklak.org API.','twitter-api') );
         }
 
         // else exchange access token if callback // request secret saved as option
@@ -195,8 +195,8 @@ function twitter_api_admin_base_uri(){
  * Admin menu registration callback
  */
 function twitter_api_admin_menu() {
-    $title = __('Twitter API','twitter-api');
-    add_options_page( $title, $title, 'manage_options', 'twitter-api-admin', 'twitter_api_admin_render_page');
+    $title = __('Tweets Widget','twitter-api');
+    add_options_page( $title, $title, 'manage_options', 'tweets-widget-settings', 'twitter_api_admin_render_page');
 }
 
 

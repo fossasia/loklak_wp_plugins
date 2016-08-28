@@ -142,7 +142,7 @@ class TwitterApiClient {
         extract( _twitter_api_config() );
         if( $default ){
             if( ! $consumer_key || ! $consumer_secret || ! $access_key || ! $access_secret ){
-                trigger_error( __('Twitter application not fully configured','twitter-api') );
+                trigger_error( __('Twitter API not configured. Details are available in your <a href="https://dev.twitter.com/apps">Twitter dashboard</a>. The plugin is still functional if you use the loklak.org API.','twitter-api') );
             }
             $Client->set_oauth( $consumer_key, $consumer_secret, $access_key, $access_secret ); 
         }       
