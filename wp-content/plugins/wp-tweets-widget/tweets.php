@@ -345,7 +345,6 @@ function tweets_shortcode( $atts ){
 add_shortcode( 'tweets', 'tweets_shortcode' );
 
 
-
 if( is_admin() ){
 
     require_once dirname(__FILE__).'/loklak_php_api/Lib/loklak-api-admin.php';
@@ -354,12 +353,10 @@ if( is_admin() ){
         require_once dirname(__FILE__).'/api/wp-twitter-api/twitter-api.php';
     }
     // extra visibility of API settings link
-    function tweets_plugin_row_meta( $links, $file ){
-        if( false !== strpos($file,'/tweets.php') ){
-            $links[] = '<a href="options-general.php?page=tweets-widget-settings"><strong>'.esc_attr__('Settings','twitter-api').'</strong></a>';
-        } 
+    function tweets_plugin_action_links( $links){
+        $links[] = '<a href="options-general.php?page=tweets-widget-settings">'.esc_attr__('Settings','twitter-api').'</a>';
         return $links;
     }
-    add_action('plugin_row_meta', 'tweets_plugin_row_meta', 10, 2 );
+    add_action('plugin_action_links_' . plugin_basename(__FILE__), 'tweets_plugin_action_links', 10, 2 );
 }
 

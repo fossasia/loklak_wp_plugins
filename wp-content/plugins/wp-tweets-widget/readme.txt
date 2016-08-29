@@ -2,8 +2,8 @@
 Contributors: fossasia
 Tags: twitter, loklak, loklak api, tweets, oauth, api, rest, api, widget, sidebar
 Requires at least: 3.5.1
-Tested up to: 4.5.2
-Stable tag: 1.0 
+Tested up to: 4.5.3
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,10 +50,9 @@ Once your site is authenticated you can configure the widget as follows:
 
 See the 'Other Notes' tab for theming information.
 
-= Why do I have to register my own Twitter app? =
+= Do I have to register my own Twitter app? =
 
-Because I'm providing code, not a service. If I set up a Twitter app for this plugin I'd be responsible for every person who uses it. 
-If Twitter closed my account or revoked my keys every instance of this plugin would break. Twitter also place limits on the number of users that can connect to a single app.
+Yes, if you want to use Twitter's new API 1.1 . If you decide to use loklak.org's anonymous API then no need. More info in the 'Description' tab.
 
 = How I do know what my Twitter OAuth settings are? =
 
@@ -72,7 +71,7 @@ This is useful for only showing your most interesting content.
 
 If you're unable too fix your [PHP cURL](https://php.net/manual/en/book.curl.php) installation, you can disable SSL verification of twitter.com by adding this to your theme functions.php:  
 `add_filter('https_ssl_verify', '__return_false');`  
-Do so at your own risk.
+But, please do so at your own risk.
 
 
 == Screenshots ==
@@ -82,6 +81,10 @@ Do so at your own risk.
 3. Widget screen shows feed options
 
 == Changelog ==
+
+= 1.0.1 =
+* Fixes FAQs
+* Fixes minor URL bugs
 
 = 1.0 =
 * A whole new version!
