@@ -412,7 +412,7 @@ class wpTwitterWidget extends AaronPlugin {
 		}
 
 		if ( (empty( $this->_settings['twp']['consumer-key'] ) || empty( $this->_settings['twp']['consumer-secret'] ) ) && !$this->_settings['twp']['loklak_api'] ) {
-			$msg = sprintf( __( 'You need to <a href="%s">set up your Twitter app keys</a>.', $this->_slug ), $this->get_options_url() );
+			$msg = sprintf( __( 'You need to <a href="%s">set up your Twitter app keys</a> or use Loklak API to activate plugin functionality.', $this->_slug ), $this->get_options_url() );
 			echo '<div class="error"><p>' . $msg . '</p></div>';
 		}
 
