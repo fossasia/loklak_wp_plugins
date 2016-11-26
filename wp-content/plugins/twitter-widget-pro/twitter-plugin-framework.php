@@ -1,20 +1,20 @@
 <?php
 /**
- * Version: 1.0.0
+ * Version: 1.0
  */
 /**
  * Changelog:
  *
- * 1.0.0:
+ * 1.0:
  *  - First version of the plugin!
  **/
-if (!class_exists('AaronPlugin')) {
+if (!class_exists('TwitterPlugin')) {
 	/**
-	 * Abstract class AaronPlugin used as a WordPress Plugin framework
+	 * Abstract class TwitterPlugin used as a WordPress Plugin framework
 	 *
-	 * @abstract
+	 * @abstractet Feed Plugin
 	 */
-	abstract class AaronPlugin {
+	abstract class TwitterPlugin {
 		/**
 		 * @var array Plugin settings
 		 */
@@ -64,16 +64,6 @@ if (!class_exists('AaronPlugin')) {
 		 * @var string - The plugin slug used on WordPress.org
 		 */
 		protected $_slug = '';
-
-		/**
-		 * @var string - The feed URL for AaronDCampbell.com
-		 */
-		protected $_feed_url = 'http://aarondcampbell.com/feed/';
-
-		/**
-		 * @var string - The button ID for the PayPal button, override this generic one with a plugin-specific one
-		 */
-		protected $_paypalButtonId = '9925248';
 
 		protected $_optionsPageAction = 'options.php';
 
@@ -171,7 +161,7 @@ if (!class_exists('AaronPlugin')) {
 
 		public function options_page() {
 			global $wp_meta_boxes;
-			$allBoxes = array_keys( $wp_meta_boxes['aaron-'.$this->_slug] );
+			$allBoxes = array_keys( $wp_meta_boxes['twitter-'.$this->_slug] );
 			$mainBoxes = array_filter( $allBoxes, array( $this, '_filter_boxes_main' ) );
 			unset($mainBoxes['main']);
 			sort($mainBoxes);
@@ -193,7 +183,7 @@ if (!class_exists('AaronPlugin')) {
 							<form action="<?php esc_attr_e( $this->_optionsPageAction ); ?>" method="post"<?php do_action( 'rpf-options-page-form-tag' ) ?>>
 								<?php
 								settings_fields( $this->_optionGroup );
-								do_meta_boxes( 'aaron-' . $this->_slug, 'main', '' );
+								do_meta_boxes( 'twitter-' . $this->_slug, 'main', '' );
 								if ( apply_filters( 'rpf-show-general-settings-submit'.$this->_slug, true ) ) {
 								?>
 								<p class="submit">
@@ -206,7 +196,7 @@ if (!class_exists('AaronPlugin')) {
 						<?php
 							}
 							foreach( $mainBoxes as $context ) {
-								do_meta_boxes( 'aaron-' . $this->_slug, $context, '' );
+								do_meta_boxes( 'twitter-' . $this->_slug, $context, '' );
 							}
 						?>
 						</div>
@@ -216,7 +206,7 @@ if (!class_exists('AaronPlugin')) {
 						<div class="alignright" style="width:24%;">
 							<?php
 							foreach( $sidebarBoxes as $context ) {
-								do_meta_boxes( 'aaron-' . $this->_slug, $context, '' );
+								do_meta_boxes( 'twitter-' . $this->_slug, $context, '' );
 							}
 							?>
 						</div>
@@ -271,28 +261,18 @@ if (!class_exists('AaronPlugin')) {
 		}
 
 		public function add_default_options_meta_boxes() {
-			if ( apply_filters( 'show-aaron-like-this', true ) )
-				add_meta_box( $this->_slug . '-like-this', __('Like this Plugin?', $this->_slug), array($this, 'like_this_meta_box'), 'aaron-' . $this->_slug, 'sidebar');
+			if ( apply_filters( 'show-twitter-like-this', true ) )
+				add_meta_box( $this->_slug . '-like-this', __('Like this Plugin?', $this->_slug), array($this, 'like_this_meta_box'), 'twitter-' . $this->_slug, 'sidebar');
 
-			if ( apply_filters( 'show-aaron-support', true ) )
-				add_meta_box( $this->_slug . '-support', __('Need Support?', $this->_slug), array($this, 'support_meta_box'), 'aaron-' . $this->_slug, 'sidebar');
+			if ( apply_filters( 'show-twitter-support', true ) )
+				add_meta_box( $this->_slug . '-support', __('Need Support?', $this->_slug), array($this, 'support_meta_box'), 'twitter-' . $this->_slug, 'sidebar');
 
-			if ( apply_filters( 'show-aaron-feed', true ) )
-				add_meta_box( $this->_slug . '-aaron-feed', __('Latest news from Aaron', $this->_slug), array($this, 'aaron_feed_meta_box'), 'aaron-' . $this->_slug, 'sidebar');
+			if ( apply_filters( 'show-twitter-feed', true ) )
+				add_meta_box( $this->_slug . '-twitter-feed', __('Latest news from twitter', $this->_slug), array($this, 'twitter_feed_meta_box'), 'twitter-' . $this->_slug, 'sidebar');
 		}
 
-		public function aaron_feed_meta_box() {
-			$args = array(
-				'url'			=> $this->_feed_url,
-				'items'			=> '5',
-			);
-			echo '<div class="rss-widget">';
-			wp_widget_rss_output( $args );
-			echo "</div>";
-		}
-
-		public function screen_icon_link($name = 'aaron') {
-			$link = '<a href="http://aarondcampbell.com">';
+		public function screen_icon_link($name = 'twitter') {
+			$link = '<a href="http://fossasia.org">';
 			if ( function_exists( 'get_screen_icon' ) ) {
 				$link .= get_screen_icon( $name );
 			} else {

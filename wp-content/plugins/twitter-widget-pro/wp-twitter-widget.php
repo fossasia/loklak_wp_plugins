@@ -1,16 +1,16 @@
 <?php
 /**
- * Plugin Name: Twitter Widget
- * Description: A widget that properly handles twitter feeds, including @username, #hashtag, and link parsing. It can even display profile images for the users. Requires PHP5.
+ * Plugin Name: Tweet Feed Plugin
+ * Description: A widget that properly handles twitter feeds, including @username, #hashtag, and link parsing.  It can even display profile images for the users.  Requires PHP5.
  * Version: 1.0
  * Author: FOSSASIA
  * Author URI: http://fossasia.org/
  * License: GPLv2 or later
- * Text Domain: twitter-widget
+ * Text Domain: tweet-feed-plugin
  */
 
 /*
-	Copyright 2006-current  FOSSASIA  ( email : http://fossasia.org/ )
+	Copyright 2006-current  FOSSASIA
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -28,15 +28,15 @@
 */
 
 require_once( 'tlc-transients.php' );
-require_once( 'aaron-plugin-framework.php' );
-define( 'TWP_VERSION', '2.7.0' );
+require_once( 'twitter-plugin-framework.php' );
+define( 'TWP_VERSION', '1.0' );
 
 /**
  * WP_Widget_Twitter is the class that handles the main widget.
  */
 class WP_Widget_Twitter extends WP_Widget {
 	public function __construct () {
-		$this->_slug = 'twitter-widget';
+		$this->_slug = 'tweet-feed-plugin';
 		$wpTwitterWidget = wpTwitterWidget::getInstance();
 		$widget_ops = array(
 			'classname' => 'widget_twitter',
@@ -47,7 +47,7 @@ class WP_Widget_Twitter extends WP_Widget {
 			'height' => 350,
 			'id_base' => 'twitter'
 		);
-		$name = __( 'Twitter Widget', $wpTwitterWidget->get_slug() );
+		$name = __( 'Tweet Feed Plugin', $wpTwitterWidget->get_slug() );
 
 		parent::__construct( 'twitter', $name, $widget_ops, $control_ops );
 	}
@@ -249,7 +249,7 @@ class WP_Widget_Twitter extends WP_Widget {
  * includes filters that modify tweet content for things like linked usernames.
  * It also helps us avoid name collisions.
  */
-class wpTwitterWidget extends AaronPlugin {
+class wpTwitterWidget extends TwitterPlugin {
 	/**
 	 * @var wpTwitter
 	 */
@@ -265,13 +265,13 @@ class wpTwitterWidget extends AaronPlugin {
 
 		$this->_hook = 'twitterWidget';
 		$this->_file = plugin_basename( __FILE__ );
-		$this->_pageTitle = __( 'Twitter Widget', $this->_slug );
-		$this->_menuTitle = __( 'Twitter Widget', $this->_slug );
+		$this->_pageTitle = __( 'Tweet Feed Plugin', $this->_slug );
+		$this->_menuTitle = __( 'Tweet Feed Plugin', $this->_slug );
 		$this->_accessLevel = 'manage_options';
 		$this->_optionGroup = 'twp-options';
 		$this->_optionNames = array( 'twp' );
 		$this->_optionCallbacks = array();
-		$this->_slug = 'twitter-widget';
+		$this->_slug = 'tweet-feed-plugin';
 		$this->_paypalButtonId = '9993090';
 
 		/**
@@ -287,7 +287,7 @@ class wpTwitterWidget extends AaronPlugin {
 		add_filter( 'widget_twitter_content', 'convert_chars' );
 		add_filter( $this->_slug .'-opt-twp', array( $this, 'filterSettings' ) );
 		add_filter( $this->_slug .'-opt-twp-authed-users', array( $this, 'authed_users_option' ) );
-		add_shortcode( 'twitter-widget', array( $this, 'handleShortcodes' ) );
+		add_shortcode( 'tweet-feed-plugin', array( $this, 'handleShortcodes' ) );
 
 		$twp_version = get_option( 'twp_version' );
 		if ( TWP_VERSION != $twp_version )
@@ -422,10 +422,10 @@ class wpTwitterWidget extends AaronPlugin {
 	}
 
 	public function add_options_meta_boxes() {
-		add_meta_box( $this->_slug. '-loklak-api', __( 'Loklak API settings', $this->_slug ), array( $this, 'loklak_api_settings_meta_box' ), 'aaron-' . $this->_slug, 'main' );
-		add_meta_box( $this->_slug . '-oauth', __( 'Authenticated Twitter Accounts', $this->_slug ), array( $this, 'oauth_meta_box' ), 'aaron-' . $this->_slug, 'main' );
-		add_meta_box( $this->_slug . '-general-settings', __( 'General Settings', $this->_slug ), array( $this, 'general_settings_meta_box' ), 'aaron-' . $this->_slug, 'main' );
-		add_meta_box( $this->_slug . '-defaults', __( 'Default Settings for Shortcodes', $this->_slug ), array( $this, 'default_settings_meta_box' ), 'aaron-' . $this->_slug, 'main' );
+		add_meta_box( $this->_slug. '-loklak-api', __( 'Loklak API settings', $this->_slug ), array( $this, 'loklak_api_settings_meta_box' ), 'twitter-' . $this->_slug, 'main' );
+		add_meta_box( $this->_slug . '-oauth', __( 'Authenticated Twitter Accounts', $this->_slug ), array( $this, 'oauth_meta_box' ), 'twitter-' . $this->_slug, 'main' );
+		add_meta_box( $this->_slug . '-general-settings', __( 'General Settings', $this->_slug ), array( $this, 'general_settings_meta_box' ), 'twitter-' . $this->_slug, 'main' );
+		add_meta_box( $this->_slug . '-defaults', __( 'Default Settings for Shortcodes', $this->_slug ), array( $this, 'default_settings_meta_box' ), 'twitter-' . $this->_slug, 'main' );
 	}
 
 	public function loklak_api_settings_meta_box() {
@@ -503,7 +503,7 @@ class wpTwitterWidget extends AaronPlugin {
 								$minutes = ceil( ( $rate->reset - gmdate( 'U' ) ) / 60 );
 								echo sprintf( _n( 'Limits reset in: %d minutes', 'Limits reset in: %d minutes', $minutes, $this->_slug ), $minutes );
 								?><br />
-								<small><?php _e( 'This is overall usage, not just usage from Twitter Widget', $this->_slug ); ?></small>
+								<small><?php _e( 'This is overall usage, not just usage from Tweet Feed Plugin', $this->_slug ); ?></small>
 							</p>
 						</td>
 						<?php
@@ -615,7 +615,7 @@ class wpTwitterWidget extends AaronPlugin {
 							<a href="<?php echo esc_url( $test_local_url ); ?>" class="button">
 								<?php _e( 'Test local requests', $this->_slug ); ?>
 							</a><br />
-							<small><?php _e( "Twitter Widget updates tweets in the background by placing a local request to your server.  If your Tweets aren't updating, test this.  If it fails, let your host know that loopback requests aren't working on your site.", $this->_slug ); ?></small>
+							<small><?php _e( "Tweet Feed Plugin updates tweets in the background by placing a local request to your server.  If your Tweets aren't updating, test this.  If it fails, let your host know that loopback requests aren't working on your site.", $this->_slug ); ?></small>
 						</td>
 					</tr>
 				</table>
@@ -927,7 +927,7 @@ class wpTwitterWidget extends AaronPlugin {
 	}
 
 	public function register() {
-		// Fix conflict with Jetpack by disabling their Twitter widget
+		// Fix conflict with Jetpack by disabling their Tweet Feed Plugin
 		unregister_widget( 'Wickett_Twitter_Widget' );
 		register_widget( 'WP_Widget_Twitter' );
 	}
@@ -972,7 +972,7 @@ class wpTwitterWidget extends AaronPlugin {
 		if ( empty( $args['title'] ) )
 			$args['title'] = sprintf( __( 'Twitter: %s', $this->_slug ), $args['username'] );
 
-		$args['title'] = apply_filters( 'twitter-widget-title', $args['title'], $args );
+		$args['title'] = apply_filters( 'tweet-feed-plugin-title', $args['title'], $args );
 		$args['title'] = "<span class='twitterwidget twitterwidget-title'>{$args['title']}</span>";
 		$widgetContent .= $args['before_title'] . $args['title'] . $args['after_title'];
 		if ( !empty( $tweets[0] ) && is_object( $tweets[0] ) && !empty( $args['avatar'] ) ) {
@@ -1072,7 +1072,7 @@ class wpTwitterWidget extends AaronPlugin {
 			$script = 'http://platform.twitter.com/widgets.js';
 			if ( is_ssl() )
 				$script = str_replace( 'http://', 'https://', $script );
-			wp_enqueue_script( 'twitter-widgets', $script, array(), '1.0.0', true );
+			wp_enqueue_script( 'tweet-feed-plugins', $script, array(), '1.0.0', true );
 
 			if ( ! function_exists( '_wp_footer_scripts' ) ) {
 				// This means we can't just enqueue our script (fixes in WP 3.3)
@@ -1100,7 +1100,7 @@ class wpTwitterWidget extends AaronPlugin {
 	}
 
 	public function add_twitter_js() {
-		wp_print_scripts( 'twitter-widgets' );
+		wp_print_scripts( 'tweet-feed-plugins' );
 	}
 
 	/**
