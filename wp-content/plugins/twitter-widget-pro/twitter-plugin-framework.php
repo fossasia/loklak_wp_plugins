@@ -266,7 +266,6 @@ if (!class_exists('TwitterPlugin')) {
 
 			if ( apply_filters( 'show-twitter-support', true ) )
 				add_meta_box( $this->_slug . '-support', __('Need Support?', $this->_slug), array($this, 'support_meta_box'), 'twitter-' . $this->_slug, 'sidebar');
-
 			if ( apply_filters( 'show-twitter-feed', true ) )
 				add_meta_box( $this->_slug . '-twitter-feed', __('Latest news from twitter', $this->_slug), array($this, 'twitter_feed_meta_box'), 'twitter-' . $this->_slug, 'sidebar');
 		}

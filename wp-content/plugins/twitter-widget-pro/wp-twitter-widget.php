@@ -6,11 +6,7 @@
  * Author: FOSSASIA
  * Author URI: http://fossasia.org/
  * License: GPLv2 or later
-<<<<<<< HEAD
  * Text Domain: tweet-feed-plugin
-=======
- * Text Domain: twitter-feed-plugin
->>>>>>> 92322026db4ba87e9c64afe78b45cf9605e64cea
  */
 
 /*
