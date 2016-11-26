@@ -294,7 +294,7 @@ if (!class_exists('TwitterPlugin')) {
 			register_widget('tp_widget_recent_tweets');
 		}
 		public function add_wp_twitter_widget_script() {
-			wp_register_script('twitter_widget_script', plugin_dir_url( __FILE__ ).'assets/js/wp-twitter-widget.js', array('jquery'));
+			wp_register_script('twitter_widget_script', plugin_dir_url( __FILE__ ).'assets/js/wp-tweet-feed-plugin.js', array('jquery'));
 			wp_enqueue_script('twitter_widget_script');
 
 		}

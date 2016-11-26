@@ -263,7 +263,7 @@ class wpTwitterWidget extends TwitterPlugin {
 	protected function _init() {
 		require_once( 'lib/wp-twitter.php' );
 
-		$this->_hook = 'twitterWidget';
+		$this->_hook = 'tweetFeedplugin';
 		$this->_file = plugin_basename( __FILE__ );
 		$this->_pageTitle = __( 'Tweet Feed Plugin', $this->_slug );
 		$this->_menuTitle = __( 'Tweet Feed Plugin', $this->_slug );
