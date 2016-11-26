@@ -1,16 +1,16 @@
 <?php
 /**
- * Plugin Name: Twitter Widget
- * Description: A widget that properly handles twitter feeds, including @username, #hashtag, and link parsing. It can even display profile images for the users. Requires PHP5.
+ * Plugin Name: Tweet Feed Plugin
+ * Description: A widget that properly handles twitter feeds, including @username, #hashtag, and link parsing.  It can even display profile images for the users.  Requires PHP5.
  * Version: 1.0
  * Author: FOSSASIA
  * Author URI: http://fossasia.org/
  * License: GPLv2 or later
- * Text Domain: twitter-widget
+ * Text Domain: twitter-feed-plugin
  */
 
 /*
-	Copyright 2006-current  FOSSASIA  ( email : http://fossasia.org/ )
+	Copyright 2006-current  FOSSASIA
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@
 
 require_once( 'tlc-transients.php' );
 require_once( 'aaron-plugin-framework.php' );
-define( 'TWP_VERSION', '2.7.0' );
+define( 'TWP_VERSION', '1.0' );
 
 /**
  * WP_Widget_Twitter is the class that handles the main widget.

@@ -1,11 +1,11 @@
 <?php
 /**
- * Version: 1.0.0
+ * Version: 1.0
  */
 /**
  * Changelog:
  *
- * 1.0.0:
+ * 1.0:
  *  - First version of the plugin!
  **/
 if (!class_exists('AaronPlugin')) {
@@ -64,16 +64,6 @@ if (!class_exists('AaronPlugin')) {
 		 * @var string - The plugin slug used on WordPress.org
 		 */
 		protected $_slug = '';
-
-		/**
-		 * @var string - The feed URL for AaronDCampbell.com
-		 */
-		protected $_feed_url = 'http://aarondcampbell.com/feed/';
-
-		/**
-		 * @var string - The button ID for the PayPal button, override this generic one with a plugin-specific one
-		 */
-		protected $_paypalButtonId = '9925248';
 
 		protected $_optionsPageAction = 'options.php';
 
@@ -281,18 +271,8 @@ if (!class_exists('AaronPlugin')) {
 				add_meta_box( $this->_slug . '-aaron-feed', __('Latest news from Aaron', $this->_slug), array($this, 'aaron_feed_meta_box'), 'aaron-' . $this->_slug, 'sidebar');
 		}
 
-		public function aaron_feed_meta_box() {
-			$args = array(
-				'url'			=> $this->_feed_url,
-				'items'			=> '5',
-			);
-			echo '<div class="rss-widget">';
-			wp_widget_rss_output( $args );
-			echo "</div>";
-		}
-
 		public function screen_icon_link($name = 'aaron') {
-			$link = '<a href="http://aarondcampbell.com">';
+			$link = '<a href="http://fossasia.org">';
 			if ( function_exists( 'get_screen_icon' ) ) {
 				$link .= get_screen_icon( $name );
 			} else {
