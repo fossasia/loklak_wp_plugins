@@ -1,17 +1,16 @@
 <?php
 /**
- * Plugin Name: Twitter Widget Pro
- * Plugin URI: https://aarondcampbell.com/wordpress-plugin/twitter-widget-pro/
- * Description: A widget that properly handles twitter feeds, including @username, #hashtag, and link parsing.  It can even display profile images for the users.  Requires PHP5.
- * Version: 2.7.0
- * Author: Aaron D. Campbell
- * Author URI: https://aarondcampbell.com/
+ * Plugin Name: Twitter Widget
+ * Description: A widget that properly handles twitter feeds, including @username, #hashtag, and link parsing. It can even display profile images for the users. Requires PHP5.
+ * Version: 1.0
+ * Author: FOSSASIA
+ * Author URI: http://fossasia.org/
  * License: GPLv2 or later
- * Text Domain: twitter-widget-pro
+ * Text Domain: twitter-widget
  */
 
 /*
-	Copyright 2006-current  Aaron D. Campbell  ( email : wp_plugins@xavisys.com )
+	Copyright 2006-current  FOSSASIA  ( email : http://fossasia.org/ )
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -33,11 +32,11 @@ require_once( 'aaron-plugin-framework.php' );
 define( 'TWP_VERSION', '2.7.0' );
 
 /**
- * WP_Widget_Twitter_Pro is the class that handles the main widget.
+ * WP_Widget_Twitter is the class that handles the main widget.
  */
-class WP_Widget_Twitter_Pro extends WP_Widget {
+class WP_Widget_Twitter extends WP_Widget {
 	public function __construct () {
-		$this->_slug = 'twitter-widget-pro';
+		$this->_slug = 'twitter-widget';
 		$wpTwitterWidget = wpTwitterWidget::getInstance();
 		$widget_ops = array(
 			'classname' => 'widget_twitter',
@@ -48,7 +47,7 @@ class WP_Widget_Twitter_Pro extends WP_Widget {
 			'height' => 350,
 			'id_base' => 'twitter'
 		);
-		$name = __( 'Twitter Widget Pro', $wpTwitterWidget->get_slug() );
+		$name = __( 'Twitter Widget', $wpTwitterWidget->get_slug() );
 
 		parent::__construct( 'twitter', $name, $widget_ops, $control_ops );
 	}
@@ -234,7 +233,7 @@ class WP_Widget_Twitter_Pro extends WP_Widget {
 	}
 
 	public function flush_widget_cache() {
-		wp_cache_delete( 'widget_twitter_widget_pro', 'widget' );
+		wp_cache_delete( 'widget_twitter_widget', 'widget' );
 	}
 
 	public function widget( $args, $instance ) {
@@ -264,15 +263,15 @@ class wpTwitterWidget extends AaronPlugin {
 	protected function _init() {
 		require_once( 'lib/wp-twitter.php' );
 
-		$this->_hook = 'twitterWidgetPro';
+		$this->_hook = 'twitterWidget';
 		$this->_file = plugin_basename( __FILE__ );
-		$this->_pageTitle = __( 'Twitter Widget Pro', $this->_slug );
+		$this->_pageTitle = __( 'Twitter Widget', $this->_slug );
 		$this->_menuTitle = __( 'Twitter Widget', $this->_slug );
 		$this->_accessLevel = 'manage_options';
 		$this->_optionGroup = 'twp-options';
 		$this->_optionNames = array( 'twp' );
 		$this->_optionCallbacks = array();
-		$this->_slug = 'twitter-widget-pro';
+		$this->_slug = 'twitter-widget';
 		$this->_paypalButtonId = '9993090';
 
 		/**
@@ -412,7 +411,7 @@ class wpTwitterWidget extends AaronPlugin {
 		}
 
 		if ( (empty( $this->_settings['twp']['consumer-key'] ) || empty( $this->_settings['twp']['consumer-secret'] ) ) && !$this->_settings['twp']['loklak_api'] ) {
-			$msg = sprintf( __( 'You need to <a href="%s">set up your Twitter app keys</a> or use Loklak API to activate plugin functionality.', $this->_slug ), $this->get_options_url() );
+			$msg = sprintf( __( 'You need to <a href="%s">set up your Twitter app keys</a> or use <a href="loklak.org">Loklak API</a> to activate plugin functionality.', $this->_slug ), $this->get_options_url() );
 			echo '<div class="error"><p>' . $msg . '</p></div>';
 		}
 
@@ -504,7 +503,7 @@ class wpTwitterWidget extends AaronPlugin {
 								$minutes = ceil( ( $rate->reset - gmdate( 'U' ) ) / 60 );
 								echo sprintf( _n( 'Limits reset in: %d minutes', 'Limits reset in: %d minutes', $minutes, $this->_slug ), $minutes );
 								?><br />
-								<small><?php _e( 'This is overall usage, not just usage from Twitter Widget Pro', $this->_slug ); ?></small>
+								<small><?php _e( 'This is overall usage, not just usage from Twitter Widget', $this->_slug ); ?></small>
 							</p>
 						</td>
 						<?php
@@ -616,7 +615,7 @@ class wpTwitterWidget extends AaronPlugin {
 							<a href="<?php echo esc_url( $test_local_url ); ?>" class="button">
 								<?php _e( 'Test local requests', $this->_slug ); ?>
 							</a><br />
-							<small><?php _e( "Twitter Widget Pro updates tweets in the background by placing a local request to your server.  If your Tweets aren't updating, test this.  If it fails, let your host know that loopback requests aren't working on your site.", $this->_slug ); ?></small>
+							<small><?php _e( "Twitter Widget updates tweets in the background by placing a local request to your server.  If your Tweets aren't updating, test this.  If it fails, let your host know that loopback requests aren't working on your site.", $this->_slug ); ?></small>
 						</td>
 					</tr>
 				</table>
@@ -930,7 +929,7 @@ class wpTwitterWidget extends AaronPlugin {
 	public function register() {
 		// Fix conflict with Jetpack by disabling their Twitter widget
 		unregister_widget( 'Wickett_Twitter_Widget' );
-		register_widget( 'WP_Widget_Twitter_Pro' );
+		register_widget( 'WP_Widget_Twitter' );
 	}
 
 	public function targetBlank( $attributes ) {

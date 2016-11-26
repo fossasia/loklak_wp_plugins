@@ -1,65 +1,13 @@
 <?php
 /**
- * Version: 1.2.1
+ * Version: 1.0.0
  */
 /**
  * Changelog:
  *
- * 1.2.1:
- *  - Fix leftover bluedog link to point to aarondcampbell.com
- *
- * 1.2.0:
- *  - Complete change to Aaron framework
- *
- * 1.1.0:
- *  - Complete change to Range framework
- *  - Coding standards
- *  - Move from camelCase to underscores for function names
- *  - Drop support for WP 2.8 & 2.9
- *
- * 1.0.15:
- *  - Fix support forum link
- *  - Update feed to Ran.ge
- *
- * 1.0.14:
- *  - Fix sidebar alignment on settings page
- *  - Fix forum link by passing it to the http://wordpress.org/tags/{slug}?forum_id=10
- *
- * 1.0.13:
- *  - Add the 'xpf-dashboard-widget' filter
- *
- * 1.0.12:
- *  - Add the xpf-show-general-settings-submit filter
- *
- * 1.0.11:
- *  - Add the xpf-pre-main-metabox action
- *
- * 1.0.10:
- *  - Allow the screen icon to be overridden
- *
- * 1.0.9:
- *  - Allow removal of Xavisys sidebar boxes
- *
- * 1.0.8:
- *  - Allow an auto-created options page that doesn't have a main meta box
- *
- * 1.0.7:
- *  - Add the ability to modify the form action on the options page
- *  - Add an action in the options page form tag
- *
- * 1.0.6:
- *  - Add ability to not have a settings page
- *
- * 1.0.5:
- *  - Added XavisysPlugin::_feed_url
- *  - Changed feed to the feed burner URL because of a redirect issue with 2.9.x
- *
- * 1.0.4:
- *  - Added donate link to the plugin meta
- *
- * 1.0.3:
- *  - Changed to use new cdn for images
- */
+ * 1.0.0:
+ *  - First version of the plugin!
+ **/
 if (!class_exists('AaronPlugin')) {
 	/**
 	 * Abstract class AaronPlugin used as a WordPress Plugin framework
@@ -285,10 +233,6 @@ if (!class_exists('AaronPlugin')) {
 				// Add Widget Page link to our plugin
 				$link = $this->get_options_link();
 				array_unshift( $links, $link );
-
-				// Add Support Forum link to our plugin
-				$link = $this->get_support_forum_link();
-				array_unshift( $links, $link );
 			}
 			return $links;
 		}
@@ -297,25 +241,6 @@ if (!class_exists('AaronPlugin')) {
 			if ( $file == $this->_file )
 				$meta[] = $this->get_plugin_link(__('Rate Plugin'));
 			return $meta;
-		}
-
-		public function get_support_forum_link( $linkText = '' ) {
-			if ( empty($linkText) ) {
-				$linkText = __( 'Support', $this->_slug );
-			}
-			return '<a href="' . $this->get_support_forum_url() . '">' . $linkText . '</a>';
-		}
-
-		public function get_donate_link( $linkText = '' ) {
-			$url = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=' . $this->_paypalButtonId;
-			if ( empty($linkText) ) {
-				$linkText = __( 'Donate to show your appreciation.', $this->_slug );
-			}
-			return "<a href='{$url}'>{$linkText}</a>";
-		}
-
-		public function get_support_forum_url() {
-			return 'http://wordpress.org/support/plugin/' . $this->_slug;
 		}
 
 		public function get_plugin_link( $linkText = '' ) {
@@ -354,29 +279,6 @@ if (!class_exists('AaronPlugin')) {
 
 			if ( apply_filters( 'show-aaron-feed', true ) )
 				add_meta_box( $this->_slug . '-aaron-feed', __('Latest news from Aaron', $this->_slug), array($this, 'aaron_feed_meta_box'), 'aaron-' . $this->_slug, 'sidebar');
-		}
-
-		public function like_this_meta_box() {
-			echo '<p>';
-			_e('Then please do any or all of the following:', $this->_slug);
-			echo '</p><ul>';
-
-			$url = apply_filters('aaron-plugin-url-'.$this->_slug, 'https://aarondcampbell.com/wordpress-plugin/'.$this->_slug);
-			echo "<li><a href='{$url}'>";
-			_e('Link to it so others can find out about it.', $this->_slug);
-			echo "</a></li>";
-
-			echo '<li>' . $this->get_plugin_link() . '</li>';
-
-			echo '<li>' . $this->get_donate_link() . '</li>';
-
-			echo '</ul>';
-		}
-
-		public function support_meta_box() {
-			echo '<p>';
-			echo sprintf(__('If you have any problems with this plugin or ideas for improvements or enhancements, please use the <a href="%s">Support Forums</a>.', $this->_slug), $this->get_support_forum_url() );
-			echo '</p>';
 		}
 
 		public function aaron_feed_meta_box() {
