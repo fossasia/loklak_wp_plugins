@@ -1,12 +1,12 @@
 <?php
 /**
- * Plugin Name: Tweet Feed Plugin
+ * Plugin Name: Tweet Feed Widget
  * Description: A widget that properly handles twitter feeds, including @username, #hashtag, and link parsing.  It can even display profile images for the users.  Requires PHP5.
  * Version: 1.0
  * Author: FOSSASIA
  * Author URI: http://fossasia.org/
  * License: GPLv2 or later
- * Text Domain: tweet-feed-plugin
+ * Text Domain: tweet-feed-widget
  */
 
 /*
@@ -36,7 +36,7 @@ define( 'TWP_VERSION', '1.0' );
  */
 class WP_Widget_Twitter extends WP_Widget {
 	public function __construct () {
-		$this->_slug = 'tweet-feed-plugin';
+		$this->_slug = 'tweet-feed-widget';
 		$wpTwitterWidget = wpTwitterWidget::getInstance();
 		$widget_ops = array(
 			'classname' => 'widget_twitter',
@@ -47,7 +47,7 @@ class WP_Widget_Twitter extends WP_Widget {
 			'height' => 350,
 			'id_base' => 'twitter'
 		);
-		$name = __( 'Tweet Feed Plugin', $wpTwitterWidget->get_slug() );
+		$name = __( 'Tweet Feed Widget', $wpTwitterWidget->get_slug() );
 
 		parent::__construct( 'twitter', $name, $widget_ops, $control_ops );
 	}
@@ -265,13 +265,13 @@ class wpTwitterWidget extends TwitterPlugin {
 
 		$this->_hook = 'tweetFeedplugin';
 		$this->_file = plugin_basename( __FILE__ );
-		$this->_pageTitle = __( 'Tweet Feed Plugin', $this->_slug );
-		$this->_menuTitle = __( 'Tweet Feed Plugin', $this->_slug );
+		$this->_pageTitle = __( 'Tweet Feed Widget', $this->_slug );
+		$this->_menuTitle = __( 'Tweet Feed Widget', $this->_slug );
 		$this->_accessLevel = 'manage_options';
 		$this->_optionGroup = 'twp-options';
 		$this->_optionNames = array( 'twp' );
-		$this->_optionCallbacks = array();
-		$this->_slug = 'tweet-feed-plugin';
+		$this->_optionCallbacks = array( 'twp' => array($this, 'sanitize_settings') );
+		$this->_slug = 'tweet-feed-widget';
 		$this->_paypalButtonId = '9993090';
 
 		/**
@@ -287,7 +287,7 @@ class wpTwitterWidget extends TwitterPlugin {
 		add_filter( 'widget_twitter_content', 'convert_chars' );
 		add_filter( $this->_slug .'-opt-twp', array( $this, 'filterSettings' ) );
 		add_filter( $this->_slug .'-opt-twp-authed-users', array( $this, 'authed_users_option' ) );
-		add_shortcode( 'tweet-feed-plugin', array( $this, 'handleShortcodes' ) );
+		add_shortcode( 'tweet-feed-widget', array( $this, 'handleShortcodes' ) );
 
 		$twp_version = get_option( 'twp_version' );
 		if ( TWP_VERSION != $twp_version )
@@ -503,7 +503,7 @@ class wpTwitterWidget extends TwitterPlugin {
 								$minutes = ceil( ( $rate->reset - gmdate( 'U' ) ) / 60 );
 								echo sprintf( _n( 'Limits reset in: %d minutes', 'Limits reset in: %d minutes', $minutes, $this->_slug ), $minutes );
 								?><br />
-								<small><?php _e( 'This is overall usage, not just usage from Tweet Feed Plugin', $this->_slug ); ?></small>
+								<small><?php _e( 'This is overall usage, not just usage from Tweet Feed Widget', $this->_slug ); ?></small>
 							</p>
 						</td>
 						<?php
@@ -615,7 +615,7 @@ class wpTwitterWidget extends TwitterPlugin {
 							<a href="<?php echo esc_url( $test_local_url ); ?>" class="button">
 								<?php _e( 'Test local requests', $this->_slug ); ?>
 							</a><br />
-							<small><?php _e( "Tweet Feed Plugin updates tweets in the background by placing a local request to your server.  If your Tweets aren't updating, test this.  If it fails, let your host know that loopback requests aren't working on your site.", $this->_slug ); ?></small>
+							<small><?php _e( "Tweet Feed Widget updates tweets in the background by placing a local request to your server.  If your Tweets aren't updating, test this.  If it fails, let your host know that loopback requests aren't working on your site.", $this->_slug ); ?></small>
 						</td>
 					</tr>
 				</table>
@@ -927,7 +927,7 @@ class wpTwitterWidget extends TwitterPlugin {
 	}
 
 	public function register() {
-		// Fix conflict with Jetpack by disabling their Tweet Feed Plugin
+		// Fix conflict with Jetpack by disabling their Tweet Feed Widget
 		unregister_widget( 'Wickett_Twitter_Widget' );
 		register_widget( 'WP_Widget_Twitter' );
 	}
@@ -972,7 +972,7 @@ class wpTwitterWidget extends TwitterPlugin {
 		if ( empty( $args['title'] ) )
 			$args['title'] = sprintf( __( 'Twitter: %s', $this->_slug ), $args['username'] );
 
-		$args['title'] = apply_filters( 'tweet-feed-plugin-title', $args['title'], $args );
+		$args['title'] = apply_filters( 'tweet-feed-widget-title', $args['title'], $args );
 		$args['title'] = "<span class='twitterwidget twitterwidget-title'>{$args['title']}</span>";
 		$widgetContent .= $args['before_title'] . $args['title'] . $args['after_title'];
 		if ( !empty( $tweets[0] ) && is_object( $tweets[0] ) && !empty( $args['avatar'] ) ) {
@@ -1072,7 +1072,7 @@ class wpTwitterWidget extends TwitterPlugin {
 			$script = 'http://platform.twitter.com/widgets.js';
 			if ( is_ssl() )
 				$script = str_replace( 'http://', 'https://', $script );
-			wp_enqueue_script( 'tweet-feed-plugins', $script, array(), '1.0.0', true );
+			wp_enqueue_script( 'tweet-feed-widgets', $script, array(), '1.0.0', true );
 
 			if ( ! function_exists( '_wp_footer_scripts' ) ) {
 				// This means we can't just enqueue our script (fixes in WP 3.3)
@@ -1100,7 +1100,7 @@ class wpTwitterWidget extends TwitterPlugin {
 	}
 
 	public function add_twitter_js() {
-		wp_print_scripts( 'tweet-feed-plugins' );
+		wp_print_scripts( 'tweet-feed-widgets' );
 	}
 
 	/**
@@ -1362,6 +1362,23 @@ class wpTwitterWidget extends TwitterPlugin {
 		);
 
 		return $this->fixAvatar( wp_parse_args( $settings, $defaultArgs ) );
+	}
+
+	public function sanitize_settings( $input ) {
+		if ( isset( $input['consumer-key'] ) )
+			$input['consumer-key'] = sanitize_text_field( $input['consumer-key'] );
+		if ( isset( $input['consumer-secret'] ) )
+			$input['consumer-secret'] = sanitize_text_field( $input['consumer-secret'] );
+		if ( isset( $input['title'] ) )
+			$input['title'] = sanitize_text_field( $input['title'] );
+		if ( isset( $input['errmsg'] ) )
+			$input['errmsg'] = sanitize_text_field( $input['errmsg'] );
+		if ( isset( $input['username'] ) )
+			$input['username'] = sanitize_text_field( $input['username'] );
+		if ( isset( $input['dateFormat'] ) )
+			$input['dateFormat'] = sanitize_text_field( $input['dateFormat'] );
+
+		return $input;
 	}
 
 	/**

@@ -87,7 +87,7 @@ if (!class_exists('TwitterPlugin')) {
 			if ( is_callable(array( $this, 'add_options_meta_boxes' )) )
 				add_action( 'admin_init', array( $this, 'add_options_meta_boxes' ) );
 
-			add_action( 'admin_init', array( $this, 'add_default_options_meta_boxes' ) );
+			//add_action( 'admin_init', array( $this, 'add_default_options_meta_boxes' ) );
 			add_action( 'admin_print_scripts', array( $this,'admin_print_scripts' ) );
 			add_action( 'admin_enqueue_scripts', array( $this,'admin_enqueue_scripts' ) );
 
@@ -260,15 +260,15 @@ if (!class_exists('TwitterPlugin')) {
 			}
 		}
 
-		public function add_default_options_meta_boxes() {
-			if ( apply_filters( 'show-twitter-like-this', true ) )
-				add_meta_box( $this->_slug . '-like-this', __('Like this Plugin?', $this->_slug), array($this, 'like_this_meta_box'), 'twitter-' . $this->_slug, 'sidebar');
+		// public function add_default_options_meta_boxes() {
+		// 	if ( apply_filters( 'show-twitter-like-this', true ) )
+		// 		add_meta_box( $this->_slug . '-like-this', __('Like this Plugin?', $this->_slug), array($this, 'like_this_meta_box'), 'twitter-' . $this->_slug, 'sidebar');
 
-			if ( apply_filters( 'show-twitter-support', true ) )
-				add_meta_box( $this->_slug . '-support', __('Need Support?', $this->_slug), array($this, 'support_meta_box'), 'twitter-' . $this->_slug, 'sidebar');
-			if ( apply_filters( 'show-twitter-feed', true ) )
-				add_meta_box( $this->_slug . '-twitter-feed', __('Latest news from twitter', $this->_slug), array($this, 'twitter_feed_meta_box'), 'twitter-' . $this->_slug, 'sidebar');
-		}
+		// 	if ( apply_filters( 'show-twitter-support', true ) )
+		// 		add_meta_box( $this->_slug . '-support', __('Need Support?', $this->_slug), array($this, 'support_meta_box'), 'twitter-' . $this->_slug, 'sidebar');
+		// 	if ( apply_filters( 'show-twitter-feed', true ) )
+		// 		add_meta_box( $this->_slug . '-twitter-feed', __('Latest news from twitter', $this->_slug), array($this, 'twitter_feed_meta_box'), 'twitter-' . $this->_slug, 'sidebar');
+		// }
 
 		public function screen_icon_link($name = 'twitter') {
 			$link = '<a href="http://fossasia.org">';
@@ -289,12 +289,9 @@ if (!class_exists('TwitterPlugin')) {
 				wp_enqueue_script('dashboard');
 			}
 		}
-
-		public function register_tp_twitter_widget() {
-			register_widget('tp_widget_recent_tweets');
-		}
+		
 		public function add_wp_twitter_widget_script() {
-			wp_register_script('twitter_widget_script', plugin_dir_url( __FILE__ ).'assets/js/wp-tweet-feed-plugin.js', array('jquery'));
+			wp_register_script('twitter_widget_script', plugin_dir_url( __FILE__ ).'assets/js/wp-tweet-feed-widget.js', array('jquery'));
 			wp_enqueue_script('twitter_widget_script');
 
 		}
