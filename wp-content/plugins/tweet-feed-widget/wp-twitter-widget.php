@@ -32,9 +32,9 @@ require_once( 'twitter-plugin-framework.php' );
 define( 'TWP_VERSION', '1.0' );
 
 /**
- * WP_Widget_Twitter_Pro is the class that handles the main widget.
+ * WP_Tweet_Feed_Widget is the class that handles the main widget.
  */
-class WP_Widget_Twitter_Pro extends WP_Widget {
+class WP_Tweet_Feed_Widget extends WP_Widget {
 	public function __construct () {
 		$this->_slug = 'tweet-feed-widget';
 		$wpTwitterWidget = wpTwitterWidget::getInstance();
@@ -929,7 +929,7 @@ class wpTwitterWidget extends TwitterPlugin {
 	public function register() {
 		// Fix conflict with Jetpack by disabling their Tweet Feed Widget
 		unregister_widget( 'Wickett_Twitter_Widget' );
-		register_widget( 'WP_Widget_Twitter' );
+		register_widget( 'WP_Tweet_Feed_Widget' );
 	}
 
 	public function targetBlank( $attributes ) {
