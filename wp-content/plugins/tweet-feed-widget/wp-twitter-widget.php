@@ -32,9 +32,9 @@ require_once( 'twitter-plugin-framework.php' );
 define( 'TWP_VERSION', '1.0' );
 
 /**
- * WP_Widget_Twitter is the class that handles the main widget.
+ * WP_Widget_Twitter_Pro is the class that handles the main widget.
  */
-class WP_Widget_Twitter extends WP_Widget {
+class WP_Widget_Twitter_Pro extends WP_Widget {
 	public function __construct () {
 		$this->_slug = 'tweet-feed-widget';
 		$wpTwitterWidget = wpTwitterWidget::getInstance();
@@ -263,7 +263,7 @@ class wpTwitterWidget extends TwitterPlugin {
 	protected function _init() {
 		require_once( 'lib/wp-twitter.php' );
 
-		$this->_hook = 'tweetFeedplugin';
+		$this->_hook = 'tweetFeedWidget';
 		$this->_file = plugin_basename( __FILE__ );
 		$this->_pageTitle = __( 'Tweet Feed Widget', $this->_slug );
 		$this->_menuTitle = __( 'Tweet Feed Widget', $this->_slug );
