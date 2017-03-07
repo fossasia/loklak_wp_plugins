@@ -2,6 +2,8 @@
 
 # WordPress 4.5.3-ja + pg4wp2 Heroku ([Original Repository](https://github.com/macminiosx/wordpress-ja-pg4wp2-heroku))
 
+[![Join the chat at https://gitter.im/fossasia/loklak_wp_plugins](https://badges.gitter.im/fossasia/loklak_wp_plugins.svg)](https://gitter.im/fossasia/loklak_wp_plugins?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 This is a Wordpress site repo which can be deployed on Heroku to test the plugins with Loklak support. 
 
 https://loklak-wordpress.herokuapp.com is a sample Wordpress installation with all plugins present in `wp-content/plugins`
